@@ -1,0 +1,21 @@
+h1 Manage Photos
+form#galleries(method='POST', action='/admin/galleries')
+  table.data
+    tr
+      th Display Name
+      th Directory Name
+      th Start Date
+    - each gallery in galleries
+      tr.gallery
+        td
+          input.inline(name='gallery_' + gallery.dirName + '_displayName',
+            value=gallery.displayName, size=gallery.displayName.length)
+        td #{gallery.dirName}
+        td
+          input.inline.date(value=formatDate(gallery.startDate),
+            name='gallery_' + gallery.dirName + '_startDate')
+  input(type='submit', value='Save')
+script(type='text/javascript')
+    $(document).ready(function() {
+      $('input.date').datepicker();
+    });

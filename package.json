@@ -1,0 +1,37 @@
+{
+  "name": "peterlyons.com",
+  "description": "The Node/Express Web App that powers the peterlyons.com web site",
+  "version": "4.3.0",
+  "homepage": "http://peterlyons.com",
+  "repository": "ssh://git.peterlyons.com/home/plyons/projects/peter_lyons_web_site/peterlyons.com.git",
+  "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
+  "main": "app/server.coffee",
+  "engines": {
+    "node": "0.8.18"
+  },
+  "files": [],
+  "dependencies": {
+    "async": "0.1.15",
+    "asyncjs": "0.0.9",
+    "bcrypt": "0.7.x",
+    "coffee-script": "1.2.0",
+    "express": "2.5.6",
+    "connect": "git+ssh://git@github.com/focusaurus/connect.git#8d2797a04b3d334f196822bfc2f1cb09a52d5023",
+    "jade": "0.20.0",
+    "cheerio": "0.7.0",
+    "JSONPath": "0.8.5",
+    "markdown-js": "0.0.3",
+    "nib": "0.7.x",
+    "stylus": "0.22.6",
+    "underscore": "1.3.1",
+    "mkdirp": "0.3.4"
+  },
+  "devDependencies": {
+    "chai": "1.4.x",
+    "commander": "0.5.2",
+    "mocha": "1.7.x",
+    "node-inspector": "*",
+    "nodemon": "0.6.7",
+    "superagent": "0.12.x"
+  }
+}

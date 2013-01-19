@@ -1,0 +1,6 @@
+#node.js app server for peterlyons.com (photo gallery and basic templates)
+check host "node_peterlyons.com" with address 127.0.0.1
+    start = "/sbin/start node_peterlyons"
+    stop = "/sbin/stop node_peterlyons"
+    if failed port 9000 protocol http then restart
+    if 5 restarts within 5 cycles then timeout
