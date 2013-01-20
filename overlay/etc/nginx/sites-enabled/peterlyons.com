@@ -13,8 +13,9 @@ server {
     charset utf-8;
     access_log /home/plyons/projects/peterlyons.com/var/log/nginx.access.log;
     error_log /home/plyons/projects/peterlyons.com/var/log/nginx.error.log;
-    error_page 404 /error404.html;
-    error_page 502 /error502.html;
+    #I think the try_files directive means these won't be served by nginx
+    #error_page 404 /error404.html;
+    #error_page 502 /error502.html;
 
     location / {
         root /home/plyons/projects/peterlyons.com/public;

@@ -141,8 +141,8 @@ class BlogIndex extends pages.Page
         layout: false
         pretty: true
         locals: self.locals
-      options.locals.posts = self.posts
-      asyncjs.list(self.posts).map (post, next) ->
+      recentPosts = options.locals.posts = self.posts[0..9]
+      asyncjs.list(recentPosts).map (post, next) ->
         fakeRes =
           post: post
           viewPath: post.viewPath()
