@@ -1,2 +1,4 @@
 /node
 /var/log
+/build
+/dist

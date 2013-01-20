@@ -31,10 +31,17 @@ DEVURL="http://localhost:9000"
 PRODURL="http://${SITE}"
 REPO_URL="ssh://git.peterlyons.com/home/plyons/projects/peterlyons.com.git"
 NODE_VERSION="0.6.17"
-PROJECT_DIR=~/projects/peterlyons.com
+PROJECT_DIR=~/projects/peter_lyons_web_site/code
 OVERLAY="${PROJECT_DIR}/overlay"
 PUBLIC="${PROJECT_DIR}/public"
 BRANCH=master
+
+#OS X support
+TAR=tar
+if which gnutar &> /dev/null; then
+  TAR=gnutar
+fi
+
 ########## No-Op Test Tasks for sudo, root, and normal user ##########
 #Use these to make sure your passwordless ssh is working, hosts are correct, etc
 test:uptime() {
@@ -222,6 +229,7 @@ app:clone() {
     cd
 }
 
+#@todo node has binary distros now. Use the install_node function
 task:prereqs() {
     set -e
     cdpd
@@ -431,6 +439,55 @@ task:watch() {
     stylus -w -o public app/assets/css/screen.styl
 }
 
+install_node() {
+  local VERSION=${1-0.8.18}
+  local PREFIX=${2-node}
+  local PLATFORM=$(uname | tr A-Z a-z)
+  local ARCH=x64
+  case $(uname -p) in
+      i686)
+          ARCH=x86
+      ;;
+  esac
+  mkdir -p "${PREFIX}"
+  curl --silent \
+    "http://nodejs.org/dist/v${VERSION}/node-v${VERSION}-${PLATFORM}-${ARCH}.tar.gz" \
+    | tar xzf - --strip-components=1 -C "${PREFIX}"
+}
+
+dirs() {
+  for DIR in $@
+  do
+    if [ -e "${DIR}" ] && [ ! -d "${DIR}" ]; then
+      echo "ERROR: path ${DIR} exists but is not a directory" 1>&2
+      return 5
+    fi
+    mkdir -p "${DIR}"
+  done
+}
+
+task:dist() {
+    cdpd
+    local GIT_REF="${1-master}"
+    local BUILD_DIR="build"
+    local DIST_DIR="dist"
+    local PREFIX="${SITE}-${GIT_REF}"
+    dirs "${BUILD_DIR}" "${DIST_DIR}"
+    git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
+      #extract that archive into a temporary build directory
+      "${TAR}" --directory "${BUILD_DIR}" --extract
+    #install node
+    NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+    install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
+    (cd "${BUILD_DIR}/${PREFIX}" && ./node/bin/npm install --silent --production)
+    "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
+}
+
+task:clean() {
+  cdpd
+  rm -rf build dist
+}
+
 task:html_to_md() {
     local HTML="${1}"
     local MD=$(echo "${1}" | sed -e 's/\.html$/.md/')
@@ -468,7 +525,7 @@ fi
 if [ -z "${HOSTS}" ]; then
     #local mode
     case "${OP}" in
-        db:*|os:*|test:*|user:*|web:*|prereqs|test|release|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
+        db:*|os:*|test:*|user:*|web:*|prereqs|clean|test|release|dist|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
             #Op looks valid-ish
             if ! expr "${OP}" : '.*:' > /dev/null; then
                 OP="task:${OP}"
