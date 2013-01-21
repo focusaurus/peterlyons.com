@@ -11,14 +11,14 @@ server {
     #This is essential so we can use the same configuration in production and staging
     server_name_in_redirect off;
     charset utf-8;
-    access_log /home/plyons/projects/peterlyons.com/var/log/nginx.access.log;
-    error_log /home/plyons/projects/peterlyons.com/var/log/nginx.error.log;
+    access_log /home/plyons/projects/peter_lyons_web_site/var/log/nginx.access.log;
+    error_log /home/plyons/projects/peter_lyons_web_site/var/log/nginx.error.log;
     #I think the try_files directive means these won't be served by nginx
     #error_page 404 /error404.html;
     #error_page 502 /error502.html;
 
     location / {
-        root /home/plyons/projects/peterlyons.com/public;
+        root /home/plyons/projects/peter_lyons_web_site/public;
         #Trailing slashes are verboten
         rewrite ^(.+)/$ http://$host$1 permanent;
         index index.html home.html;

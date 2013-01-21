@@ -439,16 +439,97 @@ task:watch() {
     stylus -w -o public app/assets/css/screen.styl
 }
 
+deploy_repo() {
+  local URL="${1}"
+  local DIR=$(echo "${URL}" | sed 's/.*\/\(.*\)\.git/\1/')
+  shift
+  local PROJECT_PATH="projects/peter_lyons_web_site"
+  for HOST in $@
+  do
+    echo "running script on ${HOST} ${URL}"
+    ssh "${HOST}" <<EOF
+      install --directory "${PROJECT_PATH}"
+      cd "${PROJECT_PATH}"
+      if [ -d "${DIR}" ]; then
+        cd "${DIR}"
+        git pull origin master
+      else
+        git clone "${URL}"
+      fi
+EOF
+  done
+
+}
+
+deploy_data() {
+  echo deploying data to $@
+  deploy_repo ssh://git.peterlyons.com/home/plyons/projects/peter_lyons_web_site/data.git "${@}"
+}
+
+deploy_static() {
+  echo deploying static to $@
+  deploy_repo ssh://git.peterlyons.com/home/plyons/projects/peter_lyons_web_site/static.git "${@}"
+
+}
+
+deploy_code() {
+  local DIST_PATH="${1}"
+  local DIST_FILE=$(basename "${DIST_PATH}")
+  local PREFIX=$(echo ${DIST_FILE} | sed 's/\.tar\.bz2//')
+  shift
+  local PROJECT_PATH="projects/peter_lyons_web_site"
+  echo deploying code "${DIST_PATH}" to $@
+  for HOST in $@
+  do
+    scp "${DIST_PATH}" "${HOST}":/tmp
+    ssh "${HOST}" <<EOF
+      echo I am running on \$(uname -a)
+      install --directory "${PROJECT_PATH}"
+      tar --extract --bzip2 --directory "${PROJECT_PATH}" --file "/tmp/${DIST_FILE}"
+      cd "${PROJECT_PATH}/${PREFIX}"
+      ./node/bin/npm rebuild
+EOF
+  done
+}
+
+task:deploy() {
+  local PAYLOAD="${1}"
+  shift
+  local DESTINATION="${1}"
+  case "${DESTINATION}" in
+    production)
+        local HOSTS="${PRODUCTION_HOSTS}"
+    ;;
+    staging)
+        local HOSTS="${STAGING_HOSTS}"
+    ;;
+  esac
+  case "${PAYLOAD}" in
+    data)
+      deploy_data ${HOSTS}
+    ;;
+    static)
+      deploy_static ${HOSTS}
+    ;;
+    *.tar.*)
+      deploy_code "${PAYLOAD}" ${HOSTS}
+    ;;
+  esac
+}
+
 install_node() {
   local VERSION=${1-0.8.18}
   local PREFIX=${2-node}
-  local PLATFORM=$(uname | tr A-Z a-z)
+  #local PLATFORM=$(uname | tr A-Z a-z)
+  #Since we only deploy to linux for staging & production, but build on a mac
+  #hard code this to linux & x64
+  local PLATFORM=linux
   local ARCH=x64
-  case $(uname -p) in
-      i686)
-          ARCH=x86
-      ;;
-  esac
+  # case $(uname -p) in
+  #     i686)
+  #         ARCH=x86
+  #     ;;
+  # esac
   mkdir -p "${PREFIX}"
   curl --silent \
     "http://nodejs.org/dist/v${VERSION}/node-v${VERSION}-${PLATFORM}-${ARCH}.tar.gz" \
@@ -479,7 +560,9 @@ task:dist() {
     #install node
     NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
     install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
-    (cd "${BUILD_DIR}/${PREFIX}" && ./node/bin/npm install --silent --production)
+    #Note we use npm from the build platform (OS X) here instead of
+    #the one for the run platform as they are incompatible
+    (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
     "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
 }
 
@@ -525,7 +608,7 @@ fi
 if [ -z "${HOSTS}" ]; then
     #local mode
     case "${OP}" in
-        db:*|os:*|test:*|user:*|web:*|prereqs|clean|test|release|dist|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
+        db:*|os:*|test:*|user:*|web:*|prereqs|deploy_*|clean|test|release|dist|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
             #Op looks valid-ish
             if ! expr "${OP}" : '.*:' > /dev/null; then
                 OP="task:${OP}"
