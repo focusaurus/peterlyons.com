@@ -31,9 +31,10 @@ DEVURL="http://localhost:9000"
 PRODURL="http://${SITE}"
 REPO_URL="ssh://git.peterlyons.com/home/plyons/projects/peterlyons.com.git"
 NODE_VERSION="0.6.17"
-PROJECT_DIR=~/projects/peter_lyons_web_site/code
-OVERLAY="${PROJECT_DIR}/overlay"
-PUBLIC="${PROJECT_DIR}/public"
+PROJECT_DIR=~/projects/peter_lyons_web_site
+CODE_PATH="${PROJECT_DIR}/code"
+OVERLAY="${CODE_PATH}/overlay"
+PUBLIC="${CODE_PATH}/public"
 BRANCH=master
 
 #OS X support
@@ -91,9 +92,7 @@ EOF
 
 #Helper function for symlinking files in the git work area out into the OS
 link() {
-    if [ ! -h "${1}" ]; then
-        ln -s -f "${OVERLAY}${1}" "${1}"
-    fi
+  ln -n -s -f "${OVERLAY}${1}" "${1}"
 }
 
 os:init_scripts() { #TASK: sudo
@@ -202,7 +201,7 @@ cdpd() {
 }
 
 list_templates() {
-    cdpd
+    cd "${CODE_PATH}"
     #We skip layout because it's just the layout and photos because
     #it's a dynamic page
     ls app/templates/*.{jade,md} | xargs -n 1 basename | sed -e s/\.jade// \
@@ -251,24 +250,24 @@ task:prereqs() {
     npm install
 }
 
-task:deploy() {
-    cdpd
-    echo "Deploying branch ${1-${BRANCH}}"
-    git fetch origin --tags
-    git checkout --track -b "${1-${BRANCH}}" || git checkout "${1-${BRANCH}}"
-    git pull origin "${1-${BRANCH}}"
-    git submodule init
-    git submodule update
-    export PATH=$(pwd)/node/bin:$PATH
-    ./node/bin/npm install
-    sudo initctl reload-configuration
-    if sudo status node_peterlyons; then
-        sudo stop node_peterlyons; sudo start node_peterlyons;
-    else
-        sudo start node_peterlyons
-    fi
-    sudo service nginx reload
-}
+# task:deploy() {
+#     cdpd
+#     echo "Deploying branch ${1-${BRANCH}}"
+#     git fetch origin --tags
+#     git checkout --track -b "${1-${BRANCH}}" || git checkout "${1-${BRANCH}}"
+#     git pull origin "${1-${BRANCH}}"
+#     git submodule init
+#     git submodule update
+#     export PATH=$(pwd)/node/bin:$PATH
+#     ./node/bin/npm install
+#     sudo initctl reload-configuration
+#     if sudo status node_peterlyons; then
+#         sudo stop node_peterlyons; sudo start node_peterlyons;
+#     else
+#         sudo start node_peterlyons
+#     fi
+#     sudo service nginx reload
+# }
 
 check_fail() {
     if [ $1 -ne 0 ]; then
@@ -278,113 +277,113 @@ check_fail() {
 }
 
 task:test() {
-    cdpd
-    local EXIT_CODE=0
-    mocha test/unit/*.coffee || EXIT_CODE=$?
-    if [ ${EXIT_CODE} -ne 0 ]; then
-      exit $EXIT_CODE
-    fi
-    mocha test/application/*.coffee || EXIT_CODE=$?
-    check_fail $EXIT_CODE
-    #rm test/application/*.js
-    #./node_modules/.bin/coffee -c bin
-    #EXIT_CODE=0
-    #BUGBUG#phantomjs ./bin/phantom_tests.js || EXIT_CODE=$?
-    #rm ./bin/phantom_tests.js
-    check_fail $EXIT_CODE
-    echo "YAY"
+  cd "${CODE_PATH}"
+  local EXIT_CODE=0
+  mocha test/unit/*.coffee || EXIT_CODE=$?
+  if [ ${EXIT_CODE} -ne 0 ]; then
+    exit $EXIT_CODE
+  fi
+  mocha test/application/*.coffee || EXIT_CODE=$?
+  check_fail $EXIT_CODE
+  #rm test/application/*.js
+  #./node_modules/.bin/coffee -c bin
+  #EXIT_CODE=0
+  #BUGBUG#phantomjs ./bin/phantom_tests.js || EXIT_CODE=$?
+  #rm ./bin/phantom_tests.js
+  check_fail $EXIT_CODE
+  echo "YAY"
 }
 
 task:start() {
-    cdpd
-    coffee app/server.coffee
+  cd "${CODE_PATH}"
+  coffee app/server.coffee
 }
 
 task:devstart() {
-    cdpd
-    nodemon --debug=9001 app/server.coffee
+  cd "${CODE_PATH}"
+  nodemon --debug=9001 app/server.coffee
 }
 
 task:debug() {
-  cdpd
+  cd "${CODE_PATH}"
   echo http://localhost:9002/debug?port=9001
   ./node_modules/.bin/coffee --nodejs --debug=9001 app/server.coffee
 }
 
 task:inspector() {
-  cdpd
+  cd "${CODE_PATH}"
   echo http://localhost:9002/debug?port=9001
   ./node_modules/.bin/node-inspector --web-port=9002
 }
 
 task:static() {
-    echo "Generating HTML for static templated pages from ${DEVURL}..."
-    for URI in $(list_templates) persblog/feed problog/feed
-    do
-        local URL="${DEVURL}/${URI}"
-        echo -n "${URI}, "
-        local EXIT_CODE=0
-        curl --silent "${URL}" --output \
-            "${PUBLIC}/${URI}.html" || EXIT_CODE=$?
-        if [ ${EXIT_CODE} -ne 0 ]; then
-            echo "FAILED to retrieve ${URL}"
-            exit ${EXIT_CODE}
-        fi
-    done
-    mv "${PUBLIC}/problog/feed.html" "${PUBLIC}/problog/feed.xml"
-    mv "${PUBLIC}/persblog/feed.html" "${PUBLIC}/persblog/feed.xml"
-    cdpd
-    cd app/posts
-    for JSON in $(find . -type f -name \*.json)
-    do
-        local URI="${JSON%.*}"
-        local URI=$(echo "${URI}" |cut -d . -f2-)
-        echo "Saving ${URI} to ${PUBLIC}${URI}.html"
-        local DIR=$(dirname "${URI}")
-        local DIR="${PUBLIC}${DIR}"
-        [ -e "${DIR}" ] || mkdir -p "${DIR}"
-        local URL="${DEVURL}${URI}"
-        local EXIT_CODE=0
-        curl --silent "${URL}" --output \
-            "${PUBLIC}${URI}.html" || EXIT_CODE=$?
-        if [ ${EXIT_CODE} -ne 0 ]; then
-            echo "FAILED to retrieve ${URL}"
-            exit ${EXIT_CODE}
-        fi
-    done
+  echo "Generating HTML for static templated pages from ${DEVURL}..."
+  for URI in $(list_templates) persblog/feed problog/feed
+  do
+      local URL="${DEVURL}/${URI}"
+      echo -n "${URI}, "
+      local EXIT_CODE=0
+      curl --silent "${URL}" --output \
+          "${PUBLIC}/${URI}.html" || EXIT_CODE=$?
+      if [ ${EXIT_CODE} -ne 0 ]; then
+          echo "FAILED to retrieve ${URL}"
+          exit ${EXIT_CODE}
+      fi
+  done
+  mv "${PUBLIC}/problog/feed.html" "${PUBLIC}/problog/feed.xml"
+  mv "${PUBLIC}/persblog/feed.html" "${PUBLIC}/persblog/feed.xml"
+  cd "${CODE_PATH}"
+  cd app/posts
+  for JSON in $(find . -type f -name \*.json)
+  do
+      local URI="${JSON%.*}"
+      local URI=$(echo "${URI}" |cut -d . -f2-)
+      echo "Saving ${URI} to ${PUBLIC}${URI}.html"
+      local DIR=$(dirname "${URI}")
+      local DIR="${PUBLIC}${DIR}"
+      [ -e "${DIR}" ] || mkdir -p "${DIR}"
+      local URL="${DEVURL}${URI}"
+      local EXIT_CODE=0
+      curl --silent "${URL}" --output \
+          "${PUBLIC}${URI}.html" || EXIT_CODE=$?
+      if [ ${EXIT_CODE} -ne 0 ]; then
+          echo "FAILED to retrieve ${URL}"
+          exit ${EXIT_CODE}
+      fi
+  done
 }
 
 task:release() {
-    echo "Hey did you remember to run ./bin/tasks.sh static?"
-    echo "CTRL-C if you forgot. Go do it. ENTER to proceed."
-    read DONTCARE
-    echo "Performing a production peterlyons.com release"
-    eval $(ssh-agent -s) && ssh-add
-    git checkout develop
-    git pull origin develop
-    task:test
-    cdpd
-    echo "Current version is $(./bin/jsonpath.coffee version)"
-    echo -n "New version: "
-    read NEW_VERSION
-    git checkout -b "release-${NEW_VERSION}" develop
-    ./bin/version.coffee "${NEW_VERSION}"
-    git commit -a -m "Bumped version number to ${NEW_VERSION}"
-    echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
-    read DONTCARE
-    git checkout master
-    git merge --no-ff "release-${NEW_VERSION}"
-    echo "Now type notes for the new tag"
-    git tag -a "v${NEW_VERSION}"
-    git checkout develop
-    git merge --no-ff "release-${NEW_VERSION}"
-    git branch -d "release-${NEW_VERSION}"
-    git push origin develop
-    git checkout master
-    git push origin master
-    git push origin master --tags
-    git checkout develop #Not good form to leave master checked out
-    echo "Ready to go. Type     ./bin/tasks.sh production deploy     to push to production"
+  echo "Hey did you remember to run ./bin/tasks.sh static?"
+  echo "CTRL-C if you forgot. Go do it. ENTER to proceed."
+  read DONTCARE
+  echo "Performing a production peterlyons.com release"
+  eval $(ssh-agent -s) && ssh-add
+  git checkout develop
+  git pull origin develop
+  task:test
+  cd "${CODE_PATH}"
+  echo "Current version is $(./bin/jsonpath.coffee version)"
+  echo -n "New version: "
+  read NEW_VERSION
+  git checkout -b "release-${NEW_VERSION}" develop
+  ./bin/version.coffee "${NEW_VERSION}"
+  git commit -a -m "Bumped version number to ${NEW_VERSION}"
+  echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
+  read DONTCARE
+  git checkout master
+  git merge --no-ff "release-${NEW_VERSION}"
+  echo "Now type notes for the new tag"
+  git tag -a "v${NEW_VERSION}"
+  git checkout develop
+  git merge --no-ff "release-${NEW_VERSION}"
+  git branch -d "release-${NEW_VERSION}"
+  git push origin develop
+  git checkout master
+  git push origin master
+  git push origin master --tags
+  git checkout develop #Not good form to leave master checked out
+  echo "Ready to go. Type     ./bin/tasks.sh production deploy     to push to production"
 }
 
 task:validate() {
@@ -435,8 +434,8 @@ task:validate() {
 }
 
 task:watch() {
-    cdpd
-    stylus -w -o public app/assets/css/screen.styl
+  cd "${CODE_PATH}"
+  stylus -w -o public app/assets/css/screen.styl
 }
 
 deploy_repo() {
@@ -483,11 +482,10 @@ deploy_code() {
   do
     scp "${DIST_PATH}" "${HOST}":/tmp
     ssh "${HOST}" <<EOF
-      echo I am running on \$(uname -a)
       install --directory "${PROJECT_PATH}"
       tar --extract --bzip2 --directory "${PROJECT_PATH}" --file "/tmp/${DIST_FILE}"
       cd "${PROJECT_PATH}/${PREFIX}"
-      ./node/bin/npm rebuild
+      ./bin/post_extract.sh
 EOF
   done
 }
@@ -548,26 +546,26 @@ dirs() {
 }
 
 task:dist() {
-    cdpd
-    local GIT_REF="${1-master}"
-    local BUILD_DIR="build"
-    local DIST_DIR="dist"
-    local PREFIX="${SITE}-${GIT_REF}"
-    dirs "${BUILD_DIR}" "${DIST_DIR}"
-    git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
-      #extract that archive into a temporary build directory
-      "${TAR}" --directory "${BUILD_DIR}" --extract
-    #install node
-    NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
-    install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
-    #Note we use npm from the build platform (OS X) here instead of
-    #the one for the run platform as they are incompatible
-    (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
-    "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
+  cd "${CODE_PATH}"
+  local GIT_REF="${1-master}"
+  local BUILD_DIR="build"
+  local DIST_DIR="dist"
+  local PREFIX="${SITE}-${GIT_REF}"
+  dirs "${BUILD_DIR}" "${DIST_DIR}"
+  git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
+    #extract that archive into a temporary build directory
+    "${TAR}" --directory "${BUILD_DIR}" --extract
+  #install node
+  NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+  install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
+  #Note we use npm from the build platform (OS X) here instead of
+  #the one for the run platform as they are incompatible
+  (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
+  "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
 }
 
 task:clean() {
-  cdpd
+  cd "${CODE_PATH}"
   rm -rf build dist
 }
 

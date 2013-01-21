@@ -18,7 +18,7 @@ server {
     #error_page 502 /error502.html;
 
     location / {
-        root /home/plyons/projects/peter_lyons_web_site/public;
+        root /home/plyons/projects/peter_lyons_web_site/static;
         #Trailing slashes are verboten
         rewrite ^(.+)/$ http://$host$1 permanent;
         index index.html home.html;
