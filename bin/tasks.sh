@@ -485,7 +485,7 @@ deploy_code() {
       install --directory "${PROJECT_PATH}"
       tar --extract --bzip2 --directory "${PROJECT_PATH}" --file "/tmp/${DIST_FILE}"
       cd "${PROJECT_PATH}/${PREFIX}"
-      ./bin/post_extract.sh
+      sudo ./bin/post_extract.sh
 EOF
   done
 }
