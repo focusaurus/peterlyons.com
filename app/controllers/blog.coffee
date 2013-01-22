@@ -140,7 +140,7 @@ class BlogIndex extends pages.Page
       options =
         layout: false
         pretty: true
-        locals: self.locals
+        locals: _.clone self.locals
       recentPosts = options.locals.posts = self.posts[0..9]
       asyncjs.list(recentPosts).map (post, next) ->
         fakeRes =
