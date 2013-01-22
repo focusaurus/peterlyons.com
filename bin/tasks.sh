@@ -380,7 +380,7 @@ task:release() {
   git push origin master
   git push origin master --tags
   git checkout develop #Not good form to leave master checked out
-  echo "Ready to go. Type     ./bin/tasks.sh production deploy     to push to production"
+  echo "Ready to go. Next steps are dist then deploy."
 }
 
 task:validate() {
