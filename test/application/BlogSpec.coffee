@@ -1,4 +1,4 @@
-config = require "../../config"
+config = require "app/config"
 assert = require("chai").assert
 cheerio = require "cheerio"
 
