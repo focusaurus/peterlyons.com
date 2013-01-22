@@ -354,9 +354,6 @@ task:static() {
 }
 
 task:release() {
-  echo "Hey did you remember to run ./bin/tasks.sh static?"
-  echo "CTRL-C if you forgot. Go do it. ENTER to proceed."
-  read DONTCARE
   echo "Performing a production peterlyons.com release"
   eval $(ssh-agent -s) && ssh-add
   git checkout develop

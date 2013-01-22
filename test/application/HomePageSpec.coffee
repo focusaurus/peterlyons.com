@@ -1,4 +1,4 @@
-config = require "../../config"
+config = require "app/config"
 expect = require("chai").expect
 {loadPage} = require "../TestUtils"
 

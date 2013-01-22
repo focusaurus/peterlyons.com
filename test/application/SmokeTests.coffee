@@ -1,4 +1,4 @@
-config = require "../../config"
+config = require "app/config"
 request = require "superagent"
 expect = require("chai").expect
 
