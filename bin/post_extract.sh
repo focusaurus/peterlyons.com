@@ -4,10 +4,12 @@
 #It should be run as root via sudo
 
 set_owner_and_permissions() {
-  chown -R plyons:plyons .
+  chown -R plyons:www-data . ../data
   find . -type d -print0 | xargs -0 chmod 775
   find . -type f -print0 | xargs -0 chmod 664
   chmod +x node/bin/* node_modules/.bin/* bin/* app/server.coffee
+  chgrp -R www-data ../data/posts
+  chmod -R g+w ../data/posts
 }
 
 repoint_code_symlink() {

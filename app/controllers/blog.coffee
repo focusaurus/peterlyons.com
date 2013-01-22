@@ -77,7 +77,7 @@ savePost = (req, callback) ->
   blogSlug = req.param "blogSlug"
   post = new Post blogSlug, req.body.title, new Date(), "md"
   post.content = (req.body.content || "").trim() + "\n"
-  post.base = path.join(__dirname, "..", "posts")
+  post.base = path.join(__dirname, "..", "..", "..", "data", "posts")
   post.save callback
 
 createPost = (req, res, next) ->
@@ -163,6 +163,12 @@ class BlogIndex extends pages.Page
       .end (error, fakeRes) ->
         res.header "Content-Type", "text/xml"
         res.render "feed", options
+
+    app.get "/#{@URI}/flushCache", (req, res, next) ->
+      loadBlog self.URI, (error,  posts) ->
+        return next error if error
+        self.posts = self.locals.posts = posts
+        res.send "blog posts reloaded"
 
     app.get new RegExp("/(#{@URI})/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
 

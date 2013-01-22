@@ -443,7 +443,7 @@ deploy_repo() {
   for HOST in $@
   do
     echo "running script on ${HOST} ${URL}"
-    ssh "${HOST}" <<EOF
+    ssh -A "${HOST}" <<EOF
       install --directory "${PROJECT_PATH}"
       cd "${PROJECT_PATH}"
       if [ -d "${DIR}" ]; then
@@ -517,9 +517,9 @@ install_node() {
   local PREFIX=${2-node}
   #local PLATFORM=$(uname | tr A-Z a-z)
   #Since we only deploy to linux for staging & production, but build on a mac
-  #hard code this to linux & x64
+  #hard code this to linux & x86
   local PLATFORM=linux
-  local ARCH=x64
+  local ARCH=x86
   # case $(uname -p) in
   #     i686)
   #         ARCH=x86
