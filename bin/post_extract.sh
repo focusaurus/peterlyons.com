@@ -7,7 +7,7 @@ set_owner_and_permissions() {
   chown -R plyons:plyons .
   find . -type d -print0 | xargs -0 chmod 775
   find . -type f -print0 | xargs -0 chmod 664
-  chmod +x bin/*
+  chmod +x node/bin/* node_modules/.bin/* bin/* app/server.coffee
 }
 
 repoint_code_symlink() {

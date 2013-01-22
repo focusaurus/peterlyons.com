@@ -21,8 +21,8 @@ server {
         root /home/plyons/projects/peter_lyons_web_site/static;
         #Trailing slashes are verboten
         rewrite ^(.+)/$ http://$host$1 permanent;
-        index index.html home.html;
-        try_files $uri $uri.html $uri.xml $uri/ @app;
+        index index.html;
+        try_files $uri.html $uri/index.html $uri.xml @app;
     }
 
     location @app {
