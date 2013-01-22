@@ -16,7 +16,7 @@ commander
 
 post = new Post commander.blog, commander.title, new Date(), commander.format
 post.name = commander.slug || post.name
-post.base = path.join __dirname, "..", "app", "posts"
+post.base = path.join __dirname, "..", "..", "data", "posts"
 metaPath = path.join post.base, post.metadataPath()
 mkdirp.sync path.dirname(metaPath)
 metadata = JSON.stringify(post.metadata()) + "\n"
