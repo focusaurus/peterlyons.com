@@ -2,34 +2,24 @@
 config = require "app/config"
 errors = require "app/errors"
 express = require "express"
-markdown = require("markdown-js").makeHtml
 path = require "path"
 
-app = express.createServer()
-app.use express.bodyParser()
+app = express()
 app.use express.logger {format: ":method :url"}
+app.use express.bodyParser()
 app.use app.router
-app.use express.compiler(src: __dirname + "/../public", enable: ["coffeescript"])
 app.use express.static(config.staticDir)
 # if config.tests
 #   #Note to self. Make sure compiler comes BEFORE static
 #   app.use express.compiler(src: __dirname + "/../test", enable: ["coffeescript"])
 #   app.use express.static(__dirname + "/../test")
 
-
-app.register ".md",
-  compile: (md, options) ->
-    html = markdown md
-    (locals) -> html
-app.register ".html",
-  compile: (html, options) ->
-    (locals) -> html
 app.set "view engine", "jade"
 app.set "view options",
   layout: "layout.jade"
 app.set "views", __dirname + "/templates"
 
-app.helpers
+app.locals
   config: config
   post: false
   title: ''
@@ -39,12 +29,12 @@ app.use (req, res, next) ->
   next new errors.NotFound req.path
 
 #Load in the controllers
-["pages", "galleries", "photos", "blog", "css"].map (controllerName) ->
+["pages", "galleries", "photos", "blog", "css", "markdown", "html"].map (controllerName) ->
   controller = require "app/controllers/" + controllerName
   controller.setup app
 errors.setup app
 
-app.error (error, req, res, next) ->
+app.use (error, req, res, next) ->
   console.log error
   if error instanceof errors.NotFound
     res.render "error404"

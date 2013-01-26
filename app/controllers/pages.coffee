@@ -4,7 +4,7 @@ jade = require "jade"
 path = require "path"
 
 class Page
-  constructor: (@view, @locals={}) ->
+  constructor: (@view, @title) ->
     if @view.indexOf(".") >= 0
       @URI = @view.split(".")[0]
     else
@@ -12,13 +12,14 @@ class Page
       @view = "#{@view}.jade"
 
   render: (req) =>
-    if @locals.title? and @locals.title.indexOf("Peter Lyons") < 0
-      @locals.title = @locals.title + " | Peter Lyons"
-    req.res.render @view, {locals: @locals}
+    console.log("@bug Page.render", @title)
+    if @title?.indexOf("Peter Lyons") < 0
+      @title = @title + " | Peter Lyons"
+    req.res.render @view, {title: @title}
 
 pages = []
 page = (URI, title) ->
-  pages.push new Page(URI, {title})
+  pages.push new Page(URI, title)
 page "home", "Peter Lyons: node.js coder for hire"
 page "bands", "My Bands"
 page "bigclock", "BigClock: a full screen desktop clock in java"
@@ -36,7 +37,7 @@ page "smartears", "SmartEars: Ear Training Software"
 page "stacks.md", "Technology Stacks"
 page "web_prog.md", "Web Programming Concepts for Non-Programmers"
 #page "web_data", "Data on the Web"
-homePage = new Page "home", {title: pages[0].locals.title}
+homePage = new Page "home", pages[0].title
 homePage.URI = ""
 pages.push homePage
 

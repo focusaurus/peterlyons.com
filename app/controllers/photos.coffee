@@ -4,7 +4,6 @@ fs = require 'fs'
 config = require 'app/config'
 gallery = require 'app/models/gallery'
 galleries = require 'app/controllers/galleries'
-{Page} = require 'app/controllers/pages'
 
 #Load photo metadata from a photos.json file in the gallery directory
 getPhotoJSON = (locals, callback) ->
@@ -40,7 +39,7 @@ getPhotoIPTC = (locals, callback) ->
 photoJSONToObject = (gallery, photoJSON) ->
   photos = JSON.parse(photoJSON)
   for photo in photos
-    photo.fullSizeURI ="#{config.photos.photoURI}#{gallery.dirName}/#{photo.name}#{config.photos.extension}"
+    photo.fullSizeURI = "#{config.photos.photoURI}#{gallery.dirName}/#{photo.name}#{config.photos.extension}"
     photo.pageURI = "#{config.photos.galleryURI}?gallery=#{gallery.dirName}&photo=#{photo.name}"
   return photos
 
@@ -75,9 +74,8 @@ renderPhotos = (req, res) ->
         locals.photo = locals.photos[index]
         locals.photo.next = locals.photos[index + 1] or locals.photos[0]
         locals.photo.prev = locals.photos[index - 1] or _.last(locals.photos)
-        locals.title = "#{locals.gallery.displayName} Photo Gallery"
-        page = new Page 'photos', locals
-        page.render req, res
+        locals.title = "#{locals.gallery.displayName} Photo Gallery | Peter Lyons"
+        res.render "photos", locals
 
 exports.setup = (app) ->
   app.get '/photos', renderPhotos

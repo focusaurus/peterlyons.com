@@ -22,6 +22,7 @@ exports.layout = (req, res, next) ->
 
 exports.domify = (req, res, next) ->
   res.$ = cheerio.load res.html
+  console.log("@bug domified", res.$('title').text())
   next()
 
 exports.undomify = (req, res, next) ->

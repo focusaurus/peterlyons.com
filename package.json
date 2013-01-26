@@ -15,7 +15,7 @@
     "asyncjs": "0.0.9",
     "bcrypt": "0.7.x",
     "coffee-script": "1.2.0",
-    "express": "2.5.6",
+    "express": "3.1.x",
     "connect": "git+ssh://git@github.com/focusaurus/connect.git#8d2797a04b3d334f196822bfc2f1cb09a52d5023",
     "jade": "0.20.0",
     "cheerio": "0.7.0",

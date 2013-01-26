@@ -51,12 +51,13 @@ markdownToHTML = (req, res, next) ->
     next error
 
 renderPost = (req, res, next) ->
-  post = res.post
-  footerPath = path.join __dirname, "..", "templates", "blog_layout.jade"
-  fs.readFile footerPath, "utf8", (error, jadeText) ->
+  locals =
+    title: res.post.title + " | Peter Lyons"
+    post: res.post
+    postContent: res.html
+  res.app.render "view_post", locals, (error, html) ->
     return next error if error
-    footerFunc = jade.compile jadeText
-    res.html = footerFunc {post, body: res.html}
+    res.html = html
     next()
 
 postTitle = (req, res, next) ->
@@ -95,7 +96,7 @@ createPost = (req, res, next) ->
     #cheezy reload of the blog index
     loadBlog post.blog, (error,  posts) ->
       blog = blogIndicesBySlug[post.blog]
-      blog.posts = blog.locals.posts = posts
+      blog.posts = posts
 
 convertMiddleware = [
   connect.middleware.text({limit:"5mb"})
@@ -112,9 +113,9 @@ viewPostMiddleware = [
   html
   markdownToHTML
   renderPost
-  middleware.layout
+  #middleware.layout #Not needed for express 3
   middleware.domify
-  postTitle
+  #postTitle #Not needed for express 3
   middleware.flickr
   middleware.youtube
   middleware.undomify
@@ -122,26 +123,25 @@ viewPostMiddleware = [
 ]
 
 class BlogIndex extends pages.Page
-  constructor: (@view, title='', @locals={}) ->
+  constructor: (@view, @title='') ->
     @URI = @view
-    @locals.title = title
-    @locals.URI = @URI
 
   route: (app) =>
     self = this
-    app.get "/#{@URI}", (req) ->
-      self.render req
+    app.get "/#{@URI}", (req, res) ->
+      res.render self.view, self
 
     app.get "/#{@URI}/post", (req, res) ->
       res.render "post"
     app.post "/:blogSlug/post", createPost
 
     app.get "/#{@URI}/feed", (req, res) ->
-      options =
-        layout: false
+      recentPosts = self.posts[0..9]
+      res.locals
+        title: self.title
+        URI: self.URI
         pretty: true
-        locals: _.clone self.locals
-      recentPosts = options.locals.posts = self.posts[0..9]
+        posts: recentPosts
       asyncjs.list(recentPosts).map (post, next) ->
         fakeRes =
           post: post
@@ -162,13 +162,13 @@ class BlogIndex extends pages.Page
         next()
       .end (error, fakeRes) ->
         res.header "Content-Type", "text/xml"
-        res.render "feed", options
+        res.render "feed"
 
     app.get "/#{@URI}/flushCache", (req, res, next) ->
       loadBlog self.URI, (error,  posts) ->
         return next error if error
-        self.posts = self.locals.posts = posts
-        res.send "blog posts reloaded"
+        self.posts = posts
+        res.redirect "/#{@URI}"
 
     app.get new RegExp("/(#{@URI})/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
 
@@ -217,7 +217,7 @@ setup = (app) ->
   blogIndicesBySlug[persblog.URI] = persblog
   asyncjs.list([problog, persblog]).each (blog, next) ->
     loadBlog blog.URI, (error,  posts) ->
-      blog.posts = blog.locals.posts = posts
+      blog.posts = posts
       next error
   .each (blog, next) ->
     blog.route app

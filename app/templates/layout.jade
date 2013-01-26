@@ -36,7 +36,7 @@ html(lang="en")
           a(href="/practices") Practices
           a(href="/stacks") Stacks
           a(href="/career") Career
-      !{body}
+      block body
       :coffeescript
         $ ->
           $("header nav a").each (index, link) ->
