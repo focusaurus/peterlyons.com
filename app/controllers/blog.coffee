@@ -51,7 +51,7 @@ markdownToHTML = (req, res, next) ->
 
 renderPost = (req, res, next) ->
   locals =
-    title: res.post.title + " | Peter Lyons"
+    title: res.post.title + config.titleSuffix
     post: res.post
     postContent: res.html
   res.app.render "view_post", locals, (error, html) ->

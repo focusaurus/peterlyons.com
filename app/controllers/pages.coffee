@@ -1,4 +1,5 @@
 cheerio = require "cheerio"
+config = require "app/config"
 fs = require "fs"
 jade = require "jade"
 markdown = require("markdown-js").makeHtml
@@ -13,9 +14,8 @@ class Page
       @view = "#{@view}.jade"
 
   render: (req) =>
-    console.log("@bug Page.render", @title)
     if @title?.indexOf("Peter Lyons") < 0
-      @title = @title + " | Peter Lyons"
+      @title = @title + config.titleSuffix
     req.res.render @view, {title: @title}
 
 pages = []
@@ -37,7 +37,6 @@ page "practices.md", "Practices and Values"
 page "smartears", "SmartEars: Ear Training Software"
 page "stacks.md", "Technology Stacks"
 page "web_prog.md", "Web Programming Concepts for Non-Programmers"
-#page "web_data", "Data on the Web"
 homePage = new Page "home", pages[0].title
 homePage.URI = ""
 pages.push homePage
