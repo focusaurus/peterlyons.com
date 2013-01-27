@@ -6,13 +6,10 @@ config = require "app/config"
 connect = require "connect"
 date = require "../../lib/date" #Do not remove. Monkey patches Date
 errors = require "app/errors"
-express = require "express"
 fs = require "fs"
 markdown = require("markdown-js").makeHtml
 middleware = require "./middleware"
-pages = require "./pages"
 path = require "path"
-util = require "util"
 
 {Post, leadZero} = require("../models/post")
 
@@ -96,6 +93,7 @@ createPost = (req, res, next) ->
     loadBlog post.blog, (error,  posts) ->
       blog = blogIndicesBySlug[post.blog]
       blog.posts = posts
+      delete blog.cachedFeedXML
 
 convertMiddleware = [
   connect.middleware.text({limit:"5mb"})
@@ -112,16 +110,14 @@ viewPostMiddleware = [
   html
   markdownToHTML
   renderPost
-  #middleware.layout #Not needed for express 3
   middleware.domify
-  #postTitle #Not needed for express 3
   middleware.flickr
   middleware.youtube
   middleware.undomify
   middleware.send
 ]
 
-class BlogIndex extends pages.Page
+class BlogIndex
   constructor: (@view, @title='') ->
     @URI = @view
 
@@ -134,9 +130,12 @@ class BlogIndex extends pages.Page
       res.render "post"
     app.post "/:blogSlug/post", createPost
 
-    app.get "/#{@URI}/feed", (req, res) ->
+    app.get "/#{@URI}/feed", (req, res, next) ->
+      res.header "Content-Type", "text/xml"
+      if self.cachedFeedXML
+        return res.send self.cachedFeedXML
       recentPosts = self.posts[0..9]
-      res.locals
+      locals =
         title: self.title
         URI: self.URI
         pretty: true
@@ -160,14 +159,17 @@ class BlogIndex extends pages.Page
         fakeRes.post.content = fakeRes.html
         next()
       .end (error, fakeRes) ->
-        res.header "Content-Type", "text/xml"
-        res.render "feed"
+        app.render "feed", locals, (error, feedXML) ->
+          return next error if error
+          self.cachedFeedXML = feedXML
+          res.send feedXML
 
     app.get "/#{@URI}/flushCache", (req, res, next) ->
+      delete self.cachedFeedXML
       loadBlog self.URI, (error,  posts) ->
         return next error if error
         self.posts = posts
-        res.redirect "/#{@URI}"
+        res.redirect "/#{self.URI}"
 
     app.get new RegExp("/(#{@URI})/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
 

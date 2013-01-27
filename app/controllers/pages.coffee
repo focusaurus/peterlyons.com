@@ -41,7 +41,7 @@ homePage = new Page "home", pages[0].title
 homePage.URI = ""
 pages.push homePage
 
-skipLayout = ["web_data.jade"]
+skipLayout = ["web_data.jade", "feed.jade"]
 
 route = (app, page) ->
   app.get "/" + page.URI, (req) ->
