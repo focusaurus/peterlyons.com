@@ -1,7 +1,7 @@
 article
   span.date= post.presented.date
   h1= post.title
-  !{body}
+  != postContent
 hr
 nav.post
   a.button(href="/" + post.blog) back to blog index

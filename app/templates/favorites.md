@@ -1,0 +1,92 @@
+Below is a list of musicians who have had a lasting impact on me. Many of them
+have been treasured for years. Some have recently been stuck as my "go to"
+album where I just want to play their album on a continuous loop for a month
+or so.
+
+### Bobby McFerrin
+
+Bobby is one of my true idols. He's a brilliant musician. Of course the
+general public will always associate him with his unexpected pop radio hit
+from the 80s, but he is a musician of the highest caliber with an extensive
+career. His jazz, classical, and "crossover" recordings are a thing of rare
+beauty. I like pretty much all of his recordings, but in particular I
+recommend you listen to the following.
+
+* [Paper Music](http://store.bobbymcferrin.com/papermusic.html). This is a classical recording with Bobby conducting and singing on some tracks. Listen to the Tchaikovsky **Andante Cantabile**. This recording is otherworldly in its grace and elegance. At the end you are compelled to fall to your knees and weep
+* [Beyond Words](http://store.bobbymcferrin.com/beyondwords.html) is a great recording of Bobby's specialty vocals. You will find "Invocation" sampled on some pop and hip-hop tracks these days as well.
+* [Medicine Music](http://store.bobbymcferrin.com/medicinemusic.html) has great, fun songs, especially **Baby**, and [Circlesongs](http://store.bobbymcferrin.com/circlesongs.html) is great for meditation, yoga, and relaxation.
+
+### Queen
+
+I've been hopelessly obsessed with Queen ever since their Wayne's World
+revival. I love the orchestral and progressive nature of their sound. Freddie
+and Brian in particular are pure genius. Most of it is just great sounding fun
+entertaining music, but I find both **Tenement Fuster** and **39** to be works
+of art in the first class.
+
+### Wynton Marsalis
+
+I find Wynton's role as ambassador very inspiring. He's a great virtuouso,
+composer, and figurehead. I never hear much talk about [Blood on the
+Fields](http://www.wyntonmarsalis.org/discography/jazz/blood-on-the-fields/), but I consider it to be a consummate masterpiece of long-form jazz
+composition. If you haven't heard it, and have a long airplane ride coming up,
+set aside some focused time to check it out. It's 3 CDs long though, but
+there's amazing writing, playing, and singing in there.
+
+### Steve Reich
+
+Largely thanks to [Rhapsody](/problog/2009/03/music-subscription-and-rhapsody/), I've become a big Steve Reich fan. I listened
+to a box set of 30 years of his work while coding and got hooked. [Works:
+1965-1995](http://www.amazon.com/exec/obidos/ASIN/B000005J4P/howardstokarmana) is a great collection. My favorite is the slow movement from
+**Electric Counterpoint**, which is stunningly beautiful.
+
+### Philip Glass
+
+Another great minimalist classical composer, Philip Glass has a great
+aesthetic. His music is great for coding and he has written several gorgeous
+film scores.
+
+### Imogen Heap
+
+What's not to love about this charming Brit? Her work on Frou Frou
+[Details](http://www.amazon.com/Details-Frou/dp/B00006EXLQ/ref=pd_sim_m_4) and [Speak for Yourself](http://www.amazon.com/Speak-Yourself-Imogen-Heap/dp/B000B7BZM4) is fantastic. I got to see her on the
+last US tour for Ellipse, which was fun. She's a great character and has a
+great aesthetic. Her big hit **Hide and Seek** is haunting. She's pretty much
+the queen of audience connection and is paving new paths there pulling content
+from her fans.
+
+### Zoe Keating
+
+[Zoe](http://www.zoekeating.com/) is a cellist who creates overdubbed loops of her cello in real time.
+Her music is really unique and beautiful. She's one of my main inspirations to
+get my Eigenharp. Got to see her when she came to Chautauqua.
+
+### Amanda Palmer
+
+Known as AFP or [Amanda Fucking Palmer](http://amandapalmer.net/) is an intense musician I first heard of in [The Dresden Dolls](http://www.dresdendolls.com/).  Her original songs have been aptly described as "punk cabaret".  Her music is intense, deeply personal, cathartic, and often beautiful.  I like all the Dresden Dolls stuff as well as her solo work.  Check out the songs "Delilah" and "Blake Says" for the lyrical softer side and "[Coin Operated Boy](/app/photos?gallery=halloween_2009&photo=002_coin_operated_boy)" for the fun, irreverant, cabaret side.
+
+### Morphine
+
+Morphine is pretty much my all-time favorite rock band.  They have a great, stripped-down "low rock" sound featuring Dana Colley on baritone saxophone.  Their songs are grooving and catchy.  Mark Sandman is a charismatic and enigmatic frontman.  I pretty much eat up everything they recorded.
+
+### The Blow
+
+I have a thing for melodic electropop (Imogen Heap, The Bird and the Bee), and The Blow's "Paper Television" album has had long stints as my "it" album just getting played over and over.  The songs have great beats and Khaela Maricich's vocals are fresh and zesty.
+
+### More to be written....
+
+* Laura Veirs
+* Primus
+* Tool
+* The Bird and the Bee
+
+# Favorite Album Titles
+
+Note that I don't like all of these albums. Some of them I haven't even heard.
+I just like the titles themselves.
+
+* Gentlemen, I Neglected to Inform You You Will Not Be Getting Paid: Charlie Hunter
+* I Am Not Afraid of You & I Will Beat Your Ass: Yo La Tengo
+* Kill 'Em All: Metallica
+* Good News For People Who Love Bad News: Modest Mouse
+* Give Up: The Postal Service

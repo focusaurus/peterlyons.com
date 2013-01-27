@@ -6,14 +6,10 @@ config = require "app/config"
 connect = require "connect"
 date = require "../../lib/date" #Do not remove. Monkey patches Date
 errors = require "app/errors"
-express = require "express"
 fs = require "fs"
-jade = require "jade"
 markdown = require("markdown-js").makeHtml
 middleware = require "./middleware"
-pages = require "./pages"
 path = require "path"
-util = require "util"
 
 {Post, leadZero} = require("../models/post")
 
@@ -51,12 +47,13 @@ markdownToHTML = (req, res, next) ->
     next error
 
 renderPost = (req, res, next) ->
-  post = res.post
-  footerPath = path.join __dirname, "..", "templates", "blog_layout.jade"
-  fs.readFile footerPath, "utf8", (error, jadeText) ->
+  locals =
+    title: res.post.title + config.titleSuffix
+    post: res.post
+    postContent: res.html
+  res.app.render "view_post", locals, (error, html) ->
     return next error if error
-    footerFunc = jade.compile jadeText
-    res.html = footerFunc {post, body: res.html}
+    res.html = html
     next()
 
 postTitle = (req, res, next) ->
@@ -95,7 +92,8 @@ createPost = (req, res, next) ->
     #cheezy reload of the blog index
     loadBlog post.blog, (error,  posts) ->
       blog = blogIndicesBySlug[post.blog]
-      blog.posts = blog.locals.posts = posts
+      blog.posts = posts
+      delete blog.cachedFeedXML
 
 convertMiddleware = [
   connect.middleware.text({limit:"5mb"})
@@ -112,36 +110,36 @@ viewPostMiddleware = [
   html
   markdownToHTML
   renderPost
-  middleware.layout
   middleware.domify
-  postTitle
   middleware.flickr
   middleware.youtube
   middleware.undomify
   middleware.send
 ]
 
-class BlogIndex extends pages.Page
-  constructor: (@view, title='', @locals={}) ->
+class BlogIndex
+  constructor: (@view, @title='') ->
     @URI = @view
-    @locals.title = title
-    @locals.URI = @URI
 
   route: (app) =>
     self = this
-    app.get "/#{@URI}", (req) ->
-      self.render req
+    app.get "/#{@URI}", (req, res) ->
+      res.render self.view, self
 
     app.get "/#{@URI}/post", (req, res) ->
       res.render "post"
     app.post "/:blogSlug/post", createPost
 
-    app.get "/#{@URI}/feed", (req, res) ->
-      options =
-        layout: false
+    app.get "/#{@URI}/feed", (req, res, next) ->
+      res.header "Content-Type", "text/xml"
+      if self.cachedFeedXML
+        return res.send self.cachedFeedXML
+      recentPosts = self.posts[0..9]
+      locals =
+        title: self.title
+        URI: self.URI
         pretty: true
-        locals: _.clone self.locals
-      recentPosts = options.locals.posts = self.posts[0..9]
+        posts: recentPosts
       asyncjs.list(recentPosts).map (post, next) ->
         fakeRes =
           post: post
@@ -161,14 +159,17 @@ class BlogIndex extends pages.Page
         fakeRes.post.content = fakeRes.html
         next()
       .end (error, fakeRes) ->
-        res.header "Content-Type", "text/xml"
-        res.render "feed", options
+        app.render "feed", locals, (error, feedXML) ->
+          return next error if error
+          self.cachedFeedXML = feedXML
+          res.send feedXML
 
     app.get "/#{@URI}/flushCache", (req, res, next) ->
+      delete self.cachedFeedXML
       loadBlog self.URI, (error,  posts) ->
         return next error if error
-        self.posts = self.locals.posts = posts
-        res.send "blog posts reloaded"
+        self.posts = posts
+        res.redirect "/#{self.URI}"
 
     app.get new RegExp("/(#{@URI})/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
 
@@ -217,7 +218,7 @@ setup = (app) ->
   blogIndicesBySlug[persblog.URI] = persblog
   asyncjs.list([problog, persblog]).each (blog, next) ->
     loadBlog blog.URI, (error,  posts) ->
-      blog.posts = blog.locals.posts = posts
+      blog.posts = posts
       next error
   .each (blog, next) ->
     blog.route app

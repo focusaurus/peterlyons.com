@@ -7,6 +7,7 @@ exports.appURI = "/app"
 #But loopback in staging/prod since nginx listens on the routed interface
 exports.loopback = false
 exports.errorPages = true
+exports.titleSuffix = " | Peter Lyons"
 exports.staticDir = "#{projectRoot}/../static"
 exports.photos =
   photoURI: "/photos/"
