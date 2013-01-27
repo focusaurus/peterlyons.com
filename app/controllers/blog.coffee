@@ -8,7 +8,6 @@ date = require "../../lib/date" #Do not remove. Monkey patches Date
 errors = require "app/errors"
 express = require "express"
 fs = require "fs"
-jade = require "jade"
 markdown = require("markdown-js").makeHtml
 middleware = require "./middleware"
 pages = require "./pages"

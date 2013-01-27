@@ -1,76 +1,74 @@
-extends layout
-block body
-  section#intro
-    img.hero(src="/images/pete_hero.png", alt="Pete")
-    p.intro <span class="highlight">node.js coder for hire.</span>
-    p.intro I'm a freelance web developer<br> specializing in custom application development.
-    h3 The Stack
-    :markdown
-      I'm currently focused on a bleeding-edge stack built around [Node.js](http://nodejs.org) and using [CoffeeScript](http://jashkenas.github.com/coffee-script/),
-      [Express](http://expressjs.com/), [MongoDB](http://www.mongodb.org/),
-      [jQuery](http://jquery.org/), [Jade](https://github.com/visionmedia/jade),
-      and [Stylus](http://learnboost.github.com/stylus/).
+section#intro
+  img.hero(src="/images/pete_hero.png", alt="Pete")
+  p.intro <span class="highlight">node.js coder for hire.</span>
+  p.intro I'm a freelance web developer<br> specializing in custom application development.
+  h3 The Stack
+  :markdown
+    I'm currently focused on a bleeding-edge stack built around [Node.js](http://nodejs.org) and using [CoffeeScript](http://jashkenas.github.com/coffee-script/),
+    [Express](http://expressjs.com/), [MongoDB](http://www.mongodb.org/),
+    [jQuery](http://jquery.org/), [Jade](https://github.com/visionmedia/jade),
+    and [Stylus](http://learnboost.github.com/stylus/).
 
-    a.button(href="stacks") Read more about my stacks of choice
-    h3 Practices
-    ul
-      li Pragmatic craftsmanship
-      li Agile/Lean methodology
-      li Testing and automation
-    a.button(href="practices") Read more about my practices
-  section#chops
-    h2 <span class="highlight">&lt;&gt;</span> Chops
-    h3 Check my street cred...
-    .links
-      a(href='http://www.linkedin.com/in/peterlyons1')
-        img.icon(src='/images/linkedin_icon.png', alt='LinkedIn', title='LinkedIn')
-        | LinkedIn
-      a(href='https://github.com/focusaurus')
-        img.icon(src='/images/github_icon.png', alt='github', title='github')
-        | github
-      a(href='http://stackoverflow.com/users/266795/peter-lyons')
-        img.icon(src='/images/stackoverflow_icon.png', alt='stackoverflow', title='stackoverflow')
-        | stackoverflow
-    ul
-      li <a href="https://linkzie.com">Linkzie</a> is a bookmark manager I built soup to nuts
-        ul
-          li Single Page App
-          li Drag and drop intuitive UI built with jQuery, Ajax, JSON, REST
-          li Back end in <a href="http://rubyonrails.org/">Ruby on Rails</a>
-          li Extensive front end test suite in <a href="http://pivotal.github.com/jasmine/">Jasmine</a>
-      li Full stack generalist. OSes, databases (relational or document oriented), app servers, web servers, JavaScript, CSS, HTML, UX, security
-      li Expert Linux/Unix systems administration with 6.5 years doing server automation development at Hewlett-Packard/Opsware
-  section#writing
-    h2 Favorite blog posts and StackOverflow answers
-    ul
-      li
-        a(href="/problog/2010/07/install-ubuntu-lan/", target="_blank") How to Install Ubuntu 10.04 over a LAN
-      li
-        a(href="/problog/2010/05/on-idempotence-intention-and-unix-commands/", target="_blank") On Idempotence, intention, and unix commands
-      li
-        a(href="/problog/2010/02/environment-variables-considered-harmful/", target="_blank") Environment variables considered harmful
-      li
-        a(href="http://stackoverflow.com/questions/6720440/if-im-dealing-with-dictionaries-everywhere-should-i-make-them-classes/6720671#6720671", target="_blank") Dictionaries vs. Classes in python
-      li
-        a(href="http://stackoverflow.com/questions/6606291/how-can-i-decode-this-utf-8-string-picked-on-a-random-website-and-saved-by-the-d/6606619#6606619", target="_blank") Python confusion with Unicode and the scary question mark character
-      li
-        a(href="http://stackoverflow.com/questions/6313192/how-does-jquery-have-the-object-constructor-and-the-methods-associated-with-the/6313334#6313334", target="_blank") How jQuery does <code>$()</code> and <code>$.ajax()</code>
-      li
-        a(href="http://stackoverflow.com/questions/3633154/python-check-html-valid/3646816#3646816", target="_blank") Python script to validate HTML with the W3C validator
-      li
-        a(href="http://stackoverflow.com/questions/2777116/difference-between-python-urllib-urlretrieve-and-wget/2815800#2815800", target="_blank") cURL vs. wget vs. urllib2
-      li
-        a(href="http://stackoverflow.com/questions/2430423/which-xml-library-for-what-purposes/2430541#2430541", target="_blank") DOM vs. SAX for XML processing
-  :coffeescript
-    speed = -> Math.random() * 200 + 50
-    $ ->
-      header = $("#intro .highlight")
-      subtitle = header.text()
-      header.text("")
-      pushLetter = ->
-        text = header.text()
-        if text.length == subtitle.length
-          return
-        header.text(text + subtitle[text.length])
-        setTimeout(pushLetter, speed())
+  a.button(href="stacks") Read more about my stacks of choice
+  h3 Practices
+  ul
+    li Pragmatic craftsmanship
+    li Agile/Lean methodology
+    li Testing and automation
+  a.button(href="practices") Read more about my practices
+section#chops
+  h2 <span class="highlight">&lt;&gt;</span> Chops
+  h3 Check my street cred...
+  .links
+    a(href='http://www.linkedin.com/in/peterlyons1')
+      img.icon(src='/images/linkedin_icon.png', alt='LinkedIn', title='LinkedIn')
+      | LinkedIn
+    a(href='https://github.com/focusaurus')
+      img.icon(src='/images/github_icon.png', alt='github', title='github')
+      | github
+    a(href='http://stackoverflow.com/users/266795/peter-lyons')
+      img.icon(src='/images/stackoverflow_icon.png', alt='stackoverflow', title='stackoverflow')
+      | stackoverflow
+  ul
+    li <a href="https://linkzie.com">Linkzie</a> is a bookmark manager I built soup to nuts
+      ul
+        li Single Page App
+        li Drag and drop intuitive UI built with jQuery, Ajax, JSON, REST
+        li Back end in <a href="http://rubyonrails.org/">Ruby on Rails</a>
+        li Extensive front end test suite in <a href="http://pivotal.github.com/jasmine/">Jasmine</a>
+    li Full stack generalist. OSes, databases (relational or document oriented), app servers, web servers, JavaScript, CSS, HTML, UX, security
+    li Expert Linux/Unix systems administration with 6.5 years doing server automation development at Hewlett-Packard/Opsware
+section#writing
+  h2 Favorite blog posts and StackOverflow answers
+  ul
+    li
+      a(href="/problog/2010/07/install-ubuntu-lan/", target="_blank") How to Install Ubuntu 10.04 over a LAN
+    li
+      a(href="/problog/2010/05/on-idempotence-intention-and-unix-commands/", target="_blank") On Idempotence, intention, and unix commands
+    li
+      a(href="/problog/2010/02/environment-variables-considered-harmful/", target="_blank") Environment variables considered harmful
+    li
+      a(href="http://stackoverflow.com/questions/6720440/if-im-dealing-with-dictionaries-everywhere-should-i-make-them-classes/6720671#6720671", target="_blank") Dictionaries vs. Classes in python
+    li
+      a(href="http://stackoverflow.com/questions/6606291/how-can-i-decode-this-utf-8-string-picked-on-a-random-website-and-saved-by-the-d/6606619#6606619", target="_blank") Python confusion with Unicode and the scary question mark character
+    li
+      a(href="http://stackoverflow.com/questions/6313192/how-does-jquery-have-the-object-constructor-and-the-methods-associated-with-the/6313334#6313334", target="_blank") How jQuery does <code>$()</code> and <code>$.ajax()</code>
+    li
+      a(href="http://stackoverflow.com/questions/3633154/python-check-html-valid/3646816#3646816", target="_blank") Python script to validate HTML with the W3C validator
+    li
+      a(href="http://stackoverflow.com/questions/2777116/difference-between-python-urllib-urlretrieve-and-wget/2815800#2815800", target="_blank") cURL vs. wget vs. urllib2
+    li
+      a(href="http://stackoverflow.com/questions/2430423/which-xml-library-for-what-purposes/2430541#2430541", target="_blank") DOM vs. SAX for XML processing
+:coffeescript
+  speed = -> Math.random() * 200 + 50
+  $ ->
+    header = $("#intro .highlight")
+    subtitle = header.text()
+    header.text("")
+    pushLetter = ->
+      text = header.text()
+      if text.length == subtitle.length
+        return
+      header.text(text + subtitle[text.length])
       setTimeout(pushLetter, speed())
+    setTimeout(pushLetter, speed())

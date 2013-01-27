@@ -301,7 +301,7 @@ task:start() {
 
 task:devstart() {
   cd "${CODE_PATH}"
-  nodemon --debug=9001 app/server.coffee
+  nodemon --nodejs --debug=9001 app/server.coffee
 }
 
 task:debug() {

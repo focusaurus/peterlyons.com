@@ -15,13 +15,10 @@ app.use express.static(config.staticDir)
 #   app.use express.static(__dirname + "/../test")
 
 app.set "view engine", "jade"
-app.set "view options",
-  layout: "layout.jade"
 app.set "views", __dirname + "/templates"
 
 app.locals
   config: config
-  post: false
   title: ''
 
 #Last in the chain means 404 for you
@@ -29,7 +26,7 @@ app.use (req, res, next) ->
   next new errors.NotFound req.path
 
 #Load in the controllers
-["pages", "galleries", "photos", "blog", "css", "markdown", "html"].map (controllerName) ->
+["pages", "galleries", "photos", "blog", "css"].map (controllerName) ->
   controller = require "app/controllers/" + controllerName
   controller.setup app
 errors.setup app
