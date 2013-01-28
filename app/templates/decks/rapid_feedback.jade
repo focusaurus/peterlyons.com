@@ -1,0 +1,62 @@
+doctype 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title DaVinci Coders Lunch and Learn
+    link(href="/favicon.ico", type="image/x-icon", rel="icon")
+    link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+    link(rel="stylesheet", href="/css/reset.css")
+    link(rel="stylesheet", href="/deck.js/core/deck.core.css")
+    link(rel="stylesheet", href="/deck.js/extensions/menu/deck.menu.css")
+    link(rel="stylesheet", href="/deck.js/extensions/menu/deck.hash.css")
+    link(rel="stylesheet", href="/deck.js/themes/style/web-2.0.css")
+    link(rel="stylesheet", href="/deck.js/themes/transition/vertical-slide.css")
+  body
+    section
+      h2 Rapid Feedback Learning Tools
+      h3 How data powers the web
+      h4 DaVinci Coders Lunch and Learn January 30, 2013
+
+      p pete@peterlyons.com http://peterlyons.com
+
+    section
+      h2 Example
+      h3 Random College Biology Department Course Syllabi
+      pre
+        code.
+          courses/2011/fall/BIO-101.html
+          courses/2011/fall/BIO-120.html
+          courses/2011/fall/BIO-210.html
+          courses/2011/fall/BIO-319.html
+          courses/2011/spring/BIO-102.html
+          courses/2011/spring/BIO-220.html
+          courses/2012/fall/BIO-101.html
+          courses/2012/fall/BIO-150.html
+          courses/2012/spring/BIO-102.html
+          courses/2012/spring/BIO-314.html
+
+
+    section
+      h2 References
+      ul
+        li
+          a(href="http://koans.heroku.com") Ruby Koans Online
+        li
+          a(href="http://tryruby.org/") Try Ruby
+        li
+          a(href="http://www.codecademy.com/tracks/web") Codecademy Web
+        li
+          a(href="http://www.codecademy.com/tracks/ruby") Codecademy Ruby
+        li
+          a(href="http://rubymonk.com") Ruby Monk
+        li
+          a(href="http://vimeo.com/36579366") Bret Victor - Inventing on Principle
+    script(src="/deck.js/modernizr.custom.js")
+    script(src="/js/jquery.js")
+    script(src="/deck.js/core/deck.core.js")
+    script(src="/deck.js/extensions/menu/deck.menu.js")
+    script(src="/deck.js/extensions/hash/deck.hash.js")
+    :coffeescript
+      $ ->
+        $.deck(".slide")
+
