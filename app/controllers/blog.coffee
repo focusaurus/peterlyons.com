@@ -48,7 +48,6 @@ markdownToHTML = (req, res, next) ->
 
 renderPost = (req, res, next) ->
   locals =
-    title: res.post.title + config.titleSuffix
     post: res.post
     postContent: res.html
   res.app.render "view_post", locals, (error, html) ->
@@ -118,16 +117,16 @@ viewPostMiddleware = [
 ]
 
 class BlogIndex
-  constructor: (@view, @title='') ->
+  constructor: (@view, @title="") ->
     @URI = @view
 
   route: (app) =>
     self = this
     app.get "/#{@URI}", (req, res) ->
-      res.render self.view, self
+      res.render "blogs/#{self.view}", self
 
     app.get "/#{@URI}/post", (req, res) ->
-      res.render "post"
+      res.render "blogs/post"
     app.post "/:blogSlug/post", createPost
 
     app.get "/#{@URI}/feed", (req, res, next) ->

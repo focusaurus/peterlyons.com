@@ -1,4 +1,8 @@
 cheerio = require "cheerio"
+config = require "app/config"
+#fs = require "fs"
+#jade = require "jade"
+#path = require "path"
 
 flickrshowTemplate = """<object width="500" height="375">
   <param name="flashvars" value="offsite=true&lang=en-us&{URLs}&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&{URLs}&jump_to=" width="500" height="375"></embed></object>"""
@@ -32,7 +36,30 @@ exports.youtube = (req, res, next) ->
     $elem.replaceWith(youtubeTemplate.replace /\{URL\}/, URL)
   next()
 
+# exports.jadeWithLayout = (titles) ->
+#   (req, res, next) ->
+#     templatePath = path.join req.app.get("views"), req.path + ".l.jade"
+#     fs.readFile templatePath, "utf8", (error, jadeText) ->
+#       #@todo distinguish ENOENT vs other errors
+#       return next() if error
+#       jadeText = "extends layout\nblock body\n  " + jadeText.split("\n").join("\n  ")
+#       tplFunction = jade.compile jadeText, {filename: templatePath}
+#       title = titles[req.path.slice(1)] || "Peter Lyons: node.js coder for hire"
+#       if title.indexOf("Peter Lyons") < 0
+#         title = title + config.titleSuffix
+#       res.locals {config, title}
+#       html = tplFunction res.locals
+#       res.type('html').send html
+
+exports.title = (text) ->
+  parts = ["<title>", text]
+  if text.indexOf("Peter Lyons") < 0
+    parts.push config.titleSuffix
+  parts.push "</title>"
+  parts.join("")
+
 exports.debugLog = (message) ->
   (req, res, next) ->
+    console.log req.method, req.path
     console.log message
     next()

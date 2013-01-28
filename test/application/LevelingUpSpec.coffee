@@ -21,3 +21,6 @@ describe "the Leveling Up article", ->
     html = $("body").html().toLowerCase()
     for phrase in ["operating system", "thousands"]
       expect(html).to.include phrase
+
+  it "should have the proper title", ->
+      expect($("title").text()).to.match /Leveling Up/

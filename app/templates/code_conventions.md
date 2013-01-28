@@ -1,3 +1,5 @@
+<title>Code Conventions</title>
+
 # Code conventions
 This page will document conventions I use when writing computer code.
 Hopefully folks will find them helpful. I will try to explain the reasoning
