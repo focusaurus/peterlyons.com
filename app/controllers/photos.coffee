@@ -75,7 +75,7 @@ renderPhotos = (req, res) ->
         locals.photo.next = locals.photos[index + 1] or locals.photos[0]
         locals.photo.prev = locals.photos[index - 1] or _.last(locals.photos)
         locals.title = "#{locals.gallery.displayName} Photo Gallery" + config.titleSuffix
-        res.render "photos", locals
+        res.render "photos/view_gallery", locals
 
 exports.setup = (app) ->
   app.get "/photos", renderPhotos
