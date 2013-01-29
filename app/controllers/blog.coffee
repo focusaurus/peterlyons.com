@@ -191,7 +191,7 @@ feed = (req, res, next) ->
     fakeRes.post.content = fakeRes.html
     next()
   .end (error, fakeRes) ->
-    app.render "blogs/feed", locals, (error, feedXML) ->
+    res.app.render "blogs/feed", locals, (error, feedXML) ->
       return next error if error
       res.blog.cachedFeedXML = feedXML
       res.send feedXML
