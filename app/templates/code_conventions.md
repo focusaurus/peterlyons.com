@@ -232,4 +232,4 @@ article [on the corresponding entry on my technology blog][6].
    [3]: http://www.oreillynet.com/onlamp/blog/2004/03/the_worlds_two_worst_variable.html
    [4]: http://www.python.org/dev/peps/pep-0008/
    [5]: http://www.oracle.com/technetwork/java/codeconvtoc-136057.html
-   [6]: /problog/2009/03/code-conventions/
+   [6]: /problog/2009/03/code-conventions
