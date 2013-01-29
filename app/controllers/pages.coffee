@@ -1,4 +1,5 @@
 cheerio = require "cheerio"
+config = require "app/config"
 fs = require "fs"
 jade = require "jade"
 middleware = require "./middleware"
@@ -15,8 +16,6 @@ renderTemplate = (viewPath) ->
 
 setup = (app) ->
   app.locals {title: middleware.title}
-  app.engine "html", (htmlPath, options, callback) ->
-    fs.readFile htmlPath, "utf8", callback
 
   #This custom engine allows pure markdown files without any jade wrapping
   #or indenting required
@@ -25,7 +24,7 @@ setup = (app) ->
       return callback error if error
       #Don't mess with the whitespace below, it is correct
       viewName = path.basename(mdPath)[..-4]
-      title = titles[viewName]
+      title = titles[viewName] + config.titleSuffix
       jadeText = """extends layout
 block title
   title #{title}
