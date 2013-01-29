@@ -16,7 +16,14 @@ path = require "path"
 postLinks = {}
 blogIndicesBySlug = {}
 
+class BlogIndex
+  constructor: (@URI, @title="") ->
+
 ########## middleware ##########
+loadBlogMW = (req, res, next) ->
+  res.blog = blogIndicesBySlug[req.params.blogSlug]
+  next()
+
 loadPost = (req, res, next) ->
   blog = req.params[0]
   post = new Post
@@ -48,52 +55,20 @@ markdownToHTML = (req, res, next) ->
 
 renderPost = (req, res, next) ->
   locals =
-    title: res.post.title + config.titleSuffix
     post: res.post
     postContent: res.html
-  res.app.render "view_post", locals, (error, html) ->
+  res.app.render "blogs/view_post", locals, (error, html) ->
     return next error if error
     res.html = html
     next()
 
 postTitle = (req, res, next) ->
-  res.$("title").text(res.post.title + " | Peter Lyons")
+  res.$("title").text(middleware.title(res.post.title))
   next()
 
 previewMarkdown = (req, res, next) ->
   res.html = markdown req.body
   next()
-
-verifyPassword = (password, hash, callback) ->
-  bcrypt.compare password, hash, (error, correctPassword) ->
-    return callback error if error
-    return callback "incorrect password" if not correctPassword
-    callback()
-
-savePost = (req, callback) ->
-  blogSlug = req.param "blogSlug"
-  post = new Post blogSlug, req.body.title, new Date(), "md"
-  post.content = (req.body.content || "").trim() + "\n"
-  post.base = path.join(__dirname, "..", "..", "..", "data", "posts")
-  post.save callback
-
-createPost = (req, res, next) ->
-  password = req.body.password
-  work = [
-    async.apply fs.readFile, config.blog.hashPath, "utf8"
-    async.apply verifyPassword, password
-    async.apply savePost, req
-  ]
-  async.waterfall work, (error, post) ->
-    return res.status(500).send(error) if error
-    response = post.metadata()
-    response.URI = post.URI()
-    res.send response
-    #cheezy reload of the blog index
-    loadBlog post.blog, (error,  posts) ->
-      blog = blogIndicesBySlug[post.blog]
-      blog.posts = posts
-      delete blog.cachedFeedXML
 
 convertMiddleware = [
   connect.middleware.text({limit:"5mb"})
@@ -117,62 +92,7 @@ viewPostMiddleware = [
   middleware.send
 ]
 
-class BlogIndex
-  constructor: (@view, @title='') ->
-    @URI = @view
-
-  route: (app) =>
-    self = this
-    app.get "/#{@URI}", (req, res) ->
-      res.render self.view, self
-
-    app.get "/#{@URI}/post", (req, res) ->
-      res.render "post"
-    app.post "/:blogSlug/post", createPost
-
-    app.get "/#{@URI}/feed", (req, res, next) ->
-      res.header "Content-Type", "text/xml"
-      if self.cachedFeedXML
-        return res.send self.cachedFeedXML
-      recentPosts = self.posts[0..9]
-      locals =
-        title: self.title
-        URI: self.URI
-        pretty: true
-        posts: recentPosts
-      asyncjs.list(recentPosts).map (post, next) ->
-        fakeRes =
-          post: post
-          viewPath: post.viewPath()
-        next null, fakeRes
-      .each (fakeRes, next) ->
-        html req, fakeRes, next
-      .each (fakeRes, next) ->
-        markdownToHTML req, fakeRes, next
-      .each (fakeRes, next) ->
-        middleware.domify req, fakeRes, next
-      .each (fakeRes, next) ->
-        middleware.flickr req, fakeRes, next
-      .each (fakeRes, next) ->
-        middleware.youtube req, fakeRes, next
-      .each (fakeRes, next) ->
-        fakeRes.post.content = fakeRes.html
-        next()
-      .end (error, fakeRes) ->
-        app.render "feed", locals, (error, feedXML) ->
-          return next error if error
-          self.cachedFeedXML = feedXML
-          res.send feedXML
-
-    app.get "/#{@URI}/flushCache", (req, res, next) ->
-      delete self.cachedFeedXML
-      loadBlog self.URI, (error,  posts) ->
-        return next error if error
-        self.posts = posts
-        res.redirect "/#{self.URI}"
-
-    app.get new RegExp("/(#{@URI})/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
-
+########## helper/worker functions ##########
 presentPost = (post) ->
   date = leadZero(post.publish_date.getMonth() + 1)
   date = date + "/" + leadZero(post.publish_date.getDay() + 1)
@@ -211,20 +131,99 @@ loadBlog = (URI, callback) ->
         previous: if index < posts.length then posts[index + 1] else null
     callback error, posts
 
+verifyPassword = (password, hash, callback) ->
+  bcrypt.compare password, hash, (error, correctPassword) ->
+    return callback error if error
+    return callback "incorrect password" if not correctPassword
+    callback()
+
+savePost = (req, callback) ->
+  post = new Post req.params.blogSlug, req.body.title, new Date(), "md"
+  post.content = (req.body.content || "").trim() + "\n"
+  post.base = config.blog.postBasePath
+  post.save callback
+
+########## top level request handlers ##########
+createPost = (req, res, next) ->
+  password = req.body.password
+  work = [
+    async.apply fs.readFile, config.blog.hashPath, "utf8"
+    async.apply verifyPassword, password
+    async.apply savePost, req
+  ]
+  async.waterfall work, (error, post) ->
+    return res.status(500).send(error) if error
+    response = post.metadata()
+    response.URI = post.URI()
+    res.send response
+    #cheezy reload of the blog index
+    loadBlog post.blog, (error,  posts) ->
+      blog = blogIndicesBySlug[post.blog]
+      blog.posts = posts
+      delete blog.cachedFeedXML
+
+feed = (req, res, next) ->
+  res.header "Content-Type", "text/xml"
+  if res.blog.cachedFeedXML
+    return res.send res.blog.cachedFeedXML
+  recentPosts = res.blog.posts[0..9]
+  locals =
+    title: res.blog.title
+    URI: res.blog.URI
+    pretty: true
+    posts: recentPosts
+  asyncjs.list(recentPosts).map (post, next) ->
+    fakeRes =
+      post: post
+      viewPath: post.viewPath()
+    next null, fakeRes
+  .each (fakeRes, next) ->
+    html req, fakeRes, next
+  .each (fakeRes, next) ->
+    markdownToHTML req, fakeRes, next
+  .each (fakeRes, next) ->
+    middleware.domify req, fakeRes, next
+  .each (fakeRes, next) ->
+    middleware.flickr req, fakeRes, next
+  .each (fakeRes, next) ->
+    middleware.youtube req, fakeRes, next
+  .each (fakeRes, next) ->
+    fakeRes.post.content = fakeRes.html
+    next()
+  .end (error, fakeRes) ->
+    app.render "blogs/feed", locals, (error, feedXML) ->
+      return next error if error
+      res.blog.cachedFeedXML = feedXML
+      res.send feedXML
+
+flushCache = (req, res, next) ->
+  delete res.blog.cachedFeedXML
+  loadBlog res.blog.URI, (error,  posts) ->
+    return next error if error
+    res.blog.posts = posts
+    res.redirect "/#{res.blog.URI}"
+
 setup = (app) ->
   problog = new BlogIndex("problog", "Pete's Points")
   persblog = new BlogIndex("persblog", "The Stretch of Vitality")
   blogIndicesBySlug[problog.URI] = problog
   blogIndicesBySlug[persblog.URI] = persblog
-  asyncjs.list([problog, persblog]).each (blog, next) ->
+  _load = (blog, next) ->
     loadBlog blog.URI, (error,  posts) ->
       blog.posts = posts
       next error
-  .each (blog, next) ->
-    blog.route app
-    next()
-  .end (error) ->
-    #no-op
+  doneLoading = (error) ->
+    throw error if error
+  async.forEach [problog, persblog], _load, doneLoading
+
+  blogRoute = "/:blogSlug(persblog|problog)"
+  app.get blogRoute, loadBlogMW, (req, res) ->
+      res.render "blogs/#{req.params.blogSlug}", res.blog
+  app.get "#{blogRoute}/post", (req, res) -> res.render "blogs/post"
+  app.post "#{blogRoute}/post", createPost
+  app.get "#{blogRoute}/feed", loadBlogMW, feed
+  app.get "#{blogRoute}/flushCache}", loadBlogMW, flushCache
+  app.get new RegExp("/(persblog|problog)/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
   app.post "/convert", convertMiddleware
 
 module.exports = {setup}

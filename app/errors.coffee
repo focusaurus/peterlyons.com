@@ -10,8 +10,8 @@ setup = (app) ->
     code = req.params[0]
     switch code
       when "502", "503", "404"
-        res.render "error#{code}"
+        res.render "errors/error#{code}"
       else
-        res.render "error404"
+        res.render "errors/error404"
 
 module.exports = {NotFound, setup}
