@@ -29,9 +29,9 @@ app.use (req, res, next) ->
 app.use (error, req, res, next) ->
   console.log "Error handler middleware:", error
   if error instanceof errors.NotFound
-    res.render "error404"
+    res.render "errors/error404"
   else
-    res.render "error502"
+    res.render "errors/error502"
 
 ip = if config.loopback then "127.0.0.1" else "0.0.0.0"
 console.log "Express serving on http://#{ip}:#{config.port} baseURL: #{config.baseURL}, env: #{process.env.NODE_ENV}"
