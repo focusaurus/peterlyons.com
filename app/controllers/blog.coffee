@@ -57,7 +57,7 @@ renderPost = (req, res, next) ->
   locals =
     post: res.post
     postContent: res.html
-  res.app.render "view_post", locals, (error, html) ->
+  res.app.render "blogs/view_post", locals, (error, html) ->
     return next error if error
     res.html = html
     next()
