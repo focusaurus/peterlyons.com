@@ -39,7 +39,6 @@ exports.template = (extension) ->
   (req, res, next) ->
     viewPath = req.path.slice(0) + ".#{extension}"
     viewPath = path.join req.app.get("views"), viewPath
-    console.log("@bug template middleware stating", viewPath)
     fs.stat viewPath, (error, stats) ->
       #@todo distinguish ENOENT vs other errors
       return next() if error
