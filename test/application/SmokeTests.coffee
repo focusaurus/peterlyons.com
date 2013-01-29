@@ -16,7 +16,6 @@ describe 'smoke tests for most pages on the site', ->
     ["/this-will-cause-404", /404 error page/]
     ["/leveling_up", /Pillar 1/]
     ["/web_prog", /PHP/]
-    ["/hackstars", /TechStars/]
     ["/smartears", /interval/]
     ["/oberlin", /Edison/]
     ["/favorites", /Imogen/]
