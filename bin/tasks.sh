@@ -452,6 +452,7 @@ deploy_repo() {
       else
         git clone "${URL}"
       fi
+      git submodule update --init
 EOF
   done
 
