@@ -14,7 +14,9 @@ set_owner_and_permissions() {
 
 repoint_code_symlink() {
   cd "${PROJECT_PATH}"
-  ln -nsf "${CODE_PATH}" code
+  ln -nsf "${CODE_PATH}" code.new
+  #https://gist.github.com/3807742
+  mv -T code.new code
   cd -
 }
 
