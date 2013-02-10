@@ -10,6 +10,7 @@ titles =
   code_conventions: "Code Conventions"
   leveling_up: "Leveling Up: Career Advancement for Software Developers"
   oberlin: "Music from Oberlin"
+  bands: "My Bands"
 
 renderTemplate = (viewPath) ->
   (req, res) -> res.render viewPath
