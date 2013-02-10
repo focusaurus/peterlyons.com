@@ -1,7 +1,7 @@
 {
   "name": "peterlyons.com",
   "description": "The Node/Express Web App that powers the peterlyons.com web site",
-  "version": "4.4.4",
+  "version": "4.4.5",
   "homepage": "http://peterlyons.com",
   "repository": "ssh://git.peterlyons.com/home/plyons/projects/peter_lyons_web_site/peterlyons.com.git",
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
@@ -31,7 +31,7 @@
     "commander": "0.5.x",
     "mocha": "1.7.x",
     "node-inspector": "*",
-    "nodemon": "0.6.x",
+    "node-dev": "0.2.x",
     "superagent": "0.12.x"
   }
 }

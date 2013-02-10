@@ -190,7 +190,6 @@ _platformCfg["RHLinux"] = _rhCfg
 
 Why?
 
-  1. Tracebacks with any errors in the first version will always print the first line, since the python interpreter considers it a single monster statement. Basically, you're hosed in knowing specifically where the problem is. (Fewer Statements Per Line)
   1. Second version does not duplicate constant values, making it easier to change them in one place and be done with it. (Don't Repeat Yourself)
   1. Second version is more expressive. It clearly indicates that you are copying all the data for one key and then just changing some values. The inline literal version requires you to eyeball all the data to attempt to make that determination.
   1. As a general rule, I prefer more simple statements over fewer complex/compound statements since they require less working memory in your brain (Think In Small Chunks)

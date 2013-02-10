@@ -1,23 +1,16 @@
-_ = require 'underscore'
-fs = require 'fs'
-config = require 'app/config'
-gallery = require 'app/models/gallery'
+_ = require "underscore"
+fs = require "fs"
+config = require "app/config"
+gallery = require "app/models/gallery"
+galleries = require "app/galleries"
 
 defaultLocals =
   config: config
   title: ''
   test: false
 
-exports.getGalleries = (callback) ->
-  fs.readFile config.photos.galleryDataPath, (error, data) ->
-    if error
-      return callback(error)
-    galleries = (new gallery.Gallery(jg.dirName, jg.displayName, jg.startDate) \
-      for jg in JSON.parse(data))
-    return callback(null, galleries)
-
 adminGalleries = (req, res) ->
-  exports.getGalleries (error, jsonGalleries) ->
+  galleries.getGalleries (error, jsonGalleries) ->
     throw error if error
     jsonNames = _.pluck(jsonGalleries, 'dirName')
     fs.readdir config.photos.galleryDir, (error, names) ->
@@ -58,8 +51,12 @@ updateGalleries = (req, res) ->
     else
       res.redirect '/admin/galleries'
 
-exports.setup = (app) ->
+setup = (app) ->
   if process.env.NODE_ENV in ['production', 'staging']
     return
   app.get '/admin/galleries', adminGalleries
   app.post '/admin/galleries', updateGalleries
+
+
+module.exports = setup
+

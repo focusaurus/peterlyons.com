@@ -5,7 +5,7 @@ stylus = require "stylus"
 root = path.normalize "#{__dirname}/../assets/css"
 cssCacheByName = Object.create null
 
-exports.setup = (app) ->
+setup = (app) ->
   app.get "/:name.css", (req, res, next) ->
     res.header "Content-Type", "text/css"
     name = req.params.name
@@ -26,3 +26,5 @@ exports.setup = (app) ->
             data: cssText
             mtime: stats.mtime
           res.send cssText
+
+module.exports = setup
