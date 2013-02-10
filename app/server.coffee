@@ -14,7 +14,7 @@ app.use express.bodyParser()
 #Load in the controllers
 ["pages", "galleries", "photos", "blog", "css"].map (controllerName) ->
   controller = require "app/controllers/" + controllerName
-  controller.setup app
+  controller app
 app.use express.static(config.staticDir)
 # if config.tests
 #   #Note to self. Make sure compiler comes BEFORE static

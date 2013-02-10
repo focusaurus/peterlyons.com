@@ -48,4 +48,4 @@ block body
       #$("li").addClass "slide"
       res.send $.html()
 
-module.exports = {setup}
+module.exports = setup

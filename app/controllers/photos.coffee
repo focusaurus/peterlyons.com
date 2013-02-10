@@ -3,7 +3,7 @@ async = require "async"
 fs = require "fs"
 config = require "app/config"
 gallery = require "app/models/gallery"
-galleries = require "app/controllers/galleries"
+galleries = require "app/galleries"
 
 #Load photo metadata from a photos.json file in the gallery directory
 getPhotoJSON = (locals, callback) ->
@@ -77,8 +77,11 @@ renderPhotos = (req, res) ->
         locals.title = "#{locals.gallery.displayName} Photo Gallery" + config.titleSuffix
         res.render "photos/view_gallery", locals
 
-exports.setup = (app) ->
+setup = (app) ->
   app.get "/photos", renderPhotos
   if config.photos.serveDirect
     #No nginx rewrites in the dev environment, so make this URI also work
     app.get "/app/photos", renderPhotos
+
+module.exports = setup
+

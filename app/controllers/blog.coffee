@@ -226,4 +226,4 @@ setup = (app) ->
   app.get new RegExp("/(persblog|problog)/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware
   app.post "/convert", convertMiddleware
 
-module.exports = {setup}
+module.exports = setup
