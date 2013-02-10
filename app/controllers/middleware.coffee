@@ -37,13 +37,19 @@ exports.youtube = (req, res, next) ->
 
 exports.template = (extension) ->
   (req, res, next) ->
-    viewPath = req.path.slice(0) + ".#{extension}"
-    viewPath = path.join req.app.get("views"), viewPath
-    fs.stat viewPath, (error, stats) ->
+    viewPath = req.path
+    #Handle old .html URLs so stale links out there still work
+    redirect = /\.html$/.test viewPath
+    if redirect
+      viewPath = viewPath.slice(0, viewPath.length - 5)
+    templatePath = "#{viewPath}.#{extension}"
+    templatePath = path.join req.app.get("views"), templatePath
+    fs.stat templatePath, (error, stats) ->
       #@todo distinguish ENOENT vs other errors
       return next() if error
       return next() if stats.isDirectory()
-      res.render viewPath
+      return res.redirect viewPath if redirect
+      res.render templatePath
 
 exports.title = (text) ->
   parts = ["<title>", text]
