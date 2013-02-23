@@ -27,6 +27,7 @@ link() {
 
 link_os_files() {
   local SITE=peterlyons.com
+  local OVERLAY="${PROJECT_PATH}/code/overlay"
   [ -e /etc/nginx/sites-enabled/default ] && rm /etc/nginx/sites-enabled/default
   link "/etc/nginx/sites-enabled/${SITE}"
   link "/etc/monit/conf.d/nginx_${SITE}.monitrc"
