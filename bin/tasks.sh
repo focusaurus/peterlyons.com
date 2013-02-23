@@ -473,15 +473,19 @@ task:dist() {
   local DIST_DIR="dist"
   local PREFIX="${SITE}-${GIT_REF}"
   dirs "${BUILD_DIR}" "${DIST_DIR}"
+  echo doing git archive
   git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
     #extract that archive into a temporary build directory
     "${TAR}" --directory "${BUILD_DIR}" --extract
   #install node
   NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+  echo installing node
   install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
   #Note we use npm from the build platform (OS X) here instead of
   #the one for the run platform as they are incompatible
+  echo install npm packages
   (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
+  echo creating archive
   "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
 }
 

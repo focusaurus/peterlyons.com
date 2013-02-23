@@ -6,9 +6,8 @@
 prepare_files() {
   chmod +x ./node/lib/node_modules/npm/bin/node-gyp-bin/node-gyp
   ./node/bin/npm rebuild
-  cd "${PROJECT_PATH}"
-  install --directory --group www-data --mode 2660 var/log
-  touch var/log/upstart.log
+  install --directory --group www-data --mode 2770 ../var/log
+  touch ../var/log/upstart.log
 }
 
 set_owner_and_permissions() {
@@ -35,13 +34,12 @@ link() {
 
 link_os_files() {
   local SITE=peterlyons.com
-  local OVERLAY="${PROJECT_PATH}/code/overlay"
   [ -e /etc/nginx/sites-enabled/default ] && rm /etc/nginx/sites-enabled/default
   link "/etc/nginx/sites-enabled/${SITE}"
   link "/etc/monit/conf.d/nginx_${SITE}.monitrc"
   link "/etc/monit/conf.d/node_${SITE}.monitrc"
   link "/etc/init/node_peterlyons.conf"
-  cp "${OVERLAY}/etc/monit/monitrc" /etc/monit/monitrc
+  cp "overlay/etc/monit/monitrc" /etc/monit/monitrc
 }
 
 restart_services() {
