@@ -7,7 +7,7 @@ set_owner_and_permissions() {
   chown -R plyons:www-data . ../data
   find . -type d -print0 | xargs -0 chmod 775
   find . -type f -print0 | xargs -0 chmod 664
-  chmod +x node/bin/* node_modules/.bin/* bin/* app/server.coffee
+  chmod +x node/bin/* node_modules/.bin/* bin/* ./node/lib/node_modules/npm/bin/node-gyp-bin/* app/server.coffee
   chgrp -R www-data ../data/posts
   chmod -R g+w ../data/posts
 }
@@ -48,6 +48,7 @@ cd $(dirname "${0}")/..
 CODE_PATH=$(pwd)
 PROJECT_PATH=$(dirname "${CODE_PATH}")
 
+chmod +x ./node/lib/node_modules/npm/bin/node-gyp-bin/node-gyp
 ./node/bin/npm rebuild
 [ -e ../var/log ] || mkdir -p ../var/log
 set_owner_and_permissions
