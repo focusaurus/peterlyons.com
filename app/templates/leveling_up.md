@@ -274,7 +274,68 @@ When you have resolved a high-profile issue, you will want to send out a status 
 
 #### Sample #2 of two-part email format
 
-<img src="/images/2011/root_cause_email_redacted.png" alt="Example root cause analysis email" />
+    OK, we have a full understanding of all of the myriad issues ----
+    was experiencing around OS Provisioning now. Thanks to ---- for
+    their assistance with the extended troubleshooting process and to
+    Opsware support and sustaining teams that spent lots of time and
+    energy pouring through logs and digging deep into the problem to
+    find and solve the issues.
+
+    Customer: ----
+
+    Problem: OS Provisioning fails inconsistently
+
+    **Executive Summary**
+
+    ---- was experiencing failed OS Provision attempts nearly every
+    time, with builds getting to various stages before failing.
+    We have identified multiple underlying problems causing
+    failures at different points. These include environmental
+    problems, a set of circumstances than can cause the Opsware
+    build manager to get into a bad state, and recently-updated
+    HP NIC drivers causing the server to change IP addresses at a
+    critical point during the OS Provisioning process.
+
+    The environmental factors hae been addressed. The short term
+    workaround for the build manager is to 1) only redo the RAID
+    config when really necessary and 2) restart the build manager
+    nightly or as needed. The medium term fix is to fix a bug in the
+    buildscripts. Long term, the build manager should be made to
+    survive even when the buildscripts contains this type of problem.
+    The temporary workaround for the HP NIC drivers is to skip them
+    during OS Provisioning and install them later and trigger a
+    hardware registration.
+
+    **Environmental Fixes**
+
+    During troubleshooting and environment verification, several other problems
+    in the environment were identified, although there is no evidence that any
+    of these contributed directly to the provisioning problems.
+
+    * Servers get the incorrect IP address during network boot.
+      * Troubleshooting efforts identified the root cause of this problem to be a
+        misconfigured managed server running VMWare serving DHCP on the provisioning
+        VLAN. Only 1 device can serve DHCP on a given VLAN since it is based on
+        broadcasts, and thus the managed servers being built would be assigned an IP in
+        the 192.168.160.x range, which is not reachable from the Opsware core. The rogue
+        DHCP server was tracked down with the support of ---- networking group and
+        disabled. The problem was then resolved and servers could successfully enter the
+        Opsware Server Pool.
+    * Build Scripts not the same
+      * The OS Provisioning build scripts were not identical between --- and ---- data centers.
+        The differesces appear to be insignificant. However, the files were brought into
+        sync. The DOS boot images were also checksummed and confirmed to be identical
+        between data centers.
+     * Database inconsistency
+       * There were some remaining differences between the databases in the two data centers after the
+        automated resolution tools used by Opsware support had finished. These required
+        manual intervention and were brought into sync manually. The multimaster mesh is
+        now clean with no conflicts.
+     * Incorrect time zone on ----
+       * This server was configured for EDT while Opsware requires UTC on all core servers.
+        The other 5 servers in the mesh are correctly configured for UTC. This was fixed
+        Thursday morning by editing /etc/TIMEZONE and rebooting.
+    ...
 
 ## Note these key points for communication.
 
