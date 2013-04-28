@@ -3,13 +3,20 @@
 #has been extracted on a production host.
 #It should be run as root via sudo
 
+prepare_files() {
+  chmod +x ./node/lib/node_modules/npm/bin/node-gyp-bin/node-gyp
+  ./node/bin/npm rebuild
+  install --directory --group www-data --mode 2770 ../var/log
+  touch ../var/log/upstart.log
+}
+
 set_owner_and_permissions() {
-  chown -R plyons:www-data . ../data
+  chown -R plyons:www-data . ../data ../var
   find . -type d -print0 | xargs -0 chmod 775
   find . -type f -print0 | xargs -0 chmod 664
-  chmod +x node/bin/* node_modules/.bin/* bin/* app/server.coffee
-  chgrp -R www-data ../data/posts
+  chmod +x node/bin/* node_modules/.bin/* bin/* ./node/lib/node_modules/npm/bin/node-gyp-bin/* app/server.coffee
   chmod -R g+w ../data/posts
+  chmod g+w ../var/log/upstart.log
 }
 
 repoint_code_symlink() {
@@ -32,7 +39,7 @@ link_os_files() {
   link "/etc/monit/conf.d/nginx_${SITE}.monitrc"
   link "/etc/monit/conf.d/node_${SITE}.monitrc"
   link "/etc/init/node_peterlyons.conf"
-  cp "${OVERLAY}/etc/monit/monitrc" /etc/monit/monitrc
+  cp "overlay/etc/monit/monitrc" /etc/monit/monitrc
 }
 
 restart_services() {
@@ -48,8 +55,7 @@ cd $(dirname "${0}")/..
 CODE_PATH=$(pwd)
 PROJECT_PATH=$(dirname "${CODE_PATH}")
 
-./node/bin/npm rebuild
-[ -e ../var/log ] || mkdir -p ../var/log
+prepare_files
 set_owner_and_permissions
 repoint_code_symlink
 link_os_files

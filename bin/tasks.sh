@@ -17,8 +17,10 @@
 #To bootstrap a new staging host, you would run
 #tasks.sh staging os:initial_setup
 #tasks.sh staging user:initial_setup
-#tasks.sh staging app:initial_setup
-#tasks.sh staging os:init_scripts
+#tasks.sh deploy data staging
+#tasks.sh deploy static staging
+#tasks.sh deploy <dist archive file> staging
+
 #Then on the host run "sudo service node_peterlyons.com start" to start the app
 
 TASK_SCRIPT="${0}"
@@ -30,7 +32,6 @@ STAGING_HOSTS="staging.${SITE}"
 DEVURL="http://localhost:9000"
 PRODURL="http://${SITE}"
 REPO_URL="ssh://git.peterlyons.com/home/plyons/projects/peterlyons.com.git"
-NODE_VERSION="0.6.17"
 PROJECT_DIR=~/projects/peter_lyons_web_site
 CODE_PATH="${PROJECT_DIR}/code"
 OVERLAY="${CODE_PATH}/overlay"
@@ -73,13 +74,13 @@ os:prereqs() { #TASK: sudo
     cat <<EOF | grep -v "#" | sort | xargs apt-get --assume-yes install
 #Needed to download node
 curl
-#Needed to build node.js
+#Needed to build node modules with binary add-ons
 g++
+#Needed to build bcrypt module
+libssl-dev
 #Source Code Management
 git-core
-#Needed to build node.js with SSL support
-libssl-dev
-#Needed to build node.js
+#Needed to build node.js modules with binary add-ons
 make
 #For monitoring
 monit
@@ -117,6 +118,7 @@ user:initial_setup() {
 #So the capistrano scripts can run git+ssh commands on the app server
 #and the end user's authentication will be proxied from the end user's
 #desktop to the app server through to the git SCM host
+#@todo use ssh-copy-id
 user:ssh_config() {
     KEYS=~/.ssh/authorized_keys
     [ -d ~/.ssh ] || mkdir ~/.ssh
@@ -141,35 +143,12 @@ Host git.peterlyons.com
   ForwardAgent yes
 EOF
     fi
-}
-
-
-########## Database (mysql) section ##########
-db:prod_to_stage() {
-    #If in there future there are more than 1 production host, just use the
-    #first one in the list
-    HOST=$(echo "${PRODUCTION_HOSTS}" | cut -d " " -f 1)
-    for DB in persblog problog
-    do
-        FILE="/var/tmp/${DB}.bak.sql.bz2"
-        #This does the production backup
-        echo "Enter production password for user ${DB} and DB ${DB} when prompted"
-        ssh -q -t "${HOST}" mysqldump --host localhost \
-            --user "${DB}" --allow-keywords --add-drop-table --password \
-            --add-drop-database --dump-date "${DB}" \| bzip2 -c \
-            \> "${FILE}"
-        #Copy the backup to the local computer
-        scp -q "${HOST}:${FILE}" /var/tmp
-        #Restore the backup locally
-        echo "Enter staging password (twice) for user ${DB} and DB ${DB} when" \
-            " prompted"
-        bzcat "${FILE}" | mysql --host localhost --user "${DB}" --password "${DB}"
-        #This updates the site URL, which must be relative for staging
-        echo "update wp_options set option_value = '/${DB}' where option_name" \
-            " in ('siteurl', 'home');" | mysql -u "${DB}" -p "${DB}"
-        echo "Backup, transfer, restore, and tweak complete for ${DB}"
-    done
-
+    touch ~/.ssh/known_hosts
+    if ! grep "^git.peterlyons.com " ~/.ssh/known_hosts > /dev/null 2>&1; then
+        cat <<EOF>> ~/.ssh/known_hosts
+git.peterlyons.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8epOpTtS18/jiX/OrPCgX9IAgBbJVol9iHmaFwAQ8NbI2QoLnr88zk1NXRv0Y+2zMHWzaK0blxc94ecNKzpJKhAXVCEh/7ht7WZiOu4+ZOLywsJMdLDANPAGJjWZIU4l9pmLuCm4PYrd4p2AAxMx6tq9g3HM+Zvj5x687BRVQuZwB6Ec3PbD9Q7chXyR/FfbIKXm2tholl3Sz4uTE3nPL4R4E9EZCC+4yM8wIbhQOPJrY159d98T6LRBCtCfmxL7spLXrJwdIcavX2vArXIX7FYFBiuKfVpYvIZj6AanahD4gzTOmcpAV97WdBuxMGlE/hvOroaAWmgNniyfYr5H3
+EOF
+    fi
 }
 
 ########## Web (nginx) Section ##########
@@ -211,63 +190,6 @@ list_templates() {
         -e /admin_galleries/d \
         -e s/\.md//
 }
-
-
-app:initial_setup() {
-    app:clone
-    app:prereqs
-}
-
-app:clone() {
-    PARENT="$(dirname ${PROJECT_DIR})"
-    [ -d "${PARENT}" ] || mkdir -p "${PARENT}"
-    cd "${PARENT}"
-    git clone "${REPO_URL}"
-    cd "${PROJECT_DIR}"
-    git checkout "${BRANCH}"
-    cd
-}
-
-#@todo node has binary distros now. Use the install_node function
-task:prereqs() {
-    set -e
-    cdpd
-    [ -d var/tmp ] || mkdir -p var/tmp
-    cd var/tmp
-    echo "Installing node.js version ${NODE_VERSION}"
-    #For older 0.4.x node versions
-    #curl --silent --remote-name \
-    #    "http://nodejs.org/dist/node-v${NODE_VERSION}.tar.gz"
-    #For newer 0.6.x versions
-    curl --silent --remote-name \
-        "http://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}.tar.gz"
-    tar xzf node-v${NODE_VERSION}.tar.gz
-    cd node-v${NODE_VERSION}
-    ./configure  --prefix=../../../node && make install
-    cd ..
-    rm -rf node-*
-    cdpd
-    npm install
-}
-
-# task:deploy() {
-#     cdpd
-#     echo "Deploying branch ${1-${BRANCH}}"
-#     git fetch origin --tags
-#     git checkout --track -b "${1-${BRANCH}}" || git checkout "${1-${BRANCH}}"
-#     git pull origin "${1-${BRANCH}}"
-#     git submodule init
-#     git submodule update
-#     export PATH=$(pwd)/node/bin:$PATH
-#     ./node/bin/npm install
-#     sudo initctl reload-configuration
-#     if sudo status node_peterlyons; then
-#         sudo stop node_peterlyons; sudo start node_peterlyons;
-#     else
-#         sudo start node_peterlyons
-#     fi
-#     sudo service nginx reload
-# }
 
 check_fail() {
     if [ $1 -ne 0 ]; then
@@ -380,7 +302,7 @@ task:release() {
   git push origin master
   git push origin master --tags
   git checkout develop #Not good form to leave master checked out
-  echo "Ready to go. Next steps are dist then deploy."
+  echo "Ready to go. Next steps are clean, dist, and deploy."
 }
 
 task:validate() {
@@ -443,7 +365,7 @@ deploy_repo() {
   for HOST in $@
   do
     echo "running script on ${HOST} ${URL}"
-    ssh -A "${HOST}" <<EOF
+    ssh -A -t "${HOST}" <<EOF
       install --directory "${PROJECT_PATH}"
       cd "${PROJECT_PATH}"
       if [ -d "${DIR}" ]; then
@@ -452,6 +374,7 @@ deploy_repo() {
       else
         git clone "${URL}"
       fi
+      cd "${DIR}"
       git submodule update --init
 EOF
   done
@@ -550,15 +473,19 @@ task:dist() {
   local DIST_DIR="dist"
   local PREFIX="${SITE}-${GIT_REF}"
   dirs "${BUILD_DIR}" "${DIST_DIR}"
+  echo doing git archive
   git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
     #extract that archive into a temporary build directory
     "${TAR}" --directory "${BUILD_DIR}" --extract
   #install node
   NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+  echo installing node
   install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
   #Note we use npm from the build platform (OS X) here instead of
   #the one for the run platform as they are incompatible
+  echo install npm packages
   (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
+  echo creating archive
   "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
 }
 
