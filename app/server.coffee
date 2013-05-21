@@ -9,7 +9,7 @@ app.set "view engine", "jade"
 app.set "views", __dirname + "/templates"
 app.locals
   config: config
-app.use express.logger {format: ":method :url"}
+app.use express.logger {format: ":date :method :url"}
 app.use express.bodyParser()
 
 #Load in the controllers
