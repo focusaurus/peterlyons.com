@@ -437,7 +437,7 @@ task:deploy() {
 }
 
 install_node() {
-  local VERSION=${1-0.8.18}
+  local VERSION=${1-0.10.7}
   local PREFIX=${2-node}
   #local PLATFORM=$(uname | tr A-Z a-z)
   #Since we only deploy to linux for staging & production, but build on a mac

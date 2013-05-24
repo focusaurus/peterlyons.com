@@ -1,4 +1,5 @@
 _ = require "underscore"
+connect = require "connect"
 fs = require "fs"
 config = require "app/config"
 gallery = require "app/models/gallery"
@@ -55,8 +56,6 @@ setup = (app) ->
   if process.env.NODE_ENV in ['production', 'staging']
     return
   app.get '/admin/galleries', adminGalleries
-  app.post '/admin/galleries', updateGalleries
-
+  app.post '/admin/galleries', connect.bodyParser(), updateGalleries
 
 module.exports = setup
-
