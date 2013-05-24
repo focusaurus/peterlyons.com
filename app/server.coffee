@@ -2,6 +2,7 @@
 config = require "app/config"
 errors = require "app/errors"
 express = require "express"
+middleware = require "app/controllers/middleware"
 path = require "path"
 
 app = express()
@@ -9,8 +10,8 @@ app.set "view engine", "jade"
 app.set "views", __dirname + "/templates"
 app.locals
   config: config
-app.use express.logger {format: ":method :url"}
-app.use express.bodyParser()
+app.use middleware.logRequestStart
+app.use express.logger {format: ":date :method :url"}
 
 #Load in the controllers
 (require("app/controllers/#{name}")(app) for name in [
@@ -21,7 +22,7 @@ app.use express.bodyParser()
 	"css"
 ])
 
-app.use express.static(config.staticDir)
+app.use express.static config.staticDir
 
 #Last in the chain means 404 for you
 app.use (req, res, next) ->
