@@ -12,11 +12,11 @@ block body
     ul
       if post.previous
         li
-          | Previous post
+          | Previous post &nbsp;
           a(href='/' + post.previous.URI())= post.previous.title
       if post.next
         li
-          | Next post &nbsp;&nbsp;&nbsp;&nbsp;
+          | Next post &nbsp;
           a(href='/' + post.next.URI())= post.next.title
       li
         a#toggleComments(href="#") Show Comments
