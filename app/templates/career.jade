@@ -299,7 +299,8 @@ block body
 
   :coffeescript
     $ ->
-     $("#reverse").click ->
+     $("#reverse").click (event) ->
+          event.preventDefault()
           phases = []
           parent = $("div.phase").parent()
           $("div.phase").each (index, div) ->
