@@ -415,17 +415,7 @@ Don't skip this one. This is a simple technique that can make a huge difference.
     mkdir demoCA/private
     touch demoCA/index.txt
 
-    printf "US\nNC\nCary\nOpsware Inc\nEngineering\nroot-ca\n\n" | \
-    openssl req -new -nodes -x509 \
-    -keyout demoCA/private/root-ca.key \
-    -out demoCA/root-ca.crt
-
-    openssl x509 -in demoCA/root-ca.crt -noout -next_serial -out demoCA/ serial
-
     You make a CSR for your agent CA like this:
-
-    printf "US\nNC\nCary\nOpsware Inc\nEngineering\nagent-ca\n\n\n\n" | \
-    openssl req -new -nodes -keyout agent-ca.key -out agent-ca.csr
 
     ...<SNIP>....
     Tue Jan 03 13:51:45 EST 2006

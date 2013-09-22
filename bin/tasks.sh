@@ -371,6 +371,7 @@ deploy_repo() {
       if [ -d "${DIR}" ]; then
         cd "${DIR}"
         git pull origin master
+        cd -
       else
         git clone "${URL}"
       fi
