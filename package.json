@@ -13,10 +13,10 @@
   "dependencies": {
     "async": "0.1.22",
     "asyncjs": "0.0.x",
-    "bcrypt": "0.7.x",
+    "bcrypt": "~0.7.7",
     "coffee-script": "1.4.x",
     "express": "3.1.x",
-    "connect": "~2.7.10",
+    "connect": "~2.7.11",
     "jade": "0.28.x",
     "cheerio": "0.10.x",
     "JSONPath": "0.9.1",
