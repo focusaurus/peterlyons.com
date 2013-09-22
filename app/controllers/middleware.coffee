@@ -1,8 +1,9 @@
-cheerio = require "cheerio"
-config = require "app/config"
-fs = require "fs"
-path = require "path"
-utils = require("connect").utils
+cheerio   = require "cheerio"
+config    = require "app/config"
+fs        = require "fs"
+path      = require "path"
+rawBody   = require "raw-body"
+utils     = require("connect").utils
 
 flickrshowTemplate = """<object width="500" height="375">
   <param name="flashvars" value="offsite=true&lang=en-us&{URLs}&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&{URLs}&jump_to=" width="500" height="375"></embed></object>"""
@@ -73,15 +74,14 @@ text = (req, res, next) ->
   return next() if req._body
   return next() if not utils.hasBody(req)
   return next() if not relevantMIMEType(req)
-  req.body = req.body or ''
-  #mark as assembled/buffered
-  req._body = true
-  buffer = []
-  req.setEncoding "utf8"
-  req.on "data", (chunk) -> buffer.push chunk
-  req.on "end", ->
-    req.body = buffer.join ""
+  rawBody req, (error, buffer) ->
+    return next(error) if error
+    #mark as assembled/buffered
+    req._body = true
+    req.body = buffer.toString "utf8"
+    req.body = req.body or ''
     next()
+
 
 title = (text) ->
   parts = ["<title>", text]
