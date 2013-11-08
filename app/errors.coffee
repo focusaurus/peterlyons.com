@@ -9,8 +9,8 @@ setup = (app) ->
   app.get /error(\d+)/, (req, res) ->
     code = req.params[0]
     switch code
-      when "502", "503", "404"
-        res.render "errors/error#{code}"
+      when "500", "502", "503", "504"
+        res.render "errors/error500"
       else
         res.render "errors/error404"
 
