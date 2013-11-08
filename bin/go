@@ -297,7 +297,7 @@ task:release() {
   git pull origin develop
   task:test
   cd "${CODE_PATH}"
-  echo "Current version is $(./bin/jsonpath.coffee version)"
+  echo "Current version is $(node -e 'console.log(require("./package.json").version)')"
   echo -n "New version: "
   read NEW_VERSION
   git checkout -b "release-${NEW_VERSION}" develop
@@ -494,7 +494,7 @@ task:dist() {
     #extract that archive into a temporary build directory
     "${TAR}" --directory "${BUILD_DIR}" --extract
   #install node
-  NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+  NODE_VERSION=$(node -e 'console.log(require("./package.json").engines.node)')
   echo installing node
   install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
   #Note we use npm from the build platform (OS X) here instead of
