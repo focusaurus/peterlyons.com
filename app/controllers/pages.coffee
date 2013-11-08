@@ -16,7 +16,7 @@ renderTemplate = (viewPath) ->
   (req, res) -> res.render viewPath
 
 setup = (app) ->
-  app.locals {title: middleware.title}
+  app.locals {titleSuffix: config.titleSuffix}
 
   #This custom engine allows pure markdown files without any jade wrapping
   #or indenting required
@@ -25,10 +25,10 @@ setup = (app) ->
       return callback error if error
       #Don't mess with the whitespace below, it is correct
       viewName = path.basename(mdPath)[..-4]
-      title = titles[viewName] + config.titleSuffix
+      title = titles[viewName]
       jadeText = """extends layout
-block title
-  title #{title}
+block variables
+  - title = "#{title}"
 block body
   :markdown
     

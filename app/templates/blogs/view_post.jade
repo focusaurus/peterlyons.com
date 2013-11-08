@@ -1,6 +1,6 @@
 extends ../layout
-block title
-  title= post.title + config.titleSuffix
+block variables
+  - title = post.title
 block body
   article
     span.date= post.presented.date

@@ -218,7 +218,7 @@ task:test() {
 
 task:start() {
   cd "${CODE_PATH}"
-  coffee app/server.coffee
+  node-dev app/server.coffee
 }
 
 task:devstart() {

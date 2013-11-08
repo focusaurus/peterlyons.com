@@ -62,10 +62,6 @@ renderPost = (req, res, next) ->
     res.html = html
     next()
 
-postTitle = (req, res, next) ->
-  res.$("title").text(middleware.title(res.post.title))
-  next()
-
 previewMarkdown = (req, res, next) ->
   res.html = markdown req.body
   next()

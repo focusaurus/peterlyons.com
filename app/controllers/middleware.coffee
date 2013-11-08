@@ -83,13 +83,6 @@ text = (req, res, next) ->
     next()
 
 
-title = (text) ->
-  parts = ["<title>", text]
-  if text.indexOf("Peter Lyons") < 0
-    parts.push config.titleSuffix
-  parts.push "</title>"
-  parts.join("")
-
 module.exports = {
   debugLog
   domify
@@ -98,7 +91,6 @@ module.exports = {
   send
   template
   text
-  title
   undomify
   youtube
 }

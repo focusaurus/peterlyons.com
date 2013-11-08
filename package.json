@@ -32,7 +32,7 @@
     "commander": "0.5.x",
     "mocha": "1.7.x",
     "node-inspector": "*",
-    "node-dev": "0.2.x",
+    "node-dev": "~2.0.2",
     "superagent": "0.12.x"
   }
 }
