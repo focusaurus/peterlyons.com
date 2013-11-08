@@ -1,8 +1,12 @@
+- var title;
+block variables
+- if (title && title.indexOf(titleSuffix) < 0 && title.indexOf("Peter Lyons") !== 0) { title = title + titleSuffix }
 doctype html
 html(lang="en")
   head
     meta(charset="utf-8")
-    block title
+    title=title
+    meta(name="og:title", content=title)
     meta(name="keywords", content="peter lyons, pete lyons, web development, node.js, ruby on rails, afronauts, boulder, colorado, turtle dove, startups, music, sax, saxophone, saxophonist, sunny daze, confunktion junction, oberlin, smartears, smart ears, big clock")
     meta(name="author", content="Peter Lyons")
     meta(name="description", content="Peter Lyons: node.js coder for hire")

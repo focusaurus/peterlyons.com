@@ -21,7 +21,7 @@ app.use express.logger {format: ":date :method :url"}
 	"blog"
 	"css"
 ])
-
+errors.setup app
 app.use express.static config.staticDir
 
 #Last in the chain means 404 for you
@@ -33,7 +33,7 @@ app.use (error, req, res, next) ->
   if error instanceof errors.NotFound
     res.render "errors/error404"
   else
-    res.render "errors/error502"
+    res.render "errors/error500"
 
 ip = if config.loopback then "127.0.0.1" else "0.0.0.0"
 console.log "Express serving on http://#{ip}:#{config.port} baseURL: #{config.baseURL}, env: #{process.env.NODE_ENV}"

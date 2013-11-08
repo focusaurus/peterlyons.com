@@ -15,7 +15,7 @@ describe "the photos page", ->
       expect($(selector)).not.to.be.empty
 
   it "should have the correct title", ->
-    expect($("title").text()).to.include "Photo Gallery | Peter Lyons"
+    expect($("title").text()).to.equal "Burning Man 2011 | Peter Lyons"
 
   it "should have the data attributes needed", ->
     expect($("body script").text()).to.include "data-fullSizeURI"

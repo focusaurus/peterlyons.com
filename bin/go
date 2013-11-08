@@ -35,7 +35,7 @@ REPO_URL="ssh://git.peterlyons.com/home/plyons/projects/peterlyons.com.git"
 PROJECT_DIR=~/projects/peter_lyons_web_site
 CODE_PATH="${PROJECT_DIR}/code"
 OVERLAY="${CODE_PATH}/overlay"
-PUBLIC="${CODE_PATH}/public"
+STATIC="${CODE_PATH}/../static"
 BRANCH=master
 
 #OS X support
@@ -218,7 +218,7 @@ task:test() {
 
 task:start() {
   cd "${CODE_PATH}"
-  coffee app/server.coffee
+  node-dev app/server.coffee
 }
 
 task:devstart() {
@@ -238,6 +238,21 @@ task:inspector() {
   ./node_modules/.bin/node-inspector --web-port=9002
 }
 
+task:errors() {
+  echo "Generating HTML for static error pages from ${DEVURL}..."
+  for URI in error404 error500; do
+    local URL="${DEVURL}/${URI}"
+    echo -n "${URI}, "
+    local EXIT_CODE=0
+    curl --silent "${URL}" --output \
+        "${STATIC}/${URI}.html" || EXIT_CODE=$?
+    if [ ${EXIT_CODE} -ne 0 ]; then
+        echo "FAILED to retrieve ${URL}"
+        exit ${EXIT_CODE}
+    fi
+  done
+}
+
 task:static() {
   echo "Generating HTML for static templated pages from ${DEVURL}..."
   for URI in $(list_templates) persblog/feed problog/feed
@@ -246,28 +261,28 @@ task:static() {
       echo -n "${URI}, "
       local EXIT_CODE=0
       curl --silent "${URL}" --output \
-          "${PUBLIC}/${URI}.html" || EXIT_CODE=$?
+          "${STATIC}/${URI}.html" || EXIT_CODE=$?
       if [ ${EXIT_CODE} -ne 0 ]; then
           echo "FAILED to retrieve ${URL}"
           exit ${EXIT_CODE}
       fi
   done
-  mv "${PUBLIC}/problog/feed.html" "${PUBLIC}/problog/feed.xml"
-  mv "${PUBLIC}/persblog/feed.html" "${PUBLIC}/persblog/feed.xml"
+  mv "${STATIC}/problog/feed.html" "${STATIC}/problog/feed.xml"
+  mv "${STATIC}/persblog/feed.html" "${STATIC}/persblog/feed.xml"
   cd "${CODE_PATH}"
   cd app/posts
   for JSON in $(find . -type f -name \*.json)
   do
       local URI="${JSON%.*}"
       local URI=$(echo "${URI}" |cut -d . -f2-)
-      echo "Saving ${URI} to ${PUBLIC}${URI}.html"
+      echo "Saving ${URI} to ${STATIC}${URI}.html"
       local DIR=$(dirname "${URI}")
-      local DIR="${PUBLIC}${DIR}"
+      local DIR="${STATIC}${DIR}"
       [ -e "${DIR}" ] || mkdir -p "${DIR}"
       local URL="${DEVURL}${URI}"
       local EXIT_CODE=0
       curl --silent "${URL}" --output \
-          "${PUBLIC}${URI}.html" || EXIT_CODE=$?
+          "${STATIC}${URI}.html" || EXIT_CODE=$?
       if [ ${EXIT_CODE} -ne 0 ]; then
           echo "FAILED to retrieve ${URL}"
           exit ${EXIT_CODE}
@@ -282,7 +297,7 @@ task:release() {
   git pull origin develop
   task:test
   cd "${CODE_PATH}"
-  echo "Current version is $(./bin/jsonpath.coffee version)"
+  echo "Current version is $(node -e 'console.log(require("./package.json").version)')"
   echo -n "New version: "
   read NEW_VERSION
   git checkout -b "release-${NEW_VERSION}" develop
@@ -479,7 +494,7 @@ task:dist() {
     #extract that archive into a temporary build directory
     "${TAR}" --directory "${BUILD_DIR}" --extract
   #install node
-  NODE_VERSION=$(./bin/jsonpath.coffee engines.node)
+  NODE_VERSION=$(node -e 'console.log(require("./package.json").engines.node)')
   echo installing node
   install_node "${NODE_VERSION}" "${BUILD_DIR}/${PREFIX}/node"
   #Note we use npm from the build platform (OS X) here instead of
@@ -532,7 +547,7 @@ fi
 if [ -z "${HOSTS}" ]; then
     #local mode
     case "${OP}" in
-        db:*|os:*|test:*|user:*|web:*|prereqs|deploy_*|clean|test|release|dist|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
+        db:*|os:*|test:*|user:*|web:*|prereqs|errors|deploy_*|clean|test|release|dist|debug|devstart|inspector|start|static|watch|deploy|validate|html_to_md)
             #Op looks valid-ish
             if ! expr "${OP}" : '.*:' > /dev/null; then
                 OP="task:${OP}"

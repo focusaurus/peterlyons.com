@@ -1,6 +1,6 @@
 extends layout
-block title
-  !=title("Manage Photo Galleries")
+block variables
+  - title = "Manage Photo Galleries"
 block body
   h1 Manage Photos
   form#galleries(method='POST', action='/admin/galleries')
