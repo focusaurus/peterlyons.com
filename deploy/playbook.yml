@@ -1,0 +1,47 @@
+---
+-
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  vars:
+    project: plws
+    express_port: 9000
+    express_user: plws
+    app_root: /home/plyons/projects/peter_lyons_web_site/code
+    www_root: /home/plyons/projects/peter_lyons_web_site/static
+  handlers:
+    -
+      include: handlers.yml
+  tasks:
+    -
+      #http://euphonious-intuition.com/2013/01/bootstrapping-a-cluster-with-ansible-debian-6-and-oracle-java-7/
+      name: install python-apt
+      command: apt-get install -y python python-apt
+    -
+      name: install prerequisites
+      apt: pkg={{item}}
+      with_items:
+        #multilog
+        - daemontools
+        #web server
+        - nginx
+        #Needed to build node.js modules
+        - make
+        #Needed to build node.js modules with binary add-ons
+        - g++
+        #needed to build bcrypt node.js binary module
+        - libssl-dev
+        #static/data repo access
+        - git-core
+        #For monitoring
+        - monit
+    -
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    -
+      name: configure nginx
+      template: src=nginx-site.j2 dest=/etc/nginx/sites-enabled/{{hostname}} owner=root group=root mode=0644
+      notify:
+        - restart nginx
+    -
+      name: start nginx
+      service: name=nginx state=started enabled=yes

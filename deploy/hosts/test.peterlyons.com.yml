@@ -1,0 +1,2 @@
+[servers]
+test.peterlyons.com wwwroot=/home/plyons/projects/peter_lyons_web_site/static hostname=test.peterlyons.com

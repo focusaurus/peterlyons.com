@@ -1,0 +1,6 @@
+[submodule "makitso"]
+	path = makitso
+	url = https://github.com/focusaurus/makitso.git
+[submodule "ansible"]
+	path = ansible
+	url = https://github.com/ansible/ansible.git
