@@ -1,35 +1,149 @@
 #!/bin/bash
 ##### helper functions #####
 autoinstall_makitso() {
-  [ -f makitso/makitso.sh ] && return
+  [[ -f makitso/makitso.sh ]] && return
   git submodule update --init
 }
 
 autoinstall_python() {
-  [ -x python/bin/python ] && return
+  [[ -x python/bin/python ]] && return
   ./makitso/scripts/python/install_python.sh python
 }
 
 autoinstall_ansible() {
   autoinstall_python
-  if [ ! -x ansible/bin/ansible ]; then
+  if [[ ! -x ansible/bin/ansible ]]; then
     git submodule update --init
   fi
-  [ -e python/lib/python2.7/site-packages/paramiko ] && return
+  [[ -e python/lib/python2.7/site-packages/paramiko ]] && return
   ./python/bin/pip install -r requirements-ansible.txt
 }
 
 autoinstall_node() {
   autoinstall_makitso
-  [ -x node/bin/node ] && return
+  [[ -x node/bin/node ]] && return
   local NODE_VERSION=$(./makitso/scripts/json/get_value.py package.json engines.node)
   ./makitso/scripts/node/install_node.sh node "${NODE_VERSION}"
 }
 
 autoinstall_npm_dependencies() {
   autoinstall_node
-  [ -d node_modules/express ] && return
+  [[ -d node_modules/express ]] && return
   npm install
+}
+
+usage() {
+  printf "Usage: $(basename $0) [" 1>&2
+  while read line; do
+    if echo "${line}" | egrep '^task::' >/dev/null; then
+      task=$(echo "${line}" \
+        | cut -d : -f 3 \
+        | cut -d '(' -f 1
+      )
+      if [[ -z "${first}" ]]; then
+        first="false"
+      else
+        printf "|"
+      fi
+      printf "${task}"
+    fi
+  done < <(cat "$0")
+  printf "]\n" 1>&2
+  exit 1
+}
+
+##### task functions #####
+task::dist() {
+  local GIT_REF="${1-master}"
+  local BUILD_DIR="build"
+  local DIST_DIR="dist"
+  local PREFIX="peterlyons.com-${GIT_REF}"
+  #OS X support
+  local TAR=tar
+  if which gnutar &> /dev/null; then
+    TAR=gnutar
+  fi
+  ./makitso/scripts/dirs "${BUILD_DIR}" "${DIST_DIR}"
+  echo doing git archive
+  git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
+    #extract that archive into a temporary build directory
+    "${TAR}" --directory "${BUILD_DIR}" --extract
+  #install node
+  NODE_VERSION=$(./makitso/scripts/json/get_value.py package.json engines.node)
+  echo installing node
+  ./makitso/scripts/node/install_node.sh \
+    "${BUILD_DIR}/${PREFIX}/node" "${NODE_VERSION}"
+  #Note we use npm from the build platform (OS X) here instead of
+  #the one for the run platform as they are incompatible
+  echo install npm packages
+  #@bug(cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
+  echo creating archive
+  "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
+}
+
+task::test() {
+  set -e
+  mocha test/unit/*.coffee
+  mocha test/application/*.coffee
+}
+
+task::express() {
+  node-dev --debug=9001 app/server.coffee
+}
+
+task::inspector() {
+  echo "http://localhost:9002/debug?port=9001"
+  ./node_modules/.bin/node-inspector --web-port=9002
+}
+
+task::errors() {
+  local DEVURL="http://localhost:9000"
+  local STATIC="../static"
+  echo "Generating HTML for static error pages from ${DEVURL}..."
+  for URI in error404 error500; do
+    local URL="${DEVURL}/${URI}"
+    printf "${URI}, "
+    local EXIT_CODE=0
+    curl --silent "${URL}" --output \
+        "${STATIC}/${URI}.html" || EXIT_CODE=$?
+    if [ ${EXIT_CODE} -ne 0 ]; then
+        echo "FAILED to retrieve ${URL}"
+        exit ${EXIT_CODE}
+    fi
+  done
+}
+
+task::release() {
+  echo "Performing a production peterlyons.com release"
+  eval $(ssh-agent -s) && ssh-add
+  git checkout develop
+  git pull origin develop
+  task:test
+  echo "Current version is $(./makitso/scripts/json/get_value.py package.json version)"
+  echo -n "New version: "
+  read NEW_VERSION
+  git checkout -b "release-${NEW_VERSION}" develop
+  ./bin/version.coffee "${NEW_VERSION}"
+  git commit -a -m "Bumped version number to ${NEW_VERSION}"
+  echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
+  read DONTCARE
+  git checkout master
+  git merge --no-ff "release-${NEW_VERSION}"
+  echo "Now type notes for the new tag"
+  git tag -a "v${NEW_VERSION}"
+  git checkout develop
+  git merge --no-ff "release-${NEW_VERSION}"
+  git branch -d "release-${NEW_VERSION}"
+  git push origin develop
+  git checkout master
+  git push origin master
+  git push origin master --tags
+  git checkout develop #Not good form to leave master checked out
+  echo "Ready to go. Next steps are clean, dist, and deploy."
+}
+
+task::clean() {
+  rm -rf ./build ./dist
 }
 
 ##### main code #####
@@ -50,7 +164,11 @@ main() {
       exec "./bin/${ANSIBLE_COMMAND}" "$@"
     ;;
     *)
-      echo "Usage: $(basename $0) [ansible|ansible-playbook]"
+      if type "task::$1" &>/dev/null; then
+        eval "task::$1"
+      else
+        usage "$@"
+      fi
     ;;
   esac
 }
