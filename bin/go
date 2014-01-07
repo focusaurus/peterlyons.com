@@ -56,6 +56,7 @@ task::dist() {
   git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
     #extract that archive into a temporary build directory
     tar -C "${build_dir}" --extract
+  #remove development-only files
   #install node
   #We need to explicitly use /usr/bin/python here to work well
   #with our vagrant situation when ./python is an OSX version but
@@ -65,7 +66,8 @@ task::dist() {
   ./wallah/bin/install_node "${build_dir}/${prefix}/node" "${node_version}"
   echo install npm packages
   (cd "${build_dir}/${prefix}" && ./node/bin/npm --production install)
-  (cd "${build_dir}/${prefix}" && rmdir ansible wallah)
+  (cd "${build_dir}/${prefix}" && \
+    rm -rf ansible wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules)
   echo creating archive
   tar -C "${build_dir}" --create --bzip2 --file "${dist_dir}/${prefix}.tar.bz2" .
 }
