@@ -8,3 +8,6 @@
 -
   name: restart express
   service: name=plws-express state=restarted
+-
+  name: restart monit
+  service: name=monit state=restarted

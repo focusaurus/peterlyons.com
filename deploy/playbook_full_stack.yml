@@ -1,0 +1,90 @@
+---
+-
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  vars:
+    project: plws
+    express_port: 9000
+    express_user: plws
+    app_root: /opt/peter_lyons_web_site
+    www_root: /opt/peter_lyons_web_site/static
+    data_root: /opt/peter_lyons_web_site/data
+  handlers:
+    -
+      include: handlers.yml
+  tasks:
+    -
+      name: install ansible prerequisites
+      script: ansible_prereqs.sh
+    -
+      name: install prerequisites
+      apt: pkg={{item}}
+      with_items:
+        #multilog
+        - daemontools
+        #web server
+        - nginx
+        #static/data repo access
+        - git-core
+        #For monitoring
+        - monit
+    -
+      name: create directory {{app_root}}
+      file: path={{app_root}}
+        state=directory
+        owner={{root}}
+        group={{express_user}}
+        mode=0750
+    -
+      name: clone data repo
+      git: repo=https://github.com/focusaurus/data.git
+        dest={{data_root}}
+        version=master
+    -
+      name: clone static repo
+      git: repo=https://github.com/focusaurus/static.git
+        dest={{www_root}}
+        version=master
+    # -
+    #   name: upload the app distribution archive
+    #   copy:
+    #     src="{{dist}}"
+    #     dest="{{app_root}}/{{dist | basename}}"
+    # -
+    #   name: extract the distribution archive
+    #   script: extract.sh "{{app_root}}/{{dist | basename}}"
+    -
+      name: ensure there is no default nginx site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    -
+      name: configure nginx
+      template: src=nginx-site.j2
+        dest=/etc/nginx/sites-enabled/{{hostname}}
+        owner=root group=root mode=0644
+      notify:
+        - restart nginx
+    -
+      name: start nginx
+      service: name=nginx state=started enabled=yes
+    -
+      name: configure upstart job for plws-express
+      template: src=plws-express.conf.j2 dest=/etc/init/plws-express.conf
+        owner=root group=root mode=0644
+    -
+      name: configure monit for nginx
+      file: src=nginx_peterlyons.com.monitrc
+         dest=/etc/monit/conf.d/nginx_peterlyons.com.monitrc
+         owner=root group=root mode=0644
+      notify:
+        - restart monit
+    -
+      name: configure monit for express
+      template: src=plws-express.monitrc.j2
+        dest=/etc/monit/conf.d/plws-express.monitrc
+        owner=root group=root mode=0644
+      notify:
+        - restart monit
+    -
+      name: start monit
+      service: name=monit state=started enabled=yes

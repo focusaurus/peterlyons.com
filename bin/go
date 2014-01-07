@@ -1,36 +1,18 @@
 #!/bin/bash
 ##### helper functions #####
-autoinstall_makitso() {
-  [[ -f makitso/makitso.sh ]] && return
+autoinstall_wallah() {
+  [[ -f wallah/bin/install_node ]] && return
   git submodule update --init
 }
 
-autoinstall_python() {
-  [[ -x python/bin/python ]] && return
-  ./makitso/scripts/python/install_python.sh python
-}
-
-autoinstall_ansible() {
-  autoinstall_python
-  if [[ ! -x ansible/bin/ansible ]]; then
-    git submodule update --init
-  fi
-  [[ -e python/lib/python2.7/site-packages/paramiko ]] && return
-  ./python/bin/pip install -r requirements-ansible.txt
-}
-
-autoinstall_node() {
-  autoinstall_makitso
-  [[ -x node/bin/node ]] && return
-  local NODE_VERSION=$(./makitso/scripts/json/get_value.py package.json engines.node)
-  ./makitso/scripts/node/install_node.sh node "${NODE_VERSION}"
-}
-
-autoinstall_npm_dependencies() {
-  autoinstall_node
-  [[ -d node_modules/express ]] && return
-  npm install
-}
+# autoinstall_ansible() {
+#   autoinstall_python
+#   if [[ ! -x ansible/bin/ansible ]]; then
+#     git submodule update --init
+#   fi
+#   [[ -e python/lib/python2.7/site-packages/paramiko ]] && return
+#   ./python/bin/pip install -r requirements-ansible.txt
+# }
 
 usage() {
   printf "Usage: $(basename $0) [" 1>&2
@@ -54,92 +36,99 @@ usage() {
 
 ##### task functions #####
 task::dist() {
-  local GIT_REF="${1-master}"
-  local BUILD_DIR="build"
-  local DIST_DIR="dist"
-  local PREFIX="peterlyons.com-${GIT_REF}"
+  set -e
+  #need the build system python here
+  export PATH=/usr/bin:$PATH
+  local git_ref="${1-HEAD}"
+  local build_dir="build"
+  local dist_dir="dist"
+  local prefix="peterlyons.com-${git_ref}"
   #OS X support
-  local TAR=tar
-  if which gnutar &> /dev/null; then
-    TAR=gnutar
-  fi
-  ./makitso/scripts/dirs "${BUILD_DIR}" "${DIST_DIR}"
+  # local TAR=tar
+  # if which gnutar &> /dev/null; then
+  #   TAR=gnutar
+  # fi
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites git tar
+  mkdir -p "${build_dir}" "${dist_dir}"
   echo doing git archive
-  git archive --format=tar --prefix="${PREFIX}/" "${GIT_REF}" | \
+  #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
+  git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
     #extract that archive into a temporary build directory
-    "${TAR}" --directory "${BUILD_DIR}" --extract
+    tar -C "${build_dir}" --extract
   #install node
-  NODE_VERSION=$(./makitso/scripts/json/get_value.py package.json engines.node)
-  echo installing node
-  ./makitso/scripts/node/install_node.sh \
-    "${BUILD_DIR}/${PREFIX}/node" "${NODE_VERSION}"
-  #Note we use npm from the build platform (OS X) here instead of
-  #the one for the run platform as they are incompatible
+  #We need to explicitly use /usr/bin/python here to work well
+  #with our vagrant situation when ./python is an OSX version but
+  #this script is running on a vagrant linux VM
+  local node_version=$(./wallah/bin/get_json_value \
+    "${build_dir}/${prefix}/package.json" "engines.node")
+  ./wallah/bin/install_node "${build_dir}/${prefix}/node" "${node_version}"
   echo install npm packages
-  (cd "${BUILD_DIR}/${PREFIX}" && npm install --silent --production)
+  (cd "${build_dir}/${prefix}" && ./node/bin/npm --production install)
+  (cd "${build_dir}/${prefix}" && rmdir ansible wallah)
   echo creating archive
-  "${TAR}" --directory "${BUILD_DIR}" --create --bzip2 --file "${DIST_DIR}/${PREFIX}.tar.bz2" .
+  tar -C "${build_dir}" --create --bzip2 --file "${dist_dir}/${prefix}.tar.bz2" .
 }
 
 task::test() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
   set -e
   mocha test/unit/*.coffee
   mocha test/application/*.coffee
 }
 
 task::express() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
   node-dev --debug=9001 app/server.coffee
 }
 
 task::inspector() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
   echo "http://localhost:9002/debug?port=9001"
   ./node_modules/.bin/node-inspector --web-port=9002
 }
 
 task::errors() {
-  local DEVURL="http://localhost:9000"
-  local STATIC="../static"
-  echo "Generating HTML for static error pages from ${DEVURL}..."
-  for URI in error404 error500; do
-    local URL="${DEVURL}/${URI}"
-    printf "${URI}, "
-    local EXIT_CODE=0
-    curl --silent "${URL}" --output \
-        "${STATIC}/${URI}.html" || EXIT_CODE=$?
-    if [ ${EXIT_CODE} -ne 0 ]; then
-        echo "FAILED to retrieve ${URL}"
-        exit ${EXIT_CODE}
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites curl
+  local devurl="http://localhost:9000"
+  local static="../static"
+  echo "Generating HTML for static error pages from ${devurl}..."
+  for uri in error404 error500; do
+    local url="${devurl}/${uri}"
+    printf "${uri}, "
+    local exit_code=0
+    curl --silent "${url}" --output \
+        "${static}/${uri}.html" || exit_code=$?
+    if [ ${exit_code} -ne 0 ]; then
+        echo "FAILED to retrieve ${url}"
+        exit ${exit_code}
     fi
   done
 }
 
-task::release() {
-  echo "Performing a production peterlyons.com release"
-  eval $(ssh-agent -s) && ssh-add
-  git checkout develop
-  git pull origin develop
-  task:test
-  echo "Current version is $(./makitso/scripts/json/get_value.py package.json version)"
-  echo -n "New version: "
-  read NEW_VERSION
-  git checkout -b "release-${NEW_VERSION}" develop
-  ./bin/version.coffee "${NEW_VERSION}"
-  git commit -a -m "Bumped version number to ${NEW_VERSION}"
-  echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
-  read DONTCARE
-  git checkout master
-  git merge --no-ff "release-${NEW_VERSION}"
-  echo "Now type notes for the new tag"
-  git tag -a "v${NEW_VERSION}"
-  git checkout develop
-  git merge --no-ff "release-${NEW_VERSION}"
-  git branch -d "release-${NEW_VERSION}"
-  git push origin develop
-  git checkout master
-  git push origin master
-  git push origin master --tags
-  git checkout develop #Not good form to leave master checked out
-  echo "Ready to go. Next steps are clean, dist, and deploy."
+task::deploy() {
+  autoinstall_wallah
+  ./wallah/bin/install_pip_package ansible
+  local DIST_PATH="${1}"
+  local DIST_FILE=$(basename "${DIST_PATH}")
+  local prefix=$(echo ${DIST_FILE} | sed 's/\.tar\.bz2//')
+  shift
+  local PROJECT_PATH="projects/peter_lyons_web_site"
+  echo deploying code "${DIST_PATH}" to $@
+  for HOST in $@
+  do
+    scp "${DIST_PATH}" "${HOST}":/tmp
+    ssh "${HOST}" <<EOF
+      install --directory "${PROJECT_PATH}"
+      tar --extract --bzip2 --directory "${PROJECT_PATH}" --file "/tmp/${DIST_FILE}"
+      cd "${PROJECT_PATH}/${prefix}"
+EOF
+    ssh -t "${HOST}" sudo "${PROJECT_PATH}/${prefix}/bin/post_extract.sh"
+  done
 }
 
 task::clean() {
@@ -164,8 +153,10 @@ main() {
       exec "./bin/${ANSIBLE_COMMAND}" "$@"
     ;;
     *)
-      if type "task::$1" &>/dev/null; then
-        eval "task::$1"
+      task_name="$1"
+      if type "task::${task_name}" &>/dev/null; then
+        shift
+        eval "task::${task_name}" "$@"
       else
         usage "$@"
       fi

@@ -1,6 +1,3 @@
-[submodule "makitso"]
-	path = makitso
-	url = https://github.com/focusaurus/makitso.git
-[submodule "ansible"]
-	path = ansible
-	url = https://github.com/ansible/ansible.git
+[submodule "wallah"]
+	path = wallah
+	url = https://github.com/focusaurus/wallah.git
