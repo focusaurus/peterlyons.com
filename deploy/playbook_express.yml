@@ -55,6 +55,8 @@
       unarchive:
         src="../{{dist}}"
         dest="{{app_root}}"
+      notify:
+        - restart express
     -
       name: create directory {{log_path}}
       file: path={{log_path}}
