@@ -4,7 +4,7 @@ exports.port = 9000
 exports.baseURL = "http://#{exports.site}:#{exports.port}"
 exports.appURI = "/app"
 #Listen on all IPs in dev/test (for testing from other machines),
-#But loopback in staging/prod since nginx listens on the routed interface
+#But loopback in stage/prod since nginx listens on the routed interface
 exports.loopback = false
 exports.errorPages = true
 exports.titleSuffix = " | Peter Lyons"
@@ -22,14 +22,14 @@ exports.blog =
   hashPath: "#{projectRoot}/../data/blog_password.bcrypt"
   postBasePath: "#{projectRoot}/../data/posts"
 switch process.env.NODE_ENV
-  when "production", "staging"
+  when "production", "stage"
     exports.site = "peterlyons.com"
     exports.baseURL = "http://#{exports.site}"
     exports.loopback = true
     exports.photos.serveDirect = false
     exports.errorPages = false
-  when "staging"
-    exports.site = "staging.peterlyons.com"
+  when "stage"
+    exports.site = "stage.peterlyons.com"
     exports.baseURL = "http://#{exports.site}"
     exports.loopback = true
     exports.photos.serveDirect = false

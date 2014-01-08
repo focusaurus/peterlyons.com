@@ -1,0 +1,20 @@
+#!/usr/bin/env coffee
+#
+# Re-renders the static HTML for our error pages for when express is down.
+# Writes them out to the static repo where they can later be committed to git
+
+config = require "app/config"
+jade = require "jade"
+fs = require "fs"
+path = require "path"
+
+
+for code in [404, 500]
+  locals = {titleSuffix, appURI} = config
+  filename = path.resolve "#{__dirname}/../app/templates/errors/error#{code}.jade"
+  template = fs.readFileSync filename, "utf8"
+  templateFn = jade.compile template, {filename}
+  html = templateFn config
+  outFile = path.resolve "#{__dirname}/../../static/error#{code}.html"
+  console.log "Writing #{outFile}"
+  fs.writeFileSync outFile, "utf8"

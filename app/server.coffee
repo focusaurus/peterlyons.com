@@ -10,6 +10,7 @@ app.set "view engine", "jade"
 app.set "views", __dirname + "/templates"
 app.locals
   config: config
+  appURI: config.appURI
 app.use middleware.logRequestStart
 app.use express.logger {format: ":date :method :url"}
 
