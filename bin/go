@@ -33,34 +33,32 @@ task::dist() {
   local git_ref="${1-HEAD}"
   local build_dir="build"
   local dist_dir="dist"
-  local prefix="peterlyons.com-${git_ref}"
-  #OS X support
-  # local TAR=tar
-  # if which gnutar &> /dev/null; then
-  #   TAR=gnutar
-  # fi
+  local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
   autoinstall_wallah
   ./wallah/bin/check_prerequisites git tar
   mkdir -p "${build_dir}" "${dist_dir}"
-  echo doing git archive
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
     #extract that archive into a temporary build directory
     tar -C "${build_dir}" --extract
-  #remove development-only files
-  #install node
   #We need to explicitly use /usr/bin/python here to work well
   #with our vagrant situation when ./python is an OSX version but
   #this script is running on a vagrant linux VM
-  local node_version=$(./wallah/bin/get_json_value \
+  local node_version=$(/usr/bin/python ./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
+  #install node
   ./wallah/bin/install_node "${build_dir}/${prefix}/node" "${node_version}"
   echo install npm packages
-  (cd "${build_dir}/${prefix}" && ./node/bin/npm --production install)
+  (cd "${build_dir}/${prefix}" && ./node/bin/npm install --silent --production --parseable | grep -v '^/')
+  #remove development-only files
   (cd "${build_dir}/${prefix}" && \
-    rm -rf ansible wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules)
+    rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules)
   echo creating archive
-  tar -C "${build_dir}" --create --bzip2 --file "${dist_dir}/${prefix}.tar.bz2" .
+  local dist_path="${dist_dir}/${prefix}.tar.xz"
+  tar -C "${build_dir}" --create --xz --file "${dist_path}" .
+  ls -lh "${dist_path}"
+  echo "To deploy to stage, run:"
+  printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml"
 }
 
 task::test() {
@@ -107,8 +105,13 @@ task::deploy() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   local dist_path="$1"
+  local dist_name=$(basename "${dist_path}")
+  dist_name=$(echo "${dist_name}" | sed 's/\.tar\...//')
   local inventory="$2"
-  ansible-playbook -i "${inventory}" --extra-vars "dist=${dist_path}" \
+  exec ansible-playbook \
+    -i "${inventory}" \
+    --extra-vars "'dist=${dist_path}'" \
+    --extra-vars "'dist_name=${dist_name}'" \
     ./deploy/playbook_express.yml
 }
 
@@ -120,6 +123,12 @@ task::vagrant() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   exec vagrant "$@"
+}
+
+task::ansible-playbook() {
+  autoinstall_wallah
+  ./wallah/bin/install_pip_package ansible
+  ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook "$@"
 }
 
 ##### main code #####

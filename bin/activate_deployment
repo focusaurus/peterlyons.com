@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# This script sets up file owner/group/perms after the code
+# has been extracted on a production host.
+# It should be run as root via sudo
+
+set_owner_and_permissions() {
+  chown -R plws:plws .
+  find . -type d -print0 | xargs -0 chmod 555
+  find . -type f -print0 | xargs -0 chmod 444
+  chmod +x app/server.coffee
+}
+
+repoint_current_symlink() {
+  local code_dir=$(basename "${PWD}")
+  cd .. #directory above project root
+  #http://blog.moertel.com/posts/2005-08-22-how-to-change-symlinks-atomically.html
+  #http://stackoverflow.com/a/1385261/266795
+  ln -nsf "${code_dir}" current_tmp && mv -Tf current_tmp current
+  cd -
+}
+
+##### main code #####
+#Project root is our working directory
+cd $(dirname "$0")/..
+set_owner_and_permissions
+repoint_current_symlink

@@ -4,12 +4,12 @@
   gather_facts: no
   sudo: yes
   vars:
-    project: plws
     express_port: 9000
     express_user: plws
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
+    log_path: /var/log/plws-express
   handlers:
     -
       include: handlers.yml
@@ -55,9 +55,16 @@
       unarchive:
         src="../{{dist}}"
         dest="{{app_root}}"
-    # -
-    #   name: extract the distribution archive
-    #   script: extract.sh "{{app_root}}/{{dist | basename}}"
+    -
+      name: create directory {{log_path}}
+      file: path={{log_path}}
+        state=directory
+        owner=root
+        group={{express_user}}
+        mode=0750
+    -
+      name: activate the deployment
+      command: "{{app_root}}/{{dist_name}}/bin/activate_deployment"
     -
       name: configure upstart job for plws-express
       template: src=plws-express.conf.j2 dest=/etc/init/plws-express.conf

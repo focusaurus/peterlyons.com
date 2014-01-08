@@ -30,3 +30,5 @@
         - less
         # for the editing of the text files
         - vim
+    - name: remove evil default ~/.bashrc
+      file: path=~/.bashrc state=absent

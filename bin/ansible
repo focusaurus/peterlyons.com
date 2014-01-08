@@ -1,8 +1,0 @@
-#!/bin/sh
-cd $(dirname "${0}")/..
-ROOT=$(pwd -P)
-export PYTHONPATH="${ROOT}/ansible/lib"
-export ANSIBLE_LIBRARY="${ROOT}/ansible/library"
-#Ansible needs access to the right python and ssh
-export PATH="${ROOT}/python/bin:/usr/bin"
-exec ./ansible/bin/$(basename "${0}") "${@}"

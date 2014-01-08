@@ -3,9 +3,9 @@ author "Peter Lyons <pete@peterlyons.com>"
 
 start on filesystem and started networking
 respawn
-chdir {{app_root}}
+chdir {{app_root}}/current
 setuid {{express_user}}
 setgid {{express_user}}
-env PATH=./node_modules/.bin:./node/bin
+env PATH=./node_modules/.bin:./node/bin:/usr/bin
 env NODE_ENV=production
-exec app/server.coffee | /usr/bin/multilog s1024000 /var/log/{{hostname}} 2>&1
+exec app/server.coffee | /usr/bin/multilog s1024000 {{log_path}} 2>&1
