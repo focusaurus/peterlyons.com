@@ -5,15 +5,6 @@ autoinstall_wallah() {
   git submodule update --init
 }
 
-# autoinstall_ansible() {
-#   autoinstall_python
-#   if [[ ! -x ansible/bin/ansible ]]; then
-#     git submodule update --init
-#   fi
-#   [[ -e python/lib/python2.7/site-packages/paramiko ]] && return
-#   ./python/bin/pip install -r requirements-ansible.txt
-# }
-
 usage() {
   printf "Usage: $(basename $0) [" 1>&2
   while read line; do
@@ -115,55 +106,38 @@ task::errors() {
 task::deploy() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
-  local DIST_PATH="${1}"
-  local DIST_FILE=$(basename "${DIST_PATH}")
-  local prefix=$(echo ${DIST_FILE} | sed 's/\.tar\.bz2//')
-  shift
-  local PROJECT_PATH="projects/peter_lyons_web_site"
-  echo deploying code "${DIST_PATH}" to $@
-  for HOST in $@
-  do
-    scp "${DIST_PATH}" "${HOST}":/tmp
-    ssh "${HOST}" <<EOF
-      install --directory "${PROJECT_PATH}"
-      tar --extract --bzip2 --directory "${PROJECT_PATH}" --file "/tmp/${DIST_FILE}"
-      cd "${PROJECT_PATH}/${prefix}"
-EOF
-    ssh -t "${HOST}" sudo "${PROJECT_PATH}/${prefix}/bin/post_extract.sh"
-  done
+  local dist_path="$1"
+  local inventory="$2"
+  ansible-playbook -i "${inventory}" --extra-vars "dist=${dist_path}" \
+    ./deploy/playbook_express.yml
 }
 
 task::clean() {
   rm -rf ./build ./dist
 }
 
+task::vagrant() {
+  autoinstall_wallah
+  ./wallah/bin/install_pip_package ansible
+  exec vagrant "$@"
+}
+
 ##### main code #####
 main() {
-  cd $(dirname "$0")/..
+  cd "$(dirname $0)/.."
   PATH="${PWD}/python/bin"
   PATH="${PATH}:${PWD}/node/bin"
   PATH="${PATH}:${PWD}/node_modules/.bin"
   #Need the basics like dirname et al
   PATH="${PATH}:/usr/bin:/bin"
   export PATH
-
-  case "$1" in
-    ansible|ansible-playbook)
-      autoinstall_ansible
-      ANSIBLE_COMMAND="$1"
-      shift
-      exec "./bin/${ANSIBLE_COMMAND}" "$@"
-    ;;
-    *)
-      task_name="$1"
-      if type "task::${task_name}" &>/dev/null; then
-        shift
-        eval "task::${task_name}" "$@"
-      else
-        usage "$@"
-      fi
-    ;;
-  esac
+  task_name="$1"
+  if type "task::${task_name}" &>/dev/null; then
+    shift
+    eval "task::${task_name}" "$@"
+  else
+    usage "$@"
+  fi
 }
 
 main "$@"

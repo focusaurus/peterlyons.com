@@ -25,7 +25,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # stage box intended for configuration closely matching production
   config.vm.define "stage" do |stage|
     box_setup stage, \
-      "10.9.8.21", "deploy/playbook_full_stack.yml", "deploy/hosts/vagrant_stage.yml"
+      "10.9.8.21", "deploy/playbook_nginx.yml", "deploy/hosts/vagrant_stage.yml"
     config.vm.synced_folder ".", "/vagrant", disabled: true
   end
 end
