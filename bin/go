@@ -58,7 +58,7 @@ task::dist() {
   tar -C "${build_dir}" --create --xz --file "${dist_path}" .
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
-  printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml"
+  printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
 }
 
 task::test() {

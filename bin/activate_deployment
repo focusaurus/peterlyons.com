@@ -8,7 +8,7 @@ set_owner_and_permissions() {
   chown -R plws:plws .
   find . -type d -print0 | xargs -0 chmod 555
   find . -type f -print0 | xargs -0 chmod 444
-  chmod +x app/server.coffee
+  chmod +x ./node/bin/* ./node_modules/.bin/* ./app/server.coffee
 }
 
 repoint_current_symlink() {

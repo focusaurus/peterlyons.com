@@ -61,7 +61,7 @@
         state=directory
         owner=root
         group={{express_user}}
-        mode=0750
+        mode=0770
     -
       name: activate the deployment
       command: "{{app_root}}/{{dist_name}}/bin/activate_deployment"
