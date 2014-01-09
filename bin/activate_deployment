@@ -4,11 +4,12 @@
 # has been extracted on a production host.
 # It should be run as root via sudo
 
-set_owner_and_permissions() {
-  chown -R plws:plws .
-  find . -type d -print0 | xargs -0 chmod 555
-  find . -type f -print0 | xargs -0 chmod 444
-  chmod +x ./node/bin/* ./node_modules/.bin/* ./app/server.coffee
+set_baseline_permissions() {
+  local user="$1"
+  local target="$2"
+  chown -R "${user}:sudo" "${target}"
+  find "${target}" -type d -print0 | xargs -0 chmod 550
+  find "${target}" -type f -print0 | xargs -0 chmod 440
 }
 
 repoint_current_symlink() {
@@ -23,5 +24,8 @@ repoint_current_symlink() {
 ##### main code #####
 #Project root is our working directory
 cd $(dirname "$0")/..
-set_owner_and_permissions
+set_baseline_permissions "${1-plws}" .
+chmod ug+x ./node/bin/* ./node_modules/.bin/* ./app/server.coffee
+set_baseline_permissions "${1-plws}" ../data
+find "../data/posts" -type d -print0 | xargs -0 chmod ug+w
 repoint_current_symlink
