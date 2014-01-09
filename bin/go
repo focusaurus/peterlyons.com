@@ -108,7 +108,7 @@ task::deploy() {
   local dist_name=$(basename "${dist_path}")
   dist_name=$(echo "${dist_name}" | sed 's/\.tar\...//')
   local inventory="$2"
-  exec ansible-playbook \
+  ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook \
     -i "${inventory}" \
     --extra-vars "'dist=${dist_path}'" \
     --extra-vars "'dist_name=${dist_name}'" \

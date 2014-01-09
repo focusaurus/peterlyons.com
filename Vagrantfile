@@ -20,12 +20,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "build", primary: true do |build|
     box_setup build, \
       "10.9.8.20", "deploy/playbook_build.yml", "deploy/hosts/vagrant_build.yml"
-    config.vm.synced_folder ".", "/code", type: "nfs"
   end
   # stage box intended for configuration closely matching production
   config.vm.define "stage" do |stage|
     box_setup stage, \
       "10.9.8.21", "deploy/playbook_nginx.yml", "deploy/hosts/vagrant_stage.yml"
-    config.vm.synced_folder ".", "/vagrant", disabled: true
+    stage.vm.synced_folder "./", "/vagrant", disabled: true
   end
 end
