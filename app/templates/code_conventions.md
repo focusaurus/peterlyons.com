@@ -43,7 +43,7 @@ For a sequence of statements where execution or declaration order doesn't matter
 <dd>
 People have varying mental capacities to keep things in their short term memory. Certain complex or compound statements urge the reader to fill up their short term memory with lots of intermediate products in order to comprehend a single complex statement. I find this difficult and especially frustrating when I'm reading someone else's code. And the code is broken. And I'm tired and up late because that code is broken. And the author decided to write some fancy 200-character lambda expression with seven intermediate variables. Here's a real example I encountered at work (altered to protect the guilty):
 
-    elif svd['method'] == 'some.literal.string' and filter(lambda x: type(x) == type((0,)) and x[1], svd.results.get('test_totals',{}).items()):
+    <pre>elif svd['method'] == 'some.literal.string' and filter(lambda x: type(x) == type((0,)) and x[1], svd.results.get('test_totals',{}).items()):</pre>
 
 That's a single expression! Completely unreadable to me. Clever, but worse
 than worthless.
@@ -76,16 +76,16 @@ _See also_ [Andy Lester's article on the two worst variable names][3].
 
 # General Guidelines
 
-  * Don't use C-style abbreviations that truncate words or omit certain letters. For example: `message->msg, index->idx, value->val, createDispatcher->crtDisp`. I find these highly problematic and irritating. First, they don't follow a single clear rule about how the abbreviation is achieved (sometimes truncation, sometimes dropping just vowels, sometimes dropping certain consonants). Secondly, they aren't clearly pronouncable. Pronouncability helps when discussing code and thinking about it in an audible voice in one's own mind. Thirdly, the premises that originated this convention (presumably ease of typing or length limits imposed by early languages and tools) are no longer relevant. All decent editors have word completion and/or code completion. Modern languages and tools don't have tiny eight-character length limits anymore. Also, as a native English speaker I find it hard enough to parse these things. I assume this is especially difficult for non-native speakers. Editor's note: Never abbreviate the word "password" in code. Don't use "pass". Don't use "passwd". Don't use "pwd". Don't use "pword". Don't do it. I will hunt you down. You must be stopped. The following exceptions are accomodating because of their extreme popularity: `database->Db (so connectToDatabase->connectToDb), identifier->Id`.
-  * Acronyms should be in all caps, even if this eliminates your `camelCase` boundaries. Examples (how I prefer it): `startHTTPDownload, leaveURLAlone, disconnectTCP`. This is just because acronyms must always be capitalized by their nature. It's part of what makes them an acronym.
-  * In configuration files, interactive prompts, and examples, the most usable terms for end users to enter for boolean options are "yes" and "no". These should be used in documentation and examples. We should be case insensitive and lenient and accept many synonyms such as "enabled", "true", "t", "on", "1".
-  * In log files favor fewer distinct log statements, but pack a lot of data into each log statements (include IDs, full paths, lots of context info)
-  * Don't code statements that are optional or will automatically be handled by the system (examples below)
-  * The official guidelines I link to disallow this already, but just to be clear, don't use ASCII art layout tricks with extra spaces to try to beautify or create vertical alignment in your code.
-  * Don't leave decoys. This applies to files, directories, classes, methods, properties, variables, database tables, database table columns, etc. If something is unused and unneeded because it was coded and never actually tied into the execution path of the program, delete it. If it was previously used and isn't any more, delete it. All this decoy stuff just waste's the reader's time trying to understand it or assuming it does get executed and wasting time (potentially lots of time). If it's perfectly valid code that you might need later, you can pull it from your source control system later. If you really can't part with it, create a clearly labeled "graveyard" file or directory or package where you can stash it where it is clear that it is not executing.
-  * I favor the term "invalid" to "illegal" since it is more accurate and the word "illegal" has a very specific connotation to me
-  * Some folks advocate a length limit on methods or functions. They say that chunks of related code should be refactored out into a separate function and then called from the original function. I usually do not find this helpful. Generally, if code is only executed once, I don't put it into it's own function. I find long methods are perfectly readable top to bottom and actually more readable than jumping all over the place to numerous helper functions that are not referenced elsewhere. So if a function has relatively small chunks of related code one after the other, I'm fine with it being one really long function. After all, this is the essence of computation: a long list of instructions. However, things can become less readable when there is a relatively long stretch of code that goes off on a tangent that is loosely coupled to the rest of the code. In that case, it makes sense to refactor out to a dedicated function. For example: 10 lines of validation, 25 lines of parsing, 12 lines of computing A, 30 lines of computing B, 25 lines of formatting the result - this can all be in one function. However, 6 lines of validation, 4 lines of parsing, 200 lines of computing B, 3 lines of formatting the result - it makes sense to compute B in a separate function. It's long enough that it is hard to maintain context on the surronding code while reading all the code that computes B.
-  * Avoid double negatives with boolean variables. Instead, use a positive verb whose meaning is negative. `skipCache = True` is better than `noCache = True`.
+* Don't use C-style abbreviations that truncate words or omit certain letters. For example: `message->msg, index->idx, value->val, createDispatcher->crtDisp`. I find these highly problematic and irritating. First, they don't follow a single clear rule about how the abbreviation is achieved (sometimes truncation, sometimes dropping just vowels, sometimes dropping certain consonants). Secondly, they aren't clearly pronouncable. Pronouncability helps when discussing code and thinking about it in an audible voice in one's own mind. Thirdly, the premises that originated this convention (presumably ease of typing or length limits imposed by early languages and tools) are no longer relevant. All decent editors have word completion and/or code completion. Modern languages and tools don't have tiny eight-character length limits anymore. Also, as a native English speaker I find it hard enough to parse these things. I assume this is especially difficult for non-native speakers. Editor's note: Never abbreviate the word "password" in code. Don't use "pass". Don't use "passwd". Don't use "pwd". Don't use "pword". Don't do it. I will hunt you down. You must be stopped. The following exceptions are accomodating because of their extreme popularity: `database->Db (so connectToDatabase->connectToDb), identifier->Id`.
+* Acronyms should be in all caps, even if this eliminates your `camelCase` boundaries. Examples (how I prefer it): `startHTTPDownload, leaveURLAlone, disconnectTCP`. This is just because acronyms must always be capitalized by their nature. It's part of what makes them an acronym.
+* In configuration files, interactive prompts, and examples, the most usable terms for end users to enter for boolean options are "yes" and "no". These should be used in documentation and examples. We should be case insensitive and lenient and accept many synonyms such as "enabled", "true", "t", "on", "1".
+* In log files favor fewer distinct log statements, but pack a lot of data into each log statements (include IDs, full paths, lots of context info)
+* Don't code statements that are optional or will automatically be handled by the system (examples below)
+* The official guidelines I link to disallow this already, but just to be clear, don't use ASCII art layout tricks with extra spaces to try to beautify or create vertical alignment in your code.
+* Don't leave decoys. This applies to files, directories, classes, methods, properties, variables, database tables, database table columns, etc. If something is unused and unneeded because it was coded and never actually tied into the execution path of the program, delete it. If it was previously used and isn't any more, delete it. All this decoy stuff just waste's the reader's time trying to understand it or assuming it does get executed and wasting time (potentially lots of time). If it's perfectly valid code that you might need later, you can pull it from your source control system later. If you really can't part with it, create a clearly labeled "graveyard" file or directory or package where you can stash it where it is clear that it is not executing.
+* I favor the term "invalid" to "illegal" since it is more accurate and the word "illegal" has a very specific connotation to me
+* Some folks advocate a length limit on methods or functions. They say that chunks of related code should be refactored out into a separate function and then called from the original function. I usually do not find this helpful. Generally, if code is only executed once, I don't put it into it's own function. I find long methods are perfectly readable top to bottom and actually more readable than jumping all over the place to numerous helper functions that are not referenced elsewhere. So if a function has relatively small chunks of related code one after the other, I'm fine with it being one really long function. After all, this is the essence of computation: a long list of instructions. However, things can become less readable when there is a relatively long stretch of code that goes off on a tangent that is loosely coupled to the rest of the code. In that case, it makes sense to refactor out to a dedicated function. For example: 10 lines of validation, 25 lines of parsing, 12 lines of computing A, 30 lines of computing B, 25 lines of formatting the result - this can all be in one function. However, 6 lines of validation, 4 lines of parsing, 200 lines of computing B, 3 lines of formatting the result - it makes sense to compute B in a separate function. It's long enough that it is hard to maintain context on the surronding code while reading all the code that computes B.
+* Avoid double negatives with boolean variables. Instead, use a positive verb whose meaning is negative. `skipCache = True` is better than `noCache = True`.
 
 # Python Conventions
 
@@ -114,16 +114,16 @@ looking at the API and assuming it does what makes sense. If there is no
 consistency though, it totally gums up the works and slows me to a frustrating
 crawl.
 
-  * Prefer double quotes for most strings. Python allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.
-  * Use `camelCase` names for variables and methods. Do not use `lowercase_with_underscores`. This makes switching between java and python easier and seems to be the overall winner in the OO languages I am familiar with. Note that this is in contradiction with [PEP 8][4], but in my experience `camelCase` is just the winner across multiple OO languages and at this point trying to convert to `lowercase_with_underscores` just seems like an uphil battle. I could potentially convinced to stick to [PEP 8][4] here, but as of now I use `camelCase`, as do many python libraries.
-  * Import statements should be one per line (don't use import modone, modtwo, modthree). (Make One Choice principle), (Fewer Statements Per Line)
-  * When order of execution is not important, imports should be sorted asciibetically (When In Doubt, Alphabetize). This is within the import statement groupings described in [PEP 8][4].
-  * import statements should all be done at the beginning of the module unless there is a legitimate reason to do otherwise (Make One Choice)
-  * Most of the time, I avoid the "from" keyword in imports and keep the module/package namespace explicit (i.e. always use os.path). The reason is this keeps it clear exactly where each function is coming from. If you have more than one `from somepkg import *` line in a module, the reader may have to do annoying busywork to track down which module contains a particular function. (Readability Is King).
-  * class member property initializations in constructors should be done asciibetically unless execution order matters (When In Doubt, Alphabetize)
-  * Prefer the string substitution `%` operator over using `+` to build strings. I just find it more elegant and easier to change the string later. I use this exclusively in accordance with the Make One Choice principle.
-  * Don't bother closing file objects in short-lived programs such as command line utilities or scripts. Files will be closed automatically by the interpreter. Explicit closing is often regarded as "good form", but I see no strong justification for this for small programs, or even in larger programs where the open file variable is inside a local method/function scope. It's code that you get essentially for free anyway and typing it just means you could do it wrong or make a typo.
-  * Always have a new line after an `if` statement. (Make One Choice)
+* Prefer double quotes for most strings. Python allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.
+* Use `camelCase` names for variables and methods. Do not use `lowercase_with_underscores`. This makes switching between java and python easier and seems to be the overall winner in the OO languages I am familiar with. Note that this is in contradiction with [PEP 8][4], but in my experience `camelCase` is just the winner across multiple OO languages and at this point trying to convert to `lowercase_with_underscores` just seems like an uphil battle. I could potentially convinced to stick to [PEP 8][4] here, but as of now I use `camelCase`, as do many python libraries.
+* Import statements should be one per line (don't use import modone, modtwo, modthree). (Make One Choice principle), (Fewer Statements Per Line)
+* When order of execution is not important, imports should be sorted asciibetically (When In Doubt, Alphabetize). This is within the import statement groupings described in [PEP 8][4].
+* import statements should all be done at the beginning of the module unless there is a legitimate reason to do otherwise (Make One Choice)
+* Most of the time, I avoid the "from" keyword in imports and keep the module/package namespace explicit (i.e. always use os.path). The reason is this keeps it clear exactly where each function is coming from. If you have more than one `from somepkg import *` line in a module, the reader may have to do annoying busywork to track down which module contains a particular function. (Readability Is King).
+* class member property initializations in constructors should be done asciibetically unless execution order matters (When In Doubt, Alphabetize)
+* Prefer the string substitution `%` operator over using `+` to build strings. I just find it more elegant and easier to change the string later. I use this exclusively in accordance with the Make One Choice principle.
+* Don't bother closing file objects in short-lived programs such as command line utilities or scripts. Files will be closed automatically by the interpreter. Explicit closing is often regarded as "good form", but I see no strong justification for this for small programs, or even in larger programs where the open file variable is inside a local method/function scope. It's code that you get essentially for free anyway and typing it just means you could do it wrong or make a typo.
+* Always have a new line after an `if` statement. (Make One Choice)
 
 When building lengthy inline data structures such as dictionaries or lists,
 prefer multiple statements (separate initialization and population code) to
@@ -190,36 +190,51 @@ _platformCfg["RHLinux"] = _rhCfg
 
 Why?
 
-  1. Second version does not duplicate constant values, making it easier to change them in one place and be done with it. (Don't Repeat Yourself)
-  1. Second version is more expressive. It clearly indicates that you are copying all the data for one key and then just changing some values. The inline literal version requires you to eyeball all the data to attempt to make that determination.
-  1. As a general rule, I prefer more simple statements over fewer complex/compound statements since they require less working memory in your brain (Think In Small Chunks)
+1. Second version does not duplicate constant values, making it easier to change them in one place and be done with it. (Don't Repeat Yourself)
+1. Second version is more expressive. It clearly indicates that you are copying all the data for one key and then just changing some values. The inline literal version requires you to eyeball all the data to attempt to make that determination.
+1. As a general rule, I prefer more simple statements over fewer complex/compound statements since they require less working memory in your brain (Think In Small Chunks)
 
 # Java Conventions
 
-  * Follow [Oracle's Java Code Conventions][5] for formatting rules, etc.
-  * I prefer `Collection.isEmpty()` over `Collection.size() == 0` because it is more directly expressive of the intent
-  * Prefer java.util.List and the other collection classes to arrays. In general they are easier to work with and convenient. Arrays have a tendency to be annoying in java and require System.arraycopy or java.util.Arrays methods.
-  * Prefer returning an empty collection instead of null. Null requires the caller to explicitly check for it. If you return an empty collection, the calling code that handles non-empty and empty are the same. The caller can always call `isEmpty` and special case that as needed.
-  * When order of execution is not important (as is almost always the case in Java), imports should be sorted asciibetically (When In Doubt, Alphabetize). A blank line separating groups of related imports (standard java, each third party library, internal libraries, etc) are OK but I usually don't use them because the alphabetical sorting makes finding what the reader is looking for pretty easy already.
-  * Never omit the curly braces from an `if` statement or other block beginner. (Make One Choice)
+* Follow [Oracle's Java Code Conventions][5] for formatting rules, etc.
+* I prefer `Collection.isEmpty()` over `Collection.size() == 0` because it is more directly expressive of the intent
+* Prefer java.util.List and the other collection classes to arrays. In general they are easier to work with and convenient. Arrays have a tendency to be annoying in java and require System.arraycopy or java.util.Arrays methods.
+* Prefer returning an empty collection instead of null. Null requires the caller to explicitly check for it. If you return an empty collection, the calling code that handles non-empty and empty are the same. The caller can always call `isEmpty` and special case that as needed.
+* When order of execution is not important (as is almost always the case in Java), imports should be sorted asciibetically (When In Doubt, Alphabetize). A blank line separating groups of related imports (standard java, each third party library, internal libraries, etc) are OK but I usually don't use them because the alphabetical sorting makes finding what the reader is looking for pretty easy already.
+* Never omit the curly braces from an `if` statement or other block beginner. (Make One Choice)
 
 # Bourne Shell Conventions
 
-  * I exclusively use double quotes and curly braces when referencing variables: `"${MY_VAR}"`. This can avoid bugs when the value has embedded spaces. In certain circumstances you will need to omit the double quotes to get the correct behavior, but this will usually behave properly and handle values with spaces properly. (Make One Choice)
-  * I use `UPPER_CASE_WITH_UNDERSCORES` for all variable names because that seems to be the clear convention.
+* I have now adopted [Google's Shell Style Guide][7], which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
+* Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
 
 # Ruby Conventions
 
-  * Prefer double quotes for most strings. Ruby allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. Interpolation is also supported. If your string literal needs to contain double quotes, use single quotes.
-  * Prefer string interpolation to building up strings with operators
+* Prefer double quotes for most strings. Ruby allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. Interpolation is also supported. If your string literal needs to contain double quotes, use single quotes.
+* Prefer string interpolation to building up strings with operators
+
+# JavaScript Conventions
+
+Oh God, it's a mess out there, folks. I haven't had time to write my conventions up yet, and most of the existing ones I either have mixed feelings about or think they are just outright bonkers.
+
+* Prefer double quotes for most strings. This is mostly unconventional as I ususally see single quotes preferred, however, my reasoning is as follows.
+  * JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
+  * This also fosters consistency with java/c/python/ruby/coffeescript
+  * Aprostrophes are fairly common to want to put into source code. This makes things like `"%23{name}'s Settings"` easy.
+  * I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
+    * no shift key required
+      * Valid point, but not enough to convince me. I use sticky keys anyway so no big whoop.
+    * Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>';
+      * I think with the rise of templating systems, this type of code has become extinct and justifiably so.
+
 
 # CoffeeScript Conventions
 
-  * Prefer double quotes for most strings. CoffeeScript allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.  Since CoffeeScript is compiled to javascript, there's no performance implication, but even in Ruby, it doesn't seem to matter.
-  * Prefer string interpolation to building up strings with operators
-  * Make liberal use of array literals with one item per line and no commas
-  * Omit parentheses for function definitions that take no arguments
-  * I personally don't like a space after a function argument list like this: <code>someFunc = (one, two) -&gt;</code>, but Jeremy Ashkenas seems to like it, so go with it.
+* Prefer double quotes for most strings. CoffeeScript allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.  Since CoffeeScript is compiled to javascript, there's no performance implication, but even in Ruby, it doesn't seem to matter.
+* Prefer string interpolation to building up strings with operators
+* Make liberal use of array literals with one item per line and no commas
+* Omit parentheses for function definitions that take no arguments
+* I personally don't like a space after a function argument list like this: <code>someFunc = (one, two) -&gt;</code>, but Jeremy Ashkenas seems to like it, so go with it.
 
 # Comments
 
@@ -232,3 +247,4 @@ article [on the corresponding entry on my technology blog][6].
    [4]: http://www.python.org/dev/peps/pep-0008/
    [5]: http://www.oracle.com/technetwork/java/codeconvtoc-136057.html
    [6]: /problog/2009/03/code-conventions
+   [7]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
