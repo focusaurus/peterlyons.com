@@ -1,0 +1,35 @@
+footer
+  margin-top 4em
+
+body > nav
+  position fixed
+
+footer > nav
+  display none
+
+.respond
+  color gray
+  position fixed
+  &:after
+    content "1156 (Daddy Bear)"
+
+@media screen and (max-width: 960px)
+  .respond:after
+    content "960 (Momma Bear)"
+  body > nav
+    display none
+  footer > nav
+    display block
+
+@media screen and (max-width: 720px)
+  .respond:after
+    content "720 (Baby Bear)"
+  body
+    margin 1rem
+    font-size 1rem
+  .content
+    width 100%
+
+@media screen and (max-width: 360px)
+  .respond:after
+    content "360 (Teddy Bear)"

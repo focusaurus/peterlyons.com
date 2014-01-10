@@ -12,7 +12,7 @@ html(lang="en")
     meta(name="author", content="Peter Lyons")
     //-This seems to make it way too big on mobile
     //-meta(name="viewport", content="width=device-width")
-    link(rel="stylesheet", href="/screen.css")
+    link(rel="stylesheet", href="/screen2.css")
     script(src="/js/jquery.js")
     script(src="/js/lodash.js")
     link(href="/favicon.ico", type="image/x-icon", rel="icon")
@@ -29,18 +29,14 @@ html(lang="en")
     link(href="http://fonts.googleapis.com/css?family=Oldenburg",
       rel="stylesheet")
   body
+    .respond
+    include includes/navigation
     .content
       header
-        img(src="/images/peter_lyons_logo_icon.png", alt="Peter Lyons Logo")
         h1
           a(href="/") Peter Lyons
-        nav
-          a(href="/") Home
-          a(href="/problog") Blog
-          a(href="/practices") Practices
-          a(href="/stacks") Stacks
-          a(href="/career") Career
       block body
+      include includes/footer
       :coffeescript
         $ ->
           $("header nav a").each (index, link) ->
@@ -53,4 +49,3 @@ html(lang="en")
               $link.addClass "current"
             else
               $link.removeClass "current"
-    include includes/footer

@@ -1,6 +1,7 @@
 fs = require "fs"
 path = require "path"
 stylus = require "stylus"
+config = require "app/config"
 
 root = path.normalize "#{__dirname}/../assets/css"
 cssCacheByName = Object.create null
@@ -13,7 +14,7 @@ setup = (app) ->
     stylPath = "#{root}/#{name}.styl"
     fs.stat stylPath, (error, stats) ->
       return next error if error
-      if cached?.mtime.getTime() is stats.mtime.getTime()
+      if cached?.mtime.getTime() is stats.mtime.getTime() and config.cacheCSS
         #We have a valid cached result. Bon voyage
         return res.send cached.data
       fs.readFile stylPath, "utf8", (error, stylusText) ->

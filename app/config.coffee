@@ -18,6 +18,7 @@ exports.photos =
   galleryDataPath: "#{projectRoot}/../data/galleries.json"
   serveDirect: true
 exports.tests = false
+exports.cacheCSS = false
 exports.blog =
   hashPath: "#{projectRoot}/../data/blog_password.bcrypt"
   postBasePath: "#{projectRoot}/../data/posts"
@@ -28,6 +29,7 @@ switch process.env.NODE_ENV
     exports.loopback = true
     exports.photos.serveDirect = false
     exports.errorPages = false
+    exports.cacheCSS = true
   when "stage"
     exports.site = "stage.peterlyons.com"
     exports.baseURL = "http://#{exports.site}"
