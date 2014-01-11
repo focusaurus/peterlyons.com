@@ -16,7 +16,7 @@ http://snook.ca/archives/html_and_css/font-size-with-rem
 */
 fontSize(size)
   pixels = 12 if size < -1
-  pixels = 16 if size == -1
+  pixels = 14 if size == -1
   pixels = 20 if size ==  0 //Base size 0 for main body content
   pixels = 24 if size ==  1
   pixels = 28 if size ==  2
@@ -38,7 +38,7 @@ body
   width 30em
 
 p
-  margin ($lineHeight * 2) 0
+  margin-top ($lineHeight * 2)
 
 h1, h2, h3
   margin 1.2em 0
@@ -56,6 +56,10 @@ nav
 
 nav.post
   fontSize 0
+
+pre
+  fontSize -1
+  line-height 1.3em
 
 @media screen and (max-width: 720px)
   body
