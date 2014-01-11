@@ -7,6 +7,14 @@ global-reset()
 @import "blocks/license"
 @import "layout"
 
+.clear
+  clear both
+
+////////// lists //////////
+li
+  list-style-type disc
+  margin-left 2em
+
 ////////// code //////////
 codefont = Inconsolata, "courier new", monospace, serif
 //For inline code snippets (wrapping OK)
@@ -24,3 +32,7 @@ pre
   margin 1em 0
   overflow auto
   padding 1em
+
+@import "../pages/bands"
+@import "../pages/oberlin"
+@import "../blogs/view_post"

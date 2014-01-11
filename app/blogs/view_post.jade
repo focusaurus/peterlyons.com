@@ -20,10 +20,10 @@ block body
           a(href='/' + post.next.URI())= post.next.title
       li
         a#toggleComments(href="#") Show Comments
-  section#comments.hidden
+  section#comments
     #disqus_thread
     != '<script>var disqus_shortname = "peterlyons-' + post.blog + '";</script>'
-    script
+    script.
       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
       var disqus_developer = 1;
 
@@ -37,14 +37,9 @@ block body
   :coffeescript
     toggleComments = (event) ->
       event?.preventDefault()
-      hidden = $("#comments").toggleClass("hidden").hasClass("hidden")
-      $("#toggleComments").text(if hidden then "Show Comments" else "Hide Comments")
-
-    window.disqus_config = ->
-      @callbacks.afterRender.push ->
-        num = $("#dsq-num-posts").text()
-        if num > 0 and $("#comments").hasClass("hidden")
-          toggleComments()
+      visible = $("#comments").is(":visible")
+      $("#toggleComments").text(if visible then "Hide Comments" else "Show Comments")
+      if visible then $("#comments").hide() else $("#comments").show()
 
     $ ->
       $("a#toggleComments").on "click", toggleComments
