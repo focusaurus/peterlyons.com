@@ -1,0 +1,56 @@
+extends ../site/layout
+block variables
+  - title = gallery.displayName
+block body
+  h1 New Photos are on Flickr
+  p.
+    Note that starting in the fall of 2011,
+    my photos are available on
+    <a href="http://www.flickr.com/photos/88096431@N00/">my Flickr photo stream</a>.
+    I enjoyed writing and maintaining my own photo software for a decade or so,
+    but it's time to move on.
+  h1.galleryName(data-galleryURI=gallery.URI()) Photo Gallery: #{gallery.displayName}
+  #nextPrev
+    a(href=photo.prev.pageURI) &lt;&lt;previous&nbsp;
+    a(href=photo.next.pageURI) next&gt;&gt;
+  figure
+    a#photolink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName + '&photo=' + photo.next.name)
+      img#photo(alt=photo.caption, title=photo.caption, src=photo.fullSizeURI)
+
+    figcaption#caption #{photo.caption}
+  each photo in photos
+    - jsCaption = photo.caption.replace("'", "\\'").replace('"', "&quot;").trim()
+    -  altCaption = photo.caption.replace('"', "&quot;").trim()
+    - onClick = "showPhoto('" + photo.fullSizeURI + "', '" + jsCaption + "', '" + photo.name + "');return false"
+    a.thumbnail(
+        href=config.photos.galleryURI + '?gallery=' + gallery.dirName + '&photo=' + photo.name,
+        data-name=photo.name,
+        data-fullSizeURI=photo.fullSizeURI,
+        data-caption=altCaption)
+      img.thumbnail(src=config.photos.photoURI + gallery.dirName + '/' + photo.name + config.photos.thumbExtension, alt=altCaption, title=altCaption)
+  h1 Other Photo Galleries
+  nav.photos
+    each gallery in galleries
+      - var index = galleries.indexOf(gallery)
+      - var prevIndex = index - 1
+      - if (prevIndex < 0)
+        - prevIndex = galleries.length - 1
+      - var currentYear = gallery.startDate.getFullYear()
+      - var previousYear = galleries[prevIndex].startDate.getFullYear()
+      - if (index === 0 || currentYear != previousYear)
+        h2.year #{currentYear}
+      a.gallerylink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName) #{gallery.displayName}
+  :coffeescript
+    $ ->
+      $("a.thumbnail").click (event)->
+        event.preventDefault()
+        $("#photo").attr "src", $(this).attr("data-fullSizeURI")
+        $("#photo").attr "alt", $(this).attr("data-caption")
+        $("#photo").attr "title", $(this).attr("data-caption")
+        $("#caption").text $(this).attr("data-caption")
+        #Have to omit any literal ampersand here or zombie chokes.
+        #https://github.com/assaf/zombie/issues/62/#comment_952554
+        #String.fromCharCode(38) is an ampersand
+        photoURI = $(".galleryName").attr("data-galleryURI") + "&photo=" + $(this).attr("data-name")
+        $("#photolink").attr "href", photoURI
+        window.scrollTo 0, $("#photo").position().top - 5
