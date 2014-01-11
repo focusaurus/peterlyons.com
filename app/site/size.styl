@@ -24,6 +24,8 @@ fontSize(size)
   pixels = 40  if size > 3
   font-size unit(pixels, px)
   font-size unit((pixels/10), rem)
+  line-height unit((pixels * 1.5), px)
+  line-height unit((pixels * 1.5 / 10), rem)
 
 html
   //This is a magic number that keeps 1em equal to 10px
@@ -31,11 +33,6 @@ html
 
 body
   fontSize 0
-  line-height $lineHeight
-
-.content
-  margin 1em auto
-  width 30em
 
 header h1
   font-size 6rem
@@ -62,7 +59,9 @@ nav.post
 
 pre
   fontSize -1
-  line-height 1.3em
+
+// img
+//   max-width 100%
 
 @media screen and (max-width: 720px)
   body
