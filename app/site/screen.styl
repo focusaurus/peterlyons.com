@@ -1,7 +1,19 @@
 @import "nib/reset"
 global-reset()
+@import "color"
 @import "size"
 @import "blocks/header"
 @import "blocks/navigation"
 @import "blocks/license"
 @import "layout"
+
+////////// code //////////
+codefont = Inconsolata, "courier new", monospace, serif
+//For inline code snippets (wrapping OK)
+code, pre
+  background-color $colorCodeBackground
+  color $colorCode
+  font-family codefont
+
+code
+  padding 0 0.2em
