@@ -38,7 +38,7 @@ block body
     toggleComments = (event) ->
       event?.preventDefault()
       visible = $("#comments").is(":visible")
-      $("#toggleComments").text(if visible then "Hide Comments" else "Show Comments")
+      $("#toggleComments").text(if visible then "Show Comments" else "Hide Comments")
       if visible then $("#comments").hide() else $("#comments").show()
 
     $ ->
