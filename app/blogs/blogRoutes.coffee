@@ -18,6 +18,7 @@ blogIndicesBySlug = {}
 
 class BlogIndex
   constructor: (@URI, @title="") ->
+    @blogTitle = @title
 
 ########## middleware ##########
 loadBlogMW = (req, res, next) ->
