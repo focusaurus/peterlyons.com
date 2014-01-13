@@ -40,6 +40,7 @@ block body
       - if (index === 0 || currentYear != previousYear)
         h2.year #{currentYear}
       a.gallerylink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName) #{gallery.displayName}
+block append scripts
   :coffeescript
     $ ->
       $("a.thumbnail").click (event)->

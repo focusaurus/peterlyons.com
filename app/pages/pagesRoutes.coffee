@@ -33,8 +33,8 @@ block body
       tplFunction = jade.compile jadeText, {filename: mdPath}
       callback null, tplFunction options
 
-  app.use templateMiddleware "jade"
-  app.use templateMiddleware "md"
+  app.use templateMiddleware("jade")
+  app.use templateMiddleware("md")
 
   app.get "/", (req, res) -> res.render "pages/home"
   app.get "/:deck(web_data|rapid_feedback)", (req, res, next) ->

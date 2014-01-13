@@ -14,6 +14,7 @@ block body
       | password to save
       input(type="password")
     button Save
+block append scripts
   :coffeescript
     $find = (selector) =>
       $(".create_blog").find selector
