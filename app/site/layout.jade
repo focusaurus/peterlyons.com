@@ -12,8 +12,7 @@ html(lang="en")
     meta(name="author", content="Peter Lyons")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     link(rel="stylesheet", href="/screen.css")
-    link(href="/favicon.ico", type="image/x-icon", rel="icon")
-    link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
+    link(href="/favicon.png", type="image/png", rel="icon")
     link(rel="alternate", type="application/atom+xml",
       href="/problog/feed", title="Pete's Points")
     link(rel="openid.server",
@@ -33,7 +32,11 @@ html(lang="en")
       footer.license
         include blocks/license
     block scripts
-      script(src="/js/jquery.js")
+      script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"
+      script.
+        if (typeof jQuery === 'undefined') {
+          document.write(unescape('%3Cscript src="/js/jquery.js" %3E%3C/script%3E'));
+        }
       script(src="/js/lodash.js")
       :coffeescript
         $ ->

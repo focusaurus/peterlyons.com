@@ -2,13 +2,19 @@
 global-reset()
 @import "layout"
 @import "color"
-@import "blocks/header"
-@import "blocks/navigation"
-@import "blocks/license"
 @import "typography"
 
 .clear
   clear both
+
+body
+  background-color $colorPrimaryBackground
+  color $colorPrimary
+
+a
+  color $colorLink
+  &:hover
+    background-color $colorLinkHoverBackground
 
 ////////// lists //////////
 li
@@ -30,8 +36,12 @@ pre
   overflow auto
   padding 1em
 
+@import "blocks/header"
+@import "blocks/navigation"
+@import "blocks/license"
 @import "../pages/bands"
 @import "../pages/contact"
 @import "../pages/oberlin"
 @import "../blogs/view_post"
 @import "../blogs/post_list"
+@import "../photos/view_gallery"
