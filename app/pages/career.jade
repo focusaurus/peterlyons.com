@@ -310,4 +310,4 @@ block append scripts
           #Make a single change to the live DOM to avoid flickers
           tempNode = $ "<div>"
           tempNode.append phase for phase in phases
-          parent.append tempNode.html()
+          $(".reverse").after tempNode.html()
