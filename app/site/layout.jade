@@ -19,8 +19,9 @@ html(lang="en")
     link(rel="openid.server",
       href="http://www.livejournal.com/openid/server.bml")
     link(rel="openid.delegate", href="http://focusaurus.livejournal.com/")
-    link(rel="stylesheet", type="text/css",
-      href="//fonts.googleapis.com/css?family=Poly|Sanchez|Inconsolata")
+    link(href="http://fonts.googleapis.com/css?family=PT+Sans|Inconsolata|Poly|Happy+Monkey",
+      rel="stylesheet", type="text/css")
+
   body
     .respond
     include blocks/navigation
@@ -34,3 +35,6 @@ html(lang="en")
     block scripts
       script(src="/js/jquery.js")
       script(src="/js/lodash.js")
+      :coffeescript
+        $ ->
+          $("nav a[href='#{document.location.pathname}']" ).addClass("current")

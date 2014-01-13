@@ -1,3 +1,6 @@
+$headerFont = Poly, serif
+$codeFont = Inconsolata, monospace
+
 /*
 "
 I am not dealing with font size insanity. Here is the deal.
@@ -31,10 +34,11 @@ html
   font-size 62.5%
 
 body
-  font-family Sanchez, Times, Serif
+  font-family "PT Sans", Helvetica, Arial, Sans-serif
   fontSize 0
 
 header h1
+  font-family "Happy Monkey", serif
   font-size 6rem
 
 p
@@ -42,7 +46,8 @@ p
   margin-bottom 3em
 
 h1, h2, h3
-  font-family Poly, Georgia, Serif
+  font-family $headerFont
+  margin 1em 0
 h1
   fontSize 3 1
 h2
@@ -58,13 +63,16 @@ nav
 nav.post
   fontSize 0
 
+///// code /////
+code, pre
+  font-family $codeFont
+
 pre
   fontSize -1
 
-ul, ol
-  margin-top 1em
-  margin-bottom 2em
-
+.license
+  p
+    fontSize -2
 @media screen and (max-width: 720px)
   body
     fontSize -1

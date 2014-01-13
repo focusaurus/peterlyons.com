@@ -129,7 +129,7 @@ import statements should all be done at the beginning of the module unless there
 
 Most of the time, I avoid the "from" keyword in imports and keep the module/package namespace explicit (i.e. always use os.path). The reason is this keeps it clear exactly where each function is coming from. If you have more than one `from somepkg import *` line in a module, the reader may have to do annoying busywork to track down which module contains a particular function. (Readability Is King).
 
-class member property initializations in constructors should be done asciibetically unless execution order matters (When In Doubt, Alphabetize)
+Class member property initializations in constructors should be done asciibetically unless execution order matters (When In Doubt, Alphabetize)
 
 Prefer the string substitution `%` operator over using `+` to build strings. I just find it more elegant and easier to change the string later. I use this exclusively in accordance with the Make One Choice principle.
 
