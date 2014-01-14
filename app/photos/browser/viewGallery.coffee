@@ -1,25 +1,27 @@
-#Holy Upvotes, Batman! http://stackoverflow.com/a/901144/266795
-#tweaked by plyons for testability
-getParameterByName = (name, queryString) ->
-  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]")
-  queryString = queryString or location.search
-  regex = new RegExp("[\\?&]" + name + "=([^&#]*)")
-  results = regex.exec(queryString)
-  (if not results? then "" else decodeURIComponent(results[1].replace(/\+/g, " ")))
+changePhoto = ($scope)->
+  currentIndex = 0
+  matchingPhoto = $scope.gallery.photos.filter (_p) -> _p.name is $scope.photoName
+  if matchingPhoto.length
+    currentIndex = $scope.gallery.photos.indexOf matchingPhoto[0]
+  $scope.photo = $scope.gallery.photos[currentIndex]
+  # It is OK for these indices to cause
+  # previousPhoto or nextPhoto to be undefined.
+  $scope.nextPhoto = $scope.gallery.photos[currentIndex + 1]
+  $scope.previousPhoto = $scope.gallery.photos[currentIndex - 1]
 
-galleryController = ($scope, $http, $routeParams, galleryName, photoName) ->
-
-  $http.get("/galleries/#{galleryName}").success (galleryData) ->
+changeGallery = ($scope, $http, $location) ->
+  $http.get("/galleries/#{$scope.galleryName}").success (galleryData) ->
     $scope.gallery = galleryData
-    currentIndex = 0
-    matchingPhoto = galleryData.photos.filter (photo) -> photo.name is photoName
-    if matchingPhoto.length
-      currentIndex = galleryData.photos.indexOf matchingPhoto[0]
-    $scope.photo = galleryData.photos[currentIndex]
-    # It is OK for these indices to cause
-    # previousPhoto or nextPhoto to be undefined.
-    $scope.nextPhoto = galleryData.photos[currentIndex + 1]
-    $scope.previousPhoto = galleryData.photos[currentIndex - 1]
+    $scope.photoName = $location.search().photo or $scope.gallery.photos[0]?.name
+
+galleryController = ($scope, $http, $location) ->
+  start = ->
+    $scope.galleryName = $location.search().gallery
+    $scope.photoName = $location.search().photo
+  $scope.$watch "photoName", changePhoto.bind(null, $scope)
+  $scope.$watch "galleryName", changeGallery.bind(null, $scope, $http, $location)
+  $scope.$on "$locationChangeSuccess", start
+  start()
 
   $http.get("/galleries").success (galleries) ->
     byYear = {}
@@ -35,11 +37,8 @@ galleryController = ($scope, $http, $routeParams, galleryName, photoName) ->
 
 _photos = ($routeProvider, $locationProvider) ->
   $locationProvider.html5Mode true
-  $routeProvider.otherwise
+  $routeProvider.when "/app/photos",
     controller: galleryController
-    template: $(".galleryApp").html()
-
+    reloadOnSearch: false
 photosApp = angular.module "photos", ["ngRoute"], _photos
-photosApp.value "galleryName", getParameterByName "gallery"
-photosApp.value "photoName", getParameterByName "photo"
 photosApp.controller("galleryController", galleryController)

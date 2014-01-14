@@ -31,17 +31,3 @@ block append scripts
   script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
   script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.js")
   script(src="/photos/viewGallery.js")
-  :coffeescript
-    $ ->
-      $("a.thumbnail").click (event)->
-        event.preventDefault()
-        $("#photo").attr "src", $(this).attr("data-fullSizeURI")
-        $("#photo").attr "alt", $(this).attr("data-caption")
-        $("#photo").attr "title", $(this).attr("data-caption")
-        $("#caption").text $(this).attr("data-caption")
-        #Have to omit any literal ampersand here or zombie chokes.
-        #https://github.com/assaf/zombie/issues/62/#comment_952554
-        #String.fromCharCode(38) is an ampersand
-        photoURI = $(".galleryName").attr("data-galleryURI") + "&photo=" + $(this).attr("data-name")
-        $("#photolink").attr "href", photoURI
-        window.scrollTo 0, $("#photo").position().top - 5
