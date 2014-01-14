@@ -1,4 +1,4 @@
-_ = require "underscore"
+_ = require "lodash"
 async = require "async"
 asyncjs = require "asyncjs"
 bcrypt = require "bcrypt"

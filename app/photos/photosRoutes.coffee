@@ -1,9 +1,10 @@
-_ = require "underscore"
+_ = require "lodash"
 async = require "async"
 fs = require "fs"
 config = require "app/config"
 gallery = require "./gallery"
 galleries = require "./galleries"
+connectCoffeeScript = require "connect-coffee-script"
 
 #Load photo metadata from a photos.json file in the gallery directory
 getPhotoJSON = (locals, callback) ->
@@ -77,7 +78,21 @@ renderPhotos = (req, res) ->
         locals.title = "#{locals.gallery.displayName} Photo Gallery" + config.titleSuffix
         res.render "photos/view_gallery", locals
 
+getGallery = (req, res) ->
+  galleries.loadBySlug req.params.slug, (error, gallery) ->
+    return res.status(500).send(error) if error
+    if not gallery
+      res.send 404
+      return
+    res.send gallery
+
+ccsConfig =
+  src: "#{__dirname}/browser"
+  prefix: "/photos"
+  dest: "#{config.staticDir}/photos"
 setup = (app) ->
+  app.use connectCoffeeScript(ccsConfig)
+  app.get "/galleries/:slug", getGallery
   app.get "/photos", renderPhotos
   if config.photos.serveDirect
     #No nginx rewrites in the dev environment, so make this URI also work

@@ -2,6 +2,18 @@ extends ../site/layout
 block variables
   - title = gallery.displayName
 block body
+  .galleryApp(ng-app="photos", ng-controller="galleryController", ng-cloak)
+    h1 Photo Gallery: {{gallery.displayName}}
+    #nextPrev
+      a(href="{{previousPhoto.pageURI}}", ng-if="previousPhoto") &lt;&lt;previous&nbsp;
+      a(href="{{nextPhoto.pageURI}}", ng-if="nextPhoto") next&gt;&gt;
+    figure
+      img(src="{{photo.fullSizeURI}}",
+        alt="{{photo.caption}}", title="{{photo.caption}}")
+      figcaption {{photo.caption}}
+    a.thumbnail(ng-repeat="photo in gallery.photos", href="{{photo.pageURI}}")
+      img.thumbnail(src="{{photo.thumbnailURI}}",
+        alt="{{photo.caption}}", title="{{photo.caption}}")
   h1 New Photos are on Flickr
   p.
     Note that starting in the fall of 2011,
@@ -41,6 +53,8 @@ block body
         h2.year #{currentYear}
       a.gallerylink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName) #{gallery.displayName}
 block append scripts
+  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
+  script(src="/photos/viewGallery.js")
   :coffeescript
     $ ->
       $("a.thumbnail").click (event)->

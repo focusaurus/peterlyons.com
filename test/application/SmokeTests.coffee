@@ -8,7 +8,7 @@ describe 'smoke tests for most pages on the site', ->
     ["/", /node\.js/]
     ["/career", /Opsware/]
     ["/contact", /pete@peterlyons.com/]
-    ["/stacks", /CoffeeScript/]
+    ["/stacks", /JavaScript/]
     ["/practices", /Craftsmanship/]
     ["/bands", /Afronauts/]
     ["/bands.html", /Afronauts/]

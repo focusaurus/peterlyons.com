@@ -1,6 +1,6 @@
 config = require "app/config"
 expect = require("chai").expect
-_ = require "underscore"
+_ = require "lodash"
 {loadPage} = require "../TestUtils"
 
 describe "the main layout", ->

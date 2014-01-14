@@ -1,4 +1,4 @@
-_ = require "underscore"
+_ = require "lodash"
 connect = require "connect"
 fs = require "fs"
 config = require "app/config"

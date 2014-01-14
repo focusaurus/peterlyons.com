@@ -1,4 +1,7 @@
 config = require 'app/config'
+_ = require "lodash"
+path = require "path"
+
 
 YMD = /(19|20)\d{6}/
 monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', \
@@ -49,7 +52,7 @@ exports.Gallery = class Gallery
     #avoid errors if these are undefined
     @dirName = @dirName or ''
     @displayName = @displayName or @dirName
-    @dirPath = config.photos.galleryDir + '/' + @dirName
+    @dirPath = path.resolve "#{config.photos.galleryDir}/#{@dirName}"
 
     #First, check the dirname for an embedded date like 20110402
     match = @dirName.match YMD
@@ -76,7 +79,10 @@ exports.Gallery = class Gallery
     else
       @startDate = startDateFromDirName or null
 
-  URI: () ->
+  URI: =>
     return "#{config.photos.galleryURI}?gallery=#{@dirName}"
+
+  toJSON: =>
+    _.pick @, ["photos", "dirName", "displayName", "startDate"]
 
 module.exports = Gallery
