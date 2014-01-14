@@ -2,6 +2,13 @@ extends ../site/layout
 block variables
   - title = gallery.displayName
 block body
+  h1 New Photos are on Flickr
+  p.
+    Note that starting in the fall of 2011,
+    my photos are available on
+    <a href="http://www.flickr.com/photos/88096431@N00/">my Flickr photo stream</a>.
+    I enjoyed writing and maintaining my own photo software for a decade or so,
+    but it's time to move on.
   .galleryApp(ng-app="photos", ng-controller="galleryController", ng-cloak)
     h1 Photo Gallery: {{gallery.displayName}}
     #nextPrev
@@ -14,44 +21,12 @@ block body
     a.thumbnail(ng-repeat="photo in gallery.photos", href="{{photo.pageURI}}")
       img.thumbnail(src="{{photo.thumbnailURI}}",
         alt="{{photo.caption}}", title="{{photo.caption}}")
-  h1 New Photos are on Flickr
-  p.
-    Note that starting in the fall of 2011,
-    my photos are available on
-    <a href="http://www.flickr.com/photos/88096431@N00/">my Flickr photo stream</a>.
-    I enjoyed writing and maintaining my own photo software for a decade or so,
-    but it's time to move on.
-  h1.galleryName(data-galleryURI=gallery.URI()) Photo Gallery: #{gallery.displayName}
-  #nextPrev
-    a(href=photo.prev.pageURI) &lt;&lt;previous&nbsp;
-    a(href=photo.next.pageURI) next&gt;&gt;
-  figure
-    a#photolink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName + '&photo=' + photo.next.name)
-      img#photo(alt=photo.caption, title=photo.caption, src=photo.fullSizeURI)
+    nav.photos
+      div(ng-repeat="year in years")
+        h2.year {{year.name}}
+        a.gallerylink(ng-repeat="gallery in year.galleries",
+          href="?gallery={{gallery.dirName}}") {{gallery.displayName}}
 
-    figcaption#caption #{photo.caption}
-  each photo in photos
-    - jsCaption = photo.caption.replace("'", "\\'").replace('"', "&quot;").trim()
-    -  altCaption = photo.caption.replace('"', "&quot;").trim()
-    - onClick = "showPhoto('" + photo.fullSizeURI + "', '" + jsCaption + "', '" + photo.name + "');return false"
-    a.thumbnail(
-        href=config.photos.galleryURI + '?gallery=' + gallery.dirName + '&photo=' + photo.name,
-        data-name=photo.name,
-        data-fullSizeURI=photo.fullSizeURI,
-        data-caption=altCaption)
-      img.thumbnail(src=config.photos.photoURI + gallery.dirName + '/' + photo.name + config.photos.thumbExtension, alt=altCaption, title=altCaption)
-  h1 Other Photo Galleries
-  nav.photos
-    each gallery in galleries
-      - var index = galleries.indexOf(gallery)
-      - var prevIndex = index - 1
-      - if (prevIndex < 0)
-        - prevIndex = galleries.length - 1
-      - var currentYear = gallery.startDate.getFullYear()
-      - var previousYear = galleries[prevIndex].startDate.getFullYear()
-      - if (index === 0 || currentYear != previousYear)
-        h2.year #{currentYear}
-      a.gallerylink(href=config.photos.galleryURI + '?gallery=' + gallery.dirName) #{gallery.displayName}
 block append scripts
   script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
   script(src="/photos/viewGallery.js")

@@ -8,11 +8,19 @@ galleryController = ($scope, $http, galleryName) ->
     $scope.nextPhoto = galleryData.photos[currentIndex + 1]
     $scope.previousPhoto = galleryData.photos[currentIndex - 1]
 
-makeGalleryResource = ($resource) ->
-  console.log "@bug makeGalleryResource running"
-  $resource "/galleries/:name", null, {get: {method: "GET"}}
+  $http.get("/galleries").success (galleries) ->
+    byYear = {}
+    for gallery in galleries
+      year = gallery.startDate.split("-")[0]
+      list = byYear[year]?= []
+      list.push gallery
+    years = []
+    for year, galleries of byYear
+      years.push {name: year, galleries}
+    years.reverse()
+    $scope.years = years
+
 
 photosApp = angular.module("photos", [])
-photosApp.factory "Gallery", makeGalleryResource
 photosApp.value "galleryName", "burning_man_2011"
 photosApp.controller("galleryController", galleryController)

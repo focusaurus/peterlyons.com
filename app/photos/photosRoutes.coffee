@@ -86,6 +86,11 @@ getGallery = (req, res) ->
       return
     res.send gallery
 
+getGalleries = (req, res) ->
+  galleries.getGalleries (error, galleries) ->
+    return res.status(500).send(error) if error
+    res.send galleries
+
 ccsConfig =
   src: "#{__dirname}/browser"
   prefix: "/photos"
@@ -93,6 +98,7 @@ ccsConfig =
 setup = (app) ->
   app.use connectCoffeeScript(ccsConfig)
   app.get "/galleries/:slug", getGallery
+  app.get "/galleries", getGalleries
   app.get "/photos", renderPhotos
   if config.photos.serveDirect
     #No nginx rewrites in the dev environment, so make this URI also work
