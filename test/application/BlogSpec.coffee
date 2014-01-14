@@ -37,8 +37,8 @@ describe "a blog index page", ->
       done()
 
   it "should have nicely formatted dates", ->
-    assert $("li.post span.date").length > 0
-    date = $("li.post span.date").last().html()
+    assert $("td.date").length > 0
+    date = $("td.date").last().html()
     assert.match date, /Mar 14, 2009/
 
 describe "the preview converter", ->
