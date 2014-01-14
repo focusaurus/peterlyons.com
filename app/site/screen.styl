@@ -17,6 +17,9 @@ button
   &:focus
     outline none
 
+blockquote
+  background-color $colorCodeBackground
+  padding 0.5em 1em
 a
   color $colorLink
   &:hover
@@ -24,8 +27,12 @@ a
 
 ////////// lists //////////
 li
-  list-style-type disc
   margin-left 2em
+ul li
+  list-style-type disc
+ol li
+  list-style-type decimal
+
 
 ////////// code //////////
 //For inline code snippets (wrapping OK)
