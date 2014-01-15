@@ -2,7 +2,6 @@ _ = require "lodash"
 connect = require "connect"
 fs = require "fs"
 config = require "app/config"
-Gallery = require "./Gallery"
 galleries = require "./galleries"
 
 defaultLocals =
@@ -21,7 +20,7 @@ adminGalleries = (req, res) ->
       galleryDirNames = galleryDirNames.filter (name) ->
         not (jsonNames.indexOf(name) >= 0)
 
-      newGalleries = (new Gallery(dirName) for dirName in galleryDirNames)
+      newGalleries = ({dirName} for dirName in galleryDirNames)
       allGalleries = jsonGalleries.concat newGalleries
       locals =
         title: 'Manage Photos'
@@ -41,7 +40,7 @@ updateGalleries = (req, res) ->
       continue
     dirName = match[1]
     startDate = req.body['gallery_' + dirName + '_startDate']
-    galleries.push(new Gallery(dirName, req.body[key], startDate))
+    galleries.push({dirName, displyName: req.body[key], startDate})
 
   galleries = _.sortBy galleries, (gallery) ->
     gallery.startDate

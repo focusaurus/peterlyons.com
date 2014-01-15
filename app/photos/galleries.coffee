@@ -1,7 +1,5 @@
 fs = require "fs"
 config = require "app/config"
-Gallery = require "./Gallery"
-
 
 photoJSONToObject = (gallery, photoJSON) ->
   photos = JSON.parse(photoJSON)
@@ -20,8 +18,6 @@ getGalleries = (callback) ->
       galleries = JSON.parse data
     catch e
       return callback(new Error("Invalid galleries JSON"))
-    galleries = galleries.map (gData) ->
-      new Gallery gData.dirName, gData.displayName, gData.startDate
     callback(null, galleries)
 
 loadBySlug = (slug, callback) ->
@@ -30,8 +26,7 @@ loadBySlug = (slug, callback) ->
     matches = galleries.filter (gallery) -> gallery.dirName is slug
     return callback() if not matches.length
     gallery = matches[0]
-    console.log "@bug gallery.dirPath", gallery.dirPath, gallery.displayName
-    fs.readFile "#{gallery.dirPath}/photos.json", (error, photoJSON) ->
+    fs.readFile "#{config.photos.galleryDir}/#{gallery.dirName}/photos.json", (error, photoJSON) ->
       return callback(error) if error
       gallery.photos = photoJSONToObject gallery, photoJSON
       callback null, gallery
