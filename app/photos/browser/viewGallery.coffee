@@ -1,4 +1,6 @@
 changePhoto = ($scope)->
+  if not $scope.gallery?.photos?
+    return
   currentIndex = 0
   matchingPhoto = $scope.gallery.photos.filter (_p) -> _p.name is $scope.photoName
   if matchingPhoto.length
@@ -13,11 +15,13 @@ changeGallery = ($scope, $http, $location) ->
   $http.get("/galleries/#{$scope.galleryName}").success (galleryData) ->
     $scope.gallery = galleryData
     $scope.photoName = $location.search().photo or $scope.gallery.photos[0]?.name
+    changePhoto $scope
 
 galleryController = ($scope, $http, $location) ->
   start = ->
     $scope.galleryName = $location.search().gallery
     $scope.photoName = $location.search().photo
+    window.scrollTo 0, $(".galleryApp").position().top
   $scope.$watch "photoName", changePhoto.bind(null, $scope)
   $scope.$watch "galleryName", changeGallery.bind(null, $scope, $http, $location)
   $scope.$on "$locationChangeSuccess", start
