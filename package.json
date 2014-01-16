@@ -27,7 +27,8 @@
     "mkdirp": "~0.3.5",
     "raw-body": "0.0.2",
     "connect-coffee-script": "~0.1.6",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "sharify": "~0.1.2"
   },
   "devDependencies": {
     "chai": "1.4.x",

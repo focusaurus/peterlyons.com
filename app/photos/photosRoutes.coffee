@@ -2,24 +2,22 @@ _ = require "lodash"
 config = require "app/config"
 galleries = require "./galleries"
 connectCoffeeScript = require "connect-coffee-script"
+sharify = require "sharify"
 
-renderPhotos = (req, res) ->
-  locals = {title: "Photo Gallery"}
-  conf = config.photos
 
+renderPhotos = (req, res, next) ->
   galleries.getGalleries (error, galleries) ->
-    throw error if error
-    locals.galleries = galleries
-    locals.gallery = _.sortBy(galleries, (g) -> -g.startDate)[0]
-    galleryParam = req.param "gallery"
-    matchGallery = galleries.filter (g) -> g.dirName is galleryParam
-    if matchGallery.length
-      locals.gallery = matchGallery[0]
-      locals.title = "#{locals.gallery.displayName} Photo Gallery" + config.titleSuffix
-      res.render "photos/view_gallery", locals
-    else
-      console.log "@bug redirecting", req.path, locals.gallery.dirName
-      res.redirect "#{req.path}?gallery=" + encodeURIComponent(locals.gallery.dirName)
+    return next(error) if error
+    matchGallery = galleries.filter (g) -> g.dirName is req.param("gallery")
+    if not matchGallery.length
+      mostRecent = _.sortBy(galleries, (g) -> -g.startDate)[0]
+      res.redirect "#{req.path}?gallery=" + \
+        encodeURIComponent(mostRecent.dirName)
+      return
+    gallery = matchGallery[0]
+    title = "#{gallery.displayName} Photo Gallery"
+    res.locals.sharify.data.galleries = galleries
+    res.render "photos/view_gallery", {title, gallery}
 
 getGallery = (req, res) ->
   galleries.loadBySlug req.params.slug, (error, gallery) ->
@@ -42,9 +40,9 @@ setup = (app) ->
   app.use connectCoffeeScript(ccsConfig)
   app.get "/galleries/:slug", getGallery
   app.get "/galleries", getGalleries
-  app.get "/photos", renderPhotos
+  app.get "/photos", sharify, renderPhotos
   if config.photos.serveDirect
     #No nginx rewrites in the dev environment, so make this URI also work
-    app.get "/app/photos", renderPhotos
+    app.get "/app/photos", sharify, renderPhotos
 
 module.exports = setup
