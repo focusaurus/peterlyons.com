@@ -66,14 +66,16 @@ block body
 block append scripts
   :coffeescript
     speed = -> Math.random() * 200 + 50
-    $ ->
-      header = $("#intro .highlight")
-      subtitle = header.text()
-      header.text("")
-      pushLetter = ->
-        text = header.text()
-        if text.length == subtitle.length
-          return
-        header.text(text + subtitle[text.length])
-        setTimeout(pushLetter, speed())
+    header = document.querySelector "#intro .highlight"
+    # Note innerText here fails because it discards trailing spaces,
+    # causing an infinite loop
+    subtitle = header.textContent
+    header.textContent = ""
+    pushLetter = ->
+      header = document.querySelector "#intro .highlight"
+      text = header.textContent
+      if text.length == subtitle.length
+        return
+      header.textContent = text + subtitle[text.length]
       setTimeout(pushLetter, speed())
+    setTimeout(pushLetter, speed())
