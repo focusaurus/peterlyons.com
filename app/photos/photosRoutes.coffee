@@ -1,12 +1,11 @@
 _ = require "lodash"
 config = require "app/config"
-galleries = require "./galleries"
+_galleries = require "./galleries"
 connectCoffeeScript = require "connect-coffee-script"
 sharify = require "sharify"
 
-
 renderPhotos = (req, res, next) ->
-  galleries.getGalleries (error, galleries) ->
+  _galleries.getGalleries (error, galleries) ->
     return next(error) if error
     matchGallery = galleries.filter (g) -> g.dirName is req.param("gallery")
     if not matchGallery.length
@@ -14,23 +13,18 @@ renderPhotos = (req, res, next) ->
       res.redirect "#{req.path}?gallery=" + \
         encodeURIComponent(mostRecent.dirName)
       return
-    gallery = matchGallery[0]
-    title = "#{gallery.displayName} Photo Gallery"
-    res.locals.sharify.data.galleries = galleries
-    res.render "photos/view_gallery", {title, gallery}
+    _galleries.loadBySlug  matchGallery[0].dirName, (error, gallery) ->
+      return res.status(500).send(error) if error
+      _.extend res.locals.sharify.data, {gallery, galleries}
+      res.render "photos/view_gallery", {gallery}
 
 getGallery = (req, res) ->
-  galleries.loadBySlug req.params.slug, (error, gallery) ->
+  _galleries.loadBySlug req.params.slug, (error, gallery) ->
     return res.status(500).send(error) if error
     if not gallery
       res.send 404
       return
     res.send gallery
-
-getGalleries = (req, res) ->
-  galleries.getGalleries (error, galleries) ->
-    return res.status(500).send(error) if error
-    res.send galleries
 
 ccsConfig =
   src: "#{__dirname}/browser"
@@ -39,7 +33,6 @@ ccsConfig =
 setup = (app) ->
   app.use connectCoffeeScript(ccsConfig)
   app.get "/galleries/:slug", getGallery
-  app.get "/galleries", getGalleries
   app.get "/photos", sharify, renderPhotos
   if config.photos.serveDirect
     #No nginx rewrites in the dev environment, so make this URI also work
