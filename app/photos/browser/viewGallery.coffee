@@ -1,5 +1,5 @@
 class GalleryController
-  constructor: (@$scope, @$location, @$anchorScroll, @$http, gallery, galleries) ->
+  constructor: (@$scope, @$window, @$location, @$anchorScroll, @$http, gallery, galleries) ->
     @$scope.gallery = gallery
     @$scope.galleryName = gallery.dirName
     byYear = {}
@@ -16,12 +16,24 @@ class GalleryController
     @$scope.$watch "photoName", @changePhoto
     @$scope.$watch "galleryName", @changeGallery
     @$scope.$on "$locationChangeSuccess", @parseSearch
+    angular.element(@$window).on("keyup", @onKeyup)
 
   parseSearch: =>
    havePhoto = @$location.search().photo?
    @$scope.galleryName = @$location.search().gallery
    @$scope.photoName = @$location.search().photo
    @$location.hash("photo") if havePhoto
+
+  onKeyup: (event) =>
+    switch event.keyCode
+      when 37
+        return if not @$scope.previousPhoto?
+        @$scope.photoName = @$scope.previousPhoto.name
+        @$scope.$digest()
+      when 39
+        return if not @$scope.nextPhoto?
+        @$scope.photoName = @$scope.nextPhoto.name
+        @$scope.$digest()
 
   changePhoto: =>
     currentIndex = 0
@@ -49,8 +61,8 @@ _photos = ($routeProvider, $locationProvider) ->
   $routeProvider.otherwise
     controller: GalleryController
     reloadOnSearch: false
-
 photosApp = angular.module "photos", ["ngRoute"], _photos
 photosApp.value("gallery", __sharifyData.gallery)
 photosApp.value("galleries", __sharifyData.galleries)
 photosApp.controller("GalleryController", GalleryController)
+
