@@ -54,6 +54,7 @@ class GalleryController
       return
     @$http.get("/galleries/#{@$scope.galleryName}").success (galleryData) =>
       @$scope.gallery = galleryData
+      @$window.document.title = galleryData.displayName + " Photo Gallery"
       @$scope.photoName = @$location.search().photo or @$scope.gallery.photos[0]?.name
 
 _photos = ($routeProvider, $locationProvider) ->
