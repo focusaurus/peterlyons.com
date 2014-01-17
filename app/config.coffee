@@ -22,6 +22,9 @@ exports.cacheCSS = false
 exports.blog =
   hashPath: "#{projectRoot}/../data/blog_password.bcrypt"
   postBasePath: "#{projectRoot}/../data/posts"
+exports.inspector =
+  enabled: false
+  webPort: exports.port + 2
 switch process.env.NODE_ENV
   when "production", "stage"
     exports.site = "peterlyons.com"
@@ -38,3 +41,4 @@ switch process.env.NODE_ENV
   else
     exports.tests = true
     exports.blogPreviews = true
+    exports.inspector.enabled = true

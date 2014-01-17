@@ -3,6 +3,7 @@ config = require "app/config"
 NotFound = require "./NotFound"
 express = require "express"
 path = require "path"
+child_process = require "child_process"
 
 app = express()
 app.set "view engine", "jade"
@@ -38,3 +39,15 @@ app.use (error, req, res, next) ->
 ip = if config.loopback then "127.0.0.1" else "0.0.0.0"
 console.log "Express serving on http://#{ip}:#{config.port} baseURL: #{config.baseURL}, env: #{process.env.NODE_ENV}"
 app.listen config.port, ip
+
+if config.inspector.enabled
+  inspector = child_process.fork(
+    require.resolve("node-inspector/bin/inspector"),
+    ["--web-port=#{config.inspector.webPort}", "--web-host=127.0.0.1"]
+  )
+  inspector.on "message", (message) ->
+    switch message.event
+      when "SERVER.LISTENING"
+        console.log "Visit %s to start debugging.", message.address.url
+      when "SERVER.ERROR"
+        console.log "Cannot start the server: %s.", message.error.code
