@@ -64,8 +64,7 @@ task::dist() {
 task::test() {
   autoinstall_wallah
   ./wallah/bin/install_node
-  set -e
-  mocha test/application/*.coffee
+  mocha
 }
 
 task::express() {
