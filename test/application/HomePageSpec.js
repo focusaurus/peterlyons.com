@@ -1,6 +1,6 @@
 var config = require("app/config");
 var expect = require("chai").expect;
-var loadPage = require("../TestUtils").loadPage;
+var loadPage = require("../testUtils").loadPage;
 
 describe("the home page", function() {
   var $ = null;

@@ -1,7 +1,7 @@
 config = require "app/config"
 expect = require("chai").expect
 _ = require "lodash"
-{loadPage} = require "../TestUtils"
+{loadPage} = require "../testUtils"
 
 describe "the main layout", ->
   $ = null

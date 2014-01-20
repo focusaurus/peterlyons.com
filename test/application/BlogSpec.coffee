@@ -2,7 +2,7 @@ config = require "app/config"
 assert = require("chai").assert
 cheerio = require "cheerio"
 
-{loadPage} = require "../TestUtils"
+{loadPage} = require "../testUtils"
 request = require "superagent"
 
 describe "a blog post page", ->

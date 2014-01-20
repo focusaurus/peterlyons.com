@@ -1,6 +1,6 @@
 config = require "app/config"
 assert = require("chai").assert
-{loadPage} = require "../TestUtils"
+{loadPage} = require "../testUtils"
 
 describe "the Web Data Slide Deck", ->
   $ = null

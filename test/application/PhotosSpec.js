@@ -1,6 +1,6 @@
 var config = require("app/config");
 var expect = require("chai").expect;
-var testUtils = require("../TestUtils");
+var testUtils = require("../testUtils");
 
 describe("the photos page", function() {
   var $ = null;

@@ -1,6 +1,6 @@
 config = require "app/config"
 expect = require("chai").expect
-{loadPage} = require "../TestUtils"
+{loadPage} = require "../testUtils"
 
 describe "the Leveling Up article", ->
   $ = null
