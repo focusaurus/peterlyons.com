@@ -11,6 +11,7 @@ function template(extension) {
     var templatePath = "" + viewPath + "." + extension;
     templatePath = path.join(req.app.get("views"), "pages", templatePath);
     fs.stat(templatePath, function(error, stats) {
+      //@todo distinguish ENOENT vs other errors
       if (error) {
         return next();
       }
