@@ -1,10 +1,11 @@
-slug = (phrase="") ->
-  phrase
+function slug(phrase) {
+  return (phrase || "")
     .replace(/\s/g, "-")
     .replace(/'/g, "")
     .replace(/\./g, "-")
     .replace(/--/g, "-")
     .replace(/-$/, "")
-    .toLowerCase()
+    .toLowerCase();
+}
 
-module.exports = slug
+module.exports = slug;
