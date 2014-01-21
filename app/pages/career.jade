@@ -318,25 +318,25 @@ block body
 block append scripts
   script
     ;(function iife(exports, undefined) {
-    var button = $(".reverse button");
-    var initialText = button.text();
-    button.click(function() {
+    var button = document.querySelector(".reverse button");
+    var initialText = button.innerText;
+    var lastPhase = _.last(document.querySelectorAll(".phase"));
+    var parent = lastPhase.parentNode;
+    var elementAfterPhases = lastPhase.nextSibling;
+    button.addEventListener("click", function() {
       var phases = [];
-      var parent = $("div.phase").parent();
-      $("div.phase").each(function(index, div) {
-        $(div).remove();
-        phases.unshift($(div));
+      [].forEach.call(document.querySelectorAll(".phase"), function(phase) {
+        phases.unshift(phase);
       });
-      var tempNode = $("<div>");
+      var fragment = document.createDocumentFragment();
       phases.forEach(function(phase) {
-        tempNode.append(phase);
+        fragment.appendChild(phase);
       });
-      $(".reverse").after(tempNode.html());
-      if (button.text() === initialText) {
-        button.text("View newest first");
+      parent.insertBefore(fragment, elementAfterPhases);
+      if (button.innerText === initialText) {
+        button.innerText = "View newest first";
       } else {
-        button.text(initialText);
+        button.innerText = initialText;
       }
     });
     })();
-
