@@ -39,5 +39,8 @@ html(lang="en")
       script(src="/js/lodash.js")
       script
         ;(function iife(exports, undefined) {
-        $("nav a[href='" + document.location.pathname + "}']" ).addClass("current")
+        var selector = "nav a[href='" + document.location.pathname + "']";
+        [].forEach.call(document.querySelectorAll(selector), function(el) {
+          el.classList.add("current");
+        });
         })();
