@@ -289,6 +289,7 @@ function setup(app) {
     }
   }
   async.forEach([problog, persblog], _load, doneLoading);
+  app.use("/blogs", connect.static(__dirname + "/browser"));
   var blogRoute = "/:blogSlug(persblog|problog)";
   app.get(blogRoute, loadBlogMW, function(req, res) {
     res.render("blogs/" + req.params.blogSlug, res.blog);

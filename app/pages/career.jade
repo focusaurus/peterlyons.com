@@ -316,22 +316,27 @@ block body
       * Apple Core Foundation APIs
 
 block append scripts
-  :coffeescript
-    $ ->
-      button = $(".reverse button")
-      initialText = button.text()
-      button.click () ->
-        phases = []
-        parent = $("div.phase").parent()
-        $("div.phase").each (index, div) ->
-          $(div).remove()
-          phases.unshift $(div)
-        #Make a single change to the live DOM to avoid flickers
-        tempNode = $ "<div>"
-        tempNode.append phase for phase in phases
-        $(".reverse").after tempNode.html()
-        if button.text() is initialText
-          button.text "View newest first"
-        else
-          button.text initialText
+  script
+    ;(function iife(exports, undefined) {
+    var button = $(".reverse button");
+    var initialText = button.text();
+    button.click(function() {
+      var phases = [];
+      var parent = $("div.phase").parent();
+      $("div.phase").each(function(index, div) {
+        $(div).remove();
+        phases.unshift($(div));
+      });
+      var tempNode = $("<div>");
+      phases.forEach(function(phase) {
+        tempNode.append(phase);
+      });
+      $(".reverse").after(tempNode.html());
+      if (button.text() === initialText) {
+        button.text("View newest first");
+      } else {
+        button.text(initialText);
+      }
+    });
+    })();
 

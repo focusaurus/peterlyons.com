@@ -35,12 +35,23 @@ block body
       })();
     noscript Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
 block append scripts
-  :coffeescript
-    toggleComments = (event) ->
-      event?.preventDefault()
-      classList = document.querySelector("#comments").classList
-      hidden = classList.contains("none")
-      newText = if hidden then "Hide Comments" else "Show Comments"
-      document.querySelector("#toggleComments").textContent = newText
-      if hidden then classList.remove("none") else classList.add("none")
-    document.querySelector("a#toggleComments").addEventListener "click", toggleComments
+  script
+    ;(function iife() {
+    function toggleComments(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      var classList = document.querySelector("#comments").classList;
+      var hidden = classList.contains("none");
+      var newText = hidden ? "Hide Comments" : "Show Comments";
+      document.querySelector("#toggleComments").textContent = newText;
+      if (hidden) {
+        classList.remove("none");
+      } else {
+        classList.add("none");
+      }
+    }
+
+    document.querySelector("a#toggleComments").addEventListener(
+      "click", toggleComments);
+    })();
