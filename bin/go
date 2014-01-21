@@ -70,7 +70,7 @@ task::test() {
 task::express() {
   autoinstall_wallah
   ./wallah/bin/install_node
-  node-dev --debug=9001 app/server.coffee
+  node-dev --debug=9001 app/server.js
 }
 
 task::inspector() {
