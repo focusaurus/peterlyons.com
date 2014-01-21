@@ -5,7 +5,7 @@
   "homepage": "http://peterlyons.com",
   "repository": "ssh://git.peterlyons.com/home/plyons/projects/peter_lyons_web_site/peterlyons.com.git",
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
-  "main": "app/server.coffee",
+  "main": "app/server.js",
   "engines": {
     "node": "0.10.24"
   },
@@ -14,7 +14,6 @@
     "async": "0.1.22",
     "asyncjs": "0.0.x",
     "bcrypt": "~0.7.7",
-    "coffee-script": "1.4.x",
     "express": "3.1.x",
     "connect": "~2.7.11",
     "jade": "0.28.x",

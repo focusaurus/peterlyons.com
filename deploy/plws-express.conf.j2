@@ -9,4 +9,4 @@ setgid {{express_user}}
 env PATH=./node_modules/.bin:./node/bin:/usr/bin
 env NODE_ENV=production
 env PLWS_HOSTNAME={{hostname}}
-exec app/server.coffee | /usr/bin/multilog s1024000 {{log_path}} 2>&1
+exec app/server.js | /usr/bin/multilog s1024000 {{log_path}} 2>&1
