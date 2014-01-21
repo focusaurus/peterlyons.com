@@ -25,7 +25,7 @@ repoint_current_symlink() {
 #Project root is our working directory
 cd $(dirname "$0")/..
 set_baseline_permissions "${1-plws}" .
-chmod ug+x ./node/bin/* ./node_modules/.bin/* ./app/server.coffee
+chmod ug+x ./node/bin/* ./node_modules/.bin/* ./app/server.js
 set_baseline_permissions "${1-plws}" ../data
 find "../data/posts" -type d -print0 | xargs -0 chmod ug+w
 repoint_current_symlink

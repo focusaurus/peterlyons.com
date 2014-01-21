@@ -1,20 +1,21 @@
-#!/usr/bin/env coffee
-#
-# Re-renders the static HTML for our error pages for when express is down.
-# Writes them out to the static repo where they can later be committed to git
+#!/usr/bin/env node
+//
+// Re-renders the static HTML for our error pages for when express is down.
+// Writes them out to the static repo where they can later be committed to git
 
-config = require "app/config"
-jade = require "jade"
-fs = require "fs"
-path = require "path"
+var config = require("app/config");
+var fs = require("fs");
+var jade = require("jade");
+var path = require("path");
 
-
-for code in [404, 500]
-  locals = {titleSuffix, appURI} = config
-  filename = path.resolve "#{__dirname}/../app/templates/errors/error#{code}.jade"
-  template = fs.readFileSync filename, "utf8"
-  templateFn = jade.compile template, {filename}
-  html = templateFn config
-  outFile = path.resolve "#{__dirname}/../../static/error#{code}.html"
-  console.log "Writing #{outFile}"
-  fs.writeFileSync outFile, "utf8"
+[404, 500].forEach(function(code) {
+  var filename = path.resolve(__dirname + "/../app/site/error" +
+    code + ".jade");
+  var template = fs.readFileSync(filename, "utf8");
+  var templateFn = jade.compile(template, {filename: filename});
+  var html = templateFn(config);
+  var outFile = path.resolve(__dirname + "/../../static/error" +
+    code + ".html");
+  console.log("Writing " + outFile);
+  fs.writeFileSync(outFile, html, "utf8");
+});
