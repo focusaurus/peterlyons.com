@@ -1,8 +1,8 @@
 var _ = require("lodash");
 var _galleries = require("./galleries");
 var config = require("app/config");
-var connectCoffeeScript = require("connect-coffee-script");
 var sharify = require("sharify");
+var connect = require("connect");
 
 function renderPhotos(req, res, next) {
   _galleries.getGalleries(function(error, galleries) {
@@ -48,14 +48,8 @@ function getGallery(req, res) {
   });
 }
 
-var ccsConfig = {
-  src: __dirname + "/browser",
-  prefix: "/photos",
-  dest: config.staticDir + "/photos"
-};
-
 function setup(app) {
-  app.use(connectCoffeeScript(ccsConfig));
+  app.use("/photos", connect.static(__dirname + "/browser"));
   app.get("/galleries/:slug", getGallery);
   app.get("/photos", sharify, renderPhotos);
   if (config.photos.serveDirect) {
