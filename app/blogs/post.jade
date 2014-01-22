@@ -2,7 +2,7 @@ extends ../site/layout
 block variables
   - title = "Write a new blog post"
 block body
-  .create_blog
+  .createPost
     .notices
     section.preview
     hr
@@ -15,4 +15,4 @@ block body
       input(type="password")
     button Save
 block append scripts
-  script(src="/blogs/writePost.js")
+  script(src="/blogs/createPost.js")

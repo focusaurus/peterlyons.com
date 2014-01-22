@@ -16,7 +16,7 @@ var config = {
   errorPages: isProduction,
   titleSuffix: " | Peter Lyons",
   tests: !isProduction,
-  cacheCSS: !isProduction
+  cacheCSS: isProduction
 };
 
 config.photos = {

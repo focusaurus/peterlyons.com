@@ -1,7 +1,7 @@
 ;(function iife(exports, undefined) {
 
 function $find(selector) {
-  return $(".create_blog").find(selector);
+  return $(".createPost").find(selector);
 }
 
 function $preview() {
