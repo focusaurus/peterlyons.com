@@ -16,10 +16,6 @@ block body
               value=gallery.displayName, size=gallery.displayName.length)
           td #{gallery.dirName}
           td
-            input.inline.date(value=formatDate(gallery.startDate),
+            input.inline.date(type="date", value=formatDate(gallery.startDate),
               name='gallery_' + gallery.dirName + '_startDate')
     input(type='submit', value='Save')
-  script(type='text/javascript')
-      $(document).ready(function() {
-        $('input.date').datepicker();
-      });

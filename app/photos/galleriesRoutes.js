@@ -1,6 +1,8 @@
 var _ = require("lodash");
 var connect = require("connect");
 var fs = require("fs");
+var moment = require("moment");
+
 var config = require("app/config");
 var galleries = require("./galleries");
 var defaultLocals = {
@@ -36,12 +38,11 @@ function adminGalleries(req, res, next) {
           if (!date) {
             return '';
           }
-          return (date.getMonth() + 1) + "/" + (date.getDate()) + "/" +
-            (date.getFullYear());
+          return moment(date).format("YYYY-MM-DD");
         }
       };
       locals = _.defaults(locals, defaultLocals);
-      res.render('admin_galleries', locals);
+      res.render("photos/admin_galleries", locals);
     });
   });
 }
