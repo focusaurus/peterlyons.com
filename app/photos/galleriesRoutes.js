@@ -59,7 +59,7 @@ function updateGalleries(req, res) {
     galleries.push({
       dirName: dirName,
       displyName: req.body[key],
-      startDate: startDate
+      startDate: moment(startDate).toDate()
     });
   }
   galleries = _.sortBy(galleries, function(gallery) {

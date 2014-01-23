@@ -2,9 +2,9 @@ var _ = require("lodash");
 var async = require("async");
 var asyncjs = require("asyncjs");
 var fs = require("fs");
-var leadZero = require("app/blogs/leadZero");
 var markdown = require("markdown-js").makeHtml;
 var mkdirp = require("mkdirp");
+var moment = require("moment");
 var path = require("path");
 var slug = require("app/blogs/slug");
 
@@ -26,10 +26,9 @@ Post.prototype.metadata = function() {
 };
 
 Post.prototype.URI = function() {
-  var month, year;
-  year = this.publish_date.getFullYear().toString();
-  month = leadZero(this.publish_date.getMonth() + 1);
-  return path.join(this.blog, year, month, this.name);
+  var publishMoment = moment(this.publish_date);
+  return path.join(this.blog,
+    publishMoment.format("YYYY"), publishMoment.format("MM"), this.name);
 };
 
 Post.prototype.contentPath = function() {

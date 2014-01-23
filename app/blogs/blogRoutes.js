@@ -5,11 +5,10 @@ var bcrypt = require("bcrypt");
 var blogIndicesBySlug = {};
 var config = require("app/config");
 var connect = require("connect");
-var date = require("../../lib/date");
 var fs = require("fs");
-var leadZero = require("./leadZero");
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
+var moment = require("moment");
 var NotFound = require("app/NotFound");
 var path = require("path");
 var Post = require("./Post");
@@ -122,14 +121,9 @@ var viewPostMiddleware = [
 ];
 
 function presentPost(post) {
-  var presented;
-  date = leadZero(post.publish_date.getMonth() + 1);
-  date = date + "/" + leadZero(post.publish_date.getDay() + 1);
-  date = date + "/" + post.publish_date.getFullYear();
-  presented = {};
-  presented = _.extend(presented, post);
+  var presented = _.clone(post);
   presented.title = presented.title.trim();
-  presented.date = post.publish_date.toString("MMM dd, yyyy");
+  presented.date = moment(post.publish_date).format("MMM DD, YYYY");
   return presented;
 }
 
