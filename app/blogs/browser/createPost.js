@@ -1,73 +1,56 @@
 ;(function iife(exports, undefined) {
+var MARKDOWN_OPTIONS = {
+  headers: {
+    contentType: "text/x-markdown"
+  }
+};
 
-function $find(selector) {
-  return $(".createPost").find(selector);
+function CreatePost($scope, $window, $http, $sce) {
+  this.$scope = $scope;
+  this.$http = $http;
+  this.$sce = $sce;
+  try {
+    var savedPost = JSON.parse(localStorage.postDraft);
+    $scope.title = savedPost.title;
+    $scope.contentMarkdown = savedPost.content;
+  } catch (_error) {
+    console.log(localStorage.postDraft);
+  }
+  $scope.save = save.bind(this, $scope, $window, $http);
+  $scope.$watch("contentMarkdown",
+    _.debounce(changeContentMarkdown.bind(this, $scope, $http, $sce), 250));
 }
 
-function $preview() {
-  return $find(".preview");
-}
-
-function content() {
-  return $find(".content").val();
-}
-
-function preview(content, $out) {
-  $.ajax({
-    type: "POST",
-    url: "/convert",
-    contentType: "text/x-markdown",
-    data: content,
-    success: function(response) {
-      $out.html(response);
-    }
-  });
-}
-
-function handleKeys(event) {
+function changeContentMarkdown($scope, $http, $sce) {
   var postDraft = {
-    content: content(),
-    title: $find("[name=title]").val()
+    content: $scope.contentMarkdown,
+    title: $scope.title
   };
   localStorage.postDraft = JSON.stringify(postDraft);
-  preview(postDraft.content, $preview());
-}
-
-function save() {
-  $find(".notices").html("");
-  var data = {
-    title: $find("[name=title]").val(),
-    content: content(),
-    password: $find("[type=password]").val()
-  };
-  $.ajax({
-    type: "POST",
-    url: "post",
-    contentType: "application/json",
-    data: JSON.stringify(data),
-    success: function(response) {
-      $find(".notices").html("New post saved at <a href='/" + response.URI + "'>" + response.URI + "</a>");
-      window.scrollTo(0, 0);
-    },
-    error: function(response) {
-      $find(".notices").html("<strong>BORKED!</strong>");
-    }
+  $http.post(
+    "/convert", $scope.contentMarkdown, MARKDOWN_OPTIONS
+  ).success(function(contentHtml) {
+    $scope.contentHtml = $sce.trustAsHtml(contentHtml);
   });
 }
 
-var savedPost = {
-  title: "",
-  content: ""
-};
-try {
-  savedPost = JSON.parse(localStorage.postDraft);
-} catch (_error) {
-  console.log(localStorage.postDraft);
+function save($scope, $window, $http) {
+  $scope.savedPost = null;
+  $scope.error = null;
+  var data = {
+    title: $scope.title,
+    content: $scope.contentMarkdown,
+    password: $scope.password
+  };
+  //relative URL here is intentional to post to the current blog
+  $http.post("post", data).success(function(response) {
+    $scope.savedPost = response;
+  }).error(function(response) {
+    $scope.error = response;
+  }).finally(function () {
+    $window.scrollTo(0, 0);
+  });
 }
-$find(".content").val(savedPost.content).focus().on(
-  "keyup", _.debounce(handleKeys, 250));
-$find("[name=title]").val(savedPost.title);
-preview(savedPost.content, $preview());
-$find("button").on("click", save);
 
-})();
+exports.CreatePost = CreatePost;
+})(this);

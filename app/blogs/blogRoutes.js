@@ -198,13 +198,17 @@ function savePost(req, callback) {
 
 function createPost(req, res, next) {
   var password = req.body.password;
-  var work = [async.apply(fs.readFile, config.blog.hashPath, "utf8"), async.apply(verifyPassword, password), async.apply(savePost, req)];
+  var work = [
+    async.apply(fs.readFile, config.blog.hashPath, "utf8"),
+    async.apply(verifyPassword, password),
+    async.apply(savePost, req)
+  ];
   async.waterfall(work, function(error, post) {
     if (error) {
       return res.status(500).send(error);
     }
     var response = post.metadata();
-    response.URI = post.URI();
+    response.uri = post.URI();
     res.send(response);
     loadBlog(post.blog, function(error, posts) {
       var blog;

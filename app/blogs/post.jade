@@ -2,17 +2,21 @@ extends ../site/layout
 block variables
   - title = "Write a new blog post"
 block body
-  .createPost
-    .notices
-    section.preview
+  .createPost(ng-app, ng-controller="CreatePost", ng-cloak)
+    .error(ng-if="error")
+      strong BORKED! {{error}}
+    .saved(ng-if="savedPost") New post saved at&nbsp;
+      a(ng-href="/{{savedPost.uri}}") {{savedPost.title}}
+    section.preview(ng-bind-html="contentHtml")
     hr
     label
       | title
-      input(name="title")
-    textarea.content(cols="80", rows="25")
+      input(name="title", ng-model="title")
+    textarea.content(cols="80", rows="25", ng-model="contentMarkdown")
     label
       | password to save
-      input(type="password")
-    button Save
+      input(type="password", ng-model="password")
+    button(ng-click="save()", ng-disabled="!password") Save
 block append scripts
+  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js")
   script(src="/blogs/createPost.js")
