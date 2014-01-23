@@ -39,10 +39,9 @@ function GalleryController(
 }
 
 GalleryController.prototype.parseSearch = function() {
-  var havePhoto = this.$location.search().photo !== null;
   this.$scope.galleryName = this.$location.search().gallery;
   this.$scope.photoName = this.$location.search().photo;
-  if (havePhoto) {
+  if (this.$scope.photoName !== null) {
     this.$location.hash("photo");
   }
 };
@@ -53,16 +52,18 @@ GalleryController.prototype.onKeyup = function(event) {
       if (this.$scope.previousPhoto === null) {
         return;
       }
-      this.$scope.photoName = this.$scope.previousPhoto.name;
-      this.$scope.$digest();
+      this.$location.search("photo", this.$scope.previousPhoto.name);
       break;
     case 39:
       if (this.$scope.nextPhoto === null) {
         return;
       }
-      this.$scope.photoName = this.$scope.nextPhoto.name;
-      this.$scope.$digest();
+      this.$location.search("photo", this.$scope.nextPhoto.name);
+      break;
+    default:
+      return;
   }
+  this.$scope.$apply(this.parseSearch());
 };
 
 GalleryController.prototype.changePhoto = function() {
