@@ -28,7 +28,7 @@ function renderPhotos(req, res, next) {
         gallery: gallery,
         galleries: galleries
       });
-      res.render("photos/view_gallery", {
+      res.render("photos/viewGallery", {
         gallery: gallery
       });
     });

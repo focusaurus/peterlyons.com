@@ -1,6 +1,7 @@
 extends ../site/layout
 block variables
   - title = "Write a new blog post"
+  - angular = true
 block body
   .createPost(ng-app, ng-controller="CreatePost", ng-cloak)
     .error(ng-if="error")
@@ -18,5 +19,4 @@ block body
       input(type="password", ng-model="password")
     button(ng-click="save()", ng-disabled="!password") Save
 block append scripts
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js")
   script(src="/blogs/createPost.js")

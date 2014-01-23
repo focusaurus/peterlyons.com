@@ -1,4 +1,4 @@
-- var title;
+- var title, angular;
 block variables
 - if (title && title.indexOf(titleSuffix) < 0 && title.indexOf("Peter Lyons") !== 0) { title = title + titleSuffix }
 doctype html
@@ -20,7 +20,6 @@ html(lang="en")
     meta(name="keywords", content="peter lyons, pete lyons, web development, node.js, developer, coder, freelance, consultant, afronauts, boulder, colorado, turtle dove, startups, music, sax, saxophone, saxophonist, sunny daze, confunktion junction, oberlin, smartears, smart ears, big clock")
     meta(name="author", content="Peter Lyons")
     meta(name="viewport", content="width=device-width, initial-scale=1")
-
   body
     include blocks/navigation
     .content
@@ -31,11 +30,14 @@ html(lang="en")
       footer.license
         include blocks/license
     block scripts
-      script(src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
-      script
-        if (typeof jQuery === 'undefined') {
-          document.write(unescape('%3Cscript src="/js/jquery.js" %3E%3C/script%3E'));
-        }
+      if angular
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js")
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js")
+        script
+          if (typeof angular === 'undefined') {
+            document.write(unescape('%3Cscript src="/js/angular.js" %3E%3C/script%3E'));
+            document.write(unescape('%3Cscript src="/js/angular-route.js" %3E%3C/script%3E'));
+          }
       script(src="/js/lodash.js")
       script
         ;(function iife(exports, undefined) {

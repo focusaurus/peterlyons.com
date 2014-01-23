@@ -1,6 +1,7 @@
 extends ../site/layout
 block variables
   - title = gallery.displayName + " Photo Gallery"
+  - angular = true
 block body
   h1 New Photos are on Flickr
   p.
@@ -15,11 +16,11 @@ block body
       a(href="{{previousPhoto.pageURI}}", ng-if="previousPhoto") &lt;&lt;previous&nbsp;
       a(href="{{nextPhoto.pageURI}}", ng-if="nextPhoto") next&gt;&gt;
     figure
-      img(src="{{photo.fullSizeURI}}",
+      img(ng-src="{{photo.fullSizeURI}}",
         alt="{{photo.caption}}", title="{{photo.caption}}")
       figcaption {{photo.caption}}
     a.thumbnail(ng-repeat="photo in gallery.photos", href="{{photo.pageURI}}")
-      img.thumbnail(src="{{photo.thumbnailURI}}",
+      img.thumbnail(ng-src="{{photo.thumbnailURI}}",
         alt="{{photo.caption}}", title="{{photo.caption}}")
     nav.photos
       div(ng-repeat="year in years")
@@ -28,7 +29,5 @@ block body
           href="?gallery={{gallery.dirName}}") {{gallery.displayName}}
 
 block append scripts
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js")
-  script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.min.js")
   != sharify.script()
   script(src="/photos/viewGallery.js")

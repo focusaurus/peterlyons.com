@@ -83,7 +83,7 @@ function renderPost(req, res, next) {
     post: res.post,
     postContent: res.html
   };
-  res.app.render("blogs/view_post", locals, function(error, html) {
+  res.app.render("blogs/viewPost", locals, function(error, html) {
     if (error) {
       next(error);
       return;
@@ -292,7 +292,7 @@ function setup(app) {
   app.get(blogRoute, loadBlogMW, function(req, res) {
     res.render("blogs/" + req.params.blogSlug, res.blog);
   });
-  app.get("" + blogRoute + "/post", function(req, res) {
+  app.get(blogRoute + "/post", function(req, res) {
     res.render("blogs/post");
   });
   app.post(blogRoute + "/post", connect.bodyParser(), createPost);

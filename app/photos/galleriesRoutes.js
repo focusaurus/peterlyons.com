@@ -42,7 +42,7 @@ function adminGalleries(req, res, next) {
         }
       };
       locals = _.defaults(locals, defaultLocals);
-      res.render("photos/admin_galleries", locals);
+      res.render("photos/adminGalleries", locals);
     });
   });
 }
