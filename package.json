@@ -16,7 +16,6 @@
     "bcrypt": "~0.7.7",
     "express": "3.1.x",
     "connect": "~2.7.11",
-    "jade": "~0.28.2",
     "cheerio": "0.10.x",
     "markdown-js": "0.0.3",
     "nib": "~0.7.1",
@@ -25,7 +24,8 @@
     "raw-body": "0.0.2",
     "lodash": "~2.4.1",
     "sharify": "~0.1.2",
-    "moment": "~2.5.1"
+    "moment": "~2.5.1",
+    "jade": "~1.1.5"
   },
   "devDependencies": {
     "chai": "~1.8.1",

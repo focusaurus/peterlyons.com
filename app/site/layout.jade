@@ -33,13 +33,13 @@ html(lang="en")
       if angular
         script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js")
         script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js")
-        script
+        script.
           if (typeof angular === 'undefined') {
             document.write(unescape('%3Cscript src="/js/angular.js" %3E%3C/script%3E'));
             document.write(unescape('%3Cscript src="/js/angular-route.js" %3E%3C/script%3E'));
           }
       script(src="/js/lodash.js")
-      script
+      script.
         ;(function iife(exports, undefined) {
         var selector = "nav a[href='" + document.location.pathname + "']";
         [].forEach.call(document.querySelectorAll(selector), function(el) {
