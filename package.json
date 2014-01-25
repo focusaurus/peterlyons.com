@@ -15,8 +15,6 @@
     "asyncjs": "0.0.x",
     "bcrypt": "0.7.7",
     "markdown-js": "0.0.3",
-    "nib": "0.7.1",
-    "stylus": "0.32.1",
     "mkdirp": "0.3.5",
     "lodash": "2.4.1",
     "sharify": "0.1.2",
@@ -24,7 +22,9 @@
     "jade": "1.1.5",
     "express": "3.4.8",
     "cheerio": "0.13.1",
-    "raw-body": "1.1.2"
+    "raw-body": "1.1.2",
+    "stylus": "0.42.1",
+    "nib": "1.0.2"
   },
   "devDependencies": {
     "chai": "1.8.1",
