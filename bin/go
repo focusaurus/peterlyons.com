@@ -64,7 +64,13 @@ task::dist() {
 task::test() {
   autoinstall_wallah
   ./wallah/bin/install_node
-  mocha
+  NODE_ENV=test mocha
+}
+
+task::test_debug() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  NODE_ENV=test mocha --debug-brk=9004
 }
 
 task::express() {
@@ -78,6 +84,13 @@ task::inspector() {
   ./wallah/bin/install_node
   echo "http://localhost:9002/debug?port=9001"
   ./node_modules/.bin/node-inspector --web-port=9002
+}
+
+task::inspector_tests() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  echo "http://localhost:9005/debug?port=9004"
+  ./node_modules/.bin/node-inspector --web-port=9005
 }
 
 task::errors() {
