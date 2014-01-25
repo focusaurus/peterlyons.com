@@ -1,13 +1,12 @@
-var config = require("app/config");
 var assert = require("assert");
 var testUtils = require("../testUtils");
 
 describe("the Leveling Up article", function() {
   var $ = null;
   before(function(done) {
-    testUtils.loadPage(config.baseURL + "/leveling_up", function(dom) {
+    testUtils.loadPage("/leveling_up", function(error, dom) {
       $ = dom;
-      done();
+      done(error);
     });
   });
 

@@ -1,12 +1,25 @@
 var assert = require("assert");
 var cheerio = require("cheerio");
-var request = require("superagent");
+var request = require("supertest")(require("app/server"));
+var _ = require("lodash");
 
-function loadPage(URL, done) {
-  request.get(URL, function(res) {
+function loadPage(URL, callback) {
+  request.get(URL).expect(200).end(function(error, res) {
+    if (error) {
+      callback(error);
+      return;
+    }
     var $ = cheerio.load(res.text);
-    done($);
+    callback(null, $);
   });
+}
+
+function get(URL) {
+  return request.get(URL);
+}
+
+function post(URL) {
+  return request.post(URL);
 }
 
 function assertSelectors() {
@@ -26,8 +39,33 @@ function assertSubstrings() {
   });
 }
 
+function pageContains(_url, _phraseVarArgs, _done) {
+  var phrases = Array.prototype.slice.call(arguments);
+  var url = phrases.shift();
+  var done = phrases.pop();
+
+  request.get(url).expect(200).end(function(error, res) {
+    if (error) {
+      done(error);
+      return;
+    }
+    phrases.forEach(function(phrase) {
+      if (typeof phrase === "string") {
+        assert(res.text.indexOf(phrase) >= 0, "Document missing phrase " + phrase + res.text);
+      } else {
+        //regex
+        assert(phrase.test(res.text), "Document does not match " + phrase.pattern);
+      }
+    });
+    done(null, cheerio.load(res.text));
+  });
+}
+
 module.exports = {
+  get: get,
+  post: post,
   loadPage: loadPage,
+  pageContains: pageContains,
   assertSelectors: assertSelectors,
   assertSubstrings: assertSubstrings
 };

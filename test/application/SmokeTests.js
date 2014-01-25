@@ -1,6 +1,15 @@
-var config = require("app/config");
-var request = require("superagent");
-var expect = require("chai").expect;
+var testUtils = require("../testUtils");
+var blogRoutes = require("app/blogs/blogRoutes");
+
+describe("wait for blogs to be loaded from disk", function () {
+  it("should wait for blogRoutes.ready event", function(done) {
+    if (blogRoutes.loaded) {
+      done();
+      return;
+    }
+    require("app/blogs/blogRoutes").events.on("ready", done);
+  });
+});
 
 describe('smoke tests for most pages on the site', function() {
   var testConfigs = [
@@ -10,17 +19,15 @@ describe('smoke tests for most pages on the site', function() {
     ["/stacks", /JavaScript/],
     ["/practices", /Craftsmanship/],
     ["/bands", /Afronauts/],
-    ["/bands.html", /Afronauts/],
     ["/code_conventions", /readability/],
     ["/this-will-cause-404", /404 error page/],
     ["/leveling_up", /Pillar 1/],
     ["/web_prog", /PHP/],
     ["/oberlin", /Edison/],
-    ["/oberlin.html", /Edison/],
     ["/favorites", /Imogen/],
     ["/problog", /Pete's Points/],
     ["/persblog", /travel/],
-    ["/app/photos", /Gallery/],
+    ["/app/photos?gallery=burning_man_2011", /Gallery/],
     ["/problog/2009/03/announcing-petes-points", /professional/],
     ["/persblog/2007/10/petes-travel-adventure-2007-begins-friday-october-5th", /Alitalia/]
   ];
@@ -28,11 +35,7 @@ describe('smoke tests for most pages on the site', function() {
     var URI = testConfig[0];
     var regex = testConfig[1];
     it(URI + " should match " + regex, function(done) {
-      request.get(config.baseURL + URI, function(res) {
-        expect(res.status).to.equal(200);
-        expect(res.text).to.match(regex);
-        done();
-      });
+      testUtils.pageContains(URI, regex, done);
     });
   });
 });

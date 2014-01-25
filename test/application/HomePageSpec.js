@@ -1,19 +1,17 @@
-var config = require("app/config");
 var expect = require("chai").expect;
-var loadPage = require("../testUtils").loadPage;
+var testUtils = require("../testUtils");
 
 describe("the home page", function() {
   var $ = null;
 
   before(function(done) {
-    loadPage(config.baseURL, function(dom) {
+    testUtils.loadPage("/", function(error, dom) {
       $ = dom;
-      done();
+      done(error);
     });
   });
   it("should have the intro material", function () {
-    ["section#intro", "section#chops", "section#writing"].forEach(function(selector) {
-      expect($(selector)).not.to.be.empty;
-    });
+    testUtils.assertSelectors($,
+      "section#intro", "section#chops", "section#writing");
   });
 });

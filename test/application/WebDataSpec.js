@@ -1,13 +1,12 @@
-var config = require("app/config");
 var assert = require("chai").assert;
 var testUtils = require("../testUtils");
 
 describe("the Web Data Slide Deck", function() {
   var $ = null;
   before(function(done) {
-    testUtils.loadPage(config.baseURL + "/web_data", function(dom) {
+    testUtils.loadPage("/web_data", function(error, dom) {
       $ = dom;
-      done();
+      done(error);
     });
   });
 

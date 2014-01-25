@@ -1,14 +1,13 @@
 var _ = require("lodash");
 var assert = require("assert");
-var config = require("app/config");
 var testUtils = require("../testUtils");
 
 describe("the main layout", function() {
   var $ = null;
   before(function(done) {
-    testUtils.loadPage(config.baseURL, function(dom) {
+    testUtils.loadPage("/", function(error, dom) {
       $ = dom;
-      done();
+      done(error);
     });
   });
   it("should have the google fonts", function() {

@@ -5,6 +5,7 @@ var bcrypt = require("bcrypt");
 var blogIndicesBySlug = {};
 var config = require("app/config");
 var connect = require("connect");
+var events = require("events");
 var fs = require("fs");
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
@@ -30,7 +31,6 @@ function loadPost(req, res, next) {
   var post = new Post();
   post.base = config.blog.postBasePath;
   post.load(path.join(post.base, req.path + ".json"), blog, function(error) {
-    var links;
     if (error && error.code === "ENOENT") {
       next(new NotFound(req.path));
       return;
@@ -41,7 +41,7 @@ function loadPost(req, res, next) {
     }
     res.post = post;
     post.presented = presentPost(post);
-    links = postLinks[post.URI()];
+    var links = postLinks[post.URI()];
     post.previous = links.previous;
     post.next = links.next;
     res.viewPath = post.viewPath();
@@ -78,8 +78,7 @@ function markdownToHTML(req, res, next) {
 }
 
 function renderPost(req, res, next) {
-  var locals;
-  locals = {
+  var locals = {
     post: res.post,
     postContent: res.html
   };
@@ -131,21 +130,20 @@ function loadBlog(URI, callback) {
   var basePath = path.join(config.blog.postBasePath, URI);
   basePath = path.normalize(basePath);
   var posts = [];
+
   asyncjs.walkfiles(basePath, null, asyncjs.PREORDER).stat().each(function(file, next) {
-    var noExt, post;
     if (file.stat.isDirectory()) {
       next();
       return;
     }
-    if (!/\.(md|html)$/.test(file.name)) {
+    if (!/\.json$/.test(file.name)) {
       next();
       return;
     }
-    post = new Post();
+    var post = new Post();
     posts.push(post);
-    post.base = path.resolve(path.join(__dirname, "../posts"));
-    noExt = file.path.substr(0, file.path.lastIndexOf('.'));
-    post.load("" + noExt + ".json", URI, function(error) {
+    post.base = config.blog.postBasePath;
+    post.load(file.path, URI, function(error) {
       if (error) {
         next(error);
         return;
@@ -154,23 +152,21 @@ function loadBlog(URI, callback) {
       next();
     });
   }).end(function(error) {
-    var index, post, _i, _len;
     posts = _.sortBy(posts, function(post) {
       return post.publish_date;
     }).reverse();
-    for (index = _i = 0, _len = posts.length; _i < _len; index = ++_i) {
-      post = posts[index];
+    posts.forEach(function (post, index) {
       postLinks[post.URI()] = {
         next: index > 0 ? posts[index - 1] : null,
         previous: index < posts.length ? posts[index + 1] : null
       };
-    }
+    });
     callback(error, posts);
   });
 }
 
 function verifyPassword(password, hash, callback) {
-  return bcrypt.compare(password, hash, function(error, correctPassword) {
+  bcrypt.compare(password, hash, function(error, correctPassword) {
     if (error) {
       callback(error);
       return;
@@ -285,6 +281,8 @@ function setup(app) {
     if (error) {
       throw error;
     }
+    setup.loaded = true;
+    setup.events.emit("ready");
   }
   async.forEach([problog, persblog], _load, doneLoading);
   app.use("/blogs", connect.static(__dirname + "/browser"));
@@ -303,3 +301,4 @@ function setup(app) {
 }
 
 module.exports = setup;
+setup.events = new events.EventEmitter();
