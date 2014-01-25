@@ -4,8 +4,8 @@ var asyncjs = require("asyncjs");
 var bcrypt = require("bcrypt");
 var blogIndicesBySlug = {};
 var config = require("app/config");
-var connect = require("connect");
 var events = require("events");
+var express = require("express");
 var fs = require("fs");
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
@@ -285,7 +285,7 @@ function setup(app) {
     setup.events.emit("ready");
   }
   async.forEach([problog, persblog], _load, doneLoading);
-  app.use("/blogs", connect.static(__dirname + "/browser"));
+  app.use("/blogs", express.static(__dirname + "/browser"));
   var blogRoute = "/:blogSlug(persblog|problog)";
   app.get(blogRoute, loadBlogMW, function(req, res) {
     res.render("blogs/" + req.params.blogSlug, res.blog);
@@ -293,7 +293,7 @@ function setup(app) {
   app.get(blogRoute + "/post", function(req, res) {
     res.render("blogs/post");
   });
-  app.post(blogRoute + "/post", connect.bodyParser(), createPost);
+  app.post(blogRoute + "/post", express.json(), createPost);
   app.get(blogRoute + "/feed", loadBlogMW, feed);
   app.get(blogRoute + "/flushCache}", loadBlogMW, flushCache);
   app.get(new RegExp("/(persblog|problog)/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware);

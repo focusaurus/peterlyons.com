@@ -1,5 +1,5 @@
 var _ = require("lodash");
-var connect = require("connect");
+var express = require("express");
 var fs = require("fs");
 var moment = require("moment");
 
@@ -80,7 +80,7 @@ function setup(app) {
     return;
   }
   app.get('/admin/galleries', adminGalleries);
-  app.post('/admin/galleries', connect.bodyParser(), updateGalleries);
+  app.post('/admin/galleries', express.json(), updateGalleries);
 }
 
 module.exports = setup;
