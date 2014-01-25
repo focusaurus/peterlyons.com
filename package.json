@@ -16,7 +16,7 @@
     "bcrypt": "~0.7.7",
     "express": "3.1.x",
     "connect": "~2.7.11",
-    "jade": "0.28.x",
+    "jade": "~0.28.2",
     "cheerio": "0.10.x",
     "markdown-js": "0.0.3",
     "nib": "~0.7.1",
@@ -28,12 +28,12 @@
     "moment": "~2.5.1"
   },
   "devDependencies": {
-    "chai": "~1.4.2",
+    "chai": "~1.8.1",
     "commander": "0.5.x",
     "mocha": "~1.17.1",
-    "node-inspector": "*",
-    "node-dev": "~2.0.2",
-    "superagent": "0.12.x",
+    "node-inspector": "~0.7.0-2",
+    "node-dev": "~2.1.5",
+    "superagent": "~0.16.0",
     "supertest": "~0.9.0"
   }
 }
