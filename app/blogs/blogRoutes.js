@@ -93,7 +93,7 @@ function renderPost(req, res, next) {
 }
 
 function previewMarkdown(req, res, next) {
-  res.html = markdown(req.body);
+  res.html = markdown(req.text);
   next();
 }
 

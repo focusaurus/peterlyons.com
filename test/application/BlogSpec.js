@@ -58,22 +58,23 @@ describe("the preview converter", function() {
         .send("#Header One")
         .set("Content-Type", "text/x-markdown")
         .set("Accept", "text/html")
+        .expect(200)
         .end(function(error, res) {
-      assert(res.ok);
       assert.equal("<h1>Header One</h1>", res.text.trim());
       done();
     });
   });
   it("should have the flickr & youtube pipeline middleware", function(done) {
     testUtils.post("/convert")
-        .send("<youtube href=\"http://www.youtube.com/embed/K27MA8v91D4\"/>\n<flickrshow href=\"page_show_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2Fshow%2F&page_show_back_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2F&set_id=72157631932122934&\"/>")
+        .send("<youtube href=\"http://www.youtube.com/embed/K27MA8v91D4\"></youtube>\n<flickrshow href=\"page_show_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2Fshow%2F&page_show_back_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2F&set_id=72157631932122934&\"></flickrshow>")
         .set("Content-Type", "text/x-markdown")
         .set("Accept", "text/html")
+        .expect(200)
         .end(function(error, res) {
-      assert(res.ok);
       var $ = cheerio.load(res.text);
-      assert.lengthOf($('flickrshow'), 0);
-      assert.lengthOf($('youtube'), 0);
+      assert.lengthOf($("youtube"), 0);
+      assert($("iframe").length > 0);
+      assert.lengthOf($("flickrshow"), 0);
       assert($("object").length > 0);
       done();
     });

@@ -1,17 +1,9 @@
 var cheerio = require("cheerio");
-var config = require("app/config");
 var flickrshowTemplate = '<object width="500" height="375"><param name="flashvars" value="offsite=true&lang=en-us&{URLs}&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&{URLs}&jump_to=" width="500" height="375"></embed></object>';
 var fs = require("fs");
 var path = require("path");
 var rawBody = require("raw-body");
-var TEXT_MIME_TYPES = ["application/json", "application/x-www-form-urlencoded"];
-var utils = require("connect").utils;
 var youtubeTemplate = "<iframe width='420' height='315' src='{URL}' frameborder='0' allowfullscreen></iframe>";
-
-function relevantMIMEType(req) {
-  var mime = utils.mime(req);
-  return (TEXT_MIME_TYPES.indexOf(mime) >= 0) || (0 === mime.indexOf("text/"));
-}
 
 function debugLog(message) {
   return function(req, res, next) {
@@ -31,23 +23,18 @@ function undomify(req, res, next) {
 }
 
 function flickr(req, res, next) {
-  var $ = res.$;
   res.$("flickrshow").each(function(index, elem) {
-    var $elem, URLs;
-    $elem = $(elem);
-    URLs = $elem.attr("href");
+    var $elem = res.$(elem);
+    var URLs = $elem.attr("href");
     return $elem.replaceWith(flickrshowTemplate.replace(/\{URLs\}/g, URLs));
   });
   next();
 }
 
 function youtube(req, res, next) {
-  var $;
-  $ = res.$;
-  $("youtube").each(function(index, elem) {
-    var $elem, URL;
-    $elem = $(elem);
-    URL = $elem.attr("href");
+  res.$("youtube").each(function(index, elem) {
+    var $elem = res.$(elem);
+    var URL = $elem.attr("href");
     return $elem.replaceWith(youtubeTemplate.replace(/\{URL\}/, URL));
   });
   next();
@@ -58,22 +45,16 @@ function send(req, res) {
 }
 
 function text(req, res, next) {
-  if (req._body) {
-    return next();
-  }
-  if (!utils.hasBody(req)) {
-    return next();
-  }
-  if (!relevantMIMEType(req)) {
-    return next();
-  }
-  rawBody(req, function(error, buffer) {
+  rawBody(req, {
+    length: req.headers["content-length"],
+    limit: "1mb",
+    encoding: "utf8"
+  }, function (error, string) {
     if (error) {
-      return next(error);
+      next(error);
+      return;
     }
-    req._body = true;
-    req.body = buffer.toString("utf8");
-    req.body = req.body || '';
+    req.text = string;
     next();
   });
 }
