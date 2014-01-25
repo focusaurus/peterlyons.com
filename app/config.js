@@ -14,6 +14,7 @@ var config = {
   staticDir: path.resolve(projectRoot + "/../static"),
   loopback: true,
   errorPages: isProduction,
+  enableLogger: process.env.NODE_ENV !== "test",
   titleSuffix: " | Peter Lyons",
   tests: !isProduction,
   cacheCSS: isProduction

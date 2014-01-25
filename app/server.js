@@ -12,11 +12,12 @@ app.locals({
   config: config,
   appURI: config.appURI
 });
-app.use(express.logger({
-  immediate: true,
-  format: ":method :url :date"
-}));
-
+if (config.enableLogger) {
+  app.use(express.logger({
+    immediate: true,
+    format: ":method :url :date"
+  }));
+}
 [
   "blogs/blogRoutes",
   "pages/pagesRoutes",
@@ -43,6 +44,11 @@ app.use(function(error, req, res, next) {
 });
 
 var ip = config.loopback ? "127.0.0.1" : "0.0.0.0";
+
+module.exports = app;
+if (module !== require.main) {
+  return;
+}
 
 app.listen(config.port, ip, function(error) {
   if (error) {
