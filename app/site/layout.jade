@@ -1,11 +1,12 @@
-- var title, angular;
+- var title, angular, pageTitle;
 block variables
-- if (title && title.indexOf(titleSuffix) < 0 && title.indexOf("Peter Lyons") !== 0) { title = title + titleSuffix }
+- pageTitle = title;
+- if (title && title.indexOf(titleSuffix) < 0 && title.indexOf("Peter Lyons") !== 0) { pageTitle = title + titleSuffix }
 doctype html
 html(lang="en")
   head
     meta(charset="utf-8")
-    title=title
+    title=pageTitle
     link(rel="stylesheet", href="/screen.css")
     link(href="http://fonts.googleapis.com/css?family=PT+Sans|Inconsolata|Poly|Happy+Monkey",
       rel="stylesheet")
@@ -31,7 +32,7 @@ html(lang="en")
         include blocks/license
     block scripts
       if angular
-        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js")
+        script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.js")
         script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js")
         script.
           if (typeof angular === 'undefined') {

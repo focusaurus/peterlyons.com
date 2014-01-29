@@ -1,8 +1,8 @@
-@import "nib/reset"
+@require "nib/reset"
 global-reset()
-@import "layout"
-@import "color"
-@import "typography"
+@require "layout"
+@require "color"
+@require "typography"
 
 .clear
   clear both
@@ -55,14 +55,7 @@ pre
   overflow auto
   padding 1em
 
-@import "blocks/header"
-@import "blocks/navigation"
-@import "blocks/license"
-@import "../pages/home"
-@import "../pages/bands"
-@import "../pages/contact"
-@import "../pages/oberlin"
-@import "../blogs/createPost"
-@import "../blogs/viewPost"
-@import "../blogs/postList"
-@import "../photos/viewGallery"
+@require "blocks/*"
+@require "../pages/*"
+@require "../blogs/*"
+@require "../plusParty/*"

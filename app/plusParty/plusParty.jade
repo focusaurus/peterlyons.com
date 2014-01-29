@@ -1,0 +1,14 @@
+extends ../site/layout
+block variables
+  - title = "Plus Party: Get Your Addition On!";
+  - angular = true;
+block body
+  div.plusParty(ng-app, ng-controller="PlusPartyController")
+    h1= title
+    p Paste some numbers into the box. It's OK if they have other text around them. All the numbers will be parsed out and totalled up for you.
+    textarea(ng-model="rawText")
+    ul
+      li(ng-repeat="wrapped in numbers", ng-bind="wrapped.value | number:2")
+    div.total(ng-bind="total | number:2")
+block append scripts
+  script(src="/plusParty/plusParty.js")

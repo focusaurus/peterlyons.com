@@ -25,6 +25,7 @@ describe('smoke tests for most pages on the site', function() {
     ["/web_prog", /PHP/],
     ["/oberlin", /Edison/],
     ["/favorites", /Imogen/],
+    ["/plusparty", /Plus Party/],
     ["/problog", /Pete's Points/],
     ["/persblog", /travel/],
     ["/app/photos?gallery=burning_man_2011", /Gallery/],

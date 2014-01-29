@@ -20,6 +20,7 @@ if (config.enableLogger) {
 }
 [
   "blogs/blogRoutes",
+  "plusParty/plusPartyRoutes",
   "pages/pagesRoutes",
   "photos/photosRoutes",
   "photos/galleriesRoutes",
