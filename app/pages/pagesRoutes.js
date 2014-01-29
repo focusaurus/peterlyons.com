@@ -31,7 +31,9 @@ function setup(app) {
         "  :markdown",
         "    " + markdownText.split("\n").join("\n    ")
       ].join("\n");
-      var tplFunction = jade.compile(jadeText, {filename: mdPath});
+      var tplFunction = jade.compile(jadeText, {
+        filename: mdPath
+      });
       callback(null, tplFunction(options));
     });
   });
