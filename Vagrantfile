@@ -13,8 +13,8 @@ end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # common settings shared by all vagrant boxes for this project
-  config.vm.box = "ubuntu13.10amd64"
-  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/saucy/current/saucy-server-cloudimg-amd64-vagrant-disk1.box"
+  config.vm.box = "ubuntu13.10i386"
+  config.vm.box_url = "http://cloud-images.ubuntu.com/vagrant/saucy/current/saucy-server-cloudimg-i386-vagrant-disk1.box"
   config.ssh.forward_agent = true
   # development box intended for ongoing development
   config.vm.define "build", primary: true do |build|
