@@ -30,4 +30,4 @@ block body
 
 block append scripts
   != sharify.script()
-  script(src="/photos/viewGallery.js")
+  script require("app/photos/browser/viewGallery").init();

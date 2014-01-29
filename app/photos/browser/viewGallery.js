@@ -103,7 +103,14 @@ var _photos = function($routeProvider, $locationProvider) {
   });
 };
 
-var photosApp = angular.module("photos", ["ngRoute"], _photos);
-photosApp.value("gallery", __sharifyData.gallery);
-photosApp.value("galleries", __sharifyData.galleries);
-photosApp.controller("GalleryController", GalleryController);
+function init() {
+  var photosApp = angular.module("photos", ["ngRoute"], _photos);
+  photosApp.value("gallery", __sharifyData.gallery);
+  photosApp.value("galleries", __sharifyData.galleries);
+  photosApp.controller("GalleryController", GalleryController);
+}
+
+module.exports = {
+  GalleryController: GalleryController,
+  init: init
+};

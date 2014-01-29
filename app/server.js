@@ -25,6 +25,7 @@ if (config.enableLogger) {
   "photos/photosRoutes",
   "photos/galleriesRoutes",
   "site/cssRoutes",
+  "site/jsRoutes",
   "site/errorRoutes"
 ].forEach(function(routesPath) {
   require("app/" + routesPath)(app);

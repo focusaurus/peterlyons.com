@@ -1,4 +1,4 @@
-;(function iife(exports, undefined) {
+var _ = require("lodash");
 var MARKDOWN_OPTIONS = {
   headers: {
     contentType: "text/x-markdown"
@@ -52,5 +52,4 @@ function save($scope, $window, $http) {
   });
 }
 
-exports.CreatePost = CreatePost;
-})(this);
+module.exports = CreatePost;

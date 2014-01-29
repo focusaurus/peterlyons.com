@@ -317,27 +317,4 @@ block body
       * Apple Core Foundation APIs
 
 block append scripts
-  script.
-    ;(function iife(exports, undefined) {
-    var button = document.querySelector(".reverse button");
-    var initialText = button.innerText;
-    var lastPhase = _.last(document.querySelectorAll(".phase"));
-    var parent = lastPhase.parentNode;
-    var elementAfterPhases = lastPhase.nextSibling;
-    button.addEventListener("click", function() {
-      var phases = [];
-      [].forEach.call(document.querySelectorAll(".phase"), function(phase) {
-        phases.unshift(phase);
-      });
-      var fragment = document.createDocumentFragment();
-      phases.forEach(function(phase) {
-        fragment.appendChild(phase);
-      });
-      parent.insertBefore(fragment, elementAfterPhases);
-      if (button.innerText === initialText) {
-        button.innerText = "View newest first";
-      } else {
-        button.innerText = initialText;
-      }
-    });
-    })();
+  script require("app/pages/career")();

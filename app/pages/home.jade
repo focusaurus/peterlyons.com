@@ -66,26 +66,4 @@ block body
       li
         a(href="http://stackoverflow.com/questions/2430423/which-xml-library-for-what-purposes/2430541#2430541", target="_blank") DOM vs. SAX for XML processing
 block append scripts
-  script.
-    ;(function iife(exports, undefined) {
-    var HEADER_SELECTOR = "#intro .highlight";
-    var header = document.querySelector(HEADER_SELECTOR);
-    var subtitle = header.textContent;
-    header.textContent = "";
-
-    function speed() {
-      return Math.random() * 200 + 50;
-    }
-
-    function pushLetter() {
-      var header = document.querySelector(HEADER_SELECTOR);
-      var text = header.textContent;
-      if (text.length === subtitle.length) {
-        return;
-      }
-      header.textContent = text + subtitle[text.length];
-      setTimeout(pushLetter, speed());
-    }
-
-    setTimeout(pushLetter, speed());
-    })();
+  script require("app/pages/home")();
