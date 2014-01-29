@@ -1,5 +1,5 @@
 var assert = require("assert");
-var plusParty = require("app/plusParty/browser");
+var plusParty = require("app/browser/plusParty");
 
 describe("plusParty", function () {
   describe("sum", function () {
