@@ -36,6 +36,11 @@ describe("plusParty", function () {
         plusParty.parseNumbers("$42.15 $666 £92"), [42.15, 666, 92]);
       assert.deepEqual(plusParty.parseNumbers("€0"), [0]);
     });
+    it("should ignore mm/dd/yyyy dates", function() {
+      assert.deepEqual(plusParty.parseNumbers("12/31/1984"), []);
+      assert.deepEqual(
+        plusParty.parseNumbers("6 09/20/78 17"), [6, 17]);
+    });
   });
 });
 

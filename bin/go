@@ -64,13 +64,17 @@ task::dist() {
 task::test() {
   autoinstall_wallah
   ./wallah/bin/install_node
-  NODE_ENV=test mocha
+  NODE_ENV=test mocha "$@"
+}
+
+task::karma() {
+  exec karma start test/karma.conf.js
 }
 
 task::test_debug() {
   autoinstall_wallah
   ./wallah/bin/install_node
-  NODE_ENV=test mocha --debug-brk=9004
+  NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
 task::express() {
