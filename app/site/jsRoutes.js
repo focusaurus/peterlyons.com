@@ -1,10 +1,10 @@
 var bundle = require("browserify")();
-bundle.require("app/blogs/browser/createPost");
-bundle.require("app/navigation/browser");
-bundle.require("app/pages/career");
-bundle.require("app/pages/home");
-bundle.require("app/photos/browser/viewGallery");
-bundle.require("app/plusParty/browser");
+bundle.require("app/browser/career");
+bundle.require("app/browser/CreatePost");
+bundle.require("app/browser/home");
+bundle.require("app/browser/navigation");
+bundle.require("app/browser/plusParty");
+bundle.require("app/browser/viewGallery");
 
 function setup(app) {
   app.get("/browser.js", function (req, res) {
