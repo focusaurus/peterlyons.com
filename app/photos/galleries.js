@@ -55,5 +55,6 @@ function loadBySlug(slug, callback) {
 
 module.exports = {
   getGalleries: getGalleries,
-  loadBySlug: loadBySlug
+  loadBySlug: loadBySlug,
+  photoJSONToObject: photoJSONToObject
 };
