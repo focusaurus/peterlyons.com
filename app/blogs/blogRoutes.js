@@ -301,4 +301,5 @@ function setup(app) {
 }
 
 module.exports = setup;
-setup.events = new events.EventEmitter();
+module.exports.events = new events.EventEmitter();
+module.exports.presentPost = presentPost;
