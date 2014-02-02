@@ -301,5 +301,8 @@ function setup(app) {
 }
 
 module.exports = setup;
-module.exports.events = new events.EventEmitter();
-module.exports.presentPost = presentPost;
+_.extend(module.exports, {
+  events: new events.EventEmitter(),
+  presentPost: presentPost,
+  BlogIndex: BlogIndex
+});
