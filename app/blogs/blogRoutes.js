@@ -304,5 +304,6 @@ module.exports = setup;
 _.extend(module.exports, {
   events: new events.EventEmitter(),
   presentPost: presentPost,
-  BlogIndex: BlogIndex
+  BlogIndex: BlogIndex,
+  verifyPassword: verifyPassword
 });

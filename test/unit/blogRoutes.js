@@ -1,5 +1,7 @@
 var blogRoutes = require("app/blogs/blogRoutes");
 var assert = require("assert");
+var bcrypt = require("bcrypt");
+
 
 describe("blogRoutes", function () {
   describe("presentPost", function () {
@@ -25,6 +27,18 @@ describe("blogRoutes", function () {
       assert.equal(index.URI, "/uri");
       assert.equal(index.title, "blog title");
       assert.equal(index.blogTitle, "blog title");
+    });
+  });
+  describe("verifyPassword", function () {
+    var password = "unit test blog password";
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+
+    it("should callback without error with correct password", function(done) {
+      blogRoutes.verifyPassword(password, hash, function (error) {
+        assert.ifError(error);
+        done();
+      });
     });
   });
 });
