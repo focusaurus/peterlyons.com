@@ -32,11 +32,11 @@ Post.prototype.URI = function() {
 };
 
 Post.prototype.contentPath = function() {
-  return "" + this.URI() + "." + this.format;
+  return this.URI() + "." + this.format;
 };
 
 Post.prototype.metadataPath = function() {
-  return "" + this.URI() + ".json";
+  return this.URI() + ".json";
 };
 
 Post.prototype.dirPath = function() {
@@ -44,7 +44,7 @@ Post.prototype.dirPath = function() {
 };
 
 Post.prototype.viewPath = function() {
-  return path.join(this.base, "" + this.URI() + "." + this.format);
+  return path.join(this.base, this.URI() + "." + this.format);
 };
 
 Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
@@ -64,7 +64,7 @@ Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
       metadata = JSON.parse(jsonString);
       _.extend(self, metadata);
       self.publish_date = new Date(self.publish_date);
-      self.view = "" + (self.URI()) + "." + self.format;
+      self.view = self.URI() + "." + self.format;
       callback();
     });
   });
@@ -80,12 +80,12 @@ Post.prototype.load = function(metadataPath, blog, callback) {
     metadata = JSON.parse(file.data);
     _.extend(self, metadata);
     self.publish_date = new Date(self.publish_date);
-    self.view = "" + (self.URI()) + "." + self.format;
+    self.view = (self.URI()) + "." + self.format;
     return next();
   }).each(function(file, next) {
     var noExt;
     noExt = file.path.substr(0, file.path.lastIndexOf('.'));
-    file.path = "" + noExt + "." + self.format;
+    file.path = noExt + "." + self.format;
     file.name = path.basename(file.path);
     return next();
   }).readFile("utf8").each(function(file, next) {
