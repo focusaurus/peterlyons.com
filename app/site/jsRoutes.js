@@ -1,6 +1,6 @@
 var bundle = require("browserify")();
 bundle.require("app/browser/career");
-bundle.require("app/browser/CreatePost");
+bundle.require("app/browser/post");
 bundle.require("app/browser/home");
 bundle.require("app/browser/navigation");
 bundle.require("app/browser/plusParty");

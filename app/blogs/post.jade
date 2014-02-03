@@ -3,7 +3,7 @@ block variables
   - title = "Write a new blog post"
   - angular = true
 block body
-  .createPost(ng-app, ng-controller="CreatePost", ng-cloak, ng-init="draftJSON = localStorage.postDraft")
+  .createPost(ng-app="createPostApp", ng-controller="CreatePost", ng-cloak)
     .error(ng-if="error")
       strong BORKED! {{error}}
     .saved(ng-if="savedPost") New post saved at&nbsp;
@@ -19,4 +19,4 @@ block body
       input(type="password", ng-model="password")
     button(ng-click="save()", ng-disabled="!password") Save
 block append scripts
-  script window.CreatePost = require("app/browser/CreatePost");
+  script require("app/browser/post")();

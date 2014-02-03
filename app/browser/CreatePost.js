@@ -5,18 +5,18 @@ var MARKDOWN_OPTIONS = {
   }
 };
 
-function CreatePost($scope, $window, $http, $sce, draftJSON) {
+function CreatePost($scope, $window, $http, $sce, localStorage) {
   this.$scope = $scope;
   this.$window = $window;
   this.$http = $http;
   this.$sce = $sce;
-  this.localStorage = $window.localStorage;
+  this.localStorage = localStorage;
   try {
-    var savedPost = JSON.parse(draftJSON);
+    var savedPost = JSON.parse(localStorage.postDraft);
     this.$scope.title = savedPost.title;
     this.$scope.contentMarkdown = savedPost.content;
   } catch (_error) {
-    console.log(draftJSON);
+    console.log(localStorage);
   }
   this.$scope.save = this.save;
   this.$scope.$watch("contentMarkdown",
