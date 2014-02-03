@@ -65,10 +65,11 @@ task::test() {
   autoinstall_wallah
   ./wallah/bin/install_node
   NODE_ENV=test mocha "$@"
+  exec karma run karma/karma.conf.js
 }
 
 task::karma() {
-  exec karma start test/karma.conf.js
+  exec karma start karma/karma.conf.js
 }
 
 task::test_debug() {

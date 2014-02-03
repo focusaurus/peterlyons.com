@@ -1,4 +1,4 @@
-var browserGlob = "browser/**/*.js";
+var browserGlob = "**/*.js";
 var preprocessors = {};
 preprocessors[browserGlob] = ["browserify"];
 

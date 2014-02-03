@@ -33,6 +33,7 @@ describe("CreatePost Controller", function () {
       options.$scope.contentMarkdown = "#marked it down2";
     });
     $httpBackend.flush();
-    assert.equal(options.$scope.contentHtml.toString(), "<h1>marked it down2</h1>");
+    assert.equal(options.$scope.contentHtml.toString(),
+      "<h1>marked it down2</h1>");
   });
 });
