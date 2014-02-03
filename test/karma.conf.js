@@ -8,7 +8,11 @@ function setup(config) {
     reporters: ["mocha"],
     browsers: ["Chrome"],
     frameworks: ["mocha", "browserify"],
-    files: [browserGlob],
+    files: [
+      "../thirdParty/angular.js",
+      "../thirdParty/angular-mocks.js",
+      browserGlob
+    ],
     preprocessors: preprocessors
   });
 }

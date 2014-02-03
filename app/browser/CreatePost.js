@@ -5,51 +5,55 @@ var MARKDOWN_OPTIONS = {
   }
 };
 
-function CreatePost($scope, $window, $http, $sce) {
+function CreatePost($scope, $window, $http, $sce, draftJSON) {
   this.$scope = $scope;
+  this.$window = $window;
   this.$http = $http;
   this.$sce = $sce;
+  this.localStorage = $window.localStorage;
   try {
-    var savedPost = JSON.parse(localStorage.postDraft);
-    $scope.title = savedPost.title;
-    $scope.contentMarkdown = savedPost.content;
+    var savedPost = JSON.parse(draftJSON);
+    this.$scope.title = savedPost.title;
+    this.$scope.contentMarkdown = savedPost.content;
   } catch (_error) {
-    console.log(localStorage.postDraft);
+    console.log(draftJSON);
   }
-  $scope.save = save.bind(this, $scope, $window, $http);
-  $scope.$watch("contentMarkdown",
-    _.debounce(changeContentMarkdown.bind(this, $scope, $http, $sce), 250));
+  this.$scope.save = this.save;
+  this.$scope.$watch("contentMarkdown",
+    _.throttle(this.changeContentMarkdown.bind(this), 250));
 }
 
-function changeContentMarkdown($scope, $http, $sce) {
+CreatePost.prototype.changeContentMarkdown = function changeContentMarkdown() {
+  var self = this;
   var postDraft = {
-    content: $scope.contentMarkdown,
-    title: $scope.title
+    content: this.$scope.contentMarkdown,
+    title: this.$scope.title
   };
-  localStorage.postDraft = JSON.stringify(postDraft);
-  $http.post(
-    "/convert", $scope.contentMarkdown, MARKDOWN_OPTIONS
+  this.localStorage.postDraft = JSON.stringify(postDraft);
+  this.$http.post(
+    "/convert", this.$scope.contentMarkdown, MARKDOWN_OPTIONS
   ).success(function(contentHtml) {
-    $scope.contentHtml = $sce.trustAsHtml(contentHtml);
+    self.$scope.contentHtml = self.$sce.trustAsHtml(contentHtml);
   });
-}
+};
 
-function save($scope, $window, $http) {
-  $scope.savedPost = null;
-  $scope.error = null;
+CreatePost.prototype.save = function save() {
+  var self = this;
+  this.$scope.savedPost = null;
+  this.$scope.error = null;
   var data = {
-    title: $scope.title,
-    content: $scope.contentMarkdown,
-    password: $scope.password
+    title: this.$scope.title,
+    content: this.$scope.contentMarkdown,
+    password: this.$scope.password
   };
   //relative URL here is intentional to post to the current blog
-  $http.post("post", data).success(function(response) {
-    $scope.savedPost = response;
+  this.$http.post("post", data).success(function(response) {
+    self.$scope.savedPost = response;
   }).error(function(response) {
-    $scope.error = response;
+    self.$scope.error = response;
   }).finally(function () {
-    $window.scrollTo(0, 0);
+    self.$window.scrollTo(0, 0);
   });
-}
+};
 
 module.exports = CreatePost;

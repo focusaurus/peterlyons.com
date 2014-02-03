@@ -12,6 +12,7 @@ var config = {
   port: get("port", 9000),
   appURI: "/app",
   staticDir: path.resolve(projectRoot + "/../static"),
+  thirdPartyDir: path.resolve(projectRoot + "/thirdParty"),
   loopback: true,
   errorPages: isProduction,
   enableLogger: process.env.NODE_ENV !== "test",

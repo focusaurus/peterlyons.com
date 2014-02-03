@@ -32,6 +32,7 @@ if (config.enableLogger) {
 });
 
 app.use(express.static(config.staticDir));
+app.use(express.static(config.thirdPartyDir));
 app.use(function(req, res, next) {
   next(new NotFound(req.path));
 });
