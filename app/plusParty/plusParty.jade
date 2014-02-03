@@ -9,7 +9,7 @@ block body
     textarea(ng-model="rawText")
     ul
       li(ng-repeat="wrapped in wrappedNumbers", ng-bind="wrapped.value | number:2")
-    div.total(ng-bind="total | number:2")
+    div.total(ng-bind="total")
     img(src="/images/clue_bullets.png", alt="One plus two plus two plus one.")
     iframe(src="//www.youtube.com/embed/O5ROhf5Soqs", width="560", height="315")
 block append scripts
