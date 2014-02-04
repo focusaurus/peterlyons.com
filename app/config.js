@@ -18,7 +18,8 @@ var config = {
   enableLogger: process.env.NODE_ENV !== "test",
   titleSuffix: " | Peter Lyons",
   tests: !isProduction,
-  cacheCSS: isProduction
+  cacheCSS: isProduction,
+  browserifyDebug: !isProduction
 };
 
 config.photos = {

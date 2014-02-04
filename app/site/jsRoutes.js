@@ -1,4 +1,6 @@
+var config = require("app/config");
 var bundle = require("browserify")();
+
 bundle.require("app/browser/career");
 bundle.require("app/browser/post");
 bundle.require("app/browser/home");
@@ -9,7 +11,7 @@ bundle.require("app/browser/viewGallery");
 function setup(app) {
   app.get("/browser.js", function (req, res) {
     res.header("Content-Type", "text/javascript");
-    bundle.bundle().pipe(res);
+    bundle.bundle({debug: config.browserifyDebug}).pipe(res);
   });
 }
 
