@@ -1,5 +1,5 @@
 var blogRoutes = require("app/blogs/blogRoutes");
-var assert = require("assert");
+var expectations = require("expectations");
 var bcrypt = require("bcrypt");
 
 
@@ -10,23 +10,23 @@ describe("blogRoutes", function () {
         publish_date: new Date(2014, 0, 31),
         title: "foo"
       });
-      assert.equal(presented.date, "Jan 31, 2014");
+      expect(presented.date).toBe("Jan 31, 2014");
     });
     it("should trim the title", function() {
       var presented = blogRoutes.presentPost({
         publish_date: new Date(2014, 0, 31),
         title: " a "
       });
-      assert.equal(presented.title, "a");
+      expect(presented.title).toBe("a");
     });
   });
 
   describe("BlogIndex", function () {
     it("should store URI, title, and blogTitle", function() {
       var index = new blogRoutes.BlogIndex("/uri", "blog title");
-      assert.equal(index.URI, "/uri");
-      assert.equal(index.title, "blog title");
-      assert.equal(index.blogTitle, "blog title");
+      expect(index.URI).toBe("/uri");
+      expect(index.title).toBe("blog title");
+      expect(index.blogTitle).toBe("blog title");
     });
   });
   describe("verifyPassword", function () {
@@ -36,7 +36,7 @@ describe("blogRoutes", function () {
 
     it("should callback without error with correct password", function(done) {
       blogRoutes.verifyPassword(password, hash, function (error) {
-        assert.ifError(error);
+        expect(error).toBeFalsey();
         done();
       });
     });
