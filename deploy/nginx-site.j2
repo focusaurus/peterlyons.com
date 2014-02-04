@@ -6,11 +6,7 @@ upstream express-{{hostname}} {
 
 server {
   listen 80 default;
-  #This matches peterlyons.com and *.peterlyons.com
-  server_name .{{hostname}};
-  #This is essential so we can use the same configuration
-  #in production and staging
-  server_name_in_redirect off;
+  server_name {{hostname}};
   charset utf-8;
   access_log /var/log/nginx.{{hostname}}.access.log;
   error_log /var/log/nginx.{{hostname}}.error.log;
@@ -21,9 +17,8 @@ server {
     try_files $uri $uri.html $uri/index.html @app;
   }
 
-  location ~* ZeroClipboard\.* {
+  location /ZeroClipboard {
     root {{third_party}};
-    try_files $uri @app;
   }
 
   location @app {

@@ -26,6 +26,7 @@ repoint_current_symlink() {
 cd $(dirname "$0")/..
 set_baseline_permissions "${1-plws}" .
 chmod ug+x ./node/bin/* ./node_modules/.bin/* ./app/server.js
+chmod a+r ./node_modules/zeroclipboard/*
 set_baseline_permissions "${1-plws}" ../data
 find "../data/posts" -type d -print0 | xargs -0 chmod ug+w
 repoint_current_symlink
