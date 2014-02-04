@@ -32,7 +32,6 @@
     "browserify": "3.24.11"
   },
   "devDependencies": {
-    "chai": "1.8.1",
     "commander": "0.5.x",
     "mocha": "1.17.1",
     "node-inspector": "0.7.0-2",

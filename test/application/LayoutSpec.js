@@ -1,5 +1,5 @@
 var _ = require("lodash");
-var assert = require("assert");
+var expectations = require("expectations");
 var testUtils = require("../testUtils");
 
 describe("the main layout", function() {
@@ -17,9 +17,9 @@ describe("the main layout", function() {
     var link = $(selector).each(function (index, item) {
       hrefs.push($(item).attr("href"));
     });
-    assert(_.some(hrefs, function (href) {
+    expect(_.some(hrefs, function (href) {
       return href.indexOf("fonts.googleapis.com") >= 0;
-    }));
+    })).toBeTruthy();
   });
 
   it("should have the key structural elements", function() {
@@ -28,6 +28,6 @@ describe("the main layout", function() {
   });
 
   it("should have the normal title", function() {
-    assert.equal($("title").text(), "Peter Lyons: node.js coder for hire");
+    expect($("title").text()).toBe("Peter Lyons: node.js coder for hire");
   });
 });

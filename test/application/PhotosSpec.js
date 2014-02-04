@@ -1,4 +1,3 @@
-var expect = require("chai").expect;
 var testUtils = require("../testUtils");
 
 describe("the photos page", function() {

@@ -1,4 +1,4 @@
-var assert = require("assert");
+var expectations = require("expectations");
 var testUtils = require("../testUtils");
 
 describe("the Leveling Up article", function() {
@@ -16,6 +16,6 @@ describe("the Leveling Up article", function() {
   });
 
   it("should have the proper title", function() {
-    assert(/Leveling Up/.test($("title").text()));
+    expect($("title").text()).toMatch(/Leveling Up/);
   });
 });

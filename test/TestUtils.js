@@ -1,4 +1,4 @@
-var assert = require("assert");
+var expectations = require("expectations");
 var cheerio = require("cheerio");
 var request = require("supertest")(require("app/server"));
 var _ = require("lodash");
@@ -26,7 +26,7 @@ function assertSelectors() {
   var $ = arguments[0];
   var selectors = Array.prototype.slice.call(arguments, 1);
   selectors.forEach(function(selector) {
-    assert($(selector).length > 0, "Document missing selector " + selector);
+    expect($(selector).length).toBeGreaterThan(0, "Document missing selector " + selector);
   });
 }
 
@@ -35,7 +35,7 @@ function assertSubstrings() {
   var html = $.html();
   var phrases = Array.prototype.slice.call(arguments, 1);
   phrases.forEach(function(phrase) {
-    assert(html.indexOf(phrase) >= 0, "Document missing phrase " + phrase);
+    expect(html).toContain(phrase, "Document missing phrase " + phrase);
   });
 }
 
@@ -51,10 +51,12 @@ function pageContains(_url, _phraseVarArgs, _done) {
     }
     phrases.forEach(function(phrase) {
       if (typeof phrase === "string") {
-        assert(res.text.indexOf(phrase) >= 0, "Document missing phrase " + phrase + res.text);
+        expect(res.text).toContain(
+          phrase, "Document missing phrase " + phrase + res.text);
       } else {
         //regex
-        assert(phrase.test(res.text), "Document does not match " + phrase.pattern);
+        expect(res.text).toMatch(
+          phrase, "Document does not match " + phrase.pattern);
       }
     });
     done(null, cheerio.load(res.text));
