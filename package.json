@@ -44,6 +44,7 @@
     "karma-mocha": "0.1.1",
     "karma-browserify": "0.0.6",
     "karma-mocha-reporter": "0.2.0",
-    "expectations": "~0.2.5"
+    "expectations": "0.2.5",
+    "w3c-validate": "0.0.2"
   }
 }

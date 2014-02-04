@@ -21,12 +21,85 @@ usage() {
       printf "${task}"
     fi
   done < <(cat "$0")
-  printf "]\n" 1>&2
+  printf "] [subcommand args...]\n" 1>&2
+  cat <<EOF
+
+Purpose of $(basename ${0}) script
+--------------------
+
+* entrypoint script for common commands
+* Automatically installs development prerequisites
+* Ensures the correct PATH environment variable
+* commands are grouped by purpose/lifecycle and described in more detail below
+
+
+Development Commands
+--------------------
+
+* express: start the express server
+* test: run all the tests (mocha and karma)
+* test_debug: run mocha tests with immediate breakpoint for debugging
+* karma: start karma process to continuously watch and run tests
+* validate: Run W3C HTML5 validator against the site HTML
+
+Deployment Commands
+-------------------
+
+* clean: delete the build directory
+* build: build a distribution archive for deployment
+* errors: regenerate the static error HTML pages
+* deploy: deploy code to a target system via ansible
+  * Usage: $(basename ${0}) deploy <dist-file> <inventory-file>
+  * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
+  * distribution archive files get built in the "build" directory
+  * inventory files live in the deploy/hosts directory
+* ansible: just a convenience wrapper around ./python/bin/ansible
+  * used for running ad hoc ansible commands
+  * installs ansible if needed
+  * arguments are passed through to ./python/bin/ansible
+* ansible-playbook: just a convenience wrapper around ./python/bin/ansible-playbook
+  * used for running ad hoc ansible-playbook commands
+  * installs ansible if needed
+  * arguments are passed through to ./python/bin/ansible-playbook
+* vagrant: just a convenience wrapper around vagrant with the correct environment
+EOF
   exit 1
 }
 
-##### task functions #####
-task::dist() {
+##### development task functions #####
+task::express() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  node-dev --debug=9001 app/server.js
+}
+
+task::test() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  NODE_ENV=test mocha "$@"
+  exec karma run karma/karma.conf.js
+}
+
+task::test_debug() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  NODE_ENV=test mocha --debug-brk=9004 "$@"
+}
+
+task::karma() {
+  exec karma start karma/karma.conf.js
+}
+
+task::validate() {
+  NODE_ENV=test mocha ./test/application/validation.js --validate
+}
+
+##### deployment task functions #####
+task::clean() {
+  rm -rf ./build ./dist
+}
+
+task::build() {
   set -e
   #need the build system python here
   export PATH=/usr/bin:$PATH
@@ -61,43 +134,6 @@ task::dist() {
   printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
 }
 
-task::test() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
-  NODE_ENV=test mocha "$@"
-  exec karma run karma/karma.conf.js
-}
-
-task::karma() {
-  exec karma start karma/karma.conf.js
-}
-
-task::test_debug() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
-  NODE_ENV=test mocha --debug-brk=9004 "$@"
-}
-
-task::express() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
-  node-dev --debug=9001 app/server.js
-}
-
-task::inspector() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
-  echo "http://localhost:9002/debug?port=9001"
-  ./node_modules/.bin/node-inspector --web-port=9002
-}
-
-task::inspector_tests() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
-  echo "http://localhost:9005/debug?port=9004"
-  ./node_modules/.bin/node-inspector --web-port=9005
-}
-
 task::errors() {
   autoinstall_wallah
   ./wallah/bin/check_prerequisites curl
@@ -129,10 +165,6 @@ task::deploy() {
     --extra-vars "'dist=${dist_path}'" \
     --extra-vars "'dist_name=${dist_name}'" \
     ./deploy/playbook_express.yml
-}
-
-task::clean() {
-  rm -rf ./build ./dist
 }
 
 task::vagrant() {
