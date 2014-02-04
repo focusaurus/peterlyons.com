@@ -1,4 +1,4 @@
-var assert = require("assert");
+var expectations = require("expectations");
 var CreatePost = require("app/browser/CreatePost");
 
 describe("CreatePost Controller", function () {
@@ -20,8 +20,8 @@ describe("CreatePost Controller", function () {
     };
     options.localStorage = {postDraft: JSON.stringify(postDraft)};
     injector.instantiate(CreatePost, options);
-    assert.equal(options.$scope.title, postDraft.title);
-    assert.equal(options.$scope.contentMarkdown, postDraft.content);
+    expect(options.$scope.title).toBe(postDraft.title);
+    expect(options.$scope.contentMarkdown).toBe(postDraft.content);
   });
 
   it("should convert markdown to HTML when changed", function() {
@@ -33,7 +33,7 @@ describe("CreatePost Controller", function () {
       options.$scope.contentMarkdown = "#marked it down2";
     });
     $httpBackend.flush();
-    assert.equal(options.$scope.contentHtml.toString(),
+    expect(options.$scope.contentHtml.toString()).toBe(
       "<h1>marked it down2</h1>");
   });
 });

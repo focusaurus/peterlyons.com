@@ -1,4 +1,4 @@
-var assert = require("assert");
+var expectations = require("expectations");
 var PlusParty = require("app/browser/plusParty").Controller;
 
 describe("PlusParty Controller", function () {
@@ -14,8 +14,8 @@ describe("PlusParty Controller", function () {
 
   it("should set up scope with rawText and numbers array", function() {
     injector.instantiate(PlusParty, options);
-    assert(options.$scope.rawText.toLowerCase().indexOf("paste some") >= 0);
-    assert(Array.isArray(options.$scope.numbers));
-    assert.equal(options.$scope.numbers.length, 0);
+    expect(options.$scope.rawText.toLowerCase()).toContain("paste some");
+    expect(Array.isArray(options.$scope.numbers)).toBeTruthy();
+    expect(options.$scope.numbers.length).toBe(0);
   });
 });
