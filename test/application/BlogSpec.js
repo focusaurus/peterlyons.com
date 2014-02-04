@@ -1,4 +1,4 @@
-var assert = require("chai").assert;
+var expectations = require("expectations");
 var cheerio = require("cheerio");
 var testUtils = require("../testUtils");
 var blogRoutes = require("app/blogs/blogRoutes");
@@ -22,18 +22,18 @@ describe("a blog post page", function() {
     });
   });
   it("should have the post title", function() {
-    assert.match($("title").text(), /apogaea/i);
+    expect($("title").text()).toMatch(/apogaea/i);
   });
   it("should process a flickr tag", function() {
-    assert.lengthOf($("flickr"), 0);
-    assert($("object").length > 0);
+    expect($("flickr").length).toBe(0);
+    expect($("object").length).toBeGreaterThan(0);
   });
   it("should process a youtube tag", function() {
-    assert.lengthOf($("youtube"), 0);
-    assert($("iframe").length > 0);
+    expect($("youtube").length).toBe(0);
+    expect($("iframe").length).toBeGreaterThan(0);
   });
   it("should have disqus comments", function() {
-    assert.lengthOf($("#disqus_thread"), 1);
+    expect($("#disqus_thread").length).toBe(1);
   });
 });
 
@@ -46,9 +46,9 @@ describe("a blog index page", function() {
     });
   });
   it("should have nicely formatted dates", function() {
-    assert($("td.date").length > 0);
+    expect($("td.date").length).toBeGreaterThan(0);
     var date = $("td.date").last().html();
-    assert.match(date, /Mar 14, 2009/);
+    expect(date).toMatch(/Mar 14, 2009/);
   });
 });
 
@@ -60,7 +60,7 @@ describe("the preview converter", function() {
         .set("Accept", "text/html")
         .expect(200)
         .end(function(error, res) {
-      assert.equal("<h1>Header One</h1>", res.text.trim());
+      expect("<h1>Header One</h1>").toBe(res.text.trim());
       done();
     });
   });
@@ -72,10 +72,10 @@ describe("the preview converter", function() {
         .expect(200)
         .end(function(error, res) {
       var $ = cheerio.load(res.text);
-      assert.lengthOf($("youtube"), 0);
-      assert($("iframe").length > 0);
-      assert.lengthOf($("flickrshow"), 0);
-      assert($("object").length > 0);
+      expect($("youtube").length).toBe(0);
+      expect($("iframe").length).toBeGreaterThan(0);
+      expect($("flickrshow").length).toBe(0);
+      expect($("object").length).toBeGreaterThan(0);
       done();
     });
   });
