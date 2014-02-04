@@ -9,6 +9,7 @@
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
+    third_party: /opt/peter_lyons_web_site/current/thirdParty
   handlers:
     -
       include: handlers.yml

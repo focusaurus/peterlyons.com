@@ -1,3 +1,5 @@
+var ZeroClipboard = require("zeroclipboard");
+
 var NUMBER_RE = /-?(\d{1,3}(,\d{3})*(\.\d+)?|\d+)\b/g;
 var COMMA_RE = /,/g;
 var DATE_RE = /\b\d{1,2}\/\d{1,2}\/(\d{2}|\d{4})\b/g;
@@ -38,10 +40,29 @@ function Controller($scope) {
   this.scope.numbers = [];
 }
 
+function init() {
+  angular.module("PlusParty", []).controller("PlusPartyController", Controller);
+  //https://github.com/zeroclipboard/zeroclipboard/issues/332
+  window.ZeroClipboard = ZeroClipboard;
+  var copyButton = document.getElementById("copyToClipboard");
+  var originalText = copyButton.textContent;
+  var resetText = function() {
+    copyButton.textContent = originalText;
+  };
+  var clip = new ZeroClipboard(copyButton);
+  clip.on("load", function (client) {
+    client.on("complete", function (event) {
+      copyButton.textContent = "Copied!";
+      setTimeout(resetText, 2000);
+    });
+  });
+}
+
 module.exports = {
   Controller: Controller,
   sum: sum,
   wrap: wrap,
   parseNumbers: parseNumbers,
-  recompute: recompute
+  recompute: recompute,
+  init: init
 };
