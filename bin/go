@@ -24,7 +24,7 @@ usage() {
   printf "] [subcommand args...]\n" 1>&2
   cat <<EOF
 
-Purpose of $(basename ${0}) script
+Purpose of $(basename $0) script
 --------------------
 
 * entrypoint script for common commands
@@ -41,7 +41,8 @@ Development Commands
 * test_debug: run mocha tests with immediate breakpoint for debugging
 * karma: start karma process to continuously watch and run tests
 * validate: Run W3C HTML5 validator against the site HTML
-
+* release: merge develop to master, increment package.json version, and tag
+  * Usage: $(basename $0) release <patch|minor|major|specific_version>
 Deployment Commands
 -------------------
 
@@ -49,7 +50,7 @@ Deployment Commands
 * build: build a distribution archive for deployment
 * errors: regenerate the static error HTML pages
 * deploy: deploy code to a target system via ansible
-  * Usage: $(basename ${0}) deploy <dist-file> <inventory-file>
+  * Usage: $(basename $0) deploy <dist-file> <inventory-file>
   * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
   * distribution archive files get built in the "build" directory
   * inventory files live in the deploy/hosts directory
@@ -92,6 +93,22 @@ task::karma() {
 
 task::validate() {
   NODE_ENV=test mocha ./test/application/validation.js --validate
+}
+
+task:release() {
+  echo "Performing a production peterlyons.com release"
+  git checkout develop
+  git pull origin develop
+  task::test
+  echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
+  read DONTCARE
+  git checkout master
+  git merge develop
+  npm version "$@"
+  git push origin master --tags
+  git checkout develop #Not good form to leave master checked out
+  git merge master
+  echo "Ready to go. Next steps are clean, build, and deploy."
 }
 
 ##### deployment task functions #####
