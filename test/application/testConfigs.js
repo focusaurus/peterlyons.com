@@ -12,6 +12,7 @@ module.exports = [
   ["/oberlin", /Edison/],
   ["/favorites", /Imogen/],
   ["/plusparty", /Plus Party/],
+  ["/jsDebug", /Lighting Up/],
   ["/problog", new RegExp("Pete's Points")], //messes up syntax highlighting
   ["/persblog", /travel/],
   ["/app/photos?gallery=burning_man_2011", /Gallery/],

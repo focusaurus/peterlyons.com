@@ -3,7 +3,7 @@ var flickrshowTemplate = '<object width="500" height="375"><param name="flashvar
 var fs = require("fs");
 var path = require("path");
 var rawBody = require("raw-body");
-var youtubeTemplate = "<iframe width='420' height='315' src='{URL}' frameborder='0' allowfullscreen></iframe>";
+var youtubeTemplate = "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>";
 
 function debugLog(message) {
   return function(req, res, next) {

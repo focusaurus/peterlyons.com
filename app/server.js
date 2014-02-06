@@ -21,6 +21,7 @@ if (config.enableLogger) {
 [
   "blogs/blogRoutes",
   "plusParty/plusPartyRoutes",
+  "jsDebug/jsDebugRoutes",
   "pages/pagesRoutes",
   "photos/photosRoutes",
   "photos/galleriesRoutes",
@@ -42,6 +43,7 @@ app.use(function(error, req, res, next) {
     res.render("site/error404");
   } else {
     res.render("site/error500");
+    console.error(error);
   }
 });
 
