@@ -1,4 +1,13 @@
 @import "../color"
+@import "../position"
+
+.navMenuButton
+  topRight()
+  margin-right 0.5em
+  border none
+  background-color $colorPrimaryBackground
+  &:hover
+    cursor pointer
 nav.site
   margin-left 1rem
   margin-top 2rem
@@ -10,9 +19,24 @@ nav.site
     text-decoration none
     font-weight bold
     &.current:before
-      content "\21d2\00a0"
+      content "\232a\00a0"
+  .close
+    display none
+    border none
+    background-color $colorPrimaryBackground
+    cursor pointer
+    topRight()
   section a
     margin-left 1.2rem
+  &.open
+    topRight()
+    background-color $colorPrimaryBackground
+    margin 0
+    border-left b = 0.2em solid $colorCodeBackground
+    border-bottom b
+    padding 0 1em 1em
+    .close
+      display inline-block
 
 .navigationHorizontal
   section

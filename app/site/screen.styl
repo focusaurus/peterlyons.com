@@ -1,14 +1,8 @@
 @require "nib/reset"
 global-reset()
-@require "layout"
 @require "color"
 @require "typography"
-
-.clear
-  clear both
-
-.none
-  display none
+@require "layout"
 
 body
   background-color $colorPrimaryBackground
@@ -54,6 +48,16 @@ pre
   margin 1em 0
   overflow auto
   padding 1em
+
+
+.clear
+  clear both
+
+.none
+  display none
+
+.content.navOpen
+  opacity 0.5
 
 @require "blocks/*"
 @require "../pages/*"

@@ -1,38 +1,37 @@
+@require "adaptive"
+@require "position"
+
 footer
   margin-top 4em
 
 body > nav
   position fixed
+  @media mediumScreen
+    display none
+    &.open
+      display block
+      topRight()
+      z-index 10
+      background-color $colorPrimaryBackground
+      margin 0
+      border-left 1px solid $colorCodeBackground
+
+.navMenuButton
+  display none
+  @media mediumScreen
+    display inline
 
 footer > nav
   display none
-
-.respond
-  color gray
-  position fixed
-  &:after
-    content "1156 (Daddy Bear)"
+  @media mediumScreen
+    display block
 
 .content
   margin 1em auto
   width 30em
 
-@media screen and (max-width: 1000px)
-  .respond:after
-    content "1000 (Momma Bear)"
-  body > nav
-    display none
-  footer > nav
-    display block
-
-@media screen and (max-width: 720px)
-  .respond:after
-    content "720 (Baby Bear)"
+@media smallScreen
   body
     margin 1rem
   .content
     width 100%
-
-@media screen and (max-width: 360px)
-  .respond:after
-    content "360 (Teddy Bear)"
