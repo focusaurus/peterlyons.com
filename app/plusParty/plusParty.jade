@@ -7,10 +7,11 @@ block body
     h1= title
     p Paste some numbers into the box. It's OK if they have other text around them. All the numbers will be parsed out and totaled up for you.
     textarea(data-ng-model="rawText")
+    .buttonWrapper.clear
+      button#copyToClipboard(data-clipboard-text="{{total}}") Copy Total to Clipboard
     ul
       li(data-ng-repeat="wrapped in wrappedNumbers", data-ng-bind="wrapped.value | number:2")
     div.total(data-ng-bind="total")
-    button#copyToClipboard(data-clipboard-text="{{total}}") Copy Total to Clipboard
     img(src="/images/clue_bullets.png", alt="One plus two plus two plus one.")
     iframe(src="//www.youtube.com/embed/O5ROhf5Soqs", width="560", height="315")
 block append scripts
