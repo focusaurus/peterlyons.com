@@ -66,9 +66,11 @@ app.listen(config.port, ip, function(error) {
 });
 
 if (config.inspector.enabled) {
-  child_process.fork(
-    require.resolve("node-inspector/bin/inspector"),
-    ["--web-port=" + config.inspector.webPort, "--web-host=127.0.0.1"],
-    {execArgv: []}
-  );
+  setTimeout(function () {
+    child_process.fork(
+      require.resolve("node-inspector/bin/inspector"),
+      ["--web-port=" + config.inspector.webPort, "--web-host=127.0.0.1"],
+      {execArgv: []}
+    );
+  }, 2000);
 }
