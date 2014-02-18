@@ -1,5 +1,4 @@
-<img class="band" src="/images/gora_gora_orkestar.jpg" alt="Gora Gora Orkestar"/>
-#Gora Gora Orkestar
+<img class="band" src="/images/gora_gora_orkestar.png" alt="Gora Gora Orkestar"/>
 
 Gora Gora Orkestar is a large brass band playing a variety of styles from around the world including Balkan folk music, Roma, and New Orleans Second Line Funk.
 
@@ -11,7 +10,6 @@ Gora Gora Orkestar is a large brass band playing a variety of styles from around
 
 
 <img class="band" src="/images/legitimate_front.jpg" alt="Legitimate Front"/>
-#Legitimate Front
 
 Legitimate Front is a 70's rock/soul band bursting out of Boulder's Tech/Startup scene.
 <div class="clear"></div>
@@ -23,8 +21,6 @@ Legitimate Front is a 70's rock/soul band bursting out of Boulder's Tech/Startup
 
 <img class="band" src="/images/afronauts.jpg" alt="Afronauts"/>
 
-#The Afronauts
-
 The Afronauts was a large afrobeat ensemble.
 
 <div class="clear"></div>
@@ -34,7 +30,6 @@ The Afronauts was a large afrobeat ensemble.
 
 
 <img class="band" src="/images/turtle_dove.jpg" alt="Turtle Dove Blues Band"/>
-#Turtle Dove
 
 Turtle Dove was a blues/rock quartet I played with in 2011. We played great original
 songs and fun cover tunes, including a few Morphine covers.
@@ -47,8 +42,6 @@ songs and fun cover tunes, including a few Morphine covers.
 
 
 <img class="band" src="/images/eclectric_cover.jpg" alt="Sunny Daze Eclectric"/>
-
-#Sunny Daze
 
 I played with the Acid Jazz/Funk/Latin band Sunny Daze from 2001-2007. The band continues to perform around the
 Jersey shore scene. During my tenure, we recorded three CDs.
