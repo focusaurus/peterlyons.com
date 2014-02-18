@@ -74,7 +74,7 @@ if (config.inspector.enabled) {
     );
     //tell node to start up the v8 debugger
     //delay is here to avoid TCP port bind conflicts during node-dev restarts
-    process.kill(process.pid, "SIGUSR1");
+    //process.kill(process.pid, "SIGUSR1");
 
   }, 2000);
 }
