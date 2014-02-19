@@ -1,69 +1,37 @@
 extends ../site/layout
 block variables
-  - title = "Peter Lyons: node.js coder for hire"
+  - title = "Peter Lyons: node.js expert consultant"
 block body
-  section#intro
-    img.hero(src="/images/pete_hero.png", alt="Pete")
-    p.intro <span class="highlight">node.js coder for hire.</span>
-    p.intro I'm a freelance web developer<br> specializing in custom application development.
-    h3.stack The Stack
+  section.intro
+    img.hero(src="/images/pl_lizm_drawing.jpg", alt="Pete")
+    p.highlight Crafting node.js web applications.
     :markdown
-      I'm currently focused on a bleeding-edge stack called MEAN:
+      Full-stack web development consulting to supercharge your application. I specialize in ambitious web application development.
 
-      * MongoDB
-      * ExpressJS
-      * AngularJS
-      * NodeJS
+      ### Expertise
+      * node.js, express.js server side javascript
+      * HTML5, CSS3, ambitious browser interfaces, single page applications
+      * Data-Intensive Real-Time (DIRTy) Applications
+      * User Experience
+      * APIs
+      * MongoDB, PostgreSQL
+      * Linux/Unix server administration
+      * Cloud and infrastructure
+      * Devops, deployment automation, security
+      * <a href="/stacks">Read more</a>
 
-    a.button(href="stacks") Read more about my stacks of choice
-    h3 Practices
-    ul
-      li Pragmatic craftsmanship
-      li Lightweight Lean Methodology
-      li Testing and automation
-    a.button(href="practices") Read more about my practices
-  section#chops
-    h2 <span class="highlight">&lt;&gt;</span> Chops
-    h3 Check my street cred...
-    .links
-      a(href='http://www.linkedin.com/in/peterlyons1')
-        img.icon(src='/images/linkedin_icon.png', alt='LinkedIn', title='LinkedIn')
-        | LinkedIn
-      a(href='https://github.com/focusaurus')
-        img.icon(src='/images/github_icon.png', alt='github', title='github')
-        | github
-      a(href='http://stackoverflow.com/users/266795/peter-lyons')
-        img.icon(src='/images/stackoverflow_icon.png', alt='stackoverflow', title='stackoverflow')
-        | stackoverflow
-    ul
-      li <a href="https://linkzie.com">Linkzie</a> is a bookmark manager I built soup to nuts
-        ul
-          li Single Page App
-          li Drag and drop intuitive UI built with jQuery, Ajax, JSON, REST
-          li Back end in <a href="http://rubyonrails.org">Ruby on Rails</a>
-          li Extensive front end test suite in <a href="http://pivotal.github.com/jasmine">Jasmine</a>
-      li Full stack generalist. OSes, databases (relational or document oriented), app servers, web servers, JavaScript, CSS, HTML, UX, security
-      li Expert Linux/Unix systems administration with 6.5 years doing server automation development at Hewlett-Packard/Opsware
-  section#writing
-    h2 Favorite blog posts and StackOverflow answers
-    ul
-      li
-        a(href="/problog/2010/07/install-ubuntu-lan") How to Install Ubuntu 10.04 over a LAN
-      li
-        a(href="/problog/2010/05/on-idempotence-intention-and-unix-commands") On Idempotence, intention, and unix commands
-      li
-        a(href="/problog/2010/02/environment-variables-considered-harmful") Environment variables considered harmful
-      li
-        a(href="http://stackoverflow.com/questions/6720440/if-im-dealing-with-dictionaries-everywhere-should-i-make-them-classes/6720671#6720671", target="_blank") Dictionaries vs. Classes in python
-      li
-        a(href="http://stackoverflow.com/questions/6606291/how-can-i-decode-this-utf-8-string-picked-on-a-random-website-and-saved-by-the-d/6606619#6606619", target="_blank") Python confusion with Unicode and the scary question mark character
-      li
-        a(href="http://stackoverflow.com/questions/6313192/how-does-jquery-have-the-object-constructor-and-the-methods-associated-with-the/6313334#6313334", target="_blank") How jQuery does <code>$()</code> and <code>$.ajax()</code>
-      li
-        a(href="http://stackoverflow.com/questions/3633154/python-check-html-valid/3646816#3646816", target="_blank") Python script to validate HTML with the W3C validator
-      li
-        a(href="http://stackoverflow.com/questions/2777116/difference-between-python-urllib-urlretrieve-and-wget/2815800#2815800", target="_blank") cURL vs. wget vs. urllib2
-      li
-        a(href="http://stackoverflow.com/questions/2430423/which-xml-library-for-what-purposes/2430541#2430541", target="_blank") DOM vs. SAX for XML processing
+      ### Practices
+      * Pragmatic craftsmanship
+      * Lightweight Lean Methodology
+      * Testing and automation
+      * <a href="/practices">Read more</a>
+
+      ### Experience
+      * Lead engineer for [trending.com](https://trending.com) social network
+      * Tech Lead for OS Provisioning and Solaris Patching on Hewlett Packard's Server Automation product
+      * Web development in Ruby on Rails, Python, and Java
+      * Over 1000 answers posted and 35K reputation earned on StackOverflow
+      * <a href="/career">Read more</a> about my career
+
 block append scripts
   script require("app/browser/home")();

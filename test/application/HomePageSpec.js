@@ -11,6 +11,6 @@ describe("the home page", function() {
   });
   it("should have the intro material", function () {
     testUtils.assertSelectors($,
-      "section#intro", "section#chops", "section#writing");
+      "section.intro");
   });
 });

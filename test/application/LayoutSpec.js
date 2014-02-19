@@ -28,6 +28,6 @@ describe("the main layout", function() {
   });
 
   it("should have the normal title", function() {
-    expect($("title").text()).toBe("Peter Lyons: node.js coder for hire");
+    expect($("title").text()).toBe("Peter Lyons: node.js expert consultant");
   });
 });

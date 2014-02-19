@@ -1,4 +1,4 @@
-var HEADER_SELECTOR = "#intro .highlight";
+var HEADER_SELECTOR = ".intro .highlight";
 var subtitle;
 
 function init() {
