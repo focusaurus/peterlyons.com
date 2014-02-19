@@ -1,0 +1,34 @@
+---
+-
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  tasks:
+    -
+      name: install ansible prerequisites
+      script: ansible_prereqs.sh
+    - name: Install Development Packages
+      action: apt pkg={{item}}
+      with_items:
+        # Needed to build node.js modules
+        - make
+        # Needed to build node.js modules with binary add-ons
+        - g++
+        # compiling node.js modules with native extensions
+        - build-essential
+        # needed to build bcrypt node.js binary module
+        - libssl-dev
+        # compiling python modules with native extensions
+        - python-dev
+        # git SCM
+        - git-core
+        # wallah uses curl to download stuff like node
+        - curl
+        # mmm, tasty zsh
+        - zsh
+        # plyons is in the habit of using less instead of more
+        - less
+        # for the editing of the text files
+        - vim
+    - name: remove evil default ~/.bashrc
+      file: path=~/.bashrc state=absent

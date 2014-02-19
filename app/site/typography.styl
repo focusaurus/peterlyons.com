@@ -1,0 +1,69 @@
+@require "adaptive"
+$headerFont = Poly, serif
+$codeFont = Inconsolata, monospace
+
+/*
+"
+I am not dealing with font size insanity. Here is the deal.
+The main body/content font size is zero
+Font sizes increase/decrease relative to that with simple sequential integers:
+-2, -1, 0, 1, 2, 3, 4, 5
+Each one is "a bit" larger than the previous as defined here
+I generally only need h1-h3,
+so h3 should be size 1 (just a bit larger than normal text),
+h2 should be size 2,
+and h1 should be size 3
+Use REM units for fanciness but also include pixels for unsupported browsers
+http://snook.ca/archives/html_and_css/font-size-with-rem
+"
+*/
+fontSize(size, lineHeightRatio=1.5)
+  pixels = 12 if size < -1
+  pixels = 14 if size == -1
+  pixels = 20 if size ==  0 //Base size 0 for main body content
+  pixels = 24 if size ==  1
+  pixels = 28 if size ==  2
+  pixels = 36 if size ==  3
+  pixels = 40  if size > 3
+  font-size unit(pixels, px)
+  font-size unit((pixels/10), rem)
+  line-height unit((pixels *  lineHeightRatio), px)
+  line-height unit((pixels * lineHeightRatio / 10), rem)
+
+html
+  //This is a magic number that keeps 1em equal to 10px
+  font-size 62.5%
+
+body
+  font-family "PT Sans", Helvetica, Arial, Sans-serif
+  fontSize 0
+
+button
+  fontSize 0
+
+p
+  margin-top 1.5em
+  margin-bottom 3em
+
+h1, h2, h3
+  font-family $headerFont
+  margin 1em 0
+h1
+  fontSize 3 1
+h2
+  fontSize 2 1
+h3
+  fontSize 1 1
+
+///// code /////
+code, pre
+  font-family $codeFont
+
+pre
+  fontSize -1
+
+@media mediumScreen
+  body
+    fontSize -1
+  pre
+    fontSize -2

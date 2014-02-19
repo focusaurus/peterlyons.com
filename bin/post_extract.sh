@@ -14,7 +14,7 @@ set_owner_and_permissions() {
   chown -R plyons:www-data . ../data ../var
   find . -type d -print0 | xargs -0 chmod 775
   find . -type f -print0 | xargs -0 chmod 664
-  chmod +x node/bin/* node_modules/.bin/* bin/* ./node/lib/node_modules/npm/bin/node-gyp-bin/* app/server.coffee
+  chmod +x node/bin/* node_modules/.bin/* bin/* ./node/lib/node_modules/npm/bin/node-gyp-bin/* app/server.js
   chmod -R g+w ../data/posts
   chmod g+w ../var/log/upstart.log
 }

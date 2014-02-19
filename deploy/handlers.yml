@@ -1,0 +1,13 @@
+---
+-
+  name: restart nginx
+  service: name=nginx state=restarted
+-
+  name: reload nginx
+  service: name=nginx state=reloaded
+-
+  name: restart express
+  service: name=plws-express state=restarted
+-
+  name: restart monit
+  service: name=monit state=restarted

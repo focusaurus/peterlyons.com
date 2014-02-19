@@ -1,0 +1,37 @@
+@require "adaptive"
+@require "position"
+
+footer
+  margin-top 4em
+
+body > nav
+  position fixed
+  @media mediumScreen
+    display none
+    &.open
+      display block
+      topRight()
+      z-index 10
+      background-color $colorPrimaryBackground
+      margin 0
+      border-left 1px solid $colorCodeBackground
+
+.navMenuButton
+  display none
+  @media mediumScreen
+    display inline
+
+footer > nav
+  display none
+  @media mediumScreen
+    display block
+
+.content
+  margin 1em auto
+  width 30em
+
+@media smallScreen
+  body
+    margin 1rem
+  .content
+    width 100%

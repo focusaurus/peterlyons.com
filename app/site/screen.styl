@@ -1,0 +1,67 @@
+@require "nib/reset"
+global-reset()
+@require "color"
+@require "typography"
+@require "layout"
+
+body
+  background-color $colorPrimaryBackground
+  color $colorPrimary
+
+button
+  background-color $colorCodeBackground
+  color $colorPrimary
+  &:focus
+    outline none
+  &:disabled
+    color $colorPrimaryBackground
+    border none
+
+blockquote
+  background-color $colorCodeBackground
+  padding 0.5em 1em
+a
+  color $colorLink
+  &:hover
+    background-color $colorLinkHoverBackground
+
+////////// lists //////////
+li
+  margin-left 2em
+ul li
+  list-style-type disc
+ol li
+  list-style-type decimal
+
+
+////////// code //////////
+//For inline code snippets (wrapping OK)
+code, pre
+  background-color $colorCodeBackground
+  color $colorCode
+
+code
+  padding 0 0.2em
+
+//For multiline code blocks (formatted, no wrapping)
+pre
+  margin 1em 0
+  overflow auto
+  padding 1em
+
+
+.clear
+  clear both
+
+.none
+  display none
+
+.content.navOpen
+  opacity 0.5
+
+@require "blocks/*"
+@require "../pages/*"
+@require "../photos/*"
+@require "../blogs/*"
+@require "../plusParty/*"
+@require "../jsDebug/*"

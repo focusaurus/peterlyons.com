@@ -1,0 +1,3 @@
+[submodule "wallah"]
+	path = wallah
+	url = https://github.com/focusaurus/wallah.git

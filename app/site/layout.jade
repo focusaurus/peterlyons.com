@@ -1,0 +1,44 @@
+- var title, angular, pageTitle;
+block variables
+- pageTitle = title;
+- if (title && title.indexOf(titleSuffix) < 0 && title.indexOf("Peter Lyons") !== 0) { pageTitle = title + titleSuffix }
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title=pageTitle
+    link(rel="stylesheet", href="/screen.css")
+    link(href="http://fonts.googleapis.com/css?family=Julius+Sans+One|Inconsolata|Poly|Happy+Monkey",
+      rel="stylesheet")
+    link(href="/favicon.png", type="image/png", rel="icon")
+    link(rel="alternate", type="application/atom+xml",
+      href="/problog/feed", title="Pete's Points")
+    link(rel="author", type="text/plain", href="/humans.txt")
+    link(rel="openid.server",
+      href="http://www.livejournal.com/openid/server.bml")
+    link(rel="openid.delegate", href="http://focusaurus.livejournal.com/")
+    meta(name="description", content=title)
+    meta(name="keywords", content="peter lyons, pete lyons, web development, node.js, developer, coder, freelance, consultant, afronauts, boulder, colorado, turtle dove, startups, music, sax, saxophone, saxophonist, sunny daze, confunktion junction, oberlin, smartears, smart ears, big clock")
+    meta(name="author", content="Peter Lyons")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+  body
+    //-.adaptive
+    button.navMenuButton &#926;
+    include blocks/navigation
+    .content
+      include blocks/header
+      block body
+      footer.navigationHorizontal
+        include blocks/navigation
+      footer.license
+        include blocks/license
+    block scripts
+      if angular
+        //- script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js")
+        //- script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-route.min.js")
+        script.
+          if (typeof angular === 'undefined') {
+            document.write(unescape('%3Cscript src="/angular.js" %3E%3C/script%3E'));
+            document.write(unescape('%3Cscript src="/angular-route.js" %3E%3C/script%3E'));
+          }
+      script(src="/browser.js")

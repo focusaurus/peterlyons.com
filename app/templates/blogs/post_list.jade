@@ -1,8 +1,0 @@
-a.button#subscribe(href="/" + URI + "/feed") Subscribe
-  img.icon(src='/images/feed.png', height="24", alt='Subscribe to my Atom feed', title='Subscribe to my Atom Feed')
-ul
-  each post in posts
-    li.post
-      a(href="/" + post.URI())
-        = post.title
-      span.date= "&nbsp;" + post.presented.date

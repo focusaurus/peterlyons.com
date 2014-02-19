@@ -2,3 +2,6 @@
 /var/log
 /build
 /dist
+/vagrant_ansible_inventory_default
+/python
+/.vagrant
