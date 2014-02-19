@@ -1,6 +1,6 @@
 function init() {
   var button = document.querySelector(".reverse button");
-  var initialText = button.innerText;
+  var initialText = button.textContent;
   var nodeList = document.querySelectorAll(".phase");
   var lastPhase = nodeList[nodeList.length - 1];
   var parent = lastPhase.parentNode;
@@ -15,10 +15,10 @@ function init() {
       fragment.appendChild(phase);
     });
     parent.insertBefore(fragment, elementAfterPhases);
-    if (button.innerText === initialText) {
-      button.innerText = "View newest first";
+    if (button.textContent === initialText) {
+      button.textContent = "View newest first";
     } else {
-      button.innerText = initialText;
+      button.textContent = initialText;
     }
   });
 }
