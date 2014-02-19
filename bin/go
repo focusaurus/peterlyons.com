@@ -179,6 +179,7 @@ task::deploy() {
   local inventory="$2"
   ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook \
     -i "${inventory}" \
+    --ask-sudo-pass \
     --extra-vars "'dist=${dist_path}'" \
     --extra-vars "'dist_name=${dist_name}'" \
     ./deploy/playbook_express.yml
