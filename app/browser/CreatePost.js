@@ -18,7 +18,7 @@ function CreatePost($scope, $window, $http, $sce, localStorage) {
   } catch (_error) {
     console.log(localStorage);
   }
-  this.$scope.save = this.save;
+  this.$scope.save = this.save.bind(this);
   this.$scope.$watch("contentMarkdown",
     _.throttle(this.changeContentMarkdown.bind(this), 250));
 }
