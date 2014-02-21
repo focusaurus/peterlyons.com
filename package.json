@@ -10,7 +10,7 @@
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
   "main": "app/server.js",
   "engines": {
-    "node": "0.10.25"
+    "node": "0.10.26"
   },
   "files": [],
   "dependencies": {
