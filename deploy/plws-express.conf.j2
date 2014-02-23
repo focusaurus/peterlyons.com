@@ -3,10 +3,11 @@ author "Peter Lyons <pete@peterlyons.com>"
 
 start on filesystem and started networking
 respawn
+console log
 chdir {{app_root}}/current
 setuid {{express_user}}
 setgid {{express_user}}
 env PATH=./node_modules/.bin:./node/bin:/usr/bin
 env NODE_ENV=production
 env PLWS_HOSTNAME={{hostname}}
-exec app/server.js | /usr/bin/multilog s1024000 {{log_path}} 2>&1
+exec app/server.js

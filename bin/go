@@ -95,7 +95,7 @@ task::validate() {
   NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
-task:release() {
+task::release() {
   echo "Performing a production peterlyons.com release"
   git checkout develop
   git pull origin develop
@@ -142,7 +142,7 @@ task::build() {
   (cd "${build_dir}/${prefix}" && ./node/bin/npm install --silent --production --parseable | grep -v '^/')
   #remove development-only files
   (cd "${build_dir}/${prefix}" && \
-    rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules)
+    rm -rf wallah doc deploy test karma Vagrantfile .gitignore .agignore .gitmodules)
   echo creating archive
   local dist_path="${dist_dir}/${prefix}.tar.xz"
   tar -C "${build_dir}" --create --xz --file "${dist_path}" .

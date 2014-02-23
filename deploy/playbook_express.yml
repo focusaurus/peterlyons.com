@@ -9,7 +9,6 @@
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
-    log_path: /var/log/plws-express
   handlers:
     -
       include: handlers.yml
@@ -21,8 +20,6 @@
       name: install prerequisites
       apt: pkg={{item}}
       with_items:
-        #multilog
-        - daemontools
         #static/data repo access
         - git-core
         #For monitoring
@@ -62,13 +59,6 @@
         dest="{{app_root}}"
       notify:
         - restart express
-    -
-      name: create directory {{log_path}}
-      file: path={{log_path}}
-        state=directory
-        owner=root
-        group={{express_user}}
-        mode=0770
     -
       name: activate the deployment
       command: "{{app_root}}/{{dist_name}}/bin/activate_deployment {{express_user}}"
