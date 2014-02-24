@@ -1,5 +1,5 @@
-function jsdebug(req, res) {
-  res.render("jsdebug/jsdebug");
+function jsDebug(req, res) {
+  res.render("jsDebug/jsDebug");
 }
 
 function randomDelay(req, res) {
@@ -11,8 +11,8 @@ function randomDelay(req, res) {
 }
 
 function setup(app) {
-  app.get("/jsdebug", jsdebug);
-  app.get("/jsdebug/randomDelay", randomDelay);
+  app.get("/jsDebug", jsDebug);
+  app.get("/jsDebug/randomDelay", randomDelay);
 }
 
 module.exports = setup;
