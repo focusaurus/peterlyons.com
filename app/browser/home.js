@@ -9,7 +9,7 @@ function init() {
 }
 
 function speed() {
-  return Math.random() * 200 + 50;
+  return Math.random() * 200 + 20;
 }
 
 function pushLetter() {
