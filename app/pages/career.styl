@@ -1,0 +1,11 @@
+@require "../color"
+.reverse
+  > button
+    border none
+    margin-right 2em
+    &.activeSort:before
+      content "✓ "
+    &.activeSort
+      border 1px solid $colorHeader
+    &:disabled
+      color $colorHeader
