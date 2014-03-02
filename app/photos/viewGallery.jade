@@ -11,7 +11,7 @@ block body
     I enjoyed writing and maintaining my own photo software for a decade or so,
     but it's time to move on.
   .galleryApp(data-ng-app="photos", data-ng-controller="GalleryController", data-ng-cloak)
-    h1#photo(data-ng-bind="Photo Gallery: {{gallery.displayName}}")
+    h1#photo Photo Gallery: {{gallery.displayName}}
     #nextPrev
       a(href="{{previousPhoto.pageURI}}", data-ng-if="previousPhoto") &lt;&lt;previous&nbsp;
       a(href="{{nextPhoto.pageURI}}", data-ng-if="nextPhoto") next&gt;&gt;
