@@ -2,7 +2,7 @@
 ##### helper functions #####
 autoinstall_wallah() {
   [[ -f wallah/bin/install_node ]] && return
-  git submodule update --init
+  git submodule update --init --depth 1
 }
 
 usage() {

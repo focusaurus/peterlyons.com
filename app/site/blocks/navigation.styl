@@ -17,7 +17,9 @@ nav.site
   a
     display block
     text-decoration none
-    font-weight bold
+    &.current
+      color $colorNavCurrent
+      font-weight bold
     &.current:before
       content "\232a\00a0"
   .close
