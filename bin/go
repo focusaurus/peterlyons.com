@@ -144,8 +144,8 @@ task::build() {
   (cd "${build_dir}/${prefix}" && \
     rm -rf wallah doc deploy test karma Vagrantfile .gitignore .agignore .gitmodules)
   echo creating archive
-  local dist_path="${dist_dir}/${prefix}.tar.xz"
-  tar -C "${build_dir}" --create --xz --file "${dist_path}" .
+  local dist_path="${dist_dir}/${prefix}.tar.gz"
+  tar -C "${build_dir}" --create --gzip --file "${dist_path}" .
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
   printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"

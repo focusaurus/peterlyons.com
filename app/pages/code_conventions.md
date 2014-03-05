@@ -40,7 +40,7 @@ For a sequence of statements where execution or declaration order doesn't matter
 
 People have varying mental capacities to keep things in their short term memory. Certain complex or compound statements urge the reader to fill up their short term memory with lots of intermediate products in order to comprehend a single complex statement. I find this difficult and especially frustrating when I'm reading someone else's code. And the code is broken. And I'm tired and up late because that code is broken. And the author decided to write some fancy 200-character lambda expression with seven intermediate variables. Here's a real example I encountered at work (altered to protect the guilty):
 
-    <pre>elif svd['method'] == 'some.literal.string' and filter(lambda x: type(x) == type((0,)) and x[1], svd.results.get('test_totals',{}).items()):</pre>
+    elif svd['method'] == 'some.literal.string' and filter(lambda x: type(x) == type((0,)) and x[1], svd.results.get('test_totals',{}).items()):
 
 That's a single expression! Completely unreadable to me. Clever, but worse
 than worthless.
@@ -107,11 +107,11 @@ comes to the actual python standard library itself, there is no such thing as
 foolish consistency. Even in [PEP 8][4] they admit "The naming conventions of
 Python's library are a bit of a mess". The python standard library is riddled
 with blatant inconsistencies that reveal that we are dealing with a product of
-dozens of authors and pretty bad consistency (much worse that Java in many
+dozens of authors and pretty bad consistency (much worse than Java in many
 cases). Examples abound, but just look at `os.mkdir()` vs. `os.makedirs`. I
 have so many times typed `os.mkdirs()` only later to get a `AttributeError`. I
 mean, WTF? It's in the same module for crying out loud. I have my opinion
-about how this should be (`os.makeDir()` that behaves like `os.makedirs()`),
+about how this should be (`os.make_dir()` that behaves like `os.makedirs()`),
 but I don't care that much as long as they are consistent. If a library is
 consistent, I'm flying. At this point I rarely need to read documentation. I
 can use most common libraries for IO, date, filesystem, networking just by
@@ -119,7 +119,7 @@ looking at the API and assuming it does what makes sense. If there is no
 consistency though, it totally gums up the works and slows me to a frustrating
 crawl.
 
-Prefer double quotes for most strings. Python allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.
+Prefer double quotes for most strings. Python allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/javascript/json easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.
 
 Import statements should be one per line (don't use import modone, modtwo, modthree). (Make One Choice principle), (Fewer Statements Per Line)
 
@@ -242,7 +242,7 @@ JSON requires double quotes. This makes for less pain converting between JSON an
 
 This also fosters consistency with java, c, python, ruby, and coffeescript.
 
-Aprostrophes are fairly common to want to put into source code. This makes things like `"%23{name}'s Settings"` easy.
+Aprostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
 
 I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
 
