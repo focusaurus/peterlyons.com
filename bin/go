@@ -102,7 +102,7 @@ task::release_candidate() {
   echo "Creating a new release candidate"
   git checkout develop
   git pull origin develop
-  ./node_modules/.bin/bumpy "$1-patch"
+  ./node_modules/.bin/bumpy "${1-patch}"
   git diff package.json
   git add package.json
   cat <<-EOF
