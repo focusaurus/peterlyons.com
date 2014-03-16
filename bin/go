@@ -22,47 +22,50 @@ usage() {
     fi
   done < <(cat "$0")
   printf "] [subcommand args...]\n" 1>&2
-  cat <<EOF
+  cat <<-EOF
 
-Purpose of $(basename $0) script
---------------------
+	Purpose of $(basename $0) script
+	--------------------
 
-* entrypoint script for common commands
-* Automatically installs development prerequisites
-* Ensures the correct PATH environment variable
-* commands are grouped by purpose/lifecycle and described in more detail below
+	* entrypoint script for common commands
+	* Automatically installs development prerequisites
+	* Ensures the correct PATH environment variable
+	* commands are grouped by purpose/lifecycle and described in more detail below
 
 
-Development Commands
---------------------
+	Development Commands
+	--------------------
 
-* express: start the express server
-* test: run all the tests (mocha and karma)
-* test_debug: run mocha tests with immediate breakpoint for debugging
-* karma: start karma process to continuously watch and run tests
-* validate: Run W3C HTML5 validator against the site HTML
-* release: merge develop to master, increment package.json version, and tag
-  * Usage: $(basename $0) release <patch|minor|major|specific_version>
-Deployment Commands
--------------------
+	* express: start the express server
+	* test: run all the tests (mocha and karma)
+	* test_debug: run mocha tests with immediate breakpoint for debugging
+	* karma: start karma process to continuously watch and run tests
+	* validate: Run W3C HTML5 validator against the site HTML
 
-* clean: delete the build directory
-* build: build a distribution archive for deployment
-* errors: regenerate the static error HTML pages
-* deploy: deploy code to a target system via ansible
-  * Usage: $(basename $0) deploy <dist-file> <inventory-file>
-  * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
-  * distribution archive files get built in the "build" directory
-  * inventory files live in the deploy/hosts directory
-* ansible: just a convenience wrapper around ./python/bin/ansible
-  * used for running ad hoc ansible commands
-  * installs ansible if needed
-  * arguments are passed through to ./python/bin/ansible
-* ansible-playbook: just a convenience wrapper around ./python/bin/ansible-playbook
-  * used for running ad hoc ansible-playbook commands
-  * installs ansible if needed
-  * arguments are passed through to ./python/bin/ansible-playbook
-* vagrant: just a convenience wrapper around vagrant with the correct environment
+	Deployment Commands
+	-------------------
+
+	* clean: delete the build directory
+	* build: build a distribution archive for deployment
+	* release_candidate: begin git work to prepare for a build/test/release
+	  * Usage: $(basename $0) release_candidate <patch|minor|major>
+	* release: merge develop to master, tag, and push to origin
+	  * Usage: $(basename $0) release
+	* errors: regenerate the static error HTML pages
+	* deploy: deploy code to a target system via ansible
+	  * Usage: $(basename $0) deploy <dist-file> <inventory-file>
+	  * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
+	  * distribution archive files get built in the "build" directory
+	  * inventory files live in the deploy/hosts directory
+	* ansible: just a convenience wrapper around ./python/bin/ansible
+	  * used for running ad hoc ansible commands
+	  * installs ansible if needed
+	  * arguments are passed through to ./python/bin/ansible
+	* ansible-playbook: just a convenience wrapper around ./python/bin/ansible-playbook
+	  * used for running ad hoc ansible-playbook commands
+	  * installs ansible if needed
+	  * arguments are passed through to ./python/bin/ansible-playbook
+	* vagrant: just a convenience wrapper around vagrant with the correct environment
 EOF
   exit 1
 }
@@ -95,20 +98,39 @@ task::validate() {
   NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
+task::release_candidate() {
+  echo "Creating a new release candidate"
+  git checkout develop
+  git pull origin develop
+  ./node_modules/.bin/bumpy "$1-patch"
+  git diff package.json
+  git add package.json
+  cat <<-EOF
+	Ready
+	Next steps are:
+		build on vagrant build vm
+		deploy to stage
+		test on stage
+		release
+		deploy to prod
+EOF
+
+}
+
 task::release() {
-  echo "Performing a production peterlyons.com release"
   git checkout develop
   git pull origin develop
   task::test
-  echo "ABOUT TO MERGE INTO MASTER. CTRL-C now to abort. ENTER to proceed."
+  local tag="v$(./wallah/bin/get_json_value package.json version)"
+  echo "Will merge develop to master, tag as ${tag} and push to origin"
+  echo "CTRL-C now to abort. ENTER to proceed."
   read DONTCARE
   git checkout master
   git merge develop
-  npm version "$@"
+  git tag "${tag}"
   git push origin master --tags
   git checkout develop #Not good form to leave master checked out
-  git merge master
-  echo "Ready to go. Next steps are clean, build, and deploy."
+  echo "Done. Miller Time."
 }
 
 ##### deployment task functions #####

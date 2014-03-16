@@ -24,7 +24,20 @@ The site requires 3 git repositories to fully function
 2. The data (blog posts and photo gallery metadata)
 3. Static files (images, fonts, etc)
 
-Since the data and static repos aren't very interesting, I don't publish them on github. All the interesting code is in this repository.
+The data and static repositories aren't particularly interesting. All the interesting code is in this repository.
+
+#Build Notes
+
+* do work in the develop branch
+* when ready to cut a release candidate, get develop into a clean commited state
+* make sure you are backmerged from master (normally this should always be true)
+* run `./bin/go release_candidate <patch|minor|major>`
+  * (patch is the default)
+* create a build on the vagrant "build" vm with `/vagrant/bin/go build`
+* deploy that to the vagrant "stage" vm from your laptop via `./bin/go deploy build/<build>.tar.gz deploy/hosts/vagrant_stage.yml`
+* Test that and if all looks good you can finalize the release with
+* `./bin/go release`
+* deploy to prod with `./bin/go deploy build/<build>.tar.gz deploy/hosts/production.yml`
 
 #License: MIT
 Copyright (c) 2013 Peter Lyons
