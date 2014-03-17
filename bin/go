@@ -146,9 +146,12 @@ task::build() {
   local git_ref="${1-HEAD}"
   local build_dir="build"
   local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
+  printf "prereqs..."
   autoinstall_wallah
   ./wallah/bin/check_prerequisites git tar
   mkdir -p "${build_dir}/${prefix}/node"
+
+  printf "git archive..."
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
     #extract that archive into a temporary build directory
@@ -156,6 +159,7 @@ task::build() {
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   #install node
+  printf "node..."
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
     --file node-v0.10.26-linux-x86.tar.gz
   (
@@ -163,14 +167,15 @@ task::build() {
 	  #remove development-only files
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
-  	echo install npm packages
-	  ../../node/bin/npm install --production --silent --parseable \
-    	| egrep -v '(^/|^make: |^> )'
+  	printf "npm packages..."
+	  ../../node/bin/npm install \
+	    --production --silent --parseable &> "../npm.log"
 	)
-  ./bin/go vagrant ssh build -c "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild'"
-  echo creating archive
+	printf "vagrant rebuild..."
+  ./bin/go vagrant ssh build -c "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
+  echo "archive"
   local dist_path="${build_dir}/${prefix}.tar.gz"
-  tar -C "${build_dir}" --create --gzip --file "${dist_path}" .
+  tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
   printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
