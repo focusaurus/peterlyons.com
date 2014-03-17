@@ -164,7 +164,7 @@ task::build() {
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
   	echo install npm packages
-	  ../../node/bin/npm --silent --production --parseable install \
+	  ../../node/bin/npm install --production --silent --parseable \
     	| egrep -v '(^/|^make: |^> )'
 	)
   ./bin/go vagrant ssh build -c "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild'"
