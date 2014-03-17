@@ -13,28 +13,29 @@ block body
   .galleryApp(data-ng-app="photos", data-ng-controller="GalleryController", data-ng-cloak)
     h1#photo Photo Gallery: {{gallery.displayName}}
     #nextPrev
-      a(href="{{previousPhoto.pageURI}}", data-ng-if="previousPhoto") &lt;&lt;previous&nbsp;
-      a(href="{{nextPhoto.pageURI}}", data-ng-if="nextPhoto") next&gt;&gt;
+      a(data-ng-href="{{previousPhoto.pageURI}}", data-ng-if="previousPhoto") &lt;&lt;previous&nbsp;
+      a(data-ng-href="{{nextPhoto.pageURI}}", data-ng-if="nextPhoto") next&gt;&gt;
     figure
       img(
         data-ng-src="{{photo.fullSizeURI}}",
-        src="{{photo.fullSizeURI}}"
+        src="",
         alt="{{photo.caption}}",
         title="{{photo.caption}}",
       )
       figcaption {{photo.caption}}
-    a.thumbnail(data-ng-repeat="photo in gallery.photos", href="{{photo.pageURI}}")
+    a.thumbnail(data-ng-repeat="photo in gallery.photos", data-ng-href="{{photo.pageURI}}")
+      //- src="" is to appease the W3C HTML validator
       img.thumbnail(
         data-ng-src="{{photo.thumbnailURI}}",
-        src="{{photo.thumbnailURI}}",
+        src="",
         alt="{{photo.caption}}",
         title="{{photo.caption}}"
       )
     nav.photos
       div(data-ng-repeat="year in years")
-        h2.year(data-ng-bind="{{year.name}}")
+        h2.year(data-ng-bind="year.name")
         a.gallerylink(data-ng-repeat="gallery in year.galleries",
-          href="?gallery={{gallery.dirName}}") {{gallery.displayName}}
+          data-ng-href="?gallery={{gallery.dirName}}") {{gallery.displayName}}
 
 block append scripts
   != sharify.script()

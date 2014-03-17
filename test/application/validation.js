@@ -13,6 +13,7 @@ describe("The HTML of each page", function () {
     var regex = testConfig[1];
     it(URI + " should be valid HTML5 according to the W3C", function(done) {
       this.slow(2000);
+      this.timeout(5000);
       request.get(URI).expect(200).end(function (error, res) {
         if (error) {
           done(error);
