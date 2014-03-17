@@ -105,6 +105,9 @@ task::release_candidate() {
   ./node_modules/.bin/bumpy "${1-patch}"
   git diff package.json
   git add package.json
+  local tag="v$(./wallah/bin/get_json_value package.json version)"
+  git commit -m "bump version for ${tag} release"
+  git tag "${tag}"
   cat <<-EOF
 	Ready
 	Next steps are:
@@ -121,13 +124,11 @@ task::release() {
   git checkout develop
   git pull origin develop
   task::test
-  local tag="v$(./wallah/bin/get_json_value package.json version)"
-  echo "Will merge develop to master, tag as ${tag} and push to origin"
+  echo "Will merge develop to master and push to origin"
   echo "CTRL-C now to abort. ENTER to proceed."
   read DONTCARE
   git checkout master
   git merge develop
-  git tag "${tag}"
   git push origin master --tags
   git checkout develop #Not good form to leave master checked out
   echo "Done. Miller Time."
@@ -144,29 +145,31 @@ task::build() {
   export PATH=/usr/bin:$PATH
   local git_ref="${1-HEAD}"
   local build_dir="build"
-  local dist_dir="dist"
   local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
   autoinstall_wallah
   ./wallah/bin/check_prerequisites git tar
-  mkdir -p "${build_dir}" "${dist_dir}"
+  mkdir -p "${build_dir}/${prefix}/node"
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
     #extract that archive into a temporary build directory
     tar -C "${build_dir}" --extract
-  #We need to explicitly use /usr/bin/python here to work well
-  #with our vagrant situation when ./python is an OSX version but
-  #this script is running on a vagrant linux VM
-  local node_version=$(/usr/bin/python ./wallah/bin/get_json_value \
+  local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   #install node
-  ./wallah/bin/install_node "${build_dir}/${prefix}/node" "${node_version}"
-  echo install npm packages
-  (cd "${build_dir}/${prefix}" && ./node/bin/npm install --silent --production --parseable | grep -v '^/')
-  #remove development-only files
-  (cd "${build_dir}/${prefix}" && \
-    rm -rf wallah doc deploy test karma Vagrantfile .gitignore .agignore .gitmodules)
+  tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
+    --file node-v0.10.26-linux-x86.tar.gz
+  (
+  	cd "${build_dir}/${prefix}"
+	  #remove development-only files
+    rm -rf wallah doc deploy test karma Vagrantfile \
+      .gitignore .agignore .gitmodules
+  	echo install npm packages
+	  ../../node/bin/npm --silent --production --parseable install \
+    	| egrep -v '(^/|^make: |^> )'
+	)
+  ./bin/go vagrant ssh build -c "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild'"
   echo creating archive
-  local dist_path="${dist_dir}/${prefix}.tar.gz"
+  local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" .
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
