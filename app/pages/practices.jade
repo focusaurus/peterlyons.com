@@ -11,9 +11,9 @@ block body
     * Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
     * The #1 primary mandate of the software engineer is managing complexity
     * Simple, small, consistent tools
-        * Small languages that foster consistency such as CoffeeScript or Python
+        * Small languages that foster consistency such as Python, jade
         * One and preferably only one good way to do it
-        * Significant white space fosters consistency, so I use it
+        * Significant white space fosters consistency, so I am in favor of it
         * Small core library plus good package management such as node.js with npm
         * Big, complex, heterogeneous languages like Perl and Ruby aren't compatible with my general orientation (but I will code in Ruby when appropriate)
     * Correctness and clarity are king
@@ -47,7 +47,8 @@ block body
 
     ##Programming Paradigm
 
-    * Multi-paradigm taking the best elements of procedural, functional, object oriented
+    * Multi-paradigm taking the best elements of functional, procedural, object oriented
+    * Functional programming is the dominant paradigm in my mind these days
     * Pure functional with no side effects has great testability
     * Use built-in data structures (lists, maps) for simple cases, but go to objects as soon as it is non-trivial
     * Encapsulation and composition as opposed to complex inheritence hierarchy
@@ -60,7 +61,7 @@ block body
     * Factories as opposed to fixtures
     * Test only the first-party code written for this application
     * A small handful of end to end system tests
-    * phantomjs for headless system test automation
+    * If running tests gets slow, it's probably time to split the project into smaller modules
 
     ##Process
 
@@ -83,6 +84,5 @@ block body
     * Clear development, staging, production environments from day one
     * Staging means production minus users
     * Should be able to rebuild entire app infrastructure with code and docs in the main source code repository
-    * [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branch management structure
     * [Semantic Versioning](http://semver.org/)
     * Modified [12-Factor](http://www.12factor.net/) principles
