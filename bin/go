@@ -81,7 +81,7 @@ task::test() {
   autoinstall_wallah
   ./wallah/bin/install_node
   NODE_ENV=test mocha "$@"
-  exec karma run karma/karma.conf.js
+  karma run karma/karma.conf.js
 }
 
 task::test_debug() {
@@ -111,10 +111,10 @@ task::release_candidate() {
   cat <<-EOF
 	Ready
 	Next steps are:
-		build on vagrant build vm
+		go build
 		deploy to stage
 		test on stage
-		release
+		go release
 		deploy to prod
 EOF
 
