@@ -39,13 +39,13 @@
         mode=0750
     -
       name: clone data repo
-      git: repo=https://github.com/focusaurus/data.git
+      git: repo=git+ssh://plyons@git.peterlyons.com/focusaurus/data.git
         dest={{data_root}}
         version=master
         force=no
     -
       name: allow filesystem writes for new blog posts
-      file: path="{{data_root}}/posts" state=directory recurse=true mode=0770 owner={{express_user}} group=sudo
+      file: path="{{data_root}}/posts state=directory recurse=true mode=0770 owner={{express_user}} group=sudo"
     -
       name: clone static repo
       git: repo=https://github.com/focusaurus/static.git

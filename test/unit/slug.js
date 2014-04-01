@@ -7,6 +7,7 @@ describe("app/blogs/slug", function () {
     expect(slug("no apostrophe's")).toBe("no-apostrophes");
     expect(slug("dot.to.dash")).toBe("dot-to-dash");
     expect(slug("double--dash--to--dash")).toBe("double-dash-to-dash");
+    expect(slug("no!bang")).toBe("nobang");
     expect(slug("no trailing dash-")).toBe("no-trailing-dash");
     expect(slug("LOWERCASE")).toBe("lowercase");
   });
