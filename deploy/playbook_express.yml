@@ -36,7 +36,7 @@
         state=directory
         owner=root
         group={{express_user}}
-        mode=0750
+        mode=07550
     -
       name: clone data repo
       git: repo=git+ssh://plyons@git.peterlyons.com/focusaurus/data.git
