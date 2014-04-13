@@ -60,11 +60,9 @@ function init() {
   });
 }
 
-module.exports = {
-  Controller: Controller,
-  sum: sum,
-  wrap: wrap,
-  parseNumbers: parseNumbers,
-  recompute: recompute,
-  init: init
-};
+exports.Controller = Controller;
+exports.sum = sum;
+exports.wrap = wrap;
+exports.parseNumbers = parseNumbers;
+exports.recompute = recompute;
+exports.init = init;
