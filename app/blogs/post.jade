@@ -1,7 +1,6 @@
 extends ../site/layout
 block variables
   - title = "Write a new blog post"
-  - angular = true
 block body
   .createPost(ng-app="createPostApp", ng-controller="CreatePost", ng-cloak)
     .error(ng-if="error")

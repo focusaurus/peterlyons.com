@@ -39,6 +39,9 @@ function Controller($scope) {
 }
 
 function init() {
+  //Just require angular without assigning it.
+  //browserify returns an empty object, but window.angular is there
+  require("angular");
   angular.module("PlusParty", []).controller("PlusPartyController", Controller);
   var ZeroClipboard = require("zeroclipboard");
   //https://github.com/zeroclipboard/zeroclipboard/issues/332

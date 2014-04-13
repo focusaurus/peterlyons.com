@@ -104,6 +104,10 @@ var _photos = function($routeProvider, $locationProvider) {
 };
 
 function init() {
+  //Just require angular without assigning it.
+  //browserify returns an empty object, but window.angular is there
+  require("angular");
+  require("angular-route");
   var photosApp = angular.module("photos", ["ngRoute"], _photos);
   photosApp.value("gallery", __sharifyData.gallery);
   photosApp.value("galleries", __sharifyData.galleries);

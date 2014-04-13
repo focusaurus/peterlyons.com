@@ -1,11 +1,10 @@
-var express = require("express");
+var connect = require("connect");
 
 function plusParty(req, res) {
   res.render("plusParty/plusParty.jade");
 }
 
 function setup(app) {
-  app.use("/plusparty", express.static(__dirname + "/browser"));
   app.get("/plusparty", plusParty);
 }
 

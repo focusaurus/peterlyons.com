@@ -13,9 +13,7 @@ var titles = {
 };
 
 function setup(app) {
-  app.locals({
-    titleSuffix: config.titleSuffix
-  });
+  app.locals.titleSuffix = config.titleSuffix;
   app.engine("md", function(mdPath, options, callback) {
     fs.readFile(mdPath, "utf8", function(error, markdownText) {
       if (error) {

@@ -32,13 +32,6 @@ html(lang="en")
         include blocks/navigation
       footer.license
         include blocks/license
-    block scripts
-      if angular
-        //- script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js")
-        //- script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-route.min.js")
-        script.
-          if (typeof angular === 'undefined') {
-            document.write(unescape('%3Cscript src="/angular.js" %3E%3C/script%3E'));
-            document.write(unescape('%3Cscript src="/angular-route.js" %3E%3C/script%3E'));
-          }
-      script(src="/browser.js")
+      block scripts
+        script(src="/browser.js")
+        script require("app/browser/navigation")()

@@ -2,7 +2,7 @@ var _ = require("lodash");
 var _galleries = require("./galleries");
 var config = require("app/config");
 var sharify = require("sharify");
-var express = require("express");
+var connect = require("connect");
 
 function renderPhotos(req, res, next) {
   _galleries.getGalleries(function(error, galleries) {
@@ -49,7 +49,7 @@ function getGallery(req, res) {
 }
 
 function setup(app) {
-  app.use("/photos", express.static(__dirname + "/browser"));
+  app.use("/photos", connect.static(__dirname + "/browser"));
   app.get("/galleries/:slug", getGallery);
   app.get("/photos", sharify, renderPhotos);
   if (config.photos.serveDirect) {

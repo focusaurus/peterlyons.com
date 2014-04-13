@@ -1,19 +1,17 @@
 #!/usr/bin/env node
-var child_process = require("child_process");
+require("process-title");
 var config = require("app/config");
+var connect = require("connect");
 var express = require("express");
 var NotFound = require("./NotFound");
-var path = require("path");
 
 var app = express();
 app.set("view engine", "jade");
 app.set("views", __dirname);
-app.locals({
-  config: config,
-  appURI: config.appURI
-});
+app.locals.config = config;
+app.locals.appURI = config.appURI;
 if (config.enableLogger) {
-  app.use(express.logger({
+  app.use(connect.logger({
     immediate: true,
     format: ":method :url :date"
   }));
@@ -32,8 +30,8 @@ if (config.enableLogger) {
   require("app/" + routesPath)(app);
 });
 
-app.use(express.static(config.staticDir));
-app.use(express.static(config.thirdPartyDir));
+app.use(connect.static(config.staticDir));
+app.use(connect.static(config.thirdPartyDir));
 app.use(function(req, res, next) {
   next(new NotFound(req.path));
 });
@@ -64,17 +62,4 @@ app.listen(config.port, ip, function(error) {
     "\n\tenv: " + process.env.NODE_ENV
   );
 });
-
-if (config.inspector.enabled) {
-  setTimeout(function () {
-    child_process.fork(
-      require.resolve("node-inspector/bin/inspector"),
-      ["--web-port=" + config.inspector.webPort, "--web-host=127.0.0.1"],
-      {execArgv: []}
-    );
-    //tell node to start up the v8 debugger
-    //delay is here to avoid TCP port bind conflicts during node-dev restarts
-    //process.kill(process.pid, "SIGUSR1");
-
-  }, 2000);
-}
+require('app/inspector');
