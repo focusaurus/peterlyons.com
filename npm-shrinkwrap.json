@@ -1,6 +1,6 @@
 {
   "name": "peterlyons.com",
-  "version": "5.0.6",
+  "version": "5.0.8",
   "dependencies": {
     "async": {
       "version": "0.2.10",
@@ -25,7 +25,7 @@
     },
     "browserify": {
       "version": "3.44.2",
-      "from": "browserify@^3.41.0",
+      "from": "browserify@3.44.2",
       "dependencies": {
         "JSONStream": {
           "version": "0.7.2",
@@ -33,8 +33,7 @@
           "dependencies": {
             "jsonparse": {
               "version": "0.0.5",
-              "from": "jsonparse@0.0.5",
-              "resolved": "https://registry.npmjs.org/jsonparse/-/jsonparse-0.0.5.tgz"
+              "from": "jsonparse@0.0.5"
             },
             "through": {
               "version": "2.3.4",
@@ -48,8 +47,7 @@
           "dependencies": {
             "util": {
               "version": "0.10.2",
-              "from": "util@0.10.2",
-              "resolved": "https://registry.npmjs.org/util/-/util-0.10.2.tgz"
+              "from": "util@0.10.2"
             }
           }
         },
@@ -63,8 +61,7 @@
               "dependencies": {
                 "jsonparse": {
                   "version": "0.0.5",
-                  "from": "jsonparse@0.0.5",
-                  "resolved": "https://registry.npmjs.org/jsonparse/-/jsonparse-0.0.5.tgz"
+                  "from": "jsonparse@0.0.5"
                 },
                 "through": {
                   "version": "2.2.7",
@@ -90,7 +87,7 @@
                 },
                 "source-map": {
                   "version": "0.1.33",
-                  "from": "source-map@~0.1.30",
+                  "from": "source-map@~0.1.31",
                   "dependencies": {
                     "amdefine": {
                       "version": "0.1.0",
@@ -132,42 +129,11 @@
         },
         "builtins": {
           "version": "0.0.4",
-          "from": "builtins@~0.0.3",
-          "resolved": "https://registry.npmjs.org/builtins/-/builtins-0.0.4.tgz"
+          "from": "builtins@~0.0.3"
         },
         "commondir": {
           "version": "0.0.1",
-          "from": "commondir@0.0.1",
-          "resolved": "https://registry.npmjs.org/commondir/-/commondir-0.0.1.tgz"
-        },
-        "concat-stream": {
-          "version": "1.4.5",
-          "from": "concat-stream@~1.4.1",
-          "dependencies": {
-            "typedarray": {
-              "version": "0.0.5",
-              "from": "typedarray@~0.0.5"
-            },
-            "readable-stream": {
-              "version": "1.1.13-1",
-              "from": "readable-stream@~1.1.9",
-              "dependencies": {
-                "core-util-is": {
-                  "version": "1.0.1",
-                  "from": "core-util-is@~1.0.0"
-                },
-                "isarray": {
-                  "version": "0.0.1",
-                  "from": "isarray@0.0.1",
-                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
-                },
-                "string_decoder": {
-                  "version": "0.10.25-1",
-                  "from": "string_decoder@~0.10.x"
-                }
-              }
-            }
-          }
+          "from": "commondir@0.0.1"
         },
         "console-browserify": {
           "version": "1.0.3",
@@ -203,8 +169,7 @@
               "dependencies": {
                 "jsonparse": {
                   "version": "0.0.5",
-                  "from": "jsonparse@0.0.5",
-                  "resolved": "https://registry.npmjs.org/jsonparse/-/jsonparse-0.0.5.tgz"
+                  "from": "jsonparse@0.0.5"
                 },
                 "through": {
                   "version": "2.2.7",
@@ -214,7 +179,7 @@
             },
             "minimist": {
               "version": "0.0.8",
-              "from": "minimist@~0.0.1"
+              "from": "minimist@~0.0.7"
             }
           }
         },
@@ -232,7 +197,7 @@
               "dependencies": {
                 "esprima": {
                   "version": "1.0.4",
-                  "from": "esprima@~1.0.2"
+                  "from": "esprima@~1.0.4"
                 },
                 "estraverse": {
                   "version": "0.0.4",
@@ -246,8 +211,7 @@
             },
             "esprima-fb": {
               "version": "3001.1.0-dev-harmony-fb",
-              "from": "esprima-fb@^3001.1.0-dev-harmony-fb",
-              "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-3001.0001.0000-dev-harmony-fb.tgz"
+              "from": "esprima-fb@^3001.1.0-dev-harmony-fb"
             }
           }
         },
@@ -315,8 +279,7 @@
                   "dependencies": {
                     "esprima-fb": {
                       "version": "3001.1.0-dev-harmony-fb",
-                      "from": "esprima-fb@3001.1.0-dev-harmony-fb",
-                      "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-3001.0001.0000-dev-harmony-fb.tgz"
+                      "from": "esprima-fb@3001.1.0-dev-harmony-fb"
                     }
                   }
                 }
@@ -358,7 +321,7 @@
                     },
                     "source-map": {
                       "version": "0.1.33",
-                      "from": "source-map@~0.1.30",
+                      "from": "source-map@~0.1.7",
                       "dependencies": {
                         "amdefine": {
                           "version": "0.1.0",
@@ -370,8 +333,7 @@
                 },
                 "esprima-fb": {
                   "version": "3001.1.0-dev-harmony-fb",
-                  "from": "esprima-fb@^3001.1.0-dev-harmony-fb",
-                  "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-3001.0001.0000-dev-harmony-fb.tgz"
+                  "from": "esprima-fb@3001.1.0-dev-harmony-fb"
                 }
               }
             },
@@ -403,8 +365,7 @@
         },
         "querystring-es3": {
           "version": "0.2.0",
-          "from": "querystring-es3@0.2.0",
-          "resolved": "https://registry.npmjs.org/querystring-es3/-/querystring-es3-0.2.0.tgz"
+          "from": "querystring-es3@0.2.0"
         },
         "resolve": {
           "version": "0.6.3",
@@ -452,8 +413,7 @@
           "dependencies": {
             "esprima-fb": {
               "version": "3001.1.0-dev-harmony-fb",
-              "from": "esprima-fb@^3001.1.0-dev-harmony-fb",
-              "resolved": "https://registry.npmjs.org/esprima-fb/-/esprima-fb-3001.0001.0000-dev-harmony-fb.tgz"
+              "from": "esprima-fb@3001.1.0-dev-harmony-fb"
             }
           }
         },
@@ -471,8 +431,7 @@
                 },
                 "isarray": {
                   "version": "0.0.1",
-                  "from": "isarray@0.0.1",
-                  "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+                  "from": "isarray@0.0.1"
                 },
                 "string_decoder": {
                   "version": "0.10.25-1",
@@ -566,7 +525,7 @@
               "dependencies": {
                 "source-map": {
                   "version": "0.1.33",
-                  "from": "source-map@~0.1.7",
+                  "from": "source-map@~0.1.33",
                   "dependencies": {
                     "amdefine": {
                       "version": "0.1.0",
@@ -683,6 +642,38 @@
                   "from": "domelementtype@1"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "concat-stream": {
+      "version": "1.4.5",
+      "from": "concat-stream@",
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.1",
+          "from": "inherits@~2.0.1"
+        },
+        "typedarray": {
+          "version": "0.0.5",
+          "from": "typedarray@~0.0.5"
+        },
+        "readable-stream": {
+          "version": "1.1.13-1",
+          "from": "readable-stream@~1.1.9",
+          "dependencies": {
+            "core-util-is": {
+              "version": "1.0.1",
+              "from": "core-util-is@~1.0.0"
+            },
+            "isarray": {
+              "version": "0.0.1",
+              "from": "isarray@0.0.1"
+            },
+            "string_decoder": {
+              "version": "0.10.25-1",
+              "from": "string_decoder@~0.10.x"
             }
           }
         }
@@ -1356,6 +1347,51 @@
             "inherits": {
               "version": "2.0.1",
               "from": "inherits@2"
+            }
+          }
+        }
+      }
+    },
+    "watchify": {
+      "version": "0.8.2",
+      "from": "watchify@",
+      "resolved": "https://registry.npmjs.org/watchify/-/watchify-0.8.2.tgz",
+      "dependencies": {
+        "optimist": {
+          "version": "0.5.2",
+          "from": "optimist@~0.5.0",
+          "dependencies": {
+            "wordwrap": {
+              "version": "0.0.2",
+              "from": "wordwrap@~0.0.2"
+            }
+          }
+        },
+        "shallow-copy": {
+          "version": "0.0.1",
+          "from": "shallow-copy@0.0.1"
+        },
+        "through": {
+          "version": "2.3.4",
+          "from": "through@~2.3.4"
+        },
+        "chokidar": {
+          "version": "0.8.2",
+          "from": "chokidar@^0.8.1",
+          "dependencies": {
+            "fsevents": {
+              "version": "0.2.0",
+              "from": "fsevents@0.2.0",
+              "dependencies": {
+                "nan": {
+                  "version": "0.8.0",
+                  "from": "nan@~0.8.0"
+                }
+              }
+            },
+            "recursive-readdir": {
+              "version": "0.0.2",
+              "from": "recursive-readdir@0.0.2"
             }
           }
         }
