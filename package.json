@@ -12,6 +12,10 @@
   "engines": {
     "node": "0.10.26"
   },
+  "scripts": {
+    "start": "./bin/go express",
+    "test": "./bin/go test"
+  },
   "files": [],
   "dependencies": {
     "async": "0.2.10",
