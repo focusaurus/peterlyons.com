@@ -1,6 +1,17 @@
 #!/usr/bin/env node
 var bundle = require("browserify")();
+var concat = require("concat-stream");
 var config = require("app/config");
+
+function build() {
+  return bundle.bundle({debug: config.browserifyDebug});
+}
+
+function cache() {
+  build().pipe(concat(function(buffer) {
+    module.exports.prebuiltCache = buffer;
+  }));
+}
 
 if (config.browserifyDebug) {
   bundle = require("watchify")();
@@ -20,12 +31,12 @@ bundle.require("app/browser/plusParty");
 bundle.require("app/browser/viewGallery");
 bundle.require("app/browser/navigation");
 
-function build() {
-  return bundle.bundle({debug: config.browserifyDebug});
-}
-
 if (require.main === module) {
-  build().pipe(process.stdout);
+  var brStream = build();
+  brStream.pipe(process.stdout);
+  brStream.on('end', process.exit);
+} else {
+  cache();
 }
 
 module.exports = build;
