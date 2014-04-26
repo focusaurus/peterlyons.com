@@ -1352,51 +1352,6 @@
         }
       }
     },
-    "watchify": {
-      "version": "0.8.2",
-      "from": "watchify@",
-      "resolved": "https://registry.npmjs.org/watchify/-/watchify-0.8.2.tgz",
-      "dependencies": {
-        "optimist": {
-          "version": "0.5.2",
-          "from": "optimist@~0.5.0",
-          "dependencies": {
-            "wordwrap": {
-              "version": "0.0.2",
-              "from": "wordwrap@~0.0.2"
-            }
-          }
-        },
-        "shallow-copy": {
-          "version": "0.0.1",
-          "from": "shallow-copy@0.0.1"
-        },
-        "through": {
-          "version": "2.3.4",
-          "from": "through@~2.3.4"
-        },
-        "chokidar": {
-          "version": "0.8.2",
-          "from": "chokidar@^0.8.1",
-          "dependencies": {
-            "fsevents": {
-              "version": "0.2.0",
-              "from": "fsevents@0.2.0",
-              "dependencies": {
-                "nan": {
-                  "version": "0.8.0",
-                  "from": "nan@~0.8.0"
-                }
-              }
-            },
-            "recursive-readdir": {
-              "version": "0.0.2",
-              "from": "recursive-readdir@0.0.2"
-            }
-          }
-        }
-      }
-    },
     "zeroclipboard": {
       "version": "1.3.5",
       "from": "zeroclipboard@^1.3.5",

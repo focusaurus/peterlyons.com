@@ -13,10 +13,6 @@ function cache() {
   }));
 }
 
-if (config.browserifyDebug) {
-  bundle = require("watchify")();
-  bundle.on("update", build);
-}
 [
   "angular",
   "angular-sanitize",

@@ -37,7 +37,6 @@
     "raw-body": "^1.1.3",
     "sharify": "0.1.3",
     "stylus": "^0.42.3",
-    "watchify": "^0.8.2",
     "zeroclipboard": "^1.3.5"
   },
   "devDependencies": {
