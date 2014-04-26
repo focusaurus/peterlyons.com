@@ -47,6 +47,10 @@ usage() {
 
 	* clean: delete the build directory
 	* build: build a distribution archive for deployment
+    * Usage: $(basename $0) build <HEAD|WORK|TAG>
+    * $(basename $0) build HEAD will use the last commit on the current branch
+    * $(basename $0) build WORK will use uncommited local changes
+    * $(basename $0) build TAG will use the code in the given git tag
 	* release_candidate: begin git work to prepare for a build/test/release
 	  * Usage: $(basename $0) release_candidate <patch|minor|major>
 	* release: merge develop to master, tag, and push to origin
@@ -153,13 +157,21 @@ task::build() {
 
   printf "git archive..."
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
-  git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
-    #extract that archive into a temporary build directory
-    tar -C "${build_dir}" --extract
+  if [[ "${git_ref}" == "WORK" ]]; then
+    git ls-files \
+      | tar -T - --create --file - \
+      | tar -C "${build_dir}/${prefix}" --extract --file -
+  else
+    git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
+      #extract that archive into a temporary build directory
+      tar -C "${build_dir}" --extract
+  fi
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   #install node
   printf "node..."
+  #Make sure we have npm-pkgr installed locally
+  npm install npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
     --file "node-v${node_version}-linux-x86.tar.gz"
   (
@@ -168,11 +180,14 @@ task::build() {
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
   	printf "npm packages..."
-	  ../../node/bin/npm install \
-	    --production --silent --parseable &> "../npm.log"
+	  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
+	    --silent --parseable &> "../npm.log"
+    cd node_modules
+    ln -nsf ../app
 	)
 	printf "vagrant rebuild..."
-  ./bin/go vagrant ssh build -c "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
+  ./bin/go vagrant ssh build -c \
+    "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
   echo "archive"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
