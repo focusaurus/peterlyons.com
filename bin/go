@@ -36,7 +36,7 @@ usage() {
 	Development Commands
 	--------------------
 
-	* express: start the express server
+	* express: start the express server (aliased as "start"):
 	* test: run all the tests (mocha and karma)
 	* test_debug: run mocha tests with immediate breakpoint for debugging
 	* karma: start karma process to continuously watch and run tests
@@ -79,6 +79,10 @@ task::express() {
   autoinstall_wallah
   ./wallah/bin/install_node
   node-dev --debug=9001 app/server.js
+}
+
+task::start() {
+  task::express "$@"
 }
 
 task::test() {

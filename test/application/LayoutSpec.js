@@ -31,3 +31,22 @@ describe("the main layout", function() {
     expect($("title").text()).toBe("Peter Lyons: node.js expert consultant");
   });
 });
+
+describe("the site", function() {
+
+  it("should have the JavaScript", function(done) {
+    this.timeout(5000);
+    testUtils.get("/browser.js")
+      .expect(200)
+      .expect("Content-Type", "text/javascript")
+      .expect("Content-Encoding", "gzip")
+      .end(done);
+  });
+
+  it("should have the CSS", function(done) {
+    testUtils.get("/screen.css")
+      .expect(200)
+      .expect("Content-Type", "text/css; charset=utf-8")
+      .end(done);
+  });
+});
