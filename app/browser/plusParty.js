@@ -1,4 +1,4 @@
-var NUMBER_RE = /-?(\d{1,3}(,\d{3})*(\.\d+)?|\d+)\b/g;
+var NUMBER_RE = /-?(\d{1,3}(,\d{3})*|\d+)(\.\d+)?\b/g;
 var COMMA_RE = /,/g;
 var DATE_RE = /\b\d{1,2}\/\d{1,2}\/(\d{2}|\d{4})\b/g;
 

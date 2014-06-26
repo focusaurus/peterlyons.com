@@ -39,6 +39,11 @@ describe("plusParty", function () {
       expect(plusParty.parseNumbers("€0")).toEqual([0]);
     });
 
+    it("should handle commas", function() {
+      expect(plusParty.parseNumbers("1484.57")).toEqual([1484.57]);
+      expect(plusParty.parseNumbers("123,456.57")).toEqual([123456.57]);
+    });
+
     it("should ignore mm/dd/yyyy dates", function() {
       expect(plusParty.parseNumbers("12/31/1984")).toEqual([]);
       expect(
