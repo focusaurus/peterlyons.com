@@ -28,7 +28,7 @@ describe("a blog post page", function() {
   });
   it("should process a flickr tag", function() {
     expect($("flickr").length).toBe(0);
-    expect($("object").length).toBeGreaterThan(0);
+    expect($("iframe").length).toBeGreaterThan(0);
   });
   it("should process a youtube tag", function() {
     expect($("youtube").length).toBe(0);
@@ -68,16 +68,16 @@ describe("the preview converter", function() {
   });
   it("should have the flickr & youtube pipeline middleware", function(done) {
     testUtils.post("/convert")
-        .send("<youtube href=\"http://www.youtube.com/embed/K27MA8v91D4\"></youtube>\n<flickrshow href=\"page_show_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2Fshow%2F&page_show_back_url=%2Fphotos%2F88096431%40N00%2Fsets%2F72157631932122934%2F&set_id=72157631932122934&\"></flickrshow>")
+        .send("<youtube href=\"http://www.youtube.com/embed/K27MA8v91D4\"></youtube>\n<flickrshow href=\"https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/\"></flickrshow>")
         .set("Content-Type", "text/x-markdown")
         .set("Accept", "text/html")
         .expect(200)
         .end(function(error, res) {
       var $ = cheerio.load(res.text);
       expect($("youtube").length).toBe(0);
-      expect($("iframe").length).toBeGreaterThan(0);
+      expect($("iframe").length).toBe(2);
       expect($("flickrshow").length).toBe(0);
-      expect($("object").length).toBeGreaterThan(0);
+      expect($("object").length).toBe(0);
       done();
     });
   });

@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+var cheerio = require("cheerio");
+var querystring = require("querystring");
+var concat = require("concat-stream");
+
+var write = concat(function(html) {
+  var $ = cheerio.load(html);
+  $("flickrshow").each(function(index, elem) {
+    var $elem = $(elem);
+    var qs = $elem.attr("href");
+    var qsObject = querystring.parse(querystring.unescape(qs));
+    //https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
+    console.log('<flickrshow href="https://www.flickr.com/photos/88096431@N00/sets/' + qsObject.set_id + '/"></flickrshow>');
+  });
+});
+
+process.stdin.pipe(write);
+

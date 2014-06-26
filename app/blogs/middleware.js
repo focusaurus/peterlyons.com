@@ -1,8 +1,12 @@
 var cheerio = require("cheerio");
-var flickrshowTemplate = '<object width="500" height="375"><param name="flashvars" value="offsite=true&lang=en-us&{URLs}&jump_to="></param> <param name="movie" value="http://www.flickr.com/apps/slideshow/show.swf?v=109615"></param> <param name="allowFullScreen" value="true"></param><embed type="application/x-shockwave-flash" src="http://www.flickr.com/apps/slideshow/show.swf?v=109615" allowFullScreen="true" flashvars="offsite=true&lang=en-us&{URLs}&jump_to=" width="500" height="375"></embed></object>';
 var fs = require("fs");
+var mustache = require("mustache");
 var path = require("path");
+var querystring = require("querystring");
 var rawBody = require("raw-body");
+var url = require("url");
+var flickrshowTemplate = fs.readFileSync(
+  __dirname + '/flickrshowTemplate.html', 'utf8');
 var youtubeTemplate = "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>";
 
 function debugLog(message) {
@@ -25,8 +29,16 @@ function undomify(req, res, next) {
 function flickr(req, res, next) {
   res.$("flickrshow").each(function(index, elem) {
     var $elem = res.$(elem);
-    var URLs = $elem.attr("href");
-    return $elem.replaceWith(flickrshowTemplate.replace(/\{URLs\}/g, URLs));
+    var href = $elem.attr("href");
+    //Need to parse this album URL, which I copy directly from a web browser
+    //https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
+    var slashes = url.parse(href).path.split("/");
+    var locals = {
+      userId: slashes[2],
+      setId: slashes[4]
+    };
+    var flickrHtml = mustache.render(flickrshowTemplate, locals);
+    return $elem.replaceWith(flickrHtml);
   });
   next();
 }
