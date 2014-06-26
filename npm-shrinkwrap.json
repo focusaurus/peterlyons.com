@@ -1535,6 +1535,39 @@
         }
       }
     },
+    "concat-stream": {
+      "version": "1.4.6",
+      "from": "concat-stream@^1.4.5",
+      "dependencies": {
+        "inherits": {
+          "version": "2.0.1",
+          "from": "inherits@~2.0.1"
+        },
+        "typedarray": {
+          "version": "0.0.6",
+          "from": "typedarray@~0.0.5"
+        },
+        "readable-stream": {
+          "version": "1.1.13-1",
+          "from": "readable-stream@~1.1.9",
+          "dependencies": {
+            "core-util-is": {
+              "version": "1.0.1",
+              "from": "core-util-is@~1.0.0"
+            },
+            "isarray": {
+              "version": "0.0.1",
+              "from": "isarray@0.0.1",
+              "resolved": "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz"
+            },
+            "string_decoder": {
+              "version": "0.10.25-1",
+              "from": "string_decoder@~0.10.x"
+            }
+          }
+        }
+      }
+    },
     "connect": {
       "version": "2.21.0",
       "from": "connect@^2.14.4",
@@ -2355,7 +2388,7 @@
     },
     "raw-body": {
       "version": "1.2.2",
-      "from": "raw-body@^1.1.3",
+      "from": "raw-body@1.2.2",
       "resolved": "https://registry.npmjs.org/raw-body/-/raw-body-1.2.2.tgz",
       "dependencies": {
         "bytes": {
@@ -2378,8 +2411,9 @@
       "from": "stylish@^0.4.1"
     },
     "stylus": {
-      "version": "0.42.3",
-      "from": "stylus@^0.42.3",
+      "version": "0.46.3",
+      "from": "stylus@0.46.3",
+      "resolved": "https://registry.npmjs.org/stylus/-/stylus-0.46.3.tgz",
       "dependencies": {
         "css-parse": {
           "version": "1.7.0",
