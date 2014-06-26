@@ -40,7 +40,7 @@ function setup(app) {
   app.get("/", function(req, res) {
     res.render("pages/home");
   });
-  app.get("/:deck(web_data|rapid_feedback)", function(req, res, next) {
+  app.get("/:deck(web_data|rapid_feedback|npm_gold)", function(req, res, next) {
     app.render("pages/decks/" + req.params.deck, function(error, html) {
       if (error) {
         return next(error);

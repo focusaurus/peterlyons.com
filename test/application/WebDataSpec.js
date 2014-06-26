@@ -19,6 +19,7 @@ describe("the Web Data Slide Deck", function() {
   });
 
   it('should include deck.js and the menu plugin', function() {
-    testUtils.assertSubstrings($, "deck.js", "deck.menu.js");
+    testUtils.assertSubstrings($,
+      "deck.js", "deck.menu.js", "deck.js/jquery-1.7.2.min.js");
   });
 });
