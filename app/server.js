@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --use_strict
 require("process-title");
 var config = require("config3");
 var connect = require("connect");
