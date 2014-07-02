@@ -9,6 +9,7 @@
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
+    config_dir: /etc/peterlyons.com
   handlers:
     -
       include: handlers.yml
@@ -52,6 +53,17 @@
         dest={{www_root}}
         version=master
         depth=1
+    -
+      name: create directory {{config_dir}}
+      file: path={{config_dir}}
+        state=directory
+        owner=root
+        group={{express_user}}
+        mode=0750
+    -
+      name: create express configuration file
+      template: src=config.js.j2 dest={{config_dir}}/config.js
+        owner=root group={{express_user}} mode=0640
     -
       name: upload the app distribution archive
       unarchive:

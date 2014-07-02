@@ -9,5 +9,4 @@ setuid {{express_user}}
 setgid {{express_user}}
 env PATH=./node_modules/.bin:./node/bin:/usr/bin
 env NODE_ENV=production
-env PLWS_HOSTNAME={{hostname}}
 exec app/server.js

@@ -1,6 +1,6 @@
 {
   "name": "peterlyons.com",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "dependencies": {
     "async": {
       "version": "0.9.0",
@@ -1565,6 +1565,20 @@
               "from": "string_decoder@~0.10.x"
             }
           }
+        }
+      }
+    },
+    "config3": {
+      "version": "0.0.0",
+      "from": "config3@",
+      "dependencies": {
+        "config-extend": {
+          "version": "0.0.6",
+          "from": "config-extend@^0.0.6"
+        },
+        "debug": {
+          "version": "0.7.4",
+          "from": "debug@^0.7.4"
         }
       }
     },
