@@ -3,7 +3,7 @@
 // Re-renders the static HTML for our error pages for when express is down.
 // Writes them out to the static repo where they can later be committed to git
 
-var config = require("app/config");
+var config = require("config3");
 var fs = require("fs");
 var jade = require("jade");
 var path = require("path");

@@ -1,5 +1,5 @@
 var cheerio = require("cheerio");
-var config = require("app/config");
+var config = require("config3");
 var fs = require("fs");
 var jade = require("jade");
 var path = require("path");

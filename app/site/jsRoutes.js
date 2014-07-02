@@ -1,5 +1,5 @@
 var bmw = require("browserify-middleware");
-var config = require("app/config");
+var config = require("config3");
 
 var bmwOptions = {
   cache: 1000 * 60 * 60 * 24 * 7, //1 week in milliseconds

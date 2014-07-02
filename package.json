@@ -49,6 +49,7 @@
     "browserify-middleware": "^2.6.0",
     "browserify-shim": "^3.4.1",
     "cheerio": "^0.17.0",
+    "config3": "0.0.0",
     "connect": "^2.14.4",
     "connect-cache": "^0.2.1",
     "express": "^4.0.0",

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 require("process-title");
-var config = require("app/config");
+var config = require("config3");
 var connect = require("connect");
 var express = require("express");
 var NotFound = require("./NotFound");
