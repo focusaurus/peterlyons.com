@@ -107,6 +107,15 @@ task::validate() {
   NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
+task::shrinkwrap() {
+  rm npm-shrinkwrap.json
+  mv node_modules "/tmp/node_modules-$(date +%Y%m%d%H%M)"
+  #Need to restore the node_modules/app symlink
+  git checkout node_modules
+  npm install
+  npm shrinkwrap
+}
+
 task::release_candidate() {
   echo "Creating a new release candidate"
   git checkout develop
