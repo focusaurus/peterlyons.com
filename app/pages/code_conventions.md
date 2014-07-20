@@ -26,7 +26,7 @@ you negative return on the time invested in the first version of the program.
 
 ##Precision
 
-Regardless of whether you like to think of code as more like art or more like science (I prefer the latter), code needs to be accurate and precise. There should not be careless code or comments strewn around the code. Code should look like it was created by an engineer. And not like the engineer who probably wrote it - an overtired kid scarfing junk food over a messy desk late at night; it should look like it was written by an old school 1950s chemist in a pristine lab coat who carefully labels every vial in his lab before his fills it. Even if you fancy yourself a "hacker", I think most of us agree that beautiful code just sparkles with precision and clarity and elegance.
+Regardless of whether you like to think of code as more like art or more like science (I prefer the latter), code needs to be accurate and precise. There should not be careless code or comments strewn around the code. Code should look like it was created by an engineer. And not like the engineer who probably wrote it - an overtired kid scarfing junk food over a messy desk late at night; it should look like it was written by an old school 1950s chemist in a pristine lab coat who carefully labels every vial in her lab before she fills it. Even if you fancy yourself a "hacker", I think most of us agree that beautiful code just sparkles with precision and clarity and elegance.
 
 ##Make One Choice
 
@@ -236,7 +236,7 @@ Prefer string interpolation to building up strings with operators
 
 Oh God, it's a mess out there, folks. I haven't had time to write my conventions up yet, and most of the existing ones I either have mixed feelings about or think they are just outright bonkers.
 
-Prefer double quotes for most strings. This is mostly unconventional as I ususally see single quotes preferred, however, my reasoning is as follows.
+Prefer double quotes for most strings. This is mostly unconventional as I usually see single quotes preferred, however, my reasoning is as follows.
 
 JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
 
