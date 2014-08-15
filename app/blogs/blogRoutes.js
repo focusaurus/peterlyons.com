@@ -107,6 +107,7 @@ var convertMiddleware = [
   middleware.send
 ];
 
+
 var viewPostMiddleware = [
   loadPostMW,
   html,
@@ -211,40 +212,50 @@ function createPost(req, res, next) {
   });
 }
 
+function feedRenderPost(req, post, callback) {
+  var fakeRes = {
+    post: post,
+    viewPath: post.viewPath()
+  };
+  async.applyEachSeries([
+    html,
+    markdownToHTML,
+    middleware.domify,
+    middleware.flickr,
+    middleware.youtube,
+    middleware.undomify,
+    function(req, fakeRes, next) {
+      fakeRes.post.content = fakeRes.html;
+      next();
+    }
+  ], req, fakeRes, function (error, result) {
+    if (error) {
+      callback(error);
+      return;
+    }
+    callback(null, post);
+  });
+}
+
 function feed(req, res, next) {
-  res.header("Content-Type", "text/xml");
+  res.type("xml");
   if (res.blog.cachedFeedXML) {
-    return res.send(res.blog.cachedFeedXML);
+    res.send(res.blog.cachedFeedXML);
+    return;
   }
   var recentPosts = res.blog.posts.slice(0, 10);
   var locals = {
     title: res.blog.title,
     URI: res.blog.URI,
-    pretty: true,
-    posts: recentPosts
+    pretty: true
   };
-  asyncjs.list(recentPosts).map(function(post, next) {
-    var fakeRes;
-    fakeRes = {
-      post: post,
-      viewPath: post.viewPath()
-    };
-    next(null, fakeRes);
-    return;
-  }).each(function(fakeRes, next) {
-    html(req, fakeRes, next);
-  }).each(function(fakeRes, next) {
-    markdownToHTML(req, fakeRes, next);
-  }).each(function(fakeRes, next) {
-    middleware.domify(req, fakeRes, next);
-  }).each(function(fakeRes, next) {
-    middleware.flickr(req, fakeRes, next);
-  }).each(function(fakeRes, next) {
-    middleware.youtube(req, fakeRes, next);
-  }).each(function(fakeRes, next) {
-    fakeRes.post.content = fakeRes.html;
-    next();
-  }).end(function(error, fakeRes) {
+  var boundRender = feedRenderPost.bind(null, req);
+  async.map(recentPosts, boundRender, function (error, renderedPosts) {
+    if (error) {
+      next(error)
+      return;
+    }
+    locals.posts = renderedPosts;
     res.app.render("blogs/feed", locals, function(error, feedXML) {
       if (error) {
         next(error);

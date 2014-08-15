@@ -1,6 +1,5 @@
 var _ = require("lodash");
 var async = require("async");
-var asyncjs = require("asyncjs");
 var fs = require("fs");
 var markdown = require("markdown-js").makeHtml;
 var mkdirp = require("mkdirp");

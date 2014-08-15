@@ -95,3 +95,29 @@ describe("the blog post authoring/preview page", function() {
     testUtils.assertSelectors($,"section.preview", "textarea");
   });
 });
+
+describe("a blog feed XML", function() {
+  var $ = null;
+  before(function(done) {
+    testUtils.loadPage("/problog/feed", function(error, dom) {
+      $ = dom;
+      done(error);
+    });
+  });
+
+  it("should have an atom XML feed tag", function() {
+    expect($("feed").length).toEqual(1);
+  });
+
+  it("should have the right feed > title content", function() {
+    expect($("feed > title").text()).toEqual("Pete's Points");
+  });
+
+  it("should have 10 recent posts", function() {
+    expect($("entry").length).toEqual(10);
+  });
+
+  it("should have the author", function() {
+    expect($("author > name").text()).toEqual("Peter Lyons");
+  });
+});
