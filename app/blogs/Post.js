@@ -71,33 +71,45 @@ Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
 };
 
 Post.prototype.load = function(metadataPath, blog, callback) {
-  var self;
+  var self = this;
   this.metadataPath = metadataPath;
   this.blog = blog;
-  self = this;
-  return asyncjs.files([this.metadataPath]).readFile("utf8").each(function(file, next) {
-    var metadata;
-    metadata = JSON.parse(file.data);
-    _.extend(self, metadata);
-    self.publish_date = new Date(self.publish_date);
-    self.view = (self.URI()) + "." + self.format;
-    return next();
-  }).each(function(file, next) {
-    var noExt;
-    noExt = file.path.substr(0, file.path.lastIndexOf('.'));
-    file.path = noExt + "." + self.format;
-    file.name = path.basename(file.path);
-    return next();
-  }).readFile("utf8").each(function(file, next) {
-    if (self.format === "md") {
-      self.content = markdown(file.data);
-    } else {
-      self.content = file.data;
-    }
-    return next();
-  }).end(function(error) {
-    return callback(error);
-  });
+  function loadMetadata(callback) {
+    fs.readFile(self.metadataPath, "utf8", function (error, json) {
+      if (error) {
+        callback(error);
+        return;
+      }
+      try {
+        _.extend(self, JSON.parse(json));
+        self.publish_date = new Date(self.publish_date);
+        self.view = (self.URI()) + "." + self.format;
+        callback();
+        return;
+      } catch (exception) {
+        callback(exception);
+        return;
+      }
+    });
+  }
+
+  function loadContent(callback) {
+    var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf('.'));
+    var contentPath = noExt + "." + self.format;
+    fs.readFile(contentPath, "utf8", function (error, content) {
+      if (error) {
+        callback(error);
+        return;
+      }
+      self.content = content;
+      if (self.format === "md") {
+        self.content = markdown(content);
+      }
+      callback();
+    });
+  }
+
+  async.series([loadMetadata, loadContent], callback);
 };
 
 Post.prototype.save = function(callback) {
