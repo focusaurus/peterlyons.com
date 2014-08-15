@@ -62,4 +62,4 @@ app.listen(config.port, ip, function(error) {
     "\n\tenv: " + process.env.NODE_ENV
   );
 });
-require('app/inspector');
+// require('app/inspector');

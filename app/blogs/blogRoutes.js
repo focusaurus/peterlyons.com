@@ -1,12 +1,12 @@
 var _ = require("lodash");
 var async = require("async");
-var asyncjs = require("asyncjs");
 var bcrypt = require("bcrypt");
 var blogIndicesBySlug = {};
 var config = require("config3");
 var connect = require("connect");
 var events = require("events");
 var fs = require("fs");
+var glob = require('glob');
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
 var moment = require("moment");
@@ -26,7 +26,7 @@ function loadBlogMW(req, res, next) {
   next();
 }
 
-function loadPost(req, res, next) {
+function loadPostMW(req, res, next) {
   var blog = req.params[0];
   var post = new Post();
   post.base = config.blog.postBasePath;
@@ -108,7 +108,7 @@ var convertMiddleware = [
 ];
 
 var viewPostMiddleware = [
-  loadPost,
+  loadPostMW,
   html,
   markdownToHTML,
   renderPost,
@@ -126,42 +126,44 @@ function presentPost(post) {
   return presented;
 }
 
+function loadPost(URI, file, callback) {
+  var post = new Post();
+  post.base = config.blog.postBasePath;
+  post.load(file, URI, function (error) {
+    if (error) {
+      callback(error);
+      return;
+    }
+    post.presented = presentPost(post);
+    callback(null, post);
+  });
+}
+
 function loadBlog(URI, callback) {
   var basePath = path.join(config.blog.postBasePath, URI);
   basePath = path.normalize(basePath);
-  var posts = [];
-
-  asyncjs.walkfiles(basePath, null, asyncjs.PREORDER).stat().each(function(file, next) {
-    if (file.stat.isDirectory()) {
-      next();
+  glob(basePath + "/**/*.json", function (error, files) {
+    if (error) {
+      callback(error);
       return;
     }
-    if (!/\.json$/.test(file.name)) {
-      next();
-      return;
-    }
-    var post = new Post();
-    posts.push(post);
-    post.base = config.blog.postBasePath;
-    post.load(file.path, URI, function(error) {
+    var boundLoad = loadPost.bind(null, URI);
+    async.map(files, boundLoad, function (error, posts) {
       if (error) {
-        next(error);
+        callback(error);
         return;
       }
-      post.presented = presentPost(post);
-      next();
+      posts = _.sortBy(posts, function(post) {
+        return post.publish_date;
+      }).reverse();
+      posts.forEach(function (post, index) {
+        postLinks[post.URI()] = {
+          next: index > 0 ? posts[index - 1] : null,
+          previous: index < posts.length ? posts[index + 1] : null
+        };
+      });
+      callback(error, posts);
     });
-  }).end(function(error) {
-    posts = _.sortBy(posts, function(post) {
-      return post.publish_date;
-    }).reverse();
-    posts.forEach(function (post, index) {
-      postLinks[post.URI()] = {
-        next: index > 0 ? posts[index - 1] : null,
-        previous: index < posts.length ? posts[index + 1] : null
-      };
-    });
-    callback(error, posts);
   });
 }
 
@@ -296,7 +298,10 @@ function setup(app) {
   app.post(blogRoute + "/post", connect.json(), createPost);
   app.get(blogRoute + "/feed", loadBlogMW, feed);
   app.get(blogRoute + "/flushCache}", loadBlogMW, flushCache);
-  app.get(new RegExp("/(persblog|problog)/\\d{4}/\\d{2}/\\w+"), viewPostMiddleware);
+  app.get(
+    new RegExp("/(persblog|problog)/\\d{4}/\\d{2}/\\w+"),
+    viewPostMiddleware
+  );
   app.post("/convert", convertMiddleware);
 }
 
