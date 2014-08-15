@@ -5,6 +5,13 @@ autoinstall_wallah() {
   git submodule update --init --depth 1
 }
 
+autoinstall_npm_deps() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  [[ -d node_modules/mocha ]] && return
+  npm install
+}
+
 usage() {
   printf "Usage: $(basename $0) [" 1>&2
   while read line; do
@@ -76,8 +83,7 @@ EOF
 
 ##### development task functions #####
 task::express() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   node-dev --debug=9001 app/server.js
 }
 
@@ -86,28 +92,30 @@ task::start() {
 }
 
 task::test() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   NODE_ENV=test mocha "$@"
   #@bug these are busted
   #karma run karma/karma.conf.js
 }
 
 task::test_debug() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
 task::karma() {
+  autoinstall_npm_deps
   exec karma start karma/karma.conf.js
 }
 
 task::validate() {
+  autoinstall_npm_deps
   NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
 task::release_candidate() {
+  autoinstall_npm_deps
+  ./wallah/bin/check_prerequisites git
   echo "Creating a new release candidate"
   git checkout develop
   git pull origin develop
@@ -130,6 +138,8 @@ EOF
 }
 
 task::release() {
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites git
   git checkout develop
   git pull origin develop
   task::test
@@ -150,17 +160,17 @@ task::clean() {
 
 task::build() {
   set -e
+  printf "prereqs…"
   #need the build system python here
   export PATH=/usr/bin:$PATH
   local git_ref="${1-HEAD}"
   local build_dir="build"
   local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
-  printf "prereqs..."
   autoinstall_wallah
-  ./wallah/bin/check_prerequisites git tar
+  ./wallah/bin/check_prerequisites git tar curl
   mkdir -p "${build_dir}/${prefix}/node"
 
-  printf "git archive..."
+  printf "✓\ngit archive…"
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   if [[ "${git_ref}" == "WORK" ]]; then
     git ls-files \
@@ -174,31 +184,38 @@ task::build() {
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   #install node
-  printf "node..."
+  printf "✓\nnode…"
+  local node_archive="node-v${node_version}-linux-x86.tar.gz"
+  local node_url=$(echo "http://nodejs.org/dist/v" \
+    "${node_version}/node-v${node_version}-linux-x86.tar.gz")
+  if [[ ! -f "${node_archive}" ]]; then
+    curl --silent --remote-name "${node_url}"
+  fi
+	printf "✓\nnpm packages…"
   #Make sure we have npm-pkgr installed locally
   npm install npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
-    --file "node-v${node_version}-linux-x86.tar.gz"
+    --file "${node_archive}"
   (
   	cd "${build_dir}/${prefix}"
 	  #remove development-only files
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
-  	printf "npm packages..."
 	  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
 	    --silent --parseable &> "../npm.log"
     cd node_modules
     ln -nsf ../app
 	)
-	printf "vagrant rebuild..."
+	printf "✓\nvagrant rebuild…"
   ./bin/go vagrant ssh build -c \
     "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
-  echo "archive"
+  printf "✓\narchive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
+  printf "✓\n"
   ls -lh "${dist_path}"
-  echo "To deploy to stage, run:"
-  printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
+  printf "To deploy to stage, run:\n\t"
+  printf "./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
 }
 
 task::errors() {

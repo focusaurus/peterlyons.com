@@ -14,16 +14,17 @@ html(lang="en")
     link(rel="alternate", type="application/atom+xml",
       href="/problog/feed", title="Pete's Points")
     link(rel="author", type="text/plain", href="/humans.txt")
-    link(rel="openid.server",
-      href="http://www.livejournal.com/openid/server.bml")
-    link(rel="openid.delegate", href="http://focusaurus.livejournal.com/")
+    link(rel="openid2.provider openid.server"
+      href="https://open.login.yahooapis.com/openid/op/auth")
+    link(rel="openid2.local_id openid.delegate"
+      href='https://me.yahoo.com/myusername')
     meta(name="description", content=title)
-    meta(name="keywords", content="peter lyons, pete lyons, web development, node.js, developer, coder, freelance, consultant, afronauts, boulder, colorado, turtle dove, startups, music, sax, saxophone, saxophonist, sunny daze, confunktion junction, oberlin, smartears, smart ears, big clock")
+    meta(name="keywords", content="peter lyons, pete lyons, web development, node.js, developer, coder, freelance, consultant, boulder, colorado, startups, saxophone, oberlin")
     meta(name="author", content="Peter Lyons")
     meta(name="viewport", content="width=device-width, initial-scale=1")
   body
     //-.adaptive
-    button.navMenuButton &#926;
+    button.navMenuButton &equiv;
     include blocks/navigation
     .content
       include blocks/header

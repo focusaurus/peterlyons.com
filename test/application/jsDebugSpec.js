@@ -22,7 +22,7 @@ describe("the jsDebug", function() {
   });
 
   it("should have randomDelay route", function(done) {
-    this.slow(0).timeout(0);
+    this.timeout(10 * 1000).slow(10 * 1000);
     testUtils.get("/jsDebug/randomDelay?requestNumber=42")
       .expect(200)
       .end(function (error, res) {
