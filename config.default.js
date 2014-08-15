@@ -1,7 +1,6 @@
 var path = require('path');
 
-var projectRoot = path.resolve(__dirname + "/..");
-var isProduction = process.env.NODE_ENV === "production";
+var IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 function get(name, defaultValue) {
   return process.env["PLWS_" + name.toUpperCase()] || defaultValue;
@@ -11,15 +10,15 @@ var config = {
   hostname: get("hostname", "127.0.0.1"),
   port: get("port", 9000),
   appURI: "/app",
-  staticDir: path.resolve(projectRoot + "/../static"),
-  thirdPartyDir: path.resolve(projectRoot + "/thirdParty"),
+  staticDir: path.resolve(__dirname + "/../static"),
+  thirdPartyDir: path.resolve(__dirname + "/thirdParty"),
   loopback: true,
-  errorPages: isProduction,
+  errorPages: IS_PRODUCTION,
   enableLogger: process.env.NODE_ENV !== "test",
   titleSuffix: " | Peter Lyons",
-  tests: !isProduction,
-  cacheCSS: isProduction,
-  browserifyDebug: !isProduction
+  tests: !IS_PRODUCTION,
+  cacheCSS: IS_PRODUCTION,
+  browserifyDebug: !IS_PRODUCTION
 };
 
 config.photos = {
@@ -28,17 +27,17 @@ config.photos = {
   galleryDir:  config.staticDir + "/photos",
   thumbExtension: "-TN.jpg",
   extension: ".jpg",
-  galleryDataPath: path.resolve(projectRoot + "/../data/galleries.json"),
-  serveDirect: !isProduction
+  galleryDataPath: path.resolve(__dirname + "/../data/galleries.json"),
+  serveDirect: !IS_PRODUCTION
 };
 
 config.blog = {
-  hashPath: path.resolve(projectRoot + "/../data/blog_password.bcrypt"),
-  postBasePath: path.resolve(projectRoot + "/../data/posts")
+  hashPath: path.resolve(__dirname + "/../data/blog_password.bcrypt"),
+  postBasePath: path.resolve(__dirname + "/../data/posts")
 };
 
 config.inspector = {
-  enabled: !isProduction,
+  enabled: !IS_PRODUCTION,
   webPort: config.port + 2
 };
 

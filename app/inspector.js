@@ -1,4 +1,4 @@
-var config = require("app/config");
+var config = require("config3");
 var child_process = require("child_process");
 
 if (config.inspector.enabled) {

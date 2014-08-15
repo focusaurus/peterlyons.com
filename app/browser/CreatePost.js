@@ -20,7 +20,7 @@ function CreatePost($scope, $window, $http, $sce, localStorage) {
   }
   this.$scope.save = this.save.bind(this);
   this.$scope.$watch("contentMarkdown",
-    _.throttle(this.changeContentMarkdown.bind(this), 250));
+    _.throttle(this.changeContentMarkdown.bind(this), 2000));
 }
 
 CreatePost.prototype.changeContentMarkdown = function changeContentMarkdown() {

@@ -1,5 +1,5 @@
 var fs = require("fs");
-var config = require("app/config");
+var config = require("config3");
 
 function photoJSONToObject(gallery, photoJSON) {
   var photos = JSON.parse(photoJSON);

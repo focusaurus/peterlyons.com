@@ -3,7 +3,7 @@ var connect = require("connect");
 var fs = require("fs");
 var moment = require("moment");
 
-var config = require("app/config");
+var config = require("config3");
 var galleries = require("./galleries");
 var defaultLocals = {
   config: config,

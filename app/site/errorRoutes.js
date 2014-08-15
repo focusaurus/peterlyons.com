@@ -1,4 +1,4 @@
-var config = require("app/config");
+var config = require("config3");
 
 function setup(app) {
   if (!config.errorPages) {

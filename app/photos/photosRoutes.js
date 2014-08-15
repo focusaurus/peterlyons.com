@@ -1,6 +1,6 @@
 var _ = require("lodash");
 var _galleries = require("./galleries");
-var config = require("app/config");
+var config = require("config3");
 var sharify = require("sharify");
 var connect = require("connect");
 
