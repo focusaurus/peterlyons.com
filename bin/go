@@ -190,19 +190,19 @@ task::build() {
       #extract that archive into a temporary build directory
       tar -C "${build_dir}" --extract
   fi
-  local node_version=$(./wallah/bin/get_json_value \
-    "${build_dir}/${prefix}/package.json" "engines.node")
   #install node
   printf "✓\nnode…"
+  local node_version=$(./wallah/bin/get_json_value \
+    "${build_dir}/${prefix}/package.json" "engines.node")
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
   local node_url=$(echo "http://nodejs.org/dist/v" \
-    "${node_version}/node-v${node_version}-linux-x86.tar.gz")
+    "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
   if [[ ! -f "${node_archive}" ]]; then
     curl --silent --remote-name "${node_url}"
   fi
 	printf "✓\nnpm packages…"
   #Make sure we have npm-pkgr installed locally
-  npm install npm-pkgr
+  npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
     --file "${node_archive}"
   (
@@ -250,15 +250,19 @@ task::deploy() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   local dist_path="$1"
-  local dist_name=$(basename "${dist_path}")
-  dist_name=$(echo "${dist_name}" | sed 's/\.tar\...//')
+  local dist_name=$(basename "${dist_path/.tar.*/}")
   local inventory="$2"
-  ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook \
+  export ANSIBLE_HOST_KEY_CHECKING=False
+  ansible-playbook \
     -i "${inventory}" \
     --ask-sudo-pass \
-    --extra-vars "'dist=${dist_path}'" \
-    --extra-vars "'dist_name=${dist_name}'" \
+    --extra-vars "dist=${dist_path}" \
+    --extra-vars "dist_name=${dist_name}" \
     ./deploy/playbook_express.yml
+  ansible-playbook \
+    -i "${inventory}" \
+    --ask-sudo-pass \
+    ./deploy/playbook_nginx.yml
 }
 
 task::vagrant() {
