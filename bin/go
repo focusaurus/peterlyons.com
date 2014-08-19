@@ -13,7 +13,7 @@ autoinstall_npm_deps() {
 }
 
 usage() {
-  printf "Usage: $(basename $0) [" 1>&2
+  echo -n "Usage: $(basename $0) [" 1>&2
   while read line; do
     if echo "${line}" | egrep '^task::' >/dev/null; then
       task=$(echo "${line}" \
@@ -23,12 +23,12 @@ usage() {
       if [[ -z "${first}" ]]; then
         first="false"
       else
-        printf "|"
+        echo -n "|"
       fi
-      printf "${task}"
+      echo -n "${task}"
     fi
   done < <(cat "$0")
-  printf "] [subcommand args...]\n" 1>&2
+  echo -n "] [subcommand args...]\n" 1>&2
   cat <<-EOF
 
 	Purpose of $(basename $0) script
@@ -169,7 +169,7 @@ task::clean() {
 
 task::build() {
   set -e
-  printf "prereqs…"
+  echo -n "prereqs…"
   #need the build system python here
   export PATH=/usr/bin:$PATH
   local git_ref="${1-HEAD}"
@@ -179,7 +179,7 @@ task::build() {
   ./wallah/bin/check_prerequisites git tar curl
   mkdir -p "${build_dir}/${prefix}/node"
 
-  printf "✓\ngit archive…"
+  echo -n "✓\ngit archive…"
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   if [[ "${git_ref}" == "WORK" ]]; then
     git ls-files \
@@ -191,7 +191,7 @@ task::build() {
       tar -C "${build_dir}" --extract
   fi
   #install node
-  printf "✓\nnode…"
+  echo -n "✓\nnode…"
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
@@ -200,7 +200,7 @@ task::build() {
   if [[ ! -f "${node_archive}" ]]; then
     curl --silent --remote-name "${node_url}"
   fi
-	printf "✓\nnpm packages…"
+	echo -n "✓\nnpm packages…"
   #Make sure we have npm-pkgr installed locally
   npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
@@ -215,16 +215,16 @@ task::build() {
     cd node_modules
     ln -nsf ../app
 	)
-	printf "✓\nvagrant rebuild…"
+	echo -n "✓\nvagrant rebuild…"
   ./bin/go vagrant ssh build -c \
     "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
-  printf "✓\narchive…"
+  echo -n "✓\narchive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
-  printf "✓\n"
+  echo -n "✓\n"
   ls -lh "${dist_path}"
-  printf "To deploy to stage, run:\n\t"
-  printf "./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
+  echo -n "To deploy to stage, run:\n\t"
+  echo -n "./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
 }
 
 task::errors() {
@@ -235,7 +235,7 @@ task::errors() {
   echo "Generating HTML for static error pages from ${devurl}..."
   for uri in error404 error500; do
     local url="${devurl}/${uri}"
-    printf "${uri}, "
+    echo -n "${uri}, "
     local exit_code=0
     curl --silent "${url}" --output \
         "${static}/${uri}.html" || exit_code=$?
