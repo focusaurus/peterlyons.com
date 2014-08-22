@@ -247,6 +247,7 @@ task::errors() {
 }
 
 task::deploy() {
+  set -e
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   local dist_path="$1"

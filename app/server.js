@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require("process-title");
+var analytics = require("app/site/blocks/analytics");
 var config = require("config3");
 var connect = require("connect");
 var express = require("express");
@@ -10,6 +11,7 @@ app.set("view engine", "jade");
 app.set("views", __dirname);
 app.locals.config = config;
 app.locals.appURI = config.appURI;
+app.locals.analytics = analytics;
 if (config.enableLogger) {
   app.use(connect.logger({
     immediate: true,

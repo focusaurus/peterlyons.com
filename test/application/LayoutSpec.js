@@ -1,6 +1,7 @@
 var _ = require("lodash");
 var expectations = require("expectations");
 var testUtils = require("../testUtils");
+var config = require("config3");
 
 describe("the main layout", function() {
   var $ = null;
@@ -29,6 +30,27 @@ describe("the main layout", function() {
 
   it("should have the normal title", function() {
     expect($("title").text()).toBe("Peter Lyons: node.js expert consultant");
+  });
+});
+
+describe("analytics snippet", function () {
+  before(function () {
+    config.analytics.enabled = true;
+    config.analytics.code = "UNIT_TEST";
+  });
+
+  after(function () {
+    config.analytics.enabled = false;
+    config.analytics.code = "";
+  });
+
+  it("should include the analytics snippet when enabled", function(done) {
+    testUtils.loadPage("/", function (error, $) {
+      var selector = "script[data-id=analytics]";
+      testUtils.assertSelectors($, selector);
+      expect($(selector).text()).toContain("UNIT_TEST");
+      done();
+    });
   });
 });
 
