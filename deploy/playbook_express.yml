@@ -67,10 +67,11 @@
         owner=root
         group={{express_user}}
         mode=0750
-    -
-      name: create express configuration file
-      template: src=config.js.j2 dest={{config_dir}}/config.js
-        owner=root group={{express_user}} mode=0640
+    # Note this will clobber the final values in prod, so disable it
+    # -
+    #   name: create express configuration file
+    #   template: src=config.js.j2 dest={{config_dir}}/config.js
+    #     owner=root group={{express_user}} mode=0640
     -
       name: upload the app distribution archive
       unarchive:
