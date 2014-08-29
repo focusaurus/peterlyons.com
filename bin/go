@@ -5,8 +5,15 @@ autoinstall_wallah() {
   git submodule update --init --depth 1
 }
 
+autoinstall_npm_deps() {
+  autoinstall_wallah
+  ./wallah/bin/install_node
+  [[ -d node_modules/mocha ]] && return
+  npm install
+}
+
 usage() {
-  printf "Usage: $(basename $0) [" 1>&2
+  echo -n "Usage: $(basename $0) [" 1>&2
   while read line; do
     if echo "${line}" | egrep '^task::' >/dev/null; then
       task=$(echo "${line}" \
@@ -16,12 +23,12 @@ usage() {
       if [[ -z "${first}" ]]; then
         first="false"
       else
-        printf "|"
+        echo -n "|"
       fi
-      printf "${task}"
+      echo -n "${task}"
     fi
   done < <(cat "$0")
-  printf "] [subcommand args...]\n" 1>&2
+  echo -n "] [subcommand args...]\n" 1>&2
   cat <<-EOF
 
 	Purpose of $(basename $0) script
@@ -76,8 +83,7 @@ EOF
 
 ##### development task functions #####
 task::express() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   node-dev --debug=9001 app/server.js
 }
 
@@ -86,24 +92,24 @@ task::start() {
 }
 
 task::test() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   NODE_ENV=test mocha "$@"
   #@bug these are busted
   #karma run karma/karma.conf.js
 }
 
 task::test_debug() {
-  autoinstall_wallah
-  ./wallah/bin/install_node
+  autoinstall_npm_deps
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
 task::karma() {
+  autoinstall_npm_deps
   exec karma start karma/karma.conf.js
 }
 
 task::validate() {
+  autoinstall_npm_deps
   NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
@@ -117,6 +123,8 @@ task::shrinkwrap() {
 }
 
 task::release_candidate() {
+  autoinstall_npm_deps
+  ./wallah/bin/check_prerequisites git
   echo "Creating a new release candidate"
   git checkout develop
   git pull origin develop
@@ -139,6 +147,8 @@ EOF
 }
 
 task::release() {
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites git
   git checkout develop
   git pull origin develop
   task::test
@@ -159,17 +169,17 @@ task::clean() {
 
 task::build() {
   set -e
+  echo -n "prereqs…"
   #need the build system python here
   export PATH=/usr/bin:$PATH
   local git_ref="${1-HEAD}"
   local build_dir="build"
   local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
-  printf "prereqs..."
   autoinstall_wallah
-  ./wallah/bin/check_prerequisites git tar
+  ./wallah/bin/check_prerequisites git tar curl
   mkdir -p "${build_dir}/${prefix}/node"
 
-  printf "git archive..."
+  echo ✓;echo -n "git archive…"
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   if [[ "${git_ref}" == "WORK" ]]; then
     git ls-files \
@@ -180,34 +190,41 @@ task::build() {
       #extract that archive into a temporary build directory
       tar -C "${build_dir}" --extract
   fi
+  #install node
+  echo ✓;echo -n "node…"
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
-  #install node
-  printf "node..."
+  local node_archive="node-v${node_version}-linux-x86.tar.gz"
+  local node_url=$(echo "http://nodejs.org/dist/v" \
+    "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
+  if [[ ! -f "${node_archive}" ]]; then
+    curl --silent --remote-name "${node_url}"
+  fi
+  echo ✓;echo -n "npm packages…"
   #Make sure we have npm-pkgr installed locally
-  npm install npm-pkgr
+  npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
-    --file "node-v${node_version}-linux-x86.tar.gz"
+    --file "${node_archive}"
   (
   	cd "${build_dir}/${prefix}"
 	  #remove development-only files
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
-  	printf "npm packages..."
 	  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
 	    --silent --parseable &> "../npm.log"
     cd node_modules
     ln -nsf ../app
 	)
-	printf "vagrant rebuild..."
+  echo ✓;echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
     "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
-  echo "archive"
+  echo ✓;echo -n "archive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
+  echo ✓
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
-  printf "\t./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml\n"
+  echo "  ./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml"
 }
 
 task::errors() {
@@ -218,7 +235,7 @@ task::errors() {
   echo "Generating HTML for static error pages from ${devurl}..."
   for uri in error404 error500; do
     local url="${devurl}/${uri}"
-    printf "${uri}, "
+    echo -n "${uri}, "
     local exit_code=0
     curl --silent "${url}" --output \
         "${static}/${uri}.html" || exit_code=$?
@@ -230,18 +247,23 @@ task::errors() {
 }
 
 task::deploy() {
+  set -e
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   local dist_path="$1"
-  local dist_name=$(basename "${dist_path}")
-  dist_name=$(echo "${dist_name}" | sed 's/\.tar\...//')
+  local dist_name=$(basename "${dist_path/.tar.*/}")
   local inventory="$2"
-  ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook \
+  export ANSIBLE_HOST_KEY_CHECKING=False
+  ansible-playbook \
     -i "${inventory}" \
     --ask-sudo-pass \
-    --extra-vars "'dist=${dist_path}'" \
-    --extra-vars "'dist_name=${dist_name}'" \
+    --extra-vars "dist=${dist_path}" \
+    --extra-vars "dist_name=${dist_name}" \
     ./deploy/playbook_express.yml
+  ansible-playbook \
+    -i "${inventory}" \
+    --ask-sudo-pass \
+    ./deploy/playbook_nginx.yml
 }
 
 task::vagrant() {

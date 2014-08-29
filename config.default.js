@@ -21,6 +21,11 @@ var config = {
   browserifyDebug: !IS_PRODUCTION
 };
 
+config.analytics = {
+  enabled: IS_PRODUCTION,
+  code: ""
+};
+
 config.photos = {
   photoURI: "/photos/",
   galleryURI: config.appURI + "/photos",

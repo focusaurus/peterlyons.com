@@ -40,9 +40,10 @@
       service: name=nginx state=started enabled=yes
     -
       name: configure monit for nginx
-      file: src=nginx_peterlyons.com.monitrc
-         dest=/etc/monit/conf.d/nginx_peterlyons.com.monitrc
-         owner=root group=root mode=0644
+      copy:
+        src=nginx_peterlyons.com.monitrc
+        dest=/etc/monit/conf.d/nginx_peterlyons.com.monitrc
+        owner=root group=root mode=0644
       notify:
         - restart monit
     -

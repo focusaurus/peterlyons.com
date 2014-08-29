@@ -253,6 +253,8 @@ I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quo
 
 # CoffeeScript Conventions
 
+**Note:** I no longer prefer CoffeeScript to JavaScript, so I don't add it to new projects, but these conventions are here anyway.
+
 Prefer double quotes for most strings. CoffeeScript allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.  Since CoffeeScript is compiled to javascript, there's no performance implication, but even in Ruby, it doesn't seem to matter.
 
 Prefer string interpolation to building up strings with operators

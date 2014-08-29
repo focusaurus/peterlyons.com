@@ -10,6 +10,7 @@
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
     config_dir: /etc/peterlyons.com
+    repo_base: https://github.com/focusaurus
   handlers:
     -
       include: handlers.yml
@@ -40,19 +41,25 @@
         mode=0755
     -
       name: clone data repo
-      git: repo=git+ssh://plyons@git.peterlyons.com/focusaurus/data.git
+      git: repo={{repo_base}}/data.git
         dest={{data_root}}
         version=master
         force=no
     -
       name: allow filesystem writes for new blog posts
-      file: path="{{data_root}}/posts state=directory recurse=true mode=0770 owner={{express_user}} group=sudo"
+      file: path={{data_root}}/posts
+        state=directory
+        recurse=true
+        mode=0770
+        owner={{express_user}}
+        group=sudo
     -
       name: clone static repo
-      git: repo=https://github.com/focusaurus/static.git
+      git: repo={{repo_base}}/static.git
+        accept_hostkey=True
+        depth=1
         dest={{www_root}}
         version=master
-        depth=1
     -
       name: create directory {{config_dir}}
       file: path={{config_dir}}
@@ -60,10 +67,11 @@
         owner=root
         group={{express_user}}
         mode=0750
-    -
-      name: create express configuration file
-      template: src=config.js.j2 dest={{config_dir}}/config.js
-        owner=root group={{express_user}} mode=0640
+    # Note this will clobber the final values in prod, so disable it
+    # -
+    #   name: create express configuration file
+    #   template: src=config.js.j2 dest={{config_dir}}/config.js
+    #     owner=root group={{express_user}} mode=0640
     -
       name: upload the app distribution archive
       unarchive:
