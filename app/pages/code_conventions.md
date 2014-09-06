@@ -92,6 +92,59 @@ Some folks advocate a length limit on methods or functions. They say that chunks
 
 Avoid double negatives with boolean variables. Instead, use a positive verb whose meaning is negative. `skipCache = True` is better than `noCache = True`.
 
+# Bourne Shell Conventions
+
+I have now adopted [Google's Shell Style Guide][7], which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
+
+Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
+
+# JavaScript Conventions
+
+Oh God, it's a mess out there, folks. I haven't had time to write my conventions up yet, and most of the existing ones I either have mixed feelings about or think they are just outright bonkers.
+
+- 2-space for indent
+  - node style
+  - 4 spaces is more than necessary
+- unix linefeed line endings (no carriage return)
+- Declare variables one-per line each with it's own var keyword
+  - Easiest to maintain.
+  - Declaring multiple variables with one `var` probably relates back to the convention of declaring all variables at the top of each function, which I do not do and find quite harmful, so declare your variables to keep they codespan as small as possible and use a `var` keyword each time.
+  - Comma-first is just nutso. Keep these people in the same room with the AngularJS dependency injection syntax people.
+- Use semicolons. ASI is a compensation mechanism for sloppy code.
+- CommonJS + Browserify FTW
+  - AMD is crazy
+  - requirejs is entirely terrible
+- Prefer code that does not need comments, then inline comments as needed, and jsdoc for really formal APIs or very tricky cases.
+
+The only linter I've ever been able to work with successfully is [eslint](http://eslint.org/), which I recommend for all projects. I also suggest configuring your text editor to lint with eslint on the fly.
+
+Prefer double quotes for most strings. This is mostly unconventional as I usually see single quotes preferred, however, my reasoning is as follows.
+
+- JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
+- This also fosters consistency with java, c, python, ruby, and coffeescript.
+-Aprostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
+
+I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
+
+* no shift key required
+  * Valid point, but not enough to convince me. I use sticky keys anyway so no big whoop.
+* Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>`;
+  * I think with the rise of templating systems, this type of code has become extinct and justifiably so.
+
+# CoffeeScript Conventions
+
+**Note:** I no longer prefer CoffeeScript to JavaScript, so I don't add it to new projects, but these conventions are here anyway.
+
+Prefer double quotes for most strings. CoffeeScript allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.  Since CoffeeScript is compiled to javascript, there's no performance implication, but even in Ruby, it doesn't seem to matter.
+
+Prefer string interpolation to building up strings with operators
+
+Make liberal use of array literals with one item per line and no commas
+
+Omit parentheses for function definitions that take no arguments
+
+I personally don't like a space after a function argument list like this: <code>someFunc = (one, two) -&gt;</code>, but Jeremy Ashkenas seems to like it, so go with it.
+
 # Python Conventions
 
 For the most part, I follow [PEP 8][4], so review that and follow it for the
@@ -220,50 +273,11 @@ When order of execution is not important (as is almost always the case in Java),
 
 Never omit the curly braces from an `if` statement or other block beginner. (Make One Choice)
 
-# Bourne Shell Conventions
-
-I have now adopted [Google's Shell Style Guide][7], which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
-
-Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
-
 # Ruby Conventions
 
 Prefer double quotes for most strings. Ruby allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. Interpolation is also supported. If your string literal needs to contain double quotes, use single quotes.
 
 Prefer string interpolation to building up strings with operators
-
-# JavaScript Conventions
-
-Oh God, it's a mess out there, folks. I haven't had time to write my conventions up yet, and most of the existing ones I either have mixed feelings about or think they are just outright bonkers.
-
-Prefer double quotes for most strings. This is mostly unconventional as I usually see single quotes preferred, however, my reasoning is as follows.
-
-JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
-
-This also fosters consistency with java, c, python, ruby, and coffeescript.
-
-Aprostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
-
-I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
-
-* no shift key required
-  * Valid point, but not enough to convince me. I use sticky keys anyway so no big whoop.
-* Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>`;
-  * I think with the rise of templating systems, this type of code has become extinct and justifiably so.
-
-# CoffeeScript Conventions
-
-**Note:** I no longer prefer CoffeeScript to JavaScript, so I don't add it to new projects, but these conventions are here anyway.
-
-Prefer double quotes for most strings. CoffeeScript allows either, but we should just pick one that we use primarily. Double quotes makes switching between java/c/python/ruby/coffeescript easier and allows embedding apostrophes, which is probably slightly more common than needing to embed double quotes. If your string literal needs to contain double quotes, use single quotes.  Since CoffeeScript is compiled to javascript, there's no performance implication, but even in Ruby, it doesn't seem to matter.
-
-Prefer string interpolation to building up strings with operators
-
-Make liberal use of array literals with one item per line and no commas
-
-Omit parentheses for function definitions that take no arguments
-
-I personally don't like a space after a function argument list like this: <code>someFunc = (one, two) -&gt;</code>, but Jeremy Ashkenas seems to like it, so go with it.
 
 # Comments
 
