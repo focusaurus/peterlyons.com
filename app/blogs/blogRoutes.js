@@ -1,6 +1,6 @@
 var _ = require("lodash");
 var async = require("async");
-var bcrypt = require("bcrypt");
+var bcrypt = require("bcryptjs");
 var blogIndicesBySlug = {};
 var config = require("config3");
 var connect = require("connect");

@@ -6,8 +6,6 @@ make
 g++
 # compiling node.js modules with native extensions
 build-essential
-# needed to build bcrypt node.js binary module
-libssl-dev
 # compiling python modules with native extensions
 python-dev
 # git SCM

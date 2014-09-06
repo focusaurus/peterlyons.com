@@ -1,6 +1,6 @@
 var blogRoutes = require("app/blogs/blogRoutes");
 var expectations = require("expectations");
-var bcrypt = require("bcrypt");
+var bcrypt = require("bcryptjs");
 
 
 describe("blogRoutes", function () {
