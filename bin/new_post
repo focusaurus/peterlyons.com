@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var child_process = require("child_process");
+var childProcess = require("child_process");
 var commander = require("commander");
 var fs = require("fs");
 var mkdirp = require("mkdirp");
@@ -23,4 +23,4 @@ var metaPath = path.join(post.base, post.metadataPath());
 mkdirp.sync(path.dirname(metaPath));
 var metadata = JSON.stringify(post.metadata()) + "\n";
 fs.writeFileSync(metaPath, metadata);
-child_process.exec("subl " + post.viewPath());
+childProcess.exec("subl " + post.viewPath());

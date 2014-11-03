@@ -108,6 +108,11 @@ task::karma() {
   exec karma start karma/karma.conf.js
 }
 
+task::lint() {
+  eslint --format ./node_modules/eslint-formatter-comment/index.js \
+    app bin test
+}
+
 task::validate() {
   autoinstall_npm_deps
   NODE_ENV=test mocha ./test/application/validation.js --validate
@@ -143,7 +148,6 @@ task::release_candidate() {
 		go release
 		deploy to prod
 EOF
-
 }
 
 task::release() {

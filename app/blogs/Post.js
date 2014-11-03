@@ -7,6 +7,7 @@ var moment = require("moment");
 var path = require("path");
 var slug = require("app/blogs/slug");
 
+/* eslint camelcase:0 */
 function Post(blog, title, publish_date, format) {
   this.blog = blog;
   this.title = title;
@@ -47,15 +48,14 @@ Post.prototype.viewPath = function() {
 };
 
 Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
-  var self;
+  var self = this;
   this.metadataPath = metadataPath;
   this.blog = blog;
-  self = this;
-  return fs.exists(this.metadataPath, function(exists) {
+  fs.exists(this.metadataPath, function(exists) {
     if (!exists) {
       return;
     }
-    return fs.readFile(metadataPath, "utf8", function(error, jsonString) {
+    fs.readFile(metadataPath, "utf8", function(error, jsonString) {
       var metadata;
       if (error) {
         return callback(error);
@@ -112,17 +112,19 @@ Post.prototype.load = function(metadataPath, blog, callback) {
 };
 
 Post.prototype.save = function(callback) {
-  var contentPath, metadataPath, self;
-  self = this;
-  contentPath = path.join(this.base, this.contentPath());
-  metadataPath = path.join(this.base, this.metadataPath());
-  return mkdirp(this.dirPath(), function(error) {
+  var self = this;
+  var contentPath = path.join(this.base, this.contentPath());
+  var metadataPath = path.join(this.base, this.metadataPath());
+  mkdirp(this.dirPath(), function(error) {
     var work;
     if (error) {
       return callback(error);
     }
-    work = [async.apply(fs.writeFile, contentPath, self.content), async.apply(fs.writeFile, metadataPath, JSON.stringify(self.metadata()))];
-    return async.parallel(work, function(error) {
+    work = [
+     async.apply(fs.writeFile, contentPath, self.content),
+     async.apply(fs.writeFile, metadataPath, JSON.stringify(self.metadata()))
+    ];
+    async.parallel(work, function(error) {
       if (error) {
         return callback(error);
       }

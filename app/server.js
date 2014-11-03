@@ -40,8 +40,10 @@ app.use(function(req, res, next) {
 
 app.use(function(error, req, res, next) {
   if (error instanceof NotFound) {
+    res.status(404);
     res.render("site/error404");
   } else {
+    res.status(500);
     res.render("site/error500");
     console.error(error);
   }
