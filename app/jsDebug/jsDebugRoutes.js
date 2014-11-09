@@ -4,7 +4,7 @@ function jsDebug(req, res) {
 
 function randomDelay(req, res) {
   var delay = Math.random() * 10000;
-  setTimeout(function () {
+  setTimeout(function respond() {
     res.send("Responded after " + delay.toFixed(0) + " ms to request number " +
     req.query.requestNumber);
   }, delay);
