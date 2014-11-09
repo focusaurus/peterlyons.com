@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "./bin/go express",
-    "test": "./bin/go test"
+    "test": "./bin/go test",
+    "postinstall": "./node_modules/.bin/bower install"
   },
   "files": [],
   "browserify": {

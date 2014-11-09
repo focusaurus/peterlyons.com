@@ -183,7 +183,7 @@ task::build() {
   ./wallah/bin/check_prerequisites git tar curl
   mkdir -p "${build_dir}/${prefix}/node"
 
-  echo ✓;echo -n "git archive…"
+  echo ✓; echo -n "git archive…"
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   if [[ "${git_ref}" == "WORK" ]]; then
     git ls-files \
@@ -195,7 +195,7 @@ task::build() {
       tar -C "${build_dir}" --extract
   fi
   #install node
-  echo ✓;echo -n "node…"
+  echo ✓; echo -n "node…"
   local node_version=$(./wallah/bin/get_json_value \
     "${build_dir}/${prefix}/package.json" "engines.node")
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
@@ -204,7 +204,7 @@ task::build() {
   if [[ ! -f "${node_archive}" ]]; then
     curl --silent --remote-name "${node_url}"
   fi
-  echo ✓;echo -n "npm packages…"
+  echo ✓; echo -n "npm packages…"
   #Make sure we have npm-pkgr installed locally
   npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
@@ -219,10 +219,12 @@ task::build() {
     cd node_modules
     ln -nsf ../app
 	)
-  echo ✓;echo -n "vagrant rebuild…"
+  echo ✓; echo -n "bower install"
+  ./node_modules/.bin/bower install
+  echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
     "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
-  echo ✓;echo -n "archive…"
+  echo ✓; echo -n "archive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
   echo ✓

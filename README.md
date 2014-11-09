@@ -34,7 +34,8 @@ The data and static repositories aren't particularly interesting. All the intere
 * run `./bin/go release_candidate <patch|minor|major>`
   * (patch is the default)
 * create a build on the vagrant "build" vm with `/vagrant/bin/go build`
-* deploy that to the vagrant "stage" vm from your laptop via `./bin/go deploy build/<build>.tar.gz deploy/hosts/vagrant_stage.yml`
+* deploy that to the vagrant "stage" vm from your laptop via `./bin/go deploy build/<build>.tar.gz deploy/hosts/vagrant_stage.yml`*
+  * vagrant sudo password is "password"
 * Test that and if all looks good you can finalize the release with
 * `./bin/go release`
 * deploy to prod with `./bin/go deploy build/<build>.tar.gz deploy/hosts/production.yml`
