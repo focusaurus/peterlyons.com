@@ -13,7 +13,7 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   each post in posts
     entry
       title= post.title
-      link(href="http://peterlyons.com/" + post.URI())
+      link(href="http://peterlyons.com/" + post.uri())
       != "<updated>" + post.publish_date.toISOString() + "</updated>"
-      != "<id>" + config.baseURL + "/" + post.URI() + "</id>"
+      != "<id>" + config.baseURL + "/" + post.uri() + "</id>"
       content(type="html")= post.content || ""

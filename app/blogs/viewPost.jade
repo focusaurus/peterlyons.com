@@ -13,11 +13,11 @@ block body
       if post.previous
         li
           | Previous post &nbsp;
-          a(href='/' + post.previous.URI())= post.previous.title
+          a(href='/' + post.previous.uri())= post.previous.title
       if post.next
         li
           | Next post &nbsp;
-          a(href='/' + post.next.URI())= post.next.title
+          a(href='/' + post.next.uri())= post.next.title
       li
         a#toggleComments(href="#") Show Comments
   section#comments.none

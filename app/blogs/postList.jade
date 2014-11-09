@@ -4,5 +4,5 @@ table.postList
   each post in posts
     tr
       td.postTitle
-        a(href="/" + post.URI())= post.title
+        a(href="/" + post.uri())= post.title
       td.date= post.presented.date

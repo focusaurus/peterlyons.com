@@ -48,7 +48,7 @@ function loadPostMW(req, res, next) {
     }
     res.post = post;
     post.presented = presentPost(post);
-    var links = postLinks[post.URI()];
+    var links = postLinks[post.uri()];
     post.previous = links.previous;
     post.next = links.next;
     res.viewPath = post.viewPath();
@@ -156,7 +156,7 @@ function loadBlog(URI, callback) {
         return post.publish_date;
       }).reverse();
       posts.forEach(function (post, index) {
-        postLinks[post.URI()] = {
+        postLinks[post.uri()] = {
           next: index > 0 ? posts[index - 1] : null,
           previous: index < posts.length ? posts[index + 1] : null
         };
@@ -199,7 +199,7 @@ function createPost(req, res) {
       return res.status(500).send(error);
     }
     var response = post.metadata();
-    response.uri = post.URI();
+    response.uri = post.uri();
     res.send(response);
     loadBlog(post.blog, function(error, posts) {
       var blog;

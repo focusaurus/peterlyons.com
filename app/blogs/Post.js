@@ -25,18 +25,18 @@ Post.prototype.metadata = function() {
   };
 };
 
-Post.prototype.URI = function() {
+Post.prototype.uri = function() {
   var publishMoment = moment(this.publish_date);
   return path.join(this.blog,
     publishMoment.format("YYYY"), publishMoment.format("MM"), this.name);
 };
 
 Post.prototype.contentPath = function() {
-  return this.URI() + "." + this.format;
+  return this.uri() + "." + this.format;
 };
 
 Post.prototype.metadataPath = function() {
-  return this.URI() + ".json";
+  return this.uri() + ".json";
 };
 
 Post.prototype.dirPath = function() {
@@ -44,7 +44,7 @@ Post.prototype.dirPath = function() {
 };
 
 Post.prototype.viewPath = function() {
-  return path.join(this.base, this.URI() + "." + this.format);
+  return path.join(this.base, this.uri() + "." + this.format);
 };
 
 Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
@@ -63,7 +63,7 @@ Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
       metadata = JSON.parse(jsonString);
       _.extend(self, metadata);
       self.publish_date = new Date(self.publish_date);
-      self.view = self.URI() + "." + self.format;
+      self.view = self.uri() + "." + self.format;
       callback();
     });
   });
@@ -82,7 +82,7 @@ Post.prototype.load = function(metadataPath, blog, callback) {
       try {
         _.extend(self, JSON.parse(json));
         self.publish_date = new Date(self.publish_date);
-        self.view = (self.URI()) + "." + self.format;
+        self.view = (self.uri()) + "." + self.format;
         callback();
         return;
       } catch (exception) {

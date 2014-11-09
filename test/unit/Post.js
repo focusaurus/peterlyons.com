@@ -27,7 +27,7 @@ describe("Post model class", function () {
   });
 
   it("URI should be correct", function() {
-    expect(post.URI()).toBe("unitTestBlog/2014/01/unit-test-title");
+    expect(post.uri()).toBe("unitTestBlog/2014/01/unit-test-title");
   });
 
   it("contentPath should be correct", function() {
