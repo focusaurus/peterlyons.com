@@ -18,8 +18,7 @@ function setup(app) {
     "app/browser/home",
     "app/browser/plusParty",
     "app/browser/post",
-    "app/browser/viewGallery",
-    "app/browser/navigation"
+    "app/browser/viewGallery"
   ], bmwOptions));
 }
 

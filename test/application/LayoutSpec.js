@@ -60,7 +60,7 @@ describe("the site", function() {
     this.timeout(5000);
     testUtils.get("/browser.js")
       .expect(200)
-      .expect("Content-Type", "text/javascript")
+      .expect("Content-Type", "application/javascript")
       .expect("Content-Encoding", "gzip")
       .end(done);
   });
