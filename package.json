@@ -28,9 +28,7 @@
     "angular-route": "./bower_components/angular-route/angular-route.js"
   },
   "browserify-shim": {
-    "angular": {
-      "exports": "angular"
-    },
+    "angular": "angular",
     "angular-route": {
       "depends": [
         "./bower_components/angular/angular.js:angular"
@@ -46,8 +44,8 @@
     "async": "^0.9.0",
     "bcryptjs": "^2.0.2",
     "browserify": "^4.2.3",
-    "browserify-middleware": "^3.0.1",
-    "browserify-shim": "^3.4.1",
+    "browserify-middleware": "4.1.0",
+    "browserify-shim": "3.8.0",
     "cheerio": "^0.17.0",
     "config3": "0.0.0",
     "connect": "^2.14.4",

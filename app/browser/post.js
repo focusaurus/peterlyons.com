@@ -4,7 +4,7 @@ function init() {
   require("angular");
   require("angular-sanitize");
   var createPostApp = window.createPostApp = angular.module(
-    "createPostApp", []);
+    "createPostApp", ["ngSanitize"]);
   createPostApp.controller("CreatePost", require("app/browser/CreatePost"));
   createPostApp.value("localStorage", window.localStorage);
 }
