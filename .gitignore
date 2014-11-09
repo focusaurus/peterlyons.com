@@ -5,4 +5,5 @@
 /vagrant_ansible_inventory_default
 /python
 /.vagrant
-node-v*.tar.gz
+/node-v*.tar.gz
+/bower_components

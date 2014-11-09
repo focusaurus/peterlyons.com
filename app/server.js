@@ -33,7 +33,7 @@ if (config.enableLogger) {
 });
 
 app.use(connect.static(config.staticDir));
-app.use(connect.static(config.thirdPartyDir));
+app.use(connect.static(config.zeroClipboardDir));
 app.use(function(req, res, next) {
   next(new NotFound(req.path));
 });

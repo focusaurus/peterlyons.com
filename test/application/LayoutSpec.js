@@ -25,7 +25,7 @@ describe("the main layout", function() {
 
   it("should have the key structural elements", function() {
     testUtils.assertSelectors(
-      $,"header h1", "body .content", "nav.site", ".license");
+      $,"header h1", "body .content", "nav.site", ".license", "base[href='/']");
   });
 
   it("should have the normal title", function() {

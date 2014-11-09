@@ -17,10 +17,6 @@ server {
     try_files $uri $uri.html $uri/index.html @app;
   }
 
-  location /ZeroClipboard {
-    root {{third_party}};
-  }
-
   location @app {
     rewrite /app(.*) $1 break;
     error_page 404 /error404.html;
