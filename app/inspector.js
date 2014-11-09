@@ -1,9 +1,9 @@
 var config = require("config3");
-var child_process = require("child_process");
+var childProcess = require("child_process");
 
 if (config.inspector.enabled) {
   setTimeout(function () {
-    child_process.fork(
+    childProcess.fork(
       require.resolve("node-inspector/bin/inspector"),
       ["--web-port=" + config.inspector.webPort, "--web-host=127.0.0.1"],
       {execArgv: []}

@@ -2,12 +2,12 @@ var cheerio = require("cheerio");
 var fs = require("fs");
 var mustache = require("mustache");
 var path = require("path");
-var querystring = require("querystring");
 var rawBody = require("raw-body");
 var url = require("url");
 var flickrshowTemplate = fs.readFileSync(
-  __dirname + '/flickrshowTemplate.html', 'utf8');
-var youtubeTemplate = "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>";
+  path.join(__dirname, "flickrshowTemplate.html"), "utf8");
+var youtubeTemplate =
+  "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>";
 
 function debugLog(message) {
   return function(req, res, next) {

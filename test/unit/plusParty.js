@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+require("expectations");
 var plusParty = require("app/browser/plusParty");
 
 describe("plusParty", function () {

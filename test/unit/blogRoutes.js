@@ -1,5 +1,5 @@
+require("expectations");
 var blogRoutes = require("app/blogs/blogRoutes");
-var expectations = require("expectations");
 var bcrypt = require("bcryptjs");
 
 
@@ -7,14 +7,14 @@ describe("blogRoutes", function () {
   describe("presentPost", function () {
     it("should format the date", function() {
       var presented = blogRoutes.presentPost({
-        publish_date: new Date(2014, 0, 31),
+        "publish_date": new Date(2014, 0, 31),
         title: "foo"
       });
       expect(presented.date).toBe("Jan 31, 2014");
     });
     it("should trim the title", function() {
       var presented = blogRoutes.presentPost({
-        publish_date: new Date(2014, 0, 31),
+        "publish_date": new Date(2014, 0, 31),
         title: " a "
       });
       expect(presented.title).toBe("a");
@@ -29,6 +29,7 @@ describe("blogRoutes", function () {
       expect(index.blogTitle).toBe("blog title");
     });
   });
+
   describe("verifyPassword", function () {
     var password = "unit test blog password";
     var salt = bcrypt.genSaltSync(10);

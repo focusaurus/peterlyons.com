@@ -1,5 +1,5 @@
 var Post = require("app/blogs/Post");
-var expectations = require("expectations");
+require("expectations");
 
 var publishDate = new Date(2014, 0, 31);
 var post = new Post(
@@ -35,11 +35,13 @@ describe("Post model class", function () {
   });
 
   it("metadataPath should be correct", function() {
-    expect(post.metadataPath()).toBe("unitTestBlog/2014/01/unit-test-title.json");
+    expect(post.metadataPath()).toBe(
+      "unitTestBlog/2014/01/unit-test-title.json");
   });
 
   it("viewPath should be correct", function() {
-    expect(post.viewPath()).toBe("/unit/test/base/unitTestBlog/2014/01/unit-test-title.md");
+    expect(post.viewPath()).toBe(
+      "/unit/test/base/unitTestBlog/2014/01/unit-test-title.md");
   });
 
   it("dirPath should be correct", function() {

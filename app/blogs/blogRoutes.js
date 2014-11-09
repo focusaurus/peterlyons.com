@@ -6,7 +6,7 @@ var config = require("config3");
 var connect = require("connect");
 var events = require("events");
 var fs = require("fs");
-var glob = require('glob');
+var glob = require("glob");
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
 var moment = require("moment");
@@ -24,6 +24,13 @@ function BlogIndex(URI, title) {
 function loadBlogMW(req, res, next) {
   res.blog = blogIndicesBySlug[req.params.blogSlug];
   next();
+}
+
+function presentPost(post) {
+  var presented = _.clone(post);
+  presented.title = presented.title.trim();
+  presented.date = moment(post.publish_date).format("MMM DD, YYYY");
+  return presented;
 }
 
 function loadPostMW(req, res, next) {
@@ -54,10 +61,9 @@ function html(req, res, next) {
     next();
     return;
   }
-  return fs.readFile(res.viewPath, "utf8", function(error, htmlText) {
+  fs.readFile(res.viewPath, "utf8", function(error, htmlText) {
     res.html = htmlText;
     next(error);
-    return;
   });
 }
 
@@ -66,14 +72,13 @@ function markdownToHTML(req, res, next) {
     next();
     return;
   }
-  return fs.readFile(res.viewPath, "utf8", function(error, markdownText) {
+  fs.readFile(res.viewPath, "utf8", function(error, markdownText) {
     if (error) {
       next(error);
       return;
     }
     res.html = markdown(markdownText);
     next(error);
-    return;
   });
 }
 
@@ -119,13 +124,6 @@ var viewPostMiddleware = [
   middleware.undomify,
   middleware.send
 ];
-
-function presentPost(post) {
-  var presented = _.clone(post);
-  presented.title = presented.title.trim();
-  presented.date = moment(post.publish_date).format("MMM DD, YYYY");
-  return presented;
-}
 
 function loadPost(URI, file, callback) {
   var post = new Post();
@@ -189,7 +187,7 @@ function savePost(req, callback) {
   post.save(callback);
 }
 
-function createPost(req, res, next) {
+function createPost(req, res) {
   var password = req.body.password;
   var work = [
     async.apply(fs.readFile, config.blog.hashPath, "utf8"),
@@ -228,7 +226,7 @@ function feedRenderPost(req, post, callback) {
       fakeRes.post.content = fakeRes.html;
       next();
     }
-  ], req, fakeRes, function (error, result) {
+  ], req, fakeRes, function (error) {
     if (error) {
       callback(error);
       return;
@@ -252,7 +250,7 @@ function feed(req, res, next) {
   var boundRender = feedRenderPost.bind(null, req);
   async.map(recentPosts, boundRender, function (error, renderedPosts) {
     if (error) {
-      next(error)
+      next(error);
       return;
     }
     locals.posts = renderedPosts;
@@ -298,7 +296,7 @@ function setup(app) {
     setup.events.emit("ready");
   }
   async.forEach([problog, persblog], _load, doneLoading);
-  app.use("/blogs", connect.static(__dirname + "/browser"));
+  app.use("/blogs", connect.static(path.join(__dirname, "/browser")));
   var blogRoute = "/:blogSlug(persblog|problog)";
   app.get(blogRoute, loadBlogMW, function(req, res) {
     res.render("blogs/" + req.params.blogSlug, res.blog);

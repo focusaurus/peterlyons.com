@@ -1,4 +1,5 @@
 var testUtils = require("../testUtils");
+require("expectations");
 
 describe("the jsDebug", function() {
   var $ = null;

@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+require("expectations");
 var testUtils = require("../testUtils");
 
 describe("the Leveling Up article", function() {

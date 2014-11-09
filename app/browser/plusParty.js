@@ -53,7 +53,7 @@ function init() {
   };
   var clip = new ZeroClipboard(copyButton);
   clip.on("load", function (client) {
-    client.on("complete", function (event) {
+    client.on("complete", function () {
       copyButton.textContent = "Copied!";
       setTimeout(resetText, 2000);
     });

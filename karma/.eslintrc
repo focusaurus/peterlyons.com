@@ -4,6 +4,6 @@
     "node": true
   },
   "globals": {
-    "expect": true
+    "inject": true
   }
 }

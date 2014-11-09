@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+require("expectations");
 var slug = require("app/blogs/slug");
 
 describe("app/blogs/slug", function () {
@@ -17,7 +17,7 @@ describe("app/blogs/slug", function () {
   });
 
   it("should handle null", function() {
-    expect(slug(undefined)).toBe("");
+    expect(slug(void 0)).toBe("");
     expect(slug(null)).toBe("");
   });
 });

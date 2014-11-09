@@ -6,7 +6,6 @@ module.exports = [
   ["/practices", /Craftsmanship/],
   ["/bands", /Afronauts/],
   ["/code_conventions", /readability/],
-  ["/this-will-cause-404", /404 error page/],
   ["/leveling_up", /Pillar 1/],
   ["/web_prog", /PHP/],
   ["/oberlin", /Edison/],
@@ -17,5 +16,6 @@ module.exports = [
   ["/persblog", /travel/],
   ["/app/photos?gallery=burning_man_2011", /Gallery/],
   ["/problog/2009/03/announcing-petes-points", /professional/],
-  ["/persblog/2007/10/petes-travel-adventure-2007-begins-friday-october-5th", /Alitalia/]
+  ["/persblog/2007/10/petes-travel-adventure-2007-begins-friday-october-5th",
+    /Alitalia/]
 ];

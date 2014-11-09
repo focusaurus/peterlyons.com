@@ -1,7 +1,7 @@
+require("expectations");
 var _ = require("lodash");
-var expectations = require("expectations");
-var testUtils = require("../testUtils");
 var config = require("config3");
+var testUtils = require("../testUtils");
 
 describe("the main layout", function() {
   var $ = null;
@@ -15,7 +15,7 @@ describe("the main layout", function() {
     var selector = "link[rel=stylesheet]";
     testUtils.assertSelectors($, selector);
     var hrefs = [];
-    var link = $(selector).each(function (index, item) {
+    $(selector).each(function (index, item) {
       hrefs.push($(item).attr("href"));
     });
     expect(_.some(hrefs, function (href) {

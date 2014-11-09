@@ -93,7 +93,7 @@ Post.prototype.load = function(metadataPath, blog, callback) {
   }
 
   function loadContent(callback) {
-    var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf('.'));
+    var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf("."));
     var contentPath = noExt + "." + self.format;
     fs.readFile(contentPath, "utf8", function (error, content) {
       if (error) {

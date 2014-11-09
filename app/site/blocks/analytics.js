@@ -2,7 +2,8 @@ var config = require("config3");
 var fs = require("fs");
 var path = require("path");
 
-var snippetPath = path.join(__dirname, "googleAnalytics.js")
+var snippetPath = path.join(
+  __dirname, "..", "..", "..", "thirdParty", "googleAnalytics.js");
 var snippet = fs.readFileSync(snippetPath , "utf8");
 
 function render() {

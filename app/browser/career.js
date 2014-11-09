@@ -1,5 +1,5 @@
 function sort(event) {
-  var activeButton = document.querySelector(".activeSort")
+  var activeButton = document.querySelector(".activeSort");
   activeButton.classList.remove("activeSort");
   activeButton.removeAttribute("disabled");
 
@@ -22,7 +22,8 @@ function sort(event) {
 
 function init() {
   document.querySelector("button.newest").addEventListener("click", sort);
-  document.querySelector("button.chronological").addEventListener("click", sort);
+  document.querySelector("button.chronological")
+    .addEventListener("click", sort);
 }
 
 module.exports = init;

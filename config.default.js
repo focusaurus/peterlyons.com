@@ -10,8 +10,8 @@ var config = {
   hostname: get("hostname", "127.0.0.1"),
   port: get("port", 9000),
   appURI: "/app",
-  staticDir: path.resolve(__dirname + "/../static"),
-  thirdPartyDir: path.resolve(__dirname + "/thirdParty"),
+  staticDir: path.join(__dirname + "/../static"),
+  thirdPartyDir: path.join(__dirname + "/thirdParty"),
   loopback: true,
   errorPages: IS_PRODUCTION,
   enableLogger: process.env.NODE_ENV !== "test",
@@ -32,13 +32,13 @@ config.photos = {
   galleryDir:  config.staticDir + "/photos",
   thumbExtension: "-TN.jpg",
   extension: ".jpg",
-  galleryDataPath: path.resolve(__dirname + "/../data/galleries.json"),
+  galleryDataPath: path.join(__dirname + "/../data/galleries.json"),
   serveDirect: !IS_PRODUCTION
 };
 
 config.blog = {
-  hashPath: path.resolve(__dirname + "/../data/blog_password.bcrypt"),
-  postBasePath: path.resolve(__dirname + "/../data/posts")
+  hashPath: path.join(__dirname + "/../data/blog_password.bcrypt"),
+  postBasePath: path.join(__dirname + "/../data/posts")
 };
 
 config.inspector = {

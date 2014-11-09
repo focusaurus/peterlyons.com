@@ -4,7 +4,8 @@ describe("the photos page", function() {
   var $ = null;
 
   before(function(done) {
-    testUtils.loadPage("/app/photos?gallery=burning_man_2011", function(error, dom) {
+    testUtils.loadPage(
+        "/app/photos?gallery=burning_man_2011", function(error, dom) {
       $ = dom;
       done(error);
     });

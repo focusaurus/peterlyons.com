@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+var expect = require("expectations");
 var PlusParty = require("app/browser/plusParty").Controller;
 
 describe("PlusParty Controller", function () {
@@ -8,7 +8,7 @@ describe("PlusParty Controller", function () {
   beforeEach(inject(function($injector) {
     injector = $injector;
     options = {
-      $scope: injector.get("$rootScope"),
+      $scope: injector.get("$rootScope")
     };
   }));
 

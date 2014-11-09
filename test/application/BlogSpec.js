@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+require("expectations");
 var cheerio = require("cheerio");
 var testUtils = require("../testUtils");
 var blogRoutes = require("app/blogs/blogRoutes");
@@ -68,6 +68,7 @@ describe("the preview converter", function() {
   });
   it("should have the flickr & youtube pipeline middleware", function(done) {
     testUtils.post("/convert")
+        /* eslint max-len:0 */
         .send("<youtube href=\"http://www.youtube.com/embed/K27MA8v91D4\"></youtube>\n<flickrshow href=\"https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/\"></flickrshow>")
         .set("Content-Type", "text/x-markdown")
         .set("Accept", "text/html")

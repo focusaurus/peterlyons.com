@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+require("expectations");
 var testUtils = require("../testUtils");
 
 describe("the Web Data Slide Deck", function() {
@@ -14,11 +14,11 @@ describe("the Web Data Slide Deck", function() {
     expect($("section.slide").length).toBeGreaterThan(15);
   });
 
-  it('should mention some DBs', function() {
+  it("should mention some DBs", function() {
     testUtils.assertSubstrings($, "Oracle", "SQL Server", "Dynamo");
   });
 
-  it('should include deck.js and the menu plugin', function() {
+  it("should include deck.js and the menu plugin", function() {
     testUtils.assertSubstrings($,
       "deck.js", "deck.menu.js", "deck.js/jquery-1.7.2.min.js");
   });

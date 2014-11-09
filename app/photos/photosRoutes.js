@@ -1,13 +1,15 @@
 var _ = require("lodash");
 var _galleries = require("./galleries");
 var config = require("config3");
-var sharify = require("sharify");
 var connect = require("connect");
+var path = require("path");
+var sharify = require("sharify");
 
 function renderPhotos(req, res, next) {
   _galleries.getGalleries(function(error, galleries) {
     if (error) {
-      return next(error);
+      next(error);
+      return;
     }
     var matchGallery = galleries.filter(function(g) {
       return g.dirName === req.param("gallery");
@@ -38,7 +40,8 @@ function renderPhotos(req, res, next) {
 function getGallery(req, res) {
   return _galleries.loadBySlug(req.params.slug, function(error, gallery) {
     if (error) {
-      return res.status(500).send(error);
+      res.status(500).send(error);
+      return;
     }
     if (!gallery) {
       res.send(404);
@@ -49,7 +52,7 @@ function getGallery(req, res) {
 }
 
 function setup(app) {
-  app.use("/photos", connect.static(__dirname + "/browser"));
+  app.use("/photos", connect.static(path.join(__dirname, "/browser")));
   app.get("/galleries/:slug", getGallery);
   app.get("/photos", sharify, renderPhotos);
   if (config.photos.serveDirect) {

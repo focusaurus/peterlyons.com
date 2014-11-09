@@ -22,10 +22,10 @@ function GalleryController(
 
 
   var years = [];
-  for (var year in byYear) {
-    galleries = byYear[year];
+  for (var year2 in byYear) {
+    galleries = byYear[year2];
     years.push({
-      name: year,
+      name: year2,
       galleries: galleries
     });
   }
@@ -86,7 +86,8 @@ GalleryController.prototype.changeGallery = function() {
     this.firstLoadDone = true;
     return;
   }
-  this.$http.get("/galleries/" + this.$scope.galleryName).success(function(galleryData) {
+  this.$http.get("/galleries/" + this.$scope.galleryName)
+    .success(function(galleryData) {
     self.$scope.gallery = galleryData;
     self.$window.document.title = galleryData.displayName + " Photo Gallery";
     var firstPhoto = self.$scope.gallery.photos[0];
@@ -109,6 +110,7 @@ function init() {
   require("angular");
   require("angular-route");
   var photosApp = angular.module("photos", ["ngRoute"], _photos);
+  /* global __sharifyData */
   photosApp.value("gallery", __sharifyData.gallery);
   photosApp.value("galleries", __sharifyData.galleries);
   photosApp.controller("GalleryController", GalleryController);

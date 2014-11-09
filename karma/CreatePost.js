@@ -1,4 +1,4 @@
-var expectations = require("expectations");
+var expect = require("expectations");
 var CreatePost = require("app/browser/CreatePost");
 
 describe("CreatePost Controller", function () {

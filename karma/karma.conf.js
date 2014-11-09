@@ -22,7 +22,7 @@ function setup(config) {
         included: false,
         served: false
       },
-      'karma/**/*.js'
+      "karma/**/*.js"
     ],
     preprocessors: preprocessors
   });

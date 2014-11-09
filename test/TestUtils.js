@@ -1,7 +1,6 @@
-var expectations = require("expectations");
+require("expectations");
 var cheerio = require("cheerio");
 var request = require("supertest")(require("app/server"));
-var _ = require("lodash");
 
 function loadPage(URL, callback) {
   request.get(URL).expect(200).end(function(error, res) {
@@ -26,7 +25,8 @@ function assertSelectors() {
   var $ = arguments[0];
   var selectors = Array.prototype.slice.call(arguments, 1);
   selectors.forEach(function(selector) {
-    expect($(selector).length).toBeGreaterThan(0, "Document missing selector " + selector);
+    expect($(selector).length).toBeGreaterThan(
+      0, "Document missing selector " + selector);
   });
 }
 
@@ -39,6 +39,7 @@ function assertSubstrings() {
   });
 }
 
+/* eslint no-unused-vars:0 */
 function pageContains(_url, _phraseVarArgs, _done) {
   var phrases = Array.prototype.slice.call(arguments);
   var url = phrases.shift();

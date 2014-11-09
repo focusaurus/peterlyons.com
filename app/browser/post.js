@@ -3,7 +3,8 @@ function init() {
   //browserify returns an empty object, but window.angular is there
   require("angular");
   require("angular-sanitize");
-  var createPostApp = window.createPostApp = angular.module("createPostApp", []);
+  var createPostApp = window.createPostApp = angular.module(
+    "createPostApp", []);
   createPostApp.controller("CreatePost", require("app/browser/CreatePost"));
   createPostApp.value("localStorage", window.localStorage);
 }

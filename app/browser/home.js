@@ -1,13 +1,6 @@
 var HEADER_SELECTOR = ".intro .highlight";
 var subtitle;
 
-function init() {
-  var header = document.querySelector(HEADER_SELECTOR);
-  subtitle = header.textContent;
-  header.textContent = "";
-  setTimeout(pushLetter, speed());
-}
-
 function speed() {
   return Math.random() * 200 + 20;
 }
@@ -19,6 +12,13 @@ function pushLetter() {
     return;
   }
   header.textContent = text + subtitle[text.length];
+  setTimeout(pushLetter, speed());
+}
+
+function init() {
+  var header = document.querySelector(HEADER_SELECTOR);
+  subtitle = header.textContent;
+  header.textContent = "";
   setTimeout(pushLetter, speed());
 }
 
