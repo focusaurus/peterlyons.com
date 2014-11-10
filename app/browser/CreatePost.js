@@ -5,9 +5,10 @@ var MARKDOWN_OPTIONS = {
   }
 };
 
-function CreatePost($scope, $window, $http, $sce, localStorage) {
+function CreatePost($scope, $window, $location, $http, $sce, localStorage) {
   this.$scope = $scope;
   this.$window = $window;
+  this.$location = $location;
   this.$http = $http;
   this.$sce = $sce;
   this.localStorage = localStorage;
@@ -46,8 +47,8 @@ CreatePost.prototype.save = function save() {
     content: this.$scope.contentMarkdown,
     password: this.$scope.password
   };
-  //relative URL here is intentional to post to the current blog
-  this.$http.post("post", data).success(function(response) {
+  //the POST URI should be the same as the current page
+  this.$http.post(this.$location.path(), data).success(function(response) {
     self.$scope.savedPost = response;
   }).error(function(response) {
     self.$scope.error = response;
