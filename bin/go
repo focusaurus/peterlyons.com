@@ -220,7 +220,10 @@ task::build() {
     ln -nsf ../app
 	)
   echo ✓; echo -n "bower install"
-  ./node_modules/.bin/bower install
+  (
+    cd "${build_dir}/${prefix}"
+    ./node_modules/.bin/bower install
+  )
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
     "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
