@@ -1,6 +1,7 @@
 require("expectations");
 var _ = require("lodash");
 var config = require("config3");
+var pack = require("../../package");
 var testUtils = require("../testUtils");
 
 describe("the main layout", function() {
@@ -30,6 +31,11 @@ describe("the main layout", function() {
 
   it("should have the normal title", function() {
     expect($("title").text()).toBe("Peter Lyons: node.js expert consultant");
+  });
+
+  it("should include the javascript with cachebusting", function() {
+    testUtils.assertSelectors(
+      $, "script[src='/browser.js?v=" + pack.version + "']");
   });
 });
 

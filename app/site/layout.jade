@@ -41,7 +41,6 @@ html(lang="en")
           async
         )
       block scripts
-        script(src="/browser.js")
-        script require("app/browser/navigation")
+        script(src="/browser.js?v=" + appVersion)
         if config.analytics.enabled
           script(data-id="analytics")!= analytics()

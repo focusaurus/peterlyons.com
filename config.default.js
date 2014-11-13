@@ -1,4 +1,5 @@
 /* eslint-env node */
+var pack = require("./package");
 var path = require("path");
 
 var IS_PRODUCTION = process.env.NODE_ENV === "production";
@@ -8,18 +9,19 @@ function get(name, defaultValue) {
 }
 
 var config = {
-  hostname: get("hostname", "127.0.0.1"),
-  port: get("port", 9000),
   appURI: "/app",
-  staticDir: path.join(__dirname, "/../static"),
-  zeroClipboardDir: path.join(__dirname, "/node_modules/zeroclipboard"),
-  loopback: true,
-  errorPages: IS_PRODUCTION,
-  enableLogger: process.env.NODE_ENV !== "test",
-  titleSuffix: " | Peter Lyons",
-  tests: !IS_PRODUCTION,
+  appVersion: pack.version,
+  browserifyDebug: !IS_PRODUCTION,
   cacheCSS: IS_PRODUCTION,
-  browserifyDebug: !IS_PRODUCTION
+  enableLogger: process.env.NODE_ENV !== "test",
+  errorPages: IS_PRODUCTION,
+  hostname: get("hostname", "127.0.0.1"),
+  ip: get("IP", "127.0.0.1"),
+  port: get("port", 9000),
+  staticDir: path.join(__dirname, "/../static"),
+  tests: !IS_PRODUCTION,
+  titleSuffix: " | Peter Lyons",
+  zeroClipboardDir: path.join(__dirname, "/node_modules/zeroclipboard")
 };
 
 config.analytics = {

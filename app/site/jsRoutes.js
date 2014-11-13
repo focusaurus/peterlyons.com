@@ -13,7 +13,7 @@ if (!config.browserifyDebug) {
 
 function setup(app) {
   app.get("/browser.js", bmw([
-    {"app/browser/navigation": {"add": true}},
+    {"app/browser/navigation": {"entry": true}},
     "app/browser/career",
     "app/browser/home",
     "app/browser/plusParty",

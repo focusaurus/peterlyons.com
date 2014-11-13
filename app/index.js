@@ -9,6 +9,7 @@ app.set("view engine", "jade");
 app.set("views", __dirname);
 app.locals.config = config;
 app.locals.appURI = config.appURI;
+app.locals.appVersion = config.appVersion;
 app.locals.analytics = analytics;
 if (config.enableLogger) {
   app.use(connect.logger({
