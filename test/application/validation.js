@@ -1,16 +1,11 @@
-var w3c = require('w3c-validate').createValidator();
-var request = require("supertest")(require("app/server"));
-var testConfigs = require("./testConfigs");
-
-//Only validate against W3C's validator when explicitly asked
-if (process.argv.indexOf("--validate") < 0) {
-  return;
-}
 require("./BlogsAreLoaded");
-describe("The HTML of each page", function () {
+var request = require("supertest")(require("app"));
+var testConfigs = require("./testConfigs");
+var w3c = require("w3c-validate").createValidator();
+
+function suite() {
   testConfigs.forEach(function (testConfig) {
     var URI = testConfig[0];
-    var regex = testConfig[1];
     it(URI + " should be valid HTML5 according to the W3C", function(done) {
       this.slow(2000);
       this.timeout(5000);
@@ -23,4 +18,9 @@ describe("The HTML of each page", function () {
       });
     });
   });
-});
+}
+
+//Only validate against W3C's validator when explicitly asked
+if (process.env.VALIDATE === "yes") {
+  describe("The HTML of each page", suite);
+}

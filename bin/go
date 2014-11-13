@@ -115,7 +115,7 @@ task::lint() {
 
 task::validate() {
   autoinstall_npm_deps
-  NODE_ENV=test mocha ./test/application/validation.js --validate
+  VALIDATE=yes NODE_ENV=test mocha ./test/application/validation.js --validate
 }
 
 task::shrinkwrap() {
