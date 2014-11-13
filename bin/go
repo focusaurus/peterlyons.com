@@ -93,7 +93,6 @@ task::start() {
 
 task::test() {
   echo mocha tests…
-  set +x
   autoinstall_npm_deps
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
@@ -276,11 +275,7 @@ task::deploy() {
     --ask-sudo-pass \
     --extra-vars "dist=${dist_path}" \
     --extra-vars "dist_name=${dist_name}" \
-    ./deploy/playbook_express.yml
-  ansible-playbook \
-    -i "${inventory}" \
-    --ask-sudo-pass \
-    ./deploy/playbook_nginx.yml
+    ./deploy/playbook_full_stack.yml
 }
 
 task::vagrant() {
