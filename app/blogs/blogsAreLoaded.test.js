@@ -1,6 +1,6 @@
 var blogRoutes = require("app/blogs/blogRoutes");
 //This is necessary to cause the blog routes to load
-require("../testUtils");
+require("app/testUtils");
 
 describe("wait for blogs to be loaded from disk", function () {
   it("should wait for blogRoutes.ready event", function(done) {

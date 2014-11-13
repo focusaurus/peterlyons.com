@@ -1,5 +1,5 @@
 require("expectations");
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("the Web Data Slide Deck", function() {
   var $ = null;

@@ -1,10 +1,10 @@
 require("expectations");
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
-describe("the Rapid Feedback Slide Deck", function() {
+describe("the NPM Gold Slide Deck", function() {
   var $ = null;
   before(function(done) {
-    testUtils.loadPage("/rapid_feedback", function(error, dom) {
+    testUtils.loadPage("/npm_gold", function(error, dom) {
       $ = dom;
       done(error);
     });
@@ -14,8 +14,8 @@ describe("the Rapid Feedback Slide Deck", function() {
     expect($("section.slide").length).toBeGreaterThan(3);
   });
 
-  it("should mention some ruby stuff", function() {
-    testUtils.assertSubstrings($, "ruby", "rails", "stackoverflow");
+  it("should mention some packages", function() {
+    testUtils.assertSubstrings($, "lodash", "moment.js", "cheerio");
   });
 
   it("should include deck.js and the menu plugin", function() {

@@ -1,4 +1,4 @@
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("404 page should have correct status code", function() {
   it("/no-such-url should be 404", function(done) {

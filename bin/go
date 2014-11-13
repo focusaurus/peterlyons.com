@@ -92,8 +92,15 @@ task::start() {
 }
 
 task::test() {
+  echo mocha tests…
+  set +x
   autoinstall_npm_deps
-  NODE_ENV=test mocha "$@"
+  export NODE_ENV=test
+  if [[ $# -eq 0 ]]; then
+    find ./app -name \*.test.js | sort | xargs mocha
+  else
+      mocha "$@"
+  fi
   #@bug these are busted
   #karma run karma/karma.conf.js
 }
@@ -214,6 +221,7 @@ task::build() {
 	  #remove development-only files
     rm -rf wallah doc deploy test karma Vagrantfile \
       .gitignore .agignore .gitmodules
+    find ./app -name \*.test.js | xargs rm
 	  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
 	    --silent --parseable &> "../npm.log"
     cd node_modules

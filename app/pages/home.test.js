@@ -1,4 +1,4 @@
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("the home page", function() {
   var $ = null;

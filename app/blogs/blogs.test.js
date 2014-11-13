@@ -1,6 +1,6 @@
 require("expectations");
 var cheerio = require("cheerio");
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 var blogRoutes = require("app/blogs/blogRoutes");
 
 describe("wait for blogs to be loaded from disk", function () {

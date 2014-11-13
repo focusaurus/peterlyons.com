@@ -1,4 +1,4 @@
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 require("expectations");
 
 describe("the jsDebug", function() {

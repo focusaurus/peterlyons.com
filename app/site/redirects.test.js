@@ -1,4 +1,4 @@
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("legacy URLs with .html suffix should redirect", function() {
   var pages = ["/bands.html", "/oberlin.html"];

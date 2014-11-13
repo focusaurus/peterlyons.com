@@ -1,5 +1,5 @@
 require("expectations");
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("the Leveling Up article", function() {
   var $ = null;

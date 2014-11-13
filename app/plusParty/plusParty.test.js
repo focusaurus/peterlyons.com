@@ -1,5 +1,6 @@
 require("expectations");
 var plusParty = require("app/browser/plusParty");
+var testUtils = require("app/testUtils");
 
 describe("plusParty", function () {
   describe("sum", function () {
@@ -64,5 +65,14 @@ describe("plusParty", function () {
       expect(instance.scope.wrappedNumbers[1].value).toBe(7);
       expect(instance.scope.total).toBe(49);
     });
+  });
+});
+
+describe("the plus party page", function() {
+  it("should serve the zeroclipboard swf file", function(done) {
+    testUtils.get("/ZeroClipboard.swf")
+      .expect("Content-Type", "application/x-shockwave-flash")
+      .expect(200)
+      .end(done);
   });
 });

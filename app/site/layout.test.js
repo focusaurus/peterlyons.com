@@ -2,7 +2,7 @@ require("expectations");
 var _ = require("lodash");
 var config = require("config3");
 var pack = require("../../package");
-var testUtils = require("../testUtils");
+var testUtils = require("app/testUtils");
 
 describe("the main layout", function() {
   var $ = null;
