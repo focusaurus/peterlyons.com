@@ -5,8 +5,7 @@ block body
   :markdown
     #Practices
 
-    ##General Orientation
-
+    ## General Orientation
 
     * Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
     * The #1 primary mandate of the software engineer is managing complexity
@@ -29,7 +28,7 @@ block body
 
     See also my [code conventions](/code_conventions)
 
-    ##Data Modeling
+    ## Data Modeling
 
     * Integrity-first
         * Default attitude is traditional referential integrity with transactions and strict expectations of data consistency and durability
@@ -45,7 +44,7 @@ block body
         * Keep naming clear and consistent with the system model and user interface
         * Model collections based on semantics as opposed to raw data similarity
 
-    ##Programming Paradigm
+    ## Programming Paradigm
 
     * Multi-paradigm taking the best elements of functional, procedural, object oriented
     * Functional programming is the dominant paradigm in my mind these days
@@ -55,7 +54,7 @@ block body
     * Encapsulation and composition as opposed to complex inheritence hierarchy
     * Prefer basic procedural conditions and loops when they are clearer than complex functional or object oriented patterns
 
-    ##Testing
+    ## Testing
 
     * Lots of thorough pure unit tests. Fast (no I/O). High code coverage.
     * Modular code. Judicious use of mock objects. Dependency injection.
@@ -64,7 +63,7 @@ block body
     * A small handful of end to end system tests
     * If running tests gets slow, it's probably time to split the project into smaller modules
 
-    ##Process
+    ## Process
 
     * Modern Async
         * Read [The Async Manifesto](http://asyncmanifesto.org/)
@@ -76,10 +75,23 @@ block body
         * Work items must be decomposed until they fit in a single sprint (there is no extra large)
     * Lean Startup/Minimum Viable Product. Launch and learn. Rinse and repeat.
 
-    ##Devops
+    ## Devops
 
-    * Clear development, staging, production environments from day one
-    * Staging means production minus users
+    * Clear development, QA, stage, production environments from day one
     * Should be able to rebuild entire app infrastructure with code and docs in the main source code repository
     * [Semantic Versioning](http://semver.org/)
     * Modified [12-Factor](http://www.12factor.net/) principles
+
+    ### Definition and purpose of a stage environment
+
+    - Reduce risk that new releases will disrupt production
+      - In order to deliver this, stage must be entirely separate from production. No sharing of any resources whatsoever with production. 
+    - Create high confidence that new releases will deploy and function correctly
+      - If it deploys and runs OK on stage, we have very high confidence that it will deploy and run OK on prod.
+      - In order to deliver this, stage must be nearly-identical to production
+    - Provide safe environment to reproduce and troubleshoot production issues
+      - Ideally this would be a third environment dedicated to troubleshooting, but in practice resolving production issues takes priority over testing new releases thus both are conducted in a single stage environment.
+      - Need to be able to reproduce issues to have hope of resolving them. However, attempting to reproduce in production creates wreckless risk of further issues.
+      - In order to deliver high probability of reproducing issue off production, stage must be nearly-identical to production
+      - Want to know if it happens in production, it can be reproduced in staging, and if a change fixes an issue in stage, that same change will fix the issue in production.
+      - In order to deliver this, staging must nearly-always be available in a state exactly matching production. Thus stage must not be used for functional testing or QA of releases. Stage should only be used as a final quick verification that the release is deployed to stage and the new features are passing quick smoke tests. Thorough testing and QA should be done in a dedicated enironment distinct from stage.
