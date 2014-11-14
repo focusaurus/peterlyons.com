@@ -148,7 +148,7 @@ task::release_candidate() {
   cat <<-EOF
 	Ready
 	Next steps are:
-		go build
+		go build ${tag}
 		deploy to stage
 		test on stage
 		go release
