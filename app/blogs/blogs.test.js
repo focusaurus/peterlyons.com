@@ -48,8 +48,8 @@ describe("a blog index page", function() {
     });
   });
   it("should have nicely formatted dates", function() {
-    expect($("td.date").length).toBeGreaterThan(0);
-    var date = $("td.date").last().html();
+    expect($(".postDate").length).toBeGreaterThan(0);
+    var date = $(".postDate").last().html();
     expect(date).toMatch(/Mar 14, 2009/);
   });
 });

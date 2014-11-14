@@ -1,12 +1,30 @@
 @import "../site/color"
+@import "../site/typography"
 
-.postList
-  line-height 3em
-  td
-    padding 0 0.5em
-    white-space nowrap
-    text-overflow ellipsis
-  tr:nth-child(even)
-    background-color $colorEvenRow
-  .date
-    text-align right
+#subscribe
+  display block
+  text-align right
+  img
+    margin-left 0.5em
+    margin-top 0.5em
+
+.post
+  text-align center
+  width 100%
+  border-bottom 1px dashed $colorPrimary
+  white-space nowrap
+  text-overflow ellipsis
+  padding-bottom 2em
+  &:last-child
+    border-bottom none
+
+.postTitle
+  fontSize(1, 2)
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+.postDate
+  width 100%
+  text-align center
+  fontSize(-1, 1)
