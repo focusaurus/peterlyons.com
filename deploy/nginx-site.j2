@@ -25,3 +25,10 @@ server {
     proxy_pass http://express-{{hostname}};
   }
 }
+
+# redirect www to bare
+server {
+  listen 80;
+  server_name www.{{hostname}};
+  rewrite ^(.*) http://{{hostname}}$1 permanent;
+}
