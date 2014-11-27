@@ -6,8 +6,7 @@ block body
     span.date= post.presented.date
     h1= post.title
     != postContent
-  hr
-  nav.post
+  nav.blog
     a.button(href="/" + post.blog) back to blog index
     ul
       if post.previous
