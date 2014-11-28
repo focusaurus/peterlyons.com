@@ -1,4 +1,6 @@
-var expect = require("expectations");
+require("angular");
+require("angular-mocks");
+var expect = require("chai").expect;
 var CreatePost = require("app/browser/CreatePost");
 
 describe("CreatePost Controller", function () {
@@ -20,20 +22,20 @@ describe("CreatePost Controller", function () {
     };
     options.localStorage = {postDraft: JSON.stringify(postDraft)};
     injector.instantiate(CreatePost, options);
-    expect(options.$scope.title).toBe(postDraft.title);
-    expect(options.$scope.contentMarkdown).toBe(postDraft.content);
+    expect(options.$scope.title).to.equal(postDraft.title);
+    expect(options.$scope.contentMarkdown).to.equal(postDraft.content);
   });
 
   it("should convert markdown to HTML when changed", function() {
     var $httpBackend = injector.get("$httpBackend");
-    $httpBackend.expectPOST('/convert', "#marked it down2")
+    $httpBackend.expectPOST("/convert", "#marked it down2")
       .respond(200, "<h1>marked it down2</h1>");
     injector.instantiate(CreatePost, options);
     options.$scope.$apply(function () {
       options.$scope.contentMarkdown = "#marked it down2";
     });
     $httpBackend.flush();
-    expect(options.$scope.contentHtml.toString()).toBe(
+    expect(options.$scope.contentHtml.toString()).to.equal(
       "<h1>marked it down2</h1>");
   });
 });
