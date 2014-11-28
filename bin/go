@@ -12,76 +12,33 @@ autoinstall_npm_deps() {
   npm install
 }
 
-usage() {
-  echo -n "Usage: $(basename $0) [" 1>&2
-  while read line; do
-    if echo "${line}" | egrep '^task::' >/dev/null; then
-      task=$(echo "${line}" \
-        | cut -d : -f 3 \
-        | cut -d '(' -f 1
-      )
-      if [[ -z "${first}" ]]; then
-        first="false"
-      else
-        echo -n "|"
-      fi
-      echo -n "${task}"
-    fi
-  done < <(cat "$0")
-  echo -n "] [subcommand args...]\n" 1>&2
-  cat <<-EOF
-
-	Purpose of $(basename $0) script
-	--------------------
-
-	* entrypoint script for common commands
-	* Automatically installs development prerequisites
-	* Ensures the correct PATH environment variable
-	* commands are grouped by purpose/lifecycle and described in more detail below
-
-
-	Development Commands
-	--------------------
-
-	* express: start the express server (aliased as "start"):
-	* test: run all the tests (mocha and karma)
-	* test_debug: run mocha tests with immediate breakpoint for debugging
-	* karma: start karma process to continuously watch and run tests
-	* validate: Run W3C HTML5 validator against the site HTML
-
-	Deployment Commands
-	-------------------
-
-	* clean: delete the build directory
-	* build: build a distribution archive for deployment
-    * Usage: $(basename $0) build <HEAD|WORK|TAG>
-    * $(basename $0) build HEAD will use the last commit on the current branch
-    * $(basename $0) build WORK will use uncommited local changes
-    * $(basename $0) build TAG will use the code in the given git tag
-	* release_candidate: begin git work to prepare for a build/test/release
-	  * Usage: $(basename $0) release_candidate <patch|minor|major>
-	* release: merge develop to master, tag, and push to origin
-	  * Usage: $(basename $0) release
-	* errors: regenerate the static error HTML pages
-	* deploy: deploy code to a target system via ansible
-	  * Usage: $(basename $0) deploy <dist-file> <inventory-file>
-	  * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
-	  * distribution archive files get built in the "build" directory
-	  * inventory files live in the deploy/hosts directory
-	* ansible: just a convenience wrapper around ./python/bin/ansible
-	  * used for running ad hoc ansible commands
-	  * installs ansible if needed
-	  * arguments are passed through to ./python/bin/ansible
-	* ansible-playbook: just a convenience wrapper around ./python/bin/ansible-playbook
-	  * used for running ad hoc ansible-playbook commands
-	  * installs ansible if needed
-	  * arguments are passed through to ./python/bin/ansible-playbook
-	* vagrant: just a convenience wrapper around vagrant with the correct environment
-EOF
-  exit 1
+doc() {
+  help="${help}$1
+"
 }
 
-##### development task functions #####
+#The "help" variable gets extended by the "doc" function
+#inline below as needed sort of javadoc/python decorator style
+help=""
+usage() {
+  cat <<EOF
+Usage: $(basename $0) <subcommand> [args…]
+
+Purpose of $(basename $0) script
+--------------------
+* entrypoint script for common commands
+* Automatically installs development prerequisites
+* Ensures the correct PATH environment variable
+* deals with node, npm, python, ansible, vagrant, etc
+* commands are grouped by lifecycle and described in more detail below
+
+${help}
+EOF
+}
+
+doc "Development Commands
+--------------------"
+doc "* express: start the express server (also aliased as \"start\")"
 task::express() {
   autoinstall_npm_deps
   node-dev --debug=9001 app/server.js
@@ -91,8 +48,10 @@ task::start() {
   task::express "$@"
 }
 
+doc "* test: run full automated test suite"
 task::test() {
-  echo mocha tests…
+  set -e
+  echo node.js mocha unit tests…
   autoinstall_npm_deps
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
@@ -100,30 +59,47 @@ task::test() {
   else
       mocha "$@"
   fi
-  #@bug these are busted
-  #karma run karma/karma.conf.js
+  echo ✓
+  task::test_browser
+  echo node.js mocha integration tests…
+  find ./app -name \*.stest.js | sort | xargs mocha
+  echo ✓
 }
 
+doc "* test_browser: run mocha-phantomjs browser tests"
+task::test_browser() {
+  set +e
+  echo browser tests…
+  ./app/browserTestServer.js &
+  pid=$!
+  mocha-phantomjs http://localhost:9002
+  exit_code=$?
+  kill "${pid}"
+  if [[ ${exit_code} -ne 0 ]]; then
+    exit ${exit_code}
+  fi
+  echo ✓
+}
+
+doc "* test_debug: run mocha tests with immediate breakpoint for debugging"
 task::test_debug() {
   autoinstall_npm_deps
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
-task::karma() {
-  autoinstall_npm_deps
-  exec karma start karma/karma.conf.js
-}
-
+doc "* lint: enforce code style/quality with eslint"
 task::lint() {
   eslint --format ./node_modules/eslint-formatter-comment/index.js \
     app bin test
 }
 
+doc "* validate: Run W3C HTML5 validator against the site HTML"
 task::validate() {
   autoinstall_npm_deps
   NODE_ENV=test ./bin/validate
 }
 
+doc "* shrinkwrap: regenerate npm-shrinkwrap.json file"
 task::shrinkwrap() {
   rm npm-shrinkwrap.json
   mv node_modules "/tmp/node_modules-$(date +%Y%m%d%H%M)"
@@ -133,6 +109,37 @@ task::shrinkwrap() {
   npm shrinkwrap
 }
 
+doc "* errors: regenerate static error HTML pages"
+task::errors() {
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites curl
+  local devurl="http://localhost:9000"
+  local static="../static"
+  echo "Generating HTML for static error pages from ${devurl}..."
+  for uri in error404 error500; do
+    local url="${devurl}/${uri}"
+    echo -n "${uri}, "
+    local exit_code=0
+    curl --silent "${url}" --output \
+    "${static}/${uri}.html" || exit_code=$?
+    if [ ${exit_code} -ne 0 ]; then
+      echo "FAILED to retrieve ${url}"
+      exit ${exit_code}
+    fi
+  done
+}
+
+doc "
+Deployment Commands
+-------------------"
+
+doc "* clean: delete the build directory"
+task::clean() {
+  rm -rf ./build
+}
+
+doc "* release_candidate: begin git work to prepare for a build/test/release
+  * Usage: $(basename $0) release_candidate <patch|minor|major>"
 task::release_candidate() {
   autoinstall_npm_deps
   ./wallah/bin/check_prerequisites git
@@ -146,37 +153,21 @@ task::release_candidate() {
   git commit -m "bump version for ${tag} release"
   git tag "${tag}"
   cat <<-EOF
-	Ready
-	Next steps are:
-		go build ${tag}
-		deploy to stage
-		test on stage
-		go release
-		deploy to prod
+  Ready
+  Next steps are:
+  go build ${tag}
+  deploy to stage
+  test on stage
+  go release
+  deploy to prod
 EOF
 }
 
-task::release() {
-  autoinstall_wallah
-  ./wallah/bin/check_prerequisites git
-  git checkout develop
-  git pull origin develop
-  task::test
-  echo "Will merge develop to master and push to origin"
-  echo "CTRL-C now to abort. ENTER to proceed."
-  read DONTCARE
-  git checkout master
-  git merge develop
-  git push origin master --tags
-  git checkout develop #Not good form to leave master checked out
-  echo "Done. Miller Time."
-}
-
-##### deployment task functions #####
-task::clean() {
-  rm -rf ./build ./dist
-}
-
+doc "* build: build a distribution archive for deployment
+  * Usage: $(basename $0) build <HEAD|WORK|TAG>
+    * $(basename $0) build HEAD will use the last commit on the current branch
+    * $(basename $0) build WORK will use uncommited local changes
+    * $(basename $0) build TAG will use the code in the given git tag"
 task::build() {
   set -e
   echo -n "prereqs…"
@@ -193,20 +184,20 @@ task::build() {
   #note we need to use "-C" with tar and not "--directory" due to bsdtar on osx
   if [[ "${git_ref}" == "WORK" ]]; then
     git ls-files \
-      | tar -T - --create --file - \
-      | tar -C "${build_dir}/${prefix}" --extract --file -
+    | tar -T - --create --file - \
+    | tar -C "${build_dir}/${prefix}" --extract --file -
   else
     git archive --format=tar --prefix="${prefix}/" "${git_ref}" | \
-      #extract that archive into a temporary build directory
-      tar -C "${build_dir}" --extract
+    #extract that archive into a temporary build directory
+    tar -C "${build_dir}" --extract
   fi
   #install node
   echo ✓; echo -n "node…"
   local node_version=$(./wallah/bin/get_json_value \
-    "${build_dir}/${prefix}/package.json" "engines.node")
+  "${build_dir}/${prefix}/package.json" "engines.node")
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
   local node_url=$(echo "http://nodejs.org/dist/v" \
-    "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
+  "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
   if [[ ! -f "${node_archive}" ]]; then
     curl --silent --remote-name "${node_url}"
   fi
@@ -214,26 +205,26 @@ task::build() {
   #Make sure we have npm-pkgr installed locally
   npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
-    --file "${node_archive}"
+  --file "${node_archive}"
   (
-  	cd "${build_dir}/${prefix}"
-	  #remove development-only files
-    rm -rf wallah doc deploy test karma Vagrantfile \
-      .gitignore .agignore .gitmodules
-    find ./app -name \*.test.js | xargs rm
-	  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
-	    --silent --parseable &> "../npm.log"
-    cd node_modules
-    ln -nsf ../app
-	)
+  cd "${build_dir}/${prefix}"
+  #remove development-only files
+  rm -rf wallah doc deploy test karma Vagrantfile \
+  .gitignore .agignore .gitmodules
+  find ./app -name \*.test.js | xargs rm
+  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
+  --silent --parseable &> "../npm.log"
+  cd node_modules
+  ln -nsf ../app
+  )
   echo ✓; echo -n "bower install"
   (
-    cd "${build_dir}/${prefix}"
-    ./node_modules/.bin/bower install
+  cd "${build_dir}/${prefix}"
+  ./node_modules/.bin/bower install
   )
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
-    "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
+  "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
   echo ✓; echo -n "archive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
@@ -243,25 +234,12 @@ task::build() {
   echo "  ./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml"
 }
 
-task::errors() {
-  autoinstall_wallah
-  ./wallah/bin/check_prerequisites curl
-  local devurl="http://localhost:9000"
-  local static="../static"
-  echo "Generating HTML for static error pages from ${devurl}..."
-  for uri in error404 error500; do
-    local url="${devurl}/${uri}"
-    echo -n "${uri}, "
-    local exit_code=0
-    curl --silent "${url}" --output \
-        "${static}/${uri}.html" || exit_code=$?
-    if [ ${exit_code} -ne 0 ]; then
-        echo "FAILED to retrieve ${url}"
-        exit ${exit_code}
-    fi
-  done
-}
 
+doc "* deploy: deploy code to a target system via ansible
+  * Usage: $(basename $0) deploy <dist-file> <inventory-file>
+  * will deploy the full stack to the server(s) listed in the ansible yaml inventory file argument
+  * distribution archive files get built in the "build" directory
+  * inventory files live in the deploy/hosts directory"
 task::deploy() {
   set -e
   autoinstall_wallah
@@ -271,19 +249,42 @@ task::deploy() {
   local inventory="$2"
   export ANSIBLE_HOST_KEY_CHECKING=False
   ansible-playbook \
-    -i "${inventory}" \
-    --ask-sudo-pass \
-    --extra-vars "dist=${dist_path}" \
-    --extra-vars "dist_name=${dist_name}" \
-    ./deploy/playbook_full_stack.yml
+  -i "${inventory}" \
+  --ask-sudo-pass \
+  --extra-vars "dist=${dist_path}" \
+  --extra-vars "dist_name=${dist_name}" \
+  ./deploy/playbook_full_stack.yml
 }
 
+doc "* release: merge develop to master and push tags for a release"
+task::release() {
+  autoinstall_wallah
+  ./wallah/bin/check_prerequisites git
+  git checkout develop
+  git pull origin develop
+  task::test
+  echo "Will merge develop to master and push to origin"
+  echo "CTRL-C now to abort. ENTER to proceed."
+  read DONTCARE
+  git checkout master
+  git merge develop
+  git push origin master --tags
+  git checkout develop #Not good form to leave master checked out
+  echo "Done. Miller Time."
+}
+
+doc "* vagrant: convenience wrapper for vagrant commands
+  * autoinstalls deps"
 task::vagrant() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
   exec vagrant "$@"
 }
 
+doc "* ansible-playbook: convenience wrapper around ./python/bin/ansible-playbook
+  * used for running ad hoc ansible commands
+  * installs ansible if needed
+  * arguments are passed through to ./python/bin/ansible"
 task::ansible-playbook() {
   autoinstall_wallah
   ./wallah/bin/install_pip_package ansible
