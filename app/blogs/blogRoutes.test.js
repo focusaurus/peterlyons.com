@@ -1,4 +1,4 @@
-require("expectations");
+var expect = require("chai").expect;
 var blogRoutes = require("app/blogs/blogRoutes");
 var bcrypt = require("bcryptjs");
 
@@ -10,23 +10,23 @@ describe("blogRoutes", function () {
         "publish_date": new Date(2014, 0, 31),
         title: "foo"
       });
-      expect(presented.date).toBe("Jan 31, 2014");
+      expect(presented.date).to.equal("Jan 31, 2014");
     });
     it("should trim the title", function() {
       var presented = blogRoutes.presentPost({
         "publish_date": new Date(2014, 0, 31),
         title: " a "
       });
-      expect(presented.title).toBe("a");
+      expect(presented.title).to.equal("a");
     });
   });
 
   describe("BlogIndex", function () {
     it("should store URI, title, and blogTitle", function() {
       var index = new blogRoutes.BlogIndex("/uri", "blog title");
-      expect(index.URI).toBe("/uri");
-      expect(index.title).toBe("blog title");
-      expect(index.blogTitle).toBe("blog title");
+      expect(index.URI).to.equal("/uri");
+      expect(index.title).to.equal("blog title");
+      expect(index.blogTitle).to.equal("blog title");
     });
   });
 
@@ -37,7 +37,7 @@ describe("blogRoutes", function () {
 
     it("should callback without error with correct password", function(done) {
       blogRoutes.verifyPassword(password, hash, function (error) {
-        expect(error).toBeFalsey();
+        expect(error).not.to.exist();
         done();
       });
     });

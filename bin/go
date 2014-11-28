@@ -50,6 +50,13 @@ task::start() {
 
 doc "* test: run full automated test suite"
 task::test() {
+  task::test_fast
+  task::test_browser
+  task::test_slow
+}
+
+doc "* test_fast: run the fast tests"
+task::test_fast() {
   set -e
   echo node.js mocha unit tests…
   autoinstall_npm_deps
@@ -57,10 +64,14 @@ task::test() {
   if [[ $# -eq 0 ]]; then
     find ./app -name \*.test.js | sort | xargs mocha
   else
-      mocha "$@"
+    mocha "$@"
   fi
   echo ✓
-  task::test_browser
+}
+
+doc "* test_slow: run the slow tests"
+task::test_slow() {
+  set -e
   echo node.js mocha integration tests…
   find ./app -name \*.stest.js | sort | xargs mocha
   echo ✓
