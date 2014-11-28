@@ -1,6 +1,6 @@
-require("expectations");
 var _ = require("lodash");
 var config = require("config3");
+var expect = require("chai").expect;
 var pack = require("../../package");
 var testUtils = require("app/testUtils");
 
@@ -21,7 +21,7 @@ describe("the main layout", function() {
     });
     expect(_.some(hrefs, function (href) {
       return href.indexOf("fonts.googleapis.com") >= 0;
-    })).toBeTruthy();
+    })).to.be.true();
   });
 
   it("should have the key structural elements", function() {
@@ -30,7 +30,7 @@ describe("the main layout", function() {
   });
 
   it("should have the normal title", function() {
-    expect($("title").text()).toBe("Peter Lyons: node.js expert consultant");
+    expect($("title").text()).to.equal("Peter Lyons: node.js expert consultant");
   });
 
   it("should include the javascript with cachebusting", function() {
@@ -54,7 +54,7 @@ describe("analytics snippet", function () {
     testUtils.loadPage("/", function (error, $) {
       var selector = "script[data-id=analytics]";
       testUtils.assertSelectors($, selector);
-      expect($(selector).text()).toContain("UNIT_TEST");
+      expect($(selector).text()).to.include("UNIT_TEST");
       done();
     });
   });

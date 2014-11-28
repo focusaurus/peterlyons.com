@@ -1,4 +1,4 @@
-require("expectations");
+var expect = require("chai").expect;
 var cheerio = require("cheerio");
 var request = require("supertest")(require("app"));
 
@@ -25,7 +25,7 @@ function assertSelectors() {
   var $ = arguments[0];
   var selectors = Array.prototype.slice.call(arguments, 1);
   selectors.forEach(function(selector) {
-    expect($(selector).length).toBeGreaterThan(
+    expect($(selector)).to.have.length.above(
       0, "Document missing selector " + selector);
   });
 }
@@ -35,7 +35,7 @@ function assertSubstrings() {
   var html = $.html();
   var phrases = Array.prototype.slice.call(arguments, 1);
   phrases.forEach(function(phrase) {
-    expect(html).toContain(phrase, "Document missing phrase " + phrase);
+    expect(html).to.include(phrase, "Document missing phrase " + phrase);
   });
 }
 
@@ -52,11 +52,11 @@ function pageContains(_url, _phraseVarArgs, _done) {
     }
     phrases.forEach(function(phrase) {
       if (typeof phrase === "string") {
-        expect(res.text).toContain(
+        expect(res.text).to.include(
           phrase, "Document missing phrase " + phrase + res.text);
       } else {
         //regex
-        expect(res.text).toMatch(
+        expect(res.text).to.match(
           phrase, "Document does not match " + phrase.pattern);
       }
     });

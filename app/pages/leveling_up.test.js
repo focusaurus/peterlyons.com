@@ -1,4 +1,4 @@
-require("expectations");
+var expect = require("chai").expect;
 var testUtils = require("app/testUtils");
 
 describe("the Leveling Up article", function() {
@@ -16,6 +16,6 @@ describe("the Leveling Up article", function() {
   });
 
   it("should have the proper title", function() {
-    expect($("title").text()).toMatch(/Leveling Up/);
+    expect($("title").text()).to.match(/Leveling Up/);
   });
 });

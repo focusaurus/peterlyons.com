@@ -1,4 +1,4 @@
-require("expectations");
+var expect = require("chai").expect;
 var testUtils = require("app/testUtils");
 
 describe("the Web Data Slide Deck", function() {
@@ -11,7 +11,7 @@ describe("the Web Data Slide Deck", function() {
   });
 
   it("should have many sections with class slide", function() {
-    expect($("section.slide").length).toBeGreaterThan(15);
+    expect($("section.slide").length).to.be.above(15);
   });
 
   it("should mention some DBs", function() {
