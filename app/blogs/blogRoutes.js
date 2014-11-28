@@ -7,10 +7,10 @@ var connect = require("connect");
 var events = require("events");
 var fs = require("fs");
 var glob = require("glob");
+var httpErrors = require("httperrors");
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
 var moment = require("moment");
-var NotFound = require("app/NotFound");
 var path = require("path");
 var Post = require("./Post");
 var postLinks = {};
@@ -39,7 +39,7 @@ function loadPostMW(req, res, next) {
   post.base = config.blog.postBasePath;
   post.load(path.join(post.base, req.path + ".json"), blog, function(error) {
     if (error && error.code === "ENOENT") {
-      next(new NotFound(req.path));
+      next(new httpErrors.NotFound(req.path));
       return;
     }
     if (error) {

@@ -97,6 +97,12 @@ describe("the blog post authoring/preview page", function() {
   });
 });
 
+describe("a request for a non-existent blog post name", function() {
+  it("should 404", function() {
+    testUtils.get("/persblog/2014/01/no-such-post").expect(404);
+  });
+});
+
 describe("a blog feed XML", function() {
   var $ = null;
   before(function(done) {

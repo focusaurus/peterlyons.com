@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <title>peterlyons.com Browser Tests</title>
+  <link rel="stylesheet" href="/mocha/mocha.css">
+</head>
+<body>
+  <strong>peterlyons.com Browser Tests</strong>
+  <div id="mocha"></div>
+  <script src="/mocha/mocha.js"></script>
+  <script>mocha.setup("bdd")</script>
+  <script src="/browser-tests.js"></script>
+  <script>
+    mocha.checkLeaks();
+    if (window.mochaPhantomJS) {
+      mochaPhantomJS.run();
+    } else {
+      mocha.run();
+    }
+  </script>
+</body>
+</html>

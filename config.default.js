@@ -49,5 +49,10 @@ config.inspector = {
   webPort: config.port + 2
 };
 
+config.tests = {
+  port: get("testPort", 9002),
+  mochaPath: path.join(__dirname, "node_modules/mocha")
+};
+
 config.baseURL = "http://" + config.hostname + ":" + config.port;
 module.exports = config;
