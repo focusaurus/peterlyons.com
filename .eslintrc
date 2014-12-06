@@ -23,7 +23,7 @@
     "space-after-keywords": 2,
     "space-in-brackets": [2, "never"],
     "space-in-parens": [2, "never"],
-    "space-unary-word-ops": 2,
+    "space-unary-ops": 2,
     "strict": false,
     "strict": true,
     "valid-jsdoc": 2

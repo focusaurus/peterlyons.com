@@ -1,6 +1,6 @@
 var _ = require("lodash");
 var config = require("config3");
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var pack = require("../../package");
 var testUtils = require("app/testUtils");
 
@@ -21,7 +21,7 @@ describe("the main layout", function() {
     });
     expect(_.some(hrefs, function (href) {
       return href.indexOf("fonts.googleapis.com") >= 0;
-    })).to.be.true();
+    })).toBeTrue();
   });
 
   it("should have the key structural elements", function() {
@@ -30,7 +30,7 @@ describe("the main layout", function() {
   });
 
   it("should have the normal title", function() {
-    expect($("title").text()).to.equal("Peter Lyons: node.js expert consultant");
+    expect($("title").text()).toEqual("Peter Lyons: node.js expert consultant");
   });
 
   it("should include the javascript with cachebusting", function() {

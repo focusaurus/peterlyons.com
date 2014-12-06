@@ -77,9 +77,10 @@
   },
   "devDependencies": {
     "bumpy": "^0.1.1",
-    "chai": "1.10.0",
+    "chaimel": "1.1.0",
     "commander": "^0.5.2",
-    "eslint": "0.9.2",
+    "es5-shim": "4.0.5",
+    "eslint": "0.10.0",
     "eslint-formatter-comment": "1.0.0",
     "mocha": "^1.20.1",
     "mocha-phantomjs": "3.5.1",

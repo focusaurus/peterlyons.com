@@ -1,6 +1,6 @@
 require("angular");
 require("angular-mocks");
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var CreatePost = require("app/browser/CreatePost");
 
 describe("CreatePost Controller", function () {
@@ -22,8 +22,8 @@ describe("CreatePost Controller", function () {
     };
     options.localStorage = {postDraft: JSON.stringify(postDraft)};
     injector.instantiate(CreatePost, options);
-    expect(options.$scope.title).to.equal(postDraft.title);
-    expect(options.$scope.contentMarkdown).to.equal(postDraft.content);
+    expect(options.$scope.title).toEqual(postDraft.title);
+    expect(options.$scope.contentMarkdown).toEqual(postDraft.content);
   });
 
   it("should convert markdown to HTML when changed", function() {
@@ -35,7 +35,7 @@ describe("CreatePost Controller", function () {
       options.$scope.contentMarkdown = "#marked it down2";
     });
     $httpBackend.flush();
-    expect(options.$scope.contentHtml.toString()).to.equal(
+    expect(options.$scope.contentHtml.toString()).toEqual(
       "<h1>marked it down2</h1>");
   });
 });

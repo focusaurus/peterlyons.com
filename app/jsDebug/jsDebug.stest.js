@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var testUtils = require("app/testUtils");
 
 describe("the jsDebug randomDelay route", function() {
@@ -8,9 +8,9 @@ describe("the jsDebug randomDelay route", function() {
     testUtils.get("/jsDebug/randomDelay?requestNumber=42")
       .expect(200)
       .end(function (error, res) {
-        expect(error).not.to.exist();
-        expect(res.text).to.include("42");
-        expect(res.text).to.include(" ms");
+        expect(error).notToExist();
+        expect(res.text).toContain("42");
+        expect(res.text).toContain(" ms");
         done();
       });
   });

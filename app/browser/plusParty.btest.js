@@ -1,11 +1,11 @@
 require("angular");
 require("angular-mocks");
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var plusParty = require("app/browser/plusParty");
 
 describe("plusParty", function () {
   it("sum should work", function() {
-    expect(plusParty.sum(42, 7)).to.equal(49);
+    expect(plusParty.sum(42, 7)).toEqual(49);
   });
   it("wrap should work", function() {
     var wrapped = plusParty.wrap(42);

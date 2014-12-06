@@ -1,4 +1,4 @@
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var testUtils = require("app/testUtils");
 
 describe("the Rapid Feedback Slide Deck", function() {
@@ -11,7 +11,7 @@ describe("the Rapid Feedback Slide Deck", function() {
   });
 
   it("should have many sections with class slide", function() {
-    expect($("section.slide").length).to.be.above(3);
+    expect($("section.slide").length).toBeAbove(3);
   });
 
   it("should mention some ruby stuff", function() {

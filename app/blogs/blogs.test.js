@@ -1,6 +1,6 @@
 var blogRoutes = require("app/blogs/blogRoutes");
 var cheerio = require("cheerio");
-var expect = require("chai").expect;
+var expect = require("chaimel");
 var testUtils = require("app/testUtils");
 
 describe("wait for blogs to be loaded from disk", function () {
@@ -24,18 +24,18 @@ describe("a blog post page", function() {
     });
   });
   it("should have the post title", function() {
-    expect($("title").text()).to.match(/apogaea/i);
+    expect($("title").text()).toMatch(/apogaea/i);
   });
   it("should process a flickr tag", function() {
-    expect($("flickr")).to.have.length(0);
-    expect($("iframe")).not.to.have.length(0);
+    expect($("flickr")).toHaveLength(0);
+    expect($("iframe")).notToHaveLength(0);
   });
   it("should process a youtube tag", function() {
-    expect($("youtube")).to.have.length(0);
-    expect($("iframe")).not.to.have.length(0);
+    expect($("youtube")).toHaveLength(0);
+    expect($("iframe")).notToHaveLength(0);
   });
   it("should have disqus comments", function() {
-    expect($("#disqus_thread").length).to.equal(1);
+    expect($("#disqus_thread").length).toEqual(1);
   });
 });
 
@@ -48,9 +48,9 @@ describe("a blog index page", function() {
     });
   });
   it("should have nicely formatted dates", function() {
-    expect($(".postDate")).not.to.have.length(0);
+    expect($(".postDate")).notToHaveLength(0);
     var date = $(".postDate").last().html();
-    expect(date).to.match(/Mar 14, 2009/);
+    expect(date).toMatch(/Mar 14, 2009/);
   });
 });
 
@@ -62,7 +62,7 @@ describe("the preview converter", function() {
         .set("Accept", "text/html")
         .expect(200)
         .end(function(error, res) {
-      expect("<h1>Header One</h1>").to.equal(res.text.trim());
+      expect("<h1>Header One</h1>").toEqual(res.text.trim());
       done();
     });
   });
@@ -75,10 +75,10 @@ describe("the preview converter", function() {
         .expect(200)
         .end(function(error, res) {
       var $ = cheerio.load(res.text);
-      expect($("youtube")).to.have.length(0);
-      expect($("iframe")).to.have.length(2);
-      expect($("flickrshow")).to.have.length(0);
-      expect($("object")).to.have.length(0);
+      expect($("youtube")).toHaveLength(0);
+      expect($("iframe")).toHaveLength(2);
+      expect($("flickrshow")).toHaveLength(0);
+      expect($("object")).toHaveLength(0);
       done();
     });
   });
@@ -113,18 +113,18 @@ describe("a blog feed XML", function() {
   });
 
   it("should have an atom XML feed tag", function() {
-    expect($("feed").length).to.equal(1);
+    expect($("feed").length).toEqual(1);
   });
 
   it("should have the right feed > title content", function() {
-    expect($("feed > title").text()).to.equal("Pete's Points");
+    expect($("feed > title").text()).toEqual("Pete's Points");
   });
 
   it("should have 10 recent posts", function() {
-    expect($("entry").length).to.equal(10);
+    expect($("entry").length).toEqual(10);
   });
 
   it("should have the author", function() {
-    expect($("author > name").text()).to.equal("Peter Lyons");
+    expect($("author > name").text()).toEqual("Peter Lyons");
   });
 });

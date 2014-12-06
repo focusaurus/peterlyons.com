@@ -20,6 +20,8 @@ function bundleTests(req, res, next) {
       next(error);
       return;
     }
+    //This needs to run first beccause yuck phantomjs
+    clientTests.unshift(path.join(__dirname, "browser/phantomjsSucks.btest.js"));
     var toAdd = clientTests.map(bmwAdd);
     bmw.call(null, toAdd)(req, res, next);
   });
