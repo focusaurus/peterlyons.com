@@ -29,7 +29,8 @@ The data and static repositories aren't particularly interesting. All the intere
 #Build Notes
 
 * do work in the develop branch
-* when ready to cut a release candidate, get develop into a clean commited state
+* when ready to cut a release candidate, get develop into a clean committed state
+* If you updated npm dependencies, run `go shrinkwrap` and commit the new files
 * make sure you are backmerged from master (normally this should always be true)
 * run `./bin/go release_candidate <patch|minor|major>`
   * (patch is the default)*
