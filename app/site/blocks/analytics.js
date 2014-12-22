@@ -4,7 +4,7 @@ var path = require("path");
 
 var snippetPath = path.join(
   __dirname, "..", "..", "..", "thirdParty", "googleAnalytics.js");
-var snippet = fs.readFileSync(snippetPath , "utf8");
+var snippet = fs.readFileSync(snippetPath, "utf8");
 
 function render() {
   return snippet.replace("TRACKING_CODE", config.analytics.code);

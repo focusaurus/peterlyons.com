@@ -26,13 +26,13 @@ if (config.enableLogger) {
   "photos/photosRoutes",
   "photos/galleriesRoutes",
   "site/cssRoutes",
-  "site/jsRoutes",
   "site/errorRoutes"
 ].forEach(function(routesPath) {
   require("app/" + routesPath)(app);
 });
 
 app.use(connect.static(config.staticDir));
+app.use(connect.static(config.wwwDir));
 app.use(connect.static(config.zeroClipboardDir));
 app.use(function(req, res, next) {
   next(new httpErrors.NotFound(req.path));

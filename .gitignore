@@ -5,3 +5,4 @@
 /node-v*.tar.gz
 /bower_components
 /log/*.log
+/www

@@ -22,6 +22,7 @@ var config = {
   staticDir: path.join(__dirname, "/../static"),
   tests: !IS_PRODUCTION,
   titleSuffix: " | Peter Lyons",
+  wwwDir: path.join(__dirname, "www"),
   zeroClipboardDir: path.join(__dirname, "/node_modules/zeroclipboard")
 };
 

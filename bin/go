@@ -100,6 +100,20 @@ task::test_debug() {
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
+doc "* js: build browser js via browserify"
+task::js() {
+  browserify \
+    -o www/app.js \
+    -e app/browser/navigation \
+    -r app/browser/home \
+    -r app/browser/plusParty \
+    -r app/browser/career \
+    app/browser/CreatePost \
+    app/browser/post \
+    app/browser/viewGallery
+      # $(find app/browser -name '*.js' -not -name '*test.js' -print0 | xargs -0)
+}
+
 doc "* lint: enforce code style/quality with eslint"
 task::lint() {
   eslint --format ./node_modules/eslint-formatter-comment/index.js \
