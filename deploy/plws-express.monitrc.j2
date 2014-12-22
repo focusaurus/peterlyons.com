@@ -4,3 +4,5 @@ check host "{{hostname}}" with address 127.0.0.1
   stop = "/sbin/stop plws-express"
   if failed port {{express_port}} protocol http then restart
   if 5 restarts within 5 cycles then timeout
+check file plws-express-log with path /var/log/plws-express/current
+  if match "error" then alert
