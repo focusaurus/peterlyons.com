@@ -98,9 +98,11 @@ I have now adopted [Google's Shell Style Guide][7], which I find to be quite exc
 
 Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
 
+[shell check](ShellCheck.net) has a handy little online linter.
+
 # JavaScript Conventions
 
-Oh God, it's a mess out there, folks. I haven't had time to write my conventions up yet, and most of the existing ones I either have mixed feelings about or think they are just outright bonkers.
+Oh God, it's a mess out there, folks. Things are pretty much hopelessly broken in JS land, but here are my conventions, as utterly pointless as they may ultimately be.
 
 - 2-space for indent
   - node style
@@ -108,11 +110,11 @@ Oh God, it's a mess out there, folks. I haven't had time to write my conventions
 - unix linefeed line endings (no carriage return)
 - Declare variables one-per line each with it's own var keyword
   - Easiest to maintain.
-  - Declaring multiple variables with one `var` probably relates back to the convention of declaring all variables at the top of each function, which I do not do and find quite harmful, so declare your variables to keep they codespan as small as possible and use a `var` keyword each time.
-  - Comma-first is just nutso. Keep these people in the same room with the AngularJS dependency injection syntax people.
-- Use semicolons. ASI is a compensation mechanism for sloppy code.
+  - Declaring multiple variables with one `var` probably relates back to the convention of declaring all variables at the top of each function, which I do not do and find quite harmful, so declare your variables to keep their codespan as small as possible and use a `var` keyword each time.
+  - Comma-first is just bizarre. Keep these people in the same room with the AngularJS dependency injection syntax people.
+- Use semicolons. ASI is a compensation mechanism for sloppy code. Yes, the ASI rules are for edge cases and easy enough to remember, but not learning and remembering weird rules is easier than learning and remembering weird rules.
 - CommonJS + Browserify FTW
-  - AMD is crazy
+  - AMD is completely unacceptable and counterproductive
   - requirejs is entirely terrible
 - Prefer code that does not need comments, then inline comments as needed, and jsdoc for really formal APIs or very tricky cases.
 
@@ -263,11 +265,11 @@ Why?
 
 Follow [Oracle's Java Code Conventions][5] for formatting rules, etc.
 
-I prefer `Collection.isEmpty()` over `Collection.size() == 0` because it is more directly expressive of the intent
+I prefer `Collection.isEmpty()` over `Collection.size() == 0` because it is more directly expressive of the intent.
 
-Prefer java.util.List and the other collection classes to arrays. In general they are easier to work with and convenient. Arrays have a tendency to be annoying in java and require System.arraycopy or java.util.Arrays methods.
+Prefer `java.util.List` and the other collection classes to arrays. In general they are easier to work with and convenient. Arrays have a tendency to be annoying in java and require `System.arraycopy` or `java.util.Arrays` methods.
 
-Prefer returning an empty collection instead of null. Null requires the caller to explicitly check for it. If you return an empty collection, the calling code that handles non-empty and empty are the same. The caller can always call `isEmpty` and special case that as needed.
+Prefer returning an empty collection instead of `null`. Null requires the caller to explicitly check for it. If you return an empty collection, the calling code that handles non-empty and empty are the same. The caller can always call `isEmpty` and special case that as needed.
 
 When order of execution is not important (as is almost always the case in Java), imports should be sorted asciibetically (When In Doubt, Alphabetize). A blank line separating groups of related imports (standard java, each third party library, internal libraries, etc) are OK but I usually don't use them because the alphabetical sorting makes finding what the reader is looking for pretty easy already.
 
