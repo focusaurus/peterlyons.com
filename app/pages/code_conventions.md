@@ -98,7 +98,7 @@ I have now adopted [Google's Shell Style Guide][7], which I find to be quite exc
 
 Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
 
-[shell check](ShellCheck.net) has a handy little online linter.
+[shell check](http://ShellCheck.net) has a handy little online linter.
 
 # JavaScript Conventions
 
