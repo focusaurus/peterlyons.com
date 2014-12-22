@@ -234,6 +234,9 @@ task::build() {
   cd "${build_dir}/${prefix}"
   ./node_modules/.bin/bower install
   )
+  # bower is 45MB holy shit!
+  npm uninstall bower
+  npm dedupe
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
   "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
