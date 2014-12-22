@@ -1,7 +1,7 @@
 {
   "name": "peterlyons.com",
   "description": "The Node/Express web app that powers the peterlyons.com web site",
-  "version": "5.7.0",
+  "version": "5.8.0",
   "homepage": "http://peterlyons.com",
   "repository": {
     "type": "git",
