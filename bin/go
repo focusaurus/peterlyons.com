@@ -105,13 +105,10 @@ task::js() {
   browserify \
     -o www/app.js \
     -e app/browser/navigation \
-    -r app/browser/home \
-    -r app/browser/plusParty \
-    -r app/browser/career \
-    app/browser/CreatePost \
-    app/browser/post \
-    app/browser/viewGallery
-      # $(find app/browser -name '*.js' -not -name '*test.js' -print0 | xargs -0)
+    $(find app/browser -name '*.js' -not -name '*test.js' -print0 | \
+      xargs -0 -I file echo -r file | \
+      sed -e 's/\.js$//' | \
+      xargs)
 }
 
 doc "* lint: enforce code style/quality with eslint"
