@@ -18,7 +18,9 @@
   },
   "files": [],
   "browserify": {
-    "transform": ["debowerify"]
+    "transform": [
+      "debowerify"
+    ]
   },
   "browser": {
     "angular": "./bower_components/angular/angular.js",
@@ -55,10 +57,10 @@
   "devDependencies": {
     "bistre": "1.0.1",
     "browserify": "7.0.3",
-    "browserify-shim": "3.8.1",
     "bumpy": "0.1.1",
     "chaimel": "1.1.0",
     "commander": "0.5.2",
+    "debowerify": "1.2.0",
     "es5-shim": "4.0.5",
     "eslint": "0.10.0",
     "eslint-formatter-comment": "1.0.0",

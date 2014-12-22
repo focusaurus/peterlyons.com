@@ -230,24 +230,19 @@ task::build() {
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
   --file "${node_archive}"
   (
-  cd "${build_dir}/${prefix}"
-  #remove development-only files
-  rm -rf wallah doc deploy test karma Vagrantfile \
-  .gitignore .agignore .gitmodules
-  find ./app -name \*.test.js | xargs rm
-  ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
-  --silent --parseable &> "../npm.log"
-  cd node_modules
-  ln -nsf ../app
+    cd "${build_dir}/${prefix}"
+    ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
+      --silent --parseable &> "../npm.log"
+    ln -nsf ../app node_modules/app
+    ./node_modules/.bin/bower install
+    ./bin/go js
+    npm prune --production
+    npm dedupe
+    #remove development-only files
+    rm -rf wallah doc deploy test Vagrantfile \
+    .gitignore .agignore .gitmodules
+    find ./app -name \*.test.js | xargs rm
   )
-  echo ✓; echo -n "bower install"
-  (
-  cd "${build_dir}/${prefix}"
-  ./node_modules/.bin/bower install
-  )
-  # bower is 45MB holy shit!
-  npm uninstall bower
-  npm dedupe
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
   "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
