@@ -7,7 +7,7 @@ autoinstall_wallah() {
 
 autoinstall_npm_deps() {
   autoinstall_wallah
-  ./wallah/bin/install_node
+  ./wallah/bin/install_node v"$(config3 nodeVersion)"
   [[ -d node_modules/mocha ]] && return
   npm install
 }
@@ -41,7 +41,9 @@ doc "Development Commands
 doc "* express: start the express server (also aliased as \"start\")"
 task::express() {
   autoinstall_npm_deps
-  node-dev --debug=9001 app/server.js
+  node-dev --debug=9001 ./app/server.js | \
+    tee -a ./log/app.log | \
+    bistre
 }
 
 task::start() {
@@ -204,8 +206,7 @@ task::build() {
   fi
   #install node
   echo ✓; echo -n "node…"
-  local node_version=$(./wallah/bin/get_json_value \
-  "${build_dir}/${prefix}/package.json" "engines.node")
+  local node_version="$(config3 nodeVersion)"
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
   local node_url=$(echo "http://nodejs.org/dist/v" \
   "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
@@ -260,11 +261,11 @@ task::deploy() {
   local inventory="$2"
   export ANSIBLE_HOST_KEY_CHECKING=False
   ansible-playbook \
-  -i "${inventory}" \
-  --ask-sudo-pass \
-  --extra-vars "dist=${dist_path}" \
-  --extra-vars "dist_name=${dist_name}" \
-  ./deploy/playbook_full_stack.yml
+    -i "${inventory}" \
+    --ask-sudo-pass \
+    --extra-vars "dist=${dist_path}" \
+    --extra-vars "dist_name=${dist_name}" \
+    ./deploy/playbook_full_stack.yml
 }
 
 doc "* release: merge develop to master and push tags for a release"

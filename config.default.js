@@ -11,6 +11,7 @@ function get(name, defaultValue) {
 var config = {
   appURI: "/app",
   appVersion: pack.version,
+  nodeVersion: pack.engines.node,
   browserifyDebug: !IS_PRODUCTION,
   cacheCSS: IS_PRODUCTION,
   enableLogger: process.env.NODE_ENV !== "test",
