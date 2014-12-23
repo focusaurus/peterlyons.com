@@ -99,6 +99,14 @@ task::test_debug() {
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
+doc "* watchify: generate browser JS for development"
+task::watchify() {
+  watchify \
+    -o www/app.js \
+    --debug \
+    $(./bin/browserify_args)
+}
+
 doc "* lint: enforce code style/quality with eslint"
 task::lint() {
   eslint --format ./node_modules/eslint-formatter-comment/index.js \
