@@ -227,7 +227,6 @@ task::build() {
     --file "${node_archive}"
   (
     cd "${build_dir}/${prefix}"
-    ln -nsf ../app node_modules/app
     # Run OSX node and npm utilites but within the linux build dir
     npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
     bower install --production
@@ -237,6 +236,7 @@ task::build() {
     #remove development-only files
     rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules
     find ./app -name \*.test.js | xargs rm
+    ln -nsf ../app node_modules/app
   )
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
