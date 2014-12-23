@@ -284,7 +284,7 @@
               "dependencies": {
                 "esprima": {
                   "version": "1.0.4",
-                  "from": "esprima@~1.0.4",
+                  "from": "esprima@~ 1.0.2",
                   "resolved": "https://registry.npmjs.org/esprima/-/esprima-1.0.4.tgz"
                 }
               }
@@ -390,7 +390,7 @@
             },
             "readable-stream": {
               "version": "1.1.13",
-              "from": "readable-stream@~1.1.8",
+              "from": "readable-stream@~1.1.9",
               "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz",
               "dependencies": {
                 "core-util-is": {
@@ -610,7 +610,7 @@
             },
             "mute-stream": {
               "version": "0.0.4",
-              "from": "mute-stream@0.0.4",
+              "from": "mute-stream@~0.0.4",
               "resolved": "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.4.tgz"
             },
             "readline2": {
@@ -649,7 +649,7 @@
             },
             "through": {
               "version": "2.3.6",
-              "from": "through@~2.3.4",
+              "from": "through@2.3.6",
               "resolved": "https://registry.npmjs.org/through/-/through-2.3.6.tgz"
             }
           }
@@ -971,7 +971,7 @@
         },
         "lru-cache": {
           "version": "2.5.0",
-          "from": "lru-cache@2",
+          "from": "lru-cache@~2.5.0",
           "resolved": "https://registry.npmjs.org/lru-cache/-/lru-cache-2.5.0.tgz"
         },
         "mout": {
@@ -1468,7 +1468,7 @@
                             },
                             "inherits": {
                               "version": "2.0.1",
-                              "from": "inherits@~2.0.1",
+                              "from": "inherits@~2.0.0",
                               "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.1.tgz"
                             },
                             "ini": {
@@ -1662,7 +1662,7 @@
     },
     "compression": {
       "version": "1.2.2",
-      "from": "compression@",
+      "from": "compression@1.2.2",
       "resolved": "https://registry.npmjs.org/compression/-/compression-1.2.2.tgz",
       "dependencies": {
         "accepts": {
@@ -1691,7 +1691,7 @@
         },
         "bytes": {
           "version": "1.0.0",
-          "from": "bytes@1.0.0",
+          "from": "bytes@1",
           "resolved": "https://registry.npmjs.org/bytes/-/bytes-1.0.0.tgz"
         },
         "compressible": {
@@ -1804,12 +1804,12 @@
           "dependencies": {
             "bytes": {
               "version": "0.2.1",
-              "from": "bytes@~0.2.0",
+              "from": "bytes@~0.2.1",
               "resolved": "https://registry.npmjs.org/bytes/-/bytes-0.2.1.tgz"
             },
             "negotiator": {
               "version": "0.3.0",
-              "from": "negotiator@~0.3.0",
+              "from": "negotiator@0.3.0",
               "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.3.0.tgz"
             },
             "compressible": {
@@ -1902,7 +1902,7 @@
           "dependencies": {
             "bytes": {
               "version": "0.2.1",
-              "from": "bytes@~0.2.0",
+              "from": "bytes@~0.2.1",
               "resolved": "https://registry.npmjs.org/bytes/-/bytes-0.2.1.tgz"
             }
           }
@@ -2000,7 +2000,7 @@
           "dependencies": {
             "bytes": {
               "version": "0.2.1",
-              "from": "bytes@~0.2.0",
+              "from": "bytes@~0.2.1",
               "resolved": "https://registry.npmjs.org/bytes/-/bytes-0.2.1.tgz"
             }
           }
