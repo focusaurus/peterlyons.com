@@ -92,9 +92,11 @@ Some folks advocate a length limit on methods or functions. They say that chunks
 
 Avoid double negatives with boolean variables. Instead, use a positive verb whose meaning is negative. `skipCache = True` is better than `noCache = True`.
 
-# Bourne Shell Conventions
+# Bourne Shell (bash) Conventions
 
 I have now adopted [Google's Shell Style Guide][7], which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
+
+The one thing I don't conform to is google omits the filename extension from executable scripts. I tried this, but too much tooling (linters and editor syntax highlighting) key off the filename extension, and I don't mind it, so I put filename extensions on my scripts.
 
 Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
 
