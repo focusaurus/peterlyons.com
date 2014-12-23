@@ -1,4 +1,5 @@
 var analytics = require("app/site/blocks/analytics");
+var compression = require('compression')
 var config = require("config3");
 var connect = require("connect");
 var express = require("express");
@@ -31,6 +32,7 @@ if (config.enableLogger) {
   require("app/" + routesPath)(app);
 });
 
+app.use(compression());
 app.use(connect.static(config.staticDir));
 app.use(connect.static(config.wwwDir));
 app.use(connect.static(config.zeroClipboardDir));

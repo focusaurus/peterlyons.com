@@ -42,7 +42,7 @@ describe("the main layout", function() {
     testUtils.get("/app.js?v=" + pack.version)
       .expect(200)
       .expect("Content-Type", "application/javascript")
-      // .expect("Content-Encoding", "gzip")
+      .expect("Content-Encoding", "gzip")
       .end(done);
   });
 });

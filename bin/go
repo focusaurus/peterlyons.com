@@ -60,7 +60,7 @@ doc "* test_fast: run the fast tests"
 task::test_fast() {
   set -e
   printf "browserifying…"
-  ./bin/build_js
+  task::bundle
   printf "✓\n"
   printf "node.js mocha unit tests…"
   autoinstall_npm_deps
@@ -99,9 +99,9 @@ task::test_debug() {
   NODE_ENV=test mocha --debug-brk=9004 "$@"
 }
 
-doc "* watchify: generate browser JS for development"
-task::watchify() {
-  watchify \
+doc "* bundle: generate browser JS for development"
+task::bundle() {
+  "${1-browserify}" \
     -o www/app.js \
     --debug \
     $(./bin/browserify_args)
