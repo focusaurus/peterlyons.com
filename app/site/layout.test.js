@@ -25,8 +25,8 @@ describe("the main layout", function() {
   });
 
   it("should have the key structural elements", function() {
-    testUtils.assertSelectors(
-      $,"header h1", "body .content", "nav.site", ".license", "base[href='/']");
+    testUtils.assertSelectors($,
+      "header h1", "body .content", "nav.site", ".license", "base[href='/']");
   });
 
   it("should have the normal title", function() {
@@ -35,7 +35,15 @@ describe("the main layout", function() {
 
   it("should include the javascript with cachebusting", function() {
     testUtils.assertSelectors(
-      $, "script[src='/browser.js?v=" + pack.version + "']");
+      $, "script[src='/app.js?v=" + pack.version + "']");
+  });
+
+  it("should have the browserified JavaScript", function(done) {
+    testUtils.get("/app.js?v=" + pack.version)
+      .expect(200)
+      .expect("Content-Type", "application/javascript")
+      // .expect("Content-Encoding", "gzip")
+      .end(done);
   });
 });
 

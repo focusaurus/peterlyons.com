@@ -54,13 +54,15 @@ doc "* test: run full automated test suite"
 task::test() {
   task::test_fast
   task::test_browser
-  task::test_slow
 }
 
 doc "* test_fast: run the fast tests"
 task::test_fast() {
   set -e
-  echo node.js mocha unit tests…
+  printf "browserifying…"
+  ./bin/build_js
+  printf "✓\n"
+  printf "node.js mocha unit tests…"
   autoinstall_npm_deps
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
@@ -68,22 +70,19 @@ task::test_fast() {
   else
     mocha "$@"
   fi
-  echo ✓
-}
-
-doc "* test_slow: run the slow tests"
-task::test_slow() {
-  set -e
-  echo node.js mocha integration tests…
-  find ./app -name \*.stest.js | sort | xargs mocha
-  echo ✓
+  printf "✓\n"
 }
 
 doc "* test_browser: run mocha-phantomjs browser tests"
 task::test_browser() {
   set +e
   echo browser tests…
-  ./app/browserTestServer.js &
+  # phantomjsSucks comes first because it sucks
+  browserify \
+    -o test/app-browser-tests.js \
+    app/browser/phantomjsSucks.btest.js \
+    $(find app/browser -name '*btest.js' -print0 | xargs -0)
+  ./test/server.js &
   pid=$!
   mocha-phantomjs http://localhost:9002
   exit_code=$?
@@ -98,17 +97,6 @@ doc "* test_debug: run mocha tests with immediate breakpoint for debugging"
 task::test_debug() {
   autoinstall_npm_deps
   NODE_ENV=test mocha --debug-brk=9004 "$@"
-}
-
-doc "* js: build browser js via browserify"
-task::js() {
-  browserify \
-    -o www/app.js \
-    -e app/browser/navigation \
-    $(find app/browser -name '*.js' -not -name '*test.js' -print0 | \
-      xargs -0 -I file echo -r file | \
-      sed -e 's/\.js$//' | \
-      xargs)
 }
 
 doc "* lint: enforce code style/quality with eslint"
@@ -228,19 +216,18 @@ task::build() {
   #Make sure we have npm-pkgr installed locally
   npm install --silent npm-pkgr
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
-  --file "${node_archive}"
+    --file "${node_archive}"
   (
     cd "${build_dir}/${prefix}"
-    ../../node_modules/.bin/npm-pkgr --strategy=copy --production \
-      --silent --parseable &> "../npm.log"
     ln -nsf ../app node_modules/app
-    ./node_modules/.bin/bower install
-    ./bin/go js
+    # Run OSX node and npm utilites but within the linux build dir
+    npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
+    bower install --production
+    ./bin/build_js
     npm prune --production
     npm dedupe
     #remove development-only files
-    rm -rf wallah doc deploy test Vagrantfile \
-    .gitignore .agignore .gitmodules
+    rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules
     find ./app -name \*.test.js | xargs rm
   )
   echo ✓; echo -n "vagrant rebuild…"
