@@ -6,3 +6,4 @@
 /bower_components
 /log/*.log
 /www
+/test/app-browser-tests.js
