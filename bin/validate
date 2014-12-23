@@ -1,8 +1,8 @@
 #!/usr/bin/env mocha
 /* eslint-env mocha */
-require("../test/application/BlogsAreLoaded");
+require("app/blogs/blogsAreLoaded.test");
 var request = require("supertest")(require("app"));
-var testConfigs = require("../test/application/testConfigs");
+var testConfigs = require("app/testConfigs");
 var w3c = require("w3c-validate").createValidator();
 
 describe("The HTML of each page", function () {
