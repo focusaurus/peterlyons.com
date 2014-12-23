@@ -3,8 +3,8 @@ a.button#subscribe(href="/" + URI + "/feed") Subscribe
     height="24",
     alt='Subscribe to my Atom feed',
     title='Subscribe to my Atom Feed')
-  .posts
-    each post in posts
-      .post
-        a.postTitle(href="/" + post.uri())= post.title
-        div.postDate= post.presented.date
+.posts
+  each post in posts
+    .post
+      a.postTitle(href="/" + post.uri())= post.title
+      div.postDate= post.presented.date
