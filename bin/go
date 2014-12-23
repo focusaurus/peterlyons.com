@@ -102,7 +102,7 @@ task::test_debug() {
 doc "* bundle: generate browser JS for development"
 task::bundle() {
   "${1-browserify}" \
-    -o www/app.js \
+    -o www/plws.js \
     --debug \
     $(./bin/browserify_args)
 }
@@ -155,7 +155,7 @@ Deployment Commands
 
 doc "* clean: delete the build directory"
 task::clean() {
-  rm -rf ./build
+  rm -rf ./build ./www/*
 }
 
 doc "* release_candidate: begin git work to prepare for a build/test/release
@@ -231,8 +231,10 @@ task::build() {
     npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
     bower install --production
     ./bin/build_js
-    npm prune --production
     npm dedupe
+    npm prune --production
+    # npm prune removes our symlink, add it back
+    ln -nsf ../app node_modules/app
     #remove development-only files
     rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules
     find ./app -name \*.test.js | xargs rm
