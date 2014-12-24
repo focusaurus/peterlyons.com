@@ -31,7 +31,8 @@ describe("Post model class", function () {
   });
 
   it("contentPath should be correct", function() {
-    expect(post.contentPath()).toEqual("unitTestBlog/2014/01/unit-test-title.md");
+    expect(post.contentPath())
+      .toEqual("unitTestBlog/2014/01/unit-test-title.md");
   });
 
   it("metadataPath should be correct", function() {

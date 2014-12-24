@@ -27,7 +27,8 @@ var config = {
 };
 
 config.analytics = {
-  enabled: IS_PRODUCTION,
+  // enabled: IS_PRODUCTION,
+  enabled: true, //@bug
   code: ""
 };
 

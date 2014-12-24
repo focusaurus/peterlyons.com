@@ -1,5 +1,5 @@
-var analytics = require("app/site/blocks/analytics");
-var compression = require('compression')
+var _ = require("lodash");
+var compression = require("compression");
 var config = require("config3");
 var connect = require("connect");
 var express = require("express");
@@ -9,10 +9,10 @@ var log = require("bole")(__filename);
 var app = express();
 app.set("view engine", "jade");
 app.set("views", __dirname);
-app.locals.config = config;
-app.locals.appURI = config.appURI;
-app.locals.appVersion = config.appVersion;
-app.locals.analytics = analytics;
+app.locals = _.extend(
+  {}, _.pick(config, "baseURL", "appURI", "appVersion", "analytics"));
+app.locals.analytics.script = require("app/site/blocks/analytics");
+
 if (config.enableLogger) {
   app.use(function logger(req, res, next) {
     log.debug(req);

@@ -54,6 +54,7 @@ doc "* test: run full automated test suite"
 task::test() {
   task::test_fast
   task::test_browser
+  task::lint
 }
 
 doc "* test_fast: run the fast tests"
@@ -110,7 +111,7 @@ task::bundle() {
 doc "* lint: enforce code style/quality with eslint"
 task::lint() {
   eslint --format ./node_modules/eslint-formatter-comment/index.js \
-    app bin test
+    app bin test/server.js
 }
 
 doc "* validate: Run W3C HTML5 validator against the site HTML"

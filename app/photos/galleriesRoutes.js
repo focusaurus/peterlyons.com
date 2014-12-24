@@ -6,7 +6,6 @@ var moment = require("moment");
 var config = require("config3");
 var galleries = require("./galleries");
 var defaultLocals = {
-  config: config,
   title: "",
   test: false
 };

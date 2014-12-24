@@ -36,7 +36,8 @@ describe("plusParty", function () {
     it("should handle currency symbols", function() {
       expect(plusParty.parseNumbers("$42")).toDeepEqual([42]);
       expect(
-        plusParty.parseNumbers("$42.15 $666 £92")).toDeepEqual([42.15, 666, 92]);
+        plusParty.parseNumbers("$42.15 $666 £92"))
+          .toDeepEqual([42.15, 666, 92]);
       expect(plusParty.parseNumbers("€0")).toDeepEqual([0]);
     });
 

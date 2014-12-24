@@ -93,7 +93,7 @@ describe("the blog post authoring/preview page", function() {
     });
   });
   it("should have a preview section and a textarea", function() {
-    testUtils.assertSelectors($,"section.preview", "textarea");
+    testUtils.assertSelectors($, "section.preview", "textarea");
   });
 });
 
