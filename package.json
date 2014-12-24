@@ -17,11 +17,6 @@
     "test": "./bin/go test"
   },
   "files": [],
-  "browserify": {
-    "transform": [
-      "debowerify"
-    ]
-  },
   "browser": {
     "angular": "./bower_components/angular/angular.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js",
@@ -61,7 +56,6 @@
     "browserify": "7.0.3",
     "chaimel": "1.1.0",
     "commander": "0.5.2",
-    "debowerify": "1.2.0",
     "es5-shim": "4.0.5",
     "eslint": "0.10.0",
     "eslint-formatter-comment": "1.0.0",
