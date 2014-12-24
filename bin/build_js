@@ -1,3 +1,0 @@
-#!/bin/bash
-cd $(dirname "$0")/..
-browserify $(./bin/browserify_args) "$@" | uglifyjs --no-mangle > www/plws.js

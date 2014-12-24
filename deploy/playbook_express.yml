@@ -81,7 +81,7 @@
         - restart express
     -
       name: activate the deployment
-      command: "{{app_root}}/{{dist_name}}/bin/activate_deployment {{express_user}}"
+      command: "{{app_root}}/{{dist_name}}/bin/activate_deployment.sh {{express_user}}"
     -
       name: configure upstart job for plws-express
       template: src=plws-express.conf.j2 dest=/etc/init/plws-express.conf

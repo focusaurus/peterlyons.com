@@ -104,7 +104,7 @@ task::bundle() {
   "${1-browserify}" \
     -o www/plws.js \
     --debug \
-    $(./bin/browserify_args)
+    $(./bin/browserify_args.sh)
 }
 
 doc "* lint: enforce code style/quality with eslint"
@@ -116,16 +116,15 @@ task::lint() {
 doc "* validate: Run W3C HTML5 validator against the site HTML"
 task::validate() {
   autoinstall_npm_deps
-  NODE_ENV=test ./bin/validate
+  NODE_ENV=test ./bin/validate.js
 }
 
 doc "* shrinkwrap: regenerate npm-shrinkwrap.json file"
 task::shrinkwrap() {
   rm npm-shrinkwrap.json
-  mv node_modules "/tmp/node_modules-$(date +%Y%m%d%H%M)"
+  npm prune
   #Need to restore the node_modules/app symlink
   git checkout node_modules
-  npm install
   npm shrinkwrap
 }
 
@@ -166,12 +165,7 @@ task::release_candidate() {
   echo "Creating a new release candidate"
   git checkout develop
   git pull origin develop
-  ./node_modules/.bin/bumpy "${1-patch}"
-  git diff package.json
-  git add package.json
-  local tag="v$(./wallah/bin/get_json_value package.json version)"
-  git commit -m "bump version for ${tag} release"
-  git tag "${tag}"
+  npm version -m "bump version for %s release" "${1-patch}"
   cat <<-EOF
   Ready
   Next steps are:
@@ -230,7 +224,7 @@ task::build() {
     # Run OSX node and npm utilites but within the linux build dir
     npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
     bower install --production
-    ./bin/build_js
+    ./bin/build_js.sh
     npm dedupe
     npm prune --production
     # npm prune removes our symlink, add it back
