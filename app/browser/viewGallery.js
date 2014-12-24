@@ -97,7 +97,7 @@ GalleryController.prototype.changeGallery = function() {
 };
 
 var _photos = function($routeProvider, $locationProvider) {
-  $locationProvider.html5Mode(true);
+  $locationProvider.html5Mode({enabled: true, requireBase: false});
   $routeProvider.otherwise({
     controller: GalleryController,
     reloadOnSearch: false
