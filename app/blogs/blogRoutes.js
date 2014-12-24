@@ -8,6 +8,7 @@ var events = require("events");
 var fs = require("fs");
 var glob = require("glob");
 var httpErrors = require("httperrors");
+var log = require("bole")(__filename);
 var markdown = require("markdown-js").makeHtml;
 var middleware = require("./middleware");
 var moment = require("moment");
@@ -196,6 +197,7 @@ function createPost(req, res) {
   ];
   async.waterfall(work, function(error, post) {
     if (error) {
+      log.error(error, "Could not save blog post" + req.body.title);
       return res.status(500).send(error);
     }
     var response = post.metadata();
