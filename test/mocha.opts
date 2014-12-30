@@ -1,3 +1,3 @@
---reporter spec
+--reporter progress
 --colors
 --recursive

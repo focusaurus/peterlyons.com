@@ -12,23 +12,19 @@ var config = {
   appURI: "/app",
   appVersion: pack.version,
   nodeVersion: pack.engines.node,
-  browserifyDebug: !IS_PRODUCTION,
-  cacheCSS: IS_PRODUCTION,
   enableLogger: process.env.NODE_ENV !== "test",
   errorPages: IS_PRODUCTION,
   hostname: get("hostname", "127.0.0.1"),
   ip: get("IP", "127.0.0.1"),
   port: get("port", 9000),
   staticDir: path.join(__dirname, "/../static"),
-  tests: !IS_PRODUCTION,
   titleSuffix: " | Peter Lyons",
   wwwDir: path.join(__dirname, "www"),
   zeroClipboardDir: path.join(__dirname, "/node_modules/zeroclipboard")
 };
 
 config.analytics = {
-  // enabled: IS_PRODUCTION,
-  enabled: true, //@bug
+  enabled: IS_PRODUCTION,
   code: ""
 };
 
@@ -54,6 +50,7 @@ config.inspector = {
 
 config.tests = {
   port: get("testPort", 9002),
+  debugPort: get("testDebugPort", 9004),
   mochaPath: path.join(__dirname, "node_modules/mocha")
 };
 

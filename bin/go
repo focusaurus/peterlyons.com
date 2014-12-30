@@ -50,28 +50,29 @@ task::start() {
   task::express "$@"
 }
 
-doc "* test [fast|zuul]: run automated test suite and linting
+doc "* test [node|browser|debug]: run automated test suite and linting
   * no args runs them all
-  * otherwise run the groups provided"
+  * otherwise run the groups provided
+    * debug: run mocha tests with immediate breakpoint for debugging"
 task::test() {
-  local groups="${@-fast zuul}"
+  local groups="${@-node browser}"
   for group in ${groups}; do
     if type "test_${group}" &>/dev/null; then
       eval "test_${group}"
     else
-      usage "$0 test [fast|zuul]"
+      usage "$0 test [node|browser]"
       return
     fi
   done
   task::lint
 }
 
-test_fast() {
+test_node() {
   set -e
-  printf "browserifying…"
+  echo "node.js mocha unit tests…"
+  echo -n "browserifying…"
   task::bundle
-  printf "✓\n"
-  printf "node.js mocha unit tests…"
+  echo ✓
   autoinstall_npm_deps
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
@@ -79,23 +80,23 @@ test_fast() {
   else
     mocha "$@"
   fi
-  printf "✓\n"
+  echo ✓
 }
 
-test_zuul() {
+test_browser() {
   set +e
-  echo browser tests…
-  # zuul --local 9002 --ui mocha-bdd --open \
-  #   $(find ./app -name '*btest.js' -print0 | xargs -0)
-  zuul --phantom --ui mocha-bdd --open \
+  echo -n browser tests…
+  local browser="--phantom"
+  #use this for real browser
+  # local browser="--local $(config3 tests.port)"
+  zuul ${browser} --ui mocha-bdd --open \
     $(find ./app -name '*btest.js' -print0 | xargs -0)
   echo ✓
 }
 
-doc "* test_debug: run mocha tests with immediate breakpoint for debugging"
-task::test_debug() {
+test_debug() {
   autoinstall_npm_deps
-  NODE_ENV=test mocha --debug-brk=9004 "$@"
+  NODE_ENV=test mocha --debug-brk=$(config3 tests.debugPort) "$@"
 }
 
 doc "* bundle: generate browser JS for development"
@@ -108,8 +109,10 @@ task::bundle() {
 
 doc "* lint: enforce code style/quality with eslint"
 task::lint() {
+  echo -n "linting…"
   eslint --format ./node_modules/eslint-formatter-comment/index.js \
-    app bin test/server.js
+    app bin
+  echo ✓
 }
 
 doc "* validate: Run W3C HTML5 validator against the site HTML"
