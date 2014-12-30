@@ -50,15 +50,23 @@ task::start() {
   task::express "$@"
 }
 
-doc "* test: run full automated test suite"
+doc "* test [fast|zuul]: run automated test suite and linting
+  * no args runs them all
+  * otherwise run the groups provided"
 task::test() {
-  task::test_fast
-  task::test_browser
+  local groups="${@-fast zuul}"
+  for group in ${groups}; do
+    if type "test_${group}" &>/dev/null; then
+      eval "test_${group}"
+    else
+      usage "$0 test [fast|zuul]"
+      return
+    fi
+  done
   task::lint
 }
 
-doc "* test_fast: run the fast tests"
-task::test_fast() {
+test_fast() {
   set -e
   printf "browserifying…"
   task::bundle
@@ -74,23 +82,13 @@ task::test_fast() {
   printf "✓\n"
 }
 
-doc "* test_browser: run mocha-phantomjs browser tests"
-task::test_browser() {
+test_zuul() {
   set +e
   echo browser tests…
-  # phantomjsSucks comes first because it sucks
-  browserify \
-    -o test/app-browser-tests.js \
-    app/browser/phantomjsSucks.btest.js \
-    $(find app/browser -name '*btest.js' -print0 | xargs -0)
-  ./test/server.js &
-  pid=$!
-  mocha-phantomjs http://localhost:9002
-  exit_code=$?
-  kill "${pid}"
-  if [[ ${exit_code} -ne 0 ]]; then
-    exit ${exit_code}
-  fi
+  # zuul --local 9002 --ui mocha-bdd --open \
+  #   $(find ./app -name '*btest.js' -print0 | xargs -0)
+  zuul --phantom --ui mocha-bdd --open \
+    $(find ./app -name '*btest.js' -print0 | xargs -0)
   echo ✓
 }
 
