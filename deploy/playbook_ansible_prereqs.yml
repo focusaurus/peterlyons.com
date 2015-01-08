@@ -1,0 +1,9 @@
+---
+-
+  hosts: all
+  gather_facts: no
+  sudo: yes
+  tasks:
+    -
+      name: install ansible prerequisites
+      script: ansible_prereqs.sh creates=/root/.ansible_prereqs_installed

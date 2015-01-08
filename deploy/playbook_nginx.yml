@@ -1,4 +1,5 @@
 ---
+- include: playbook_ansible_prereqs.yml
 -
   hosts: all
   gather_facts: no
@@ -14,9 +15,6 @@
     -
       include: handlers.yml
   tasks:
-    -
-      name: install ansible prerequisites
-      script: ansible_prereqs.sh
     -
       name: install nginx and monit
       apt: pkg={{item}}
