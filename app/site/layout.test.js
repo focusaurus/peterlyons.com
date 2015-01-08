@@ -67,12 +67,3 @@ describe("analytics snippet", function () {
     });
   });
 });
-
-describe("the site", function() {
-  it("should have the CSS", function(done) {
-    testUtils.get("/screen.css")
-      .expect(200)
-      .expect("Content-Type", "text/css; charset=utf-8")
-      .end(done);
-  });
-});

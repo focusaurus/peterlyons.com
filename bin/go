@@ -76,7 +76,7 @@ test_node() {
   autoinstall_npm_deps
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
-    find ./app -name \*.test.js | sort | xargs mocha
+    mocha $(find ./app -name \*.test.js -print0 | sort | xargs -0)
   else
     mocha "$@"
   fi
