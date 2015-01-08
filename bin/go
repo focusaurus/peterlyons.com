@@ -160,6 +160,7 @@ task::clean() {
 }
 
 doc "* release_candidate: begin git work to prepare for a build/test/release
+  * (aliased as "rc")
   * Usage: $(basename $0) release_candidate <patch|minor|major>"
 task::release_candidate() {
   autoinstall_npm_deps
@@ -177,6 +178,10 @@ task::release_candidate() {
   go release
   deploy to prod
 EOF
+}
+
+task::rc() {
+  task::release_candidate "$@"
 }
 
 doc "* build: build a distribution archive for deployment
