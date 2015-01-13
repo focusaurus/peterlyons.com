@@ -6,7 +6,7 @@
   sudo: yes
   vars:
     project: plws
-    express_port: 9000
+    express_port: "{{ lookup('pipe', '../node_modules/.bin/config3 port') }}"
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data

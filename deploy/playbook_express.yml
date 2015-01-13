@@ -5,7 +5,7 @@
   gather_facts: no
   sudo: yes
   vars:
-    express_port: 9000
+    express_port: "{{ lookup('pipe', '../node_modules/.bin/config3 port') }}"
     express_user: plws
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
