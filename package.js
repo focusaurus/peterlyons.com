@@ -26,17 +26,17 @@ sets.test = _.extend({
   "zuul": "1.16.3"
 }, sets.build);
 
-sets.optional = _.extend({
-  "bistre": "1.0.1",
-  "node-dev": "2.3.0",
-  "node-inspector": "0.7.4"
-}, sets.build);
-
 sets.develop = _.extend({
   "bump-cli": "1.1.3",
   "commander": "0.5.2",
   "watchify": "2.2.1"
 }, sets.build, sets.test);
+
+sets.optional = _.extend({
+  "bistre": "1.0.1",
+  "node-dev": "2.3.0",
+  "node-inspector": "0.7.4"
+}, sets.develop);
 
 sets.production = {};
 
