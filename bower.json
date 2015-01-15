@@ -1,6 +1,5 @@
 {
   "name": "peterlyons.com",
-  "version": "5.5.0",
   "private": true,
   "dependencies": {
     "angular-mocks": "~1.3.4",

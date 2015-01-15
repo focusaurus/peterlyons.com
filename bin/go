@@ -170,7 +170,9 @@ task::release_candidate() {
   echo "Creating a new release candidate"
   git checkout develop
   git pull origin develop
-  npm version -m "bump version for %s release" "${1-patch}"
+  bump _package.json --"${1-patch}"
+  git add _package.json
+  git commit -m "bump version for $(config3 appVersion) release"
   cat <<-EOF
   Ready
   Next steps are:
