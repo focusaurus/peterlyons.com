@@ -171,8 +171,10 @@ task::release_candidate() {
   git checkout develop
   git pull origin develop
   bump _package.json --"${1-patch}"
+  local version=$(config3 appVersion)
   git add _package.json
-  git commit -m "bump version for $(config3 appVersion) release"
+  git commit -m "bump version for ${version} release"
+  git tag "v${version}"
   cat <<-EOF
   Ready
   Next steps are:
