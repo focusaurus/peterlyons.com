@@ -10,8 +10,8 @@
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
   "main": "app/server.js",
   "engines": {
-    "iojs": "1.0.1",
-    "node": "0.10.33"
+    "iojs": "1.1.0",
+    "node": "0.10.36"
   },
   "scripts": {
     "start": "./bin/go express",
