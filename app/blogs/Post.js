@@ -122,7 +122,8 @@ Post.prototype.save = function(callback) {
     }
     work = [
      async.apply(fs.writeFile, contentPath, self.content),
-     async.apply(fs.writeFile, metadataPath, JSON.stringify(self.metadata()))
+     async.apply(
+       fs.writeFile, metadataPath, JSON.stringify(self.metadata(), null, 2))
     ];
     async.parallel(work, function(error) {
       if (error) {
