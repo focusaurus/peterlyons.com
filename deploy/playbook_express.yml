@@ -44,14 +44,6 @@
         version=master
         force=no
     -
-      name: allow filesystem writes for new blog posts
-      file: path={{data_root}}/posts
-        state=directory
-        recurse=true
-        mode=0770
-        owner={{express_user}}
-        group=sudo
-    -
       name: clone static repo
       git: repo={{repo_base}}/static.git
         accept_hostkey=True

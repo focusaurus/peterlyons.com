@@ -19,7 +19,7 @@ sets.test = _.extend({
   "eslint": "0.10.0",
   "eslint-formatter-comment": "1.0.0",
   "mocha": "1.20.1",
-  "phantomjs": "1.9.12",
+  "phantomjs": "1.9.15",
   "superagent": "0.18.0",
   "supertest": "0.13.0",
   "w3c-validate": "0.0.2",
@@ -28,7 +28,7 @@ sets.test = _.extend({
 
 sets.develop = _.extend({
   "bump-cli": "1.1.3",
-  "commander": "0.5.2",
+  "promptly": "0.2.1",
   "watchify": "2.2.1"
 }, sets.build, sets.test);
 

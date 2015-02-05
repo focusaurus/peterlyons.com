@@ -5,6 +5,7 @@ var blogIndicesBySlug = {};
 var config = require("config3");
 var connect = require("connect");
 var events = require("events");
+var execFile = require("child_process").execFile;
 var fs = require("fs");
 var glob = require("glob");
 var httpErrors = require("httperrors");
@@ -14,6 +15,7 @@ var middleware = require("./middleware");
 var moment = require("moment");
 var path = require("path");
 var Post = require("./Post");
+
 var postLinks = {};
 
 function BlogIndex(URI, title) {
@@ -196,12 +198,28 @@ function savePost(req, callback) {
   post.save(callback);
 }
 
+function push(token, post, callback) {
+  execFile(config.blog.pushPath, [token], function (error, stdout, stderr) {
+    if (error) {
+      log.error("Error pushing blog to github", error, stdout, stderr);
+      callback(error);
+      return;
+    }
+    log.info({
+      stdout: stdout.toString(),
+      stderr: stderr.toString()
+    }, "blog pushed to github successfully");
+    callback(null, post);
+  });
+}
+
 function createPost(req, res) {
   var password = req.body.password;
   var work = [
     async.apply(fs.readFile, config.blog.hashPath, "utf8"),
     async.apply(verifyPassword, password),
-    async.apply(savePost, req)
+    async.apply(savePost, req),
+    async.apply(push, password)
   ];
   async.waterfall(work, function(error, post) {
     if (error) {

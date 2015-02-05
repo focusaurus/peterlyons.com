@@ -1,6 +1,6 @@
 /* eslint-env node */
+var join = require("path").join;
 var pack = require("./package");
-var path = require("path");
 
 var IS_PRODUCTION = process.env.NODE_ENV === "production";
 
@@ -17,10 +17,10 @@ var config = {
   hostname: get("hostname", "127.0.0.1"),
   ip: get("IP", "127.0.0.1"),
   port: get("port", 9000),
-  staticDir: path.join(__dirname, "/../static"),
+  staticDir: join(__dirname, "/../static"),
   titleSuffix: " | Peter Lyons",
-  wwwDir: path.join(__dirname, "www"),
-  zeroClipboardDir: path.join(__dirname, "/node_modules/zeroclipboard")
+  wwwDir: join(__dirname, "www"),
+  zeroClipboardDir: join(__dirname, "/node_modules/zeroclipboard")
 };
 
 config.analytics = {
@@ -34,13 +34,14 @@ config.photos = {
   galleryDir: config.staticDir + "/photos",
   thumbExtension: "-TN.jpg",
   extension: ".jpg",
-  galleryDataPath: path.join(__dirname, "/../data/galleries.json"),
+  galleryDataPath: join(__dirname, "/../data/galleries.json"),
   serveDirect: !IS_PRODUCTION
 };
 
 config.blog = {
-  hashPath: path.join(__dirname, "/../data/blog_password.bcrypt"),
-  postBasePath: path.join(__dirname, "/../data/posts")
+  hashPath: join(__dirname, "/../data/blog_password.bcrypt"),
+  postBasePath: join(__dirname, "/../data/posts"),
+  pushPath: join(__dirname, "bin/push_posts_to_github.sh")
 };
 
 config.inspector = {
@@ -51,7 +52,7 @@ config.inspector = {
 config.tests = {
   port: get("testPort", 9002),
   debugPort: get("testDebugPort", 9004),
-  mochaPath: path.join(__dirname, "node_modules/mocha")
+  mochaPath: join(__dirname, "node_modules/mocha")
 };
 
 config.baseURL = "http://" + config.hostname + ":" + config.port;
