@@ -50,6 +50,7 @@ CreatePost.prototype.save = function save() {
   //the POST URI should be the same as the current page
   this.$http.post(this.$location.path(), data).success(function(response) {
     self.$scope.savedPost = response;
+    delete self.localStorage.postDraft;
   }).error(function(response) {
     self.$scope.error = response;
   }).finally(function () {
