@@ -12,6 +12,7 @@ function CreatePost($scope, $window, $location, $http, $sce, localStorage) {
   this.$http = $http;
   this.$sce = $sce;
   this.localStorage = localStorage;
+  this.$scope.saveButtonLabel = "Save";
   try {
     var savedPost = JSON.parse(localStorage.postDraft);
     this.$scope.title = savedPost.title;
@@ -47,6 +48,7 @@ CreatePost.prototype.save = function save() {
     content: this.$scope.contentMarkdown,
     password: this.$scope.password
   };
+  this.$scope.saveButtonLabel = "Saving…";
   //the POST URI should be the same as the current page
   this.$http.post(this.$location.path(), data).success(function(response) {
     self.$scope.savedPost = response;
@@ -55,6 +57,7 @@ CreatePost.prototype.save = function save() {
     self.$scope.error = response;
   }).finally(function () {
     self.$window.scrollTo(0, 0);
+    self.$scope.saveButtonLabel = "Save";
   });
 };
 
