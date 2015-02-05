@@ -14,7 +14,7 @@ block body
       input(name="title", ng-model="title")
     textarea.content(cols="80", rows="25", ng-model="contentMarkdown")
     label
-      | password to save
+      | password to save (github token)
       input(type="password", ng-model="password")
     button(ng-click="save()", ng-disabled="!password" ng-bind="saveButtonLabel")
 block append scripts
