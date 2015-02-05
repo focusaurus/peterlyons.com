@@ -63,6 +63,10 @@ function html(req, res, next) {
     return;
   }
   fs.readFile(res.viewPath, "utf8", function(error, htmlText) {
+    if (error && error.code === "ENOENT") {
+      next(new httpErrors.NotFound(req.path));
+      return;
+    }
     res.html = htmlText;
     next(error);
   });
@@ -74,6 +78,10 @@ function markdownToHTML(req, res, next) {
     return;
   }
   fs.readFile(res.viewPath, "utf8", function(error, markdownText) {
+    if (error && error.code === "ENOENT") {
+      next(new httpErrors.NotFound(req.path));
+      return;
+    }
     if (error) {
       next(error);
       return;
