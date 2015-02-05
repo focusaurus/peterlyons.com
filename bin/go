@@ -232,24 +232,22 @@ task::build() {
   echo ✓; echo -n "npm packages…"
   tar -C "${build_dir}/${prefix}/node" --strip-components=1 --extract --gzip \
     --file "${iojs_archive}"
-  (
-    cd "${build_dir}/${prefix}"
-    set -x #@bug
-    # Run OSX node and npm utilites but within the linux build dir
-    ./package.js build
-    # npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
-    npm install
-    bower install --production
-    ./bin/build_js.sh
-    npm dedupe
-    ./package.js production
-    npm prune --production
-    # npm prune removes our symlink, add it back
-    ln -nsf ../app node_modules/app
-    #remove development-only files
-    rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules
-    find ./app -name \*.test.js | xargs rm
-  )
+  cd "${build_dir}/${prefix}"
+  # Run OSX node and npm utilites but within the linux build dir
+  ./package.js build
+  # npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
+  npm install
+  bower install --production
+  ./bin/build_js.sh
+  npm dedupe
+  ./package.js production
+  npm prune --production
+  # npm prune removes our symlink, add it back
+  ln -nsf ../app node_modules/app
+  #remove development-only files
+  rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules
+  find ./app -name \*.test.js | xargs rm
+  cd -
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
   "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
