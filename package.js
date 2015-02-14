@@ -1,10 +1,25 @@
 #!/usr/bin/env node
 
-var _ = require("lodash");
+// NOTE during travis CI this gets run after node/iojs install but
+// before npm install, so only core modules can be used.
 var fs = require("fs");
 var join = require("path").join;
 var pack = require("./_package");
 
+// https://github.com/Raynos/xtend/blob/master/mutable.js
+function extend(target) {
+    for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i]
+
+        for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+                target[key] = source[key]
+            }
+        }
+    }
+
+    return target
+}
 var sets = {};
 
 sets.build = {
@@ -14,7 +29,7 @@ sets.build = {
   "npm-pkgr": "0.1.0"
 };
 
-sets.test = _.extend({
+sets.test = extend({
   "chaimel": "1.1.0",
   "eslint": "0.10.0",
   "eslint-formatter-comment": "1.0.0",
@@ -26,13 +41,13 @@ sets.test = _.extend({
   "zuul": "1.16.3"
 }, sets.build);
 
-sets.develop = _.extend({
+sets.develop = extend({
   "bump-cli": "1.1.3",
   "promptly": "0.2.1",
   "watchify": "2.2.1"
 }, sets.build, sets.test);
 
-sets.optional = _.extend({
+sets.optional = extend({
   "bistre": "1.0.1",
   "node-dev": "2.3.0",
   "node-inspector": "0.7.4"
@@ -42,7 +57,7 @@ sets.production = {};
 
 function main() {
   var setName = process.argv[2] || "develop";
-  _.extend(pack.dependencies, sets[setName]);
+  extend(pack.dependencies, sets[setName]);
   fs.writeFileSync(
     join(__dirname, "package.json"), JSON.stringify(pack, null, 2), "utf8");
 }
