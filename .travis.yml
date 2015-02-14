@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - "0.10"
   - "iojs-v1.2.0"
-before_script: ./package.js build
+before_install: ./package.js build
+before_script: bower install
