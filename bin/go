@@ -319,8 +319,8 @@ task::ansible-playbook() {
 
 ##### main code #####
 main() {
-  cd "$(dirname $0)/.."
-  PATH="${PWD}/python/bin"
+  cd "$(dirname "$0")/.."
+  PATH="${PATH}:${PWD}/python/bin"
   PATH="${PATH}:${PWD}/node/bin"
   PATH="${PATH}:${PWD}/node_modules/.bin"
   #Need the basics like dirname et al
