@@ -69,7 +69,7 @@ Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
   });
 };
 
-Post.prototype.load = function(metadataPath, blog, callback) {
+Post.prototype.load = function(metadataPath, blog, callback1) {
   var self = this;
   this.metadataPath = metadataPath;
   this.blog = blog;
@@ -108,7 +108,7 @@ Post.prototype.load = function(metadataPath, blog, callback) {
     });
   }
 
-  async.series([loadMetadata, loadContent], callback);
+  async.series([loadMetadata, loadContent], callback1);
 };
 
 Post.prototype.save = function(callback) {
@@ -125,9 +125,9 @@ Post.prototype.save = function(callback) {
      async.apply(
        fs.writeFile, metadataPath, JSON.stringify(self.metadata(), null, 2))
     ];
-    async.parallel(work, function(error) {
-      if (error) {
-        return callback(error);
+    async.parallel(work, function(error2) {
+      if (error2) {
+        return callback(error2);
       }
       return callback(null, self);
     });

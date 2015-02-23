@@ -21,9 +21,9 @@ function renderPhotos(req, res, next) {
         encodeURIComponent(mostRecent.dirName));
       return;
     }
-    _galleries.loadBySlug(matchGallery[0].dirName, function(error, gallery) {
-      if (error) {
-        return res.status(500).send(error);
+    _galleries.loadBySlug(matchGallery[0].dirName, function(error2, gallery) {
+      if (error2) {
+        return res.status(500).send(error2);
       }
       _.extend(res.locals.sharify.data, {
         gallery: gallery,

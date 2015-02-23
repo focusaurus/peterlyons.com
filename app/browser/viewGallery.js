@@ -12,12 +12,12 @@ function GalleryController(
   this.$scope.gallery = gallery;
   this.$scope.galleryName = gallery.dirName;
   var byYear = {};
-  galleries.forEach(function(gallery) {
-    var year = gallery.startDate.split("-")[0];
+  galleries.forEach(function(gallery2) {
+    var year = gallery2.startDate.split("-")[0];
     if (!byYear[year]) {
       byYear[year] = [];
     }
-    byYear[year].push(gallery);
+    byYear[year].push(gallery2);
   });
 
 

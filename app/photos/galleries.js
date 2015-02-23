@@ -34,8 +34,8 @@ function loadBySlug(slug, callback) {
     if (error) {
       return callback(error);
     }
-    var matches = galleries.filter(function(gallery) {
-      return gallery.dirName === slug;
+    var matches = galleries.filter(function(gallery2) {
+      return gallery2.dirName === slug;
     });
     if (!matches.length) {
       return callback();
@@ -43,9 +43,9 @@ function loadBySlug(slug, callback) {
     var gallery = matches[0];
     var jsonPath = config.photos.galleryDir + "/" + gallery.dirName +
       "/photos.json";
-    return fs.readFile(jsonPath, function(error, photoJSON) {
-      if (error) {
-        return callback(error);
+    return fs.readFile(jsonPath, function(error2, photoJSON) {
+      if (error2) {
+        return callback(error2);
       }
       gallery.photos = photoJSONToObject(gallery, photoJSON);
       return callback(null, gallery);

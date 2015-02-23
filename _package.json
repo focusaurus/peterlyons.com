@@ -30,7 +30,7 @@
     "bcryptjs": "2.1.0",
     "bole": "2.0.0",
     "cheerio": "0.17.0",
-    "compression": "1.2.2",
+    "compression": "1.4.1",
     "config3": "1.0.0",
     "connect": "2.14.4",
     "connect-cache": "0.2.1",
@@ -47,7 +47,7 @@
     "process-title": "0.0.0",
     "raw-body": "1.3.3",
     "sharify": "0.1.6",
-    "stylish": "0.4.1",
+    "stylish": "0.5.0",
     "stylus": "0.50.0",
     "zeroclipboard": "1.3.5"
   }

@@ -17,9 +17,9 @@ function adminGalleries(req, res, next) {
       return;
     }
     var jsonNames = _.pluck(jsonGalleries, "dirName");
-    fs.readdir(config.photos.galleryDir, function(error, names) {
-      if (error) {
-        next(error);
+    fs.readdir(config.photos.galleryDir, function(error2, names) {
+      if (error2) {
+        next(error2);
         return;
       }
       var galleryDirNames = _.without(names, ".DS_Store");

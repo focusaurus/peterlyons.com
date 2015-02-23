@@ -98,12 +98,12 @@ function renderPost(req, res, next) {
     post: res.post,
     postContent: res.html
   };
-  res.app.render("blogs/viewPost", locals, function(error, html) {
+  res.app.render("blogs/viewPost", locals, function(error, html2) {
     if (error) {
       next(error);
       return;
     }
-    res.html = html;
+    res.html = html2;
     next();
   });
 }
@@ -158,9 +158,9 @@ function loadBlog(URI, callback) {
       return;
     }
     var boundLoad = loadPost.bind(null, URI);
-    async.map(files, boundLoad, function (error, posts) {
-      if (error) {
-        callback(error);
+    async.map(files, boundLoad, function (error2, posts) {
+      if (error2) {
+        callback(error2);
         return;
       }
       posts = _.sortBy(posts, function(post) {
@@ -229,7 +229,7 @@ function createPost(req, res) {
     var response = post.metadata();
     response.uri = post.uri();
     res.send(response);
-    loadBlog(post.blog, function(error, posts) {
+    loadBlog(post.blog, function(error2, posts) {
       var blog;
       blog = blogIndicesBySlug[post.blog];
       blog.posts = posts;
@@ -250,8 +250,8 @@ function feedRenderPost(req, post, callback) {
     middleware.flickr,
     middleware.youtube,
     middleware.undomify,
-    function(req, fakeRes, next) {
-      fakeRes.post.content = fakeRes.html;
+    function(req2, fakeRes2, next) {
+      fakeRes2.post.content = fakeRes2.html;
       next();
     }
   ], req, fakeRes, function (error) {
@@ -282,9 +282,9 @@ function feed(req, res, next) {
       return;
     }
     locals.posts = renderedPosts;
-    res.app.render("blogs/feed", locals, function(error, feedXML) {
-      if (error) {
-        next(error);
+    res.app.render("blogs/feed", locals, function(error2, feedXML) {
+      if (error2) {
+        next(error2);
         return;
       }
       res.blog.cachedFeedXML = feedXML;
