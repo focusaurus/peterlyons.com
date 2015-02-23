@@ -33,10 +33,10 @@ sets.test = extend({
   "chaimel": "1.1.0",
   "eslint": "0.10.0",
   "eslint-formatter-comment": "1.0.0",
-  "mocha": "1.20.1",
+  "mocha": "2.1.0",
   "phantomjs": "1.9.15",
   "superagent": "0.18.0",
-  "supertest": "0.13.0",
+  "supertest": "0.15.0",
   "w3c-validate": "0.0.2",
   "zuul": "1.16.3"
 }, sets.build);
