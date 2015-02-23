@@ -26,11 +26,11 @@ sets.build = {
   "bower": "1.3.12",
   "browserify": "7.0.3",
   "uglify-js": "2.4.16",
-  "npm-pkgr": "0.1.0"
+  "npm-pkgr": "0.2.0"
 };
 
 sets.test = extend({
-  "chaimel": "1.1.0",
+  "chaimel": "1.2.0",
   "eslint": "0.10.0",
   "eslint-formatter-comment": "1.0.0",
   "mocha": "2.1.0",
