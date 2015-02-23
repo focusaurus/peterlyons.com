@@ -44,16 +44,14 @@ function init() {
   require("angular");
   angular.module("PlusParty", []).controller("PlusPartyController", Controller);
   var ZeroClipboard = require("zeroclipboard");
-  //https://github.com/zeroclipboard/zeroclipboard/issues/332
-  window.ZeroClipboard = ZeroClipboard;
   var copyButton = document.getElementById("copyToClipboard");
   var originalText = copyButton.textContent;
   var resetText = function() {
     copyButton.textContent = originalText;
   };
-  var clip = new ZeroClipboard(copyButton);
-  clip.on("load", function (client) {
-    client.on("complete", function () {
+  var client = new ZeroClipboard(copyButton);
+  client.on("ready", function () {
+    client.on("aftercopy", function () {
       copyButton.textContent = "Copied!";
       setTimeout(resetText, 2000);
     });

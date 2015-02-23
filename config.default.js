@@ -17,10 +17,10 @@ var config = {
   hostname: get("hostname", "127.0.0.1"),
   ip: get("IP", "127.0.0.1"),
   port: get("port", 9000),
-  staticDir: join(__dirname, "/../static"),
+  staticDir: join(__dirname, "../static"),
   titleSuffix: " | Peter Lyons",
   wwwDir: join(__dirname, "www"),
-  zeroClipboardDir: join(__dirname, "/node_modules/zeroclipboard")
+  zeroClipboardDir: join(__dirname, "node_modules/zeroclipboard/dist")
 };
 
 config.analytics = {
@@ -34,13 +34,13 @@ config.photos = {
   galleryDir: config.staticDir + "/photos",
   thumbExtension: "-TN.jpg",
   extension: ".jpg",
-  galleryDataPath: join(__dirname, "/../data/galleries.json"),
+  galleryDataPath: join(__dirname, "../data/galleries.json"),
   serveDirect: !IS_PRODUCTION
 };
 
 config.blog = {
-  hashPath: join(__dirname, "/../data/blog_password.bcrypt"),
-  postBasePath: join(__dirname, "/../data/posts"),
+  hashPath: join(__dirname, "../data/blog_password.bcrypt"),
+  postBasePath: join(__dirname, "../data/posts"),
   pushPath: join(__dirname, "bin/push_posts_to_github.sh")
 };
 
