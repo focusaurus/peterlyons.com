@@ -15,9 +15,8 @@ function renderPhotos(req, res, next) {
       return g.dirName === req.param("gallery");
     });
     if (!matchGallery.length) {
-      var mostRecent = _.sortBy(galleries, function(g) {
-        return -g.startDate;
-      })[0];
+      var mostRecent = _.sortByAll(
+        galleries, "startDate")[galleries.length - 1];
       res.redirect(req.path + "?gallery=" +
         encodeURIComponent(mostRecent.dirName));
       return;

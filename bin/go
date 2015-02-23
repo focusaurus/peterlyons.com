@@ -61,7 +61,7 @@ task::test() {
     if type "test_${group}" &>/dev/null; then
       eval "test_${group}"
     else
-      usage "$0 test [node|browser]"
+      usage "$0 test [node|browser|debug]"
       return
     fi
   done
