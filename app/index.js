@@ -1,7 +1,6 @@
 var _ = require("lodash");
 var compression = require("compression");
 var config = require("config3");
-var connect = require("connect");
 var express = require("express");
 var httpErrors = require("httperrors");
 var log = require("bole")(__filename);
@@ -33,9 +32,9 @@ if (config.enableLogger) {
 });
 
 app.use(compression());
-app.use(connect.static(config.staticDir));
-app.use(connect.static(config.wwwDir));
-app.use(connect.static(config.zeroClipboardDir));
+app.use(express.static(config.staticDir));
+app.use(express.static(config.wwwDir));
+app.use(express.static(config.zeroClipboardDir));
 app.use(function(req, res, next) {
   next(new httpErrors.NotFound(req.path));
 });

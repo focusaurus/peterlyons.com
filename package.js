@@ -24,7 +24,7 @@ var sets = {};
 
 sets.build = {
   "bower": "1.3.12",
-  "browserify": "7.0.3",
+  "browserify": "9.0.3",
   "uglify-js": "2.4.16",
   "npm-pkgr": "0.2.0"
 };

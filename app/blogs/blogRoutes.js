@@ -3,9 +3,10 @@ var async = require("async");
 var bcrypt = require("bcryptjs");
 var blogIndicesBySlug = {};
 var config = require("config3");
-var connect = require("connect");
+var bodyParser = require("body-parser");
 var events = require("events");
 var execFile = require("child_process").execFile;
+var express = require("express");
 var fs = require("fs");
 var glob = require("glob");
 var httpErrors = require("httperrors");
@@ -324,7 +325,7 @@ function setup(app) {
     setup.events.emit("ready");
   }
   async.forEach([problog, persblog], _load, doneLoading);
-  app.use("/blogs", connect.static(path.join(__dirname, "/browser")));
+  app.use("/blogs", express.static(path.join(__dirname, "/browser")));
   var blogRoute = "/:blogSlug(persblog|problog)";
   app.get(blogRoute, loadBlogMW, function(req, res) {
     res.render("blogs/" + req.params.blogSlug, res.blog);
@@ -332,7 +333,7 @@ function setup(app) {
   app.get(blogRoute + "/post", function(req, res) {
     res.render("blogs/post");
   });
-  app.post(blogRoute + "/post", connect.json(), createPost);
+  app.post(blogRoute + "/post", bodyParser.json(), createPost);
   app.get(blogRoute + "/feed", loadBlogMW, feed);
   app.get(blogRoute + "/flushCache}", loadBlogMW, flushCache);
   app.get(

@@ -1,7 +1,7 @@
 var _ = require("lodash");
 var _galleries = require("./galleries");
 var config = require("config3");
-var connect = require("connect");
+var express = require("express");
 var path = require("path");
 var sharify = require("sharify");
 
@@ -12,7 +12,7 @@ function renderPhotos(req, res, next) {
       return;
     }
     var matchGallery = galleries.filter(function(g) {
-      return g.dirName === req.param("gallery");
+      return g.dirName === req.query.gallery;
     });
     if (!matchGallery.length) {
       var mostRecent = _.sortByAll(
@@ -51,7 +51,7 @@ function getGallery(req, res) {
 }
 
 function setup(app) {
-  app.use("/photos", connect.static(path.join(__dirname, "/browser")));
+  app.use("/photos", express.static(path.join(__dirname, "/browser")));
   app.get("/galleries/:slug", getGallery);
   app.get("/photos", sharify, renderPhotos);
   if (config.photos.serveDirect) {
