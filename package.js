@@ -38,19 +38,19 @@ sets.test = extend({
   "superagent": "0.21.0",
   "supertest": "0.15.0",
   "w3c-validate": "0.0.2",
-  "zuul": "1.16.3"
+  "zuul": "1.19.0"
 }, sets.build);
 
 sets.develop = extend({
   "bump-cli": "1.1.3",
   "promptly": "0.2.1",
-  "watchify": "2.2.1"
+  "watchify": "2.4.0"
 }, sets.build, sets.test);
 
 sets.optional = extend({
   "bistre": "1.0.1",
-  "node-dev": "2.3.0",
-  "node-inspector": "0.7.4"
+  "node-dev": "2.6.1",
+  "node-inspector": "0.9.0"
 }, sets.develop);
 
 sets.production = {};
