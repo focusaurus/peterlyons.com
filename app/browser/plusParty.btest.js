@@ -3,7 +3,7 @@ require("angular-mocks");
 var expect = require("chaimel");
 var plusParty = require("app/browser/plusParty");
 
-describe("plusParty", function () {
+describe("plusParty", function() {
   it("sum should work", function() {
     expect(plusParty.sum(42, 7)).toEqual(49);
   });
@@ -13,7 +13,7 @@ describe("plusParty", function () {
   });
 });
 
-describe("PlusParty Controller", function () {
+describe("PlusParty Controller", function() {
   var injector;
   var options;
 

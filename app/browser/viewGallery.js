@@ -91,22 +91,25 @@ GalleryController.prototype.changeGallery = function() {
     self.$scope.gallery = galleryData;
     self.$window.document.title = galleryData.displayName + " Photo Gallery";
     var firstPhoto = self.$scope.gallery.photos[0];
-    var firstPhotoName = firstPhoto ? firstPhoto.name : null;
+    var firstPhotoName = null;
+    if (firstPhoto) {
+      firstPhotoName = firstPhoto.name;
+    }
     self.$scope.photoName = self.$location.search().photo || firstPhotoName;
   });
 };
 
-var _photos = function($routeProvider, $locationProvider) {
+function _photos($routeProvider, $locationProvider) {
   $locationProvider.html5Mode({enabled: true, requireBase: false});
   $routeProvider.otherwise({
     controller: GalleryController,
     reloadOnSearch: false
   });
-};
+}
 
 function init() {
-  //Just require angular without assigning it.
-  //browserify returns an empty object, but window.angular is there
+  // Just require angular without assigning it.
+  // browserify returns an empty object, but window.angular is there
   require("angular");
   require("angular-route");
   var photosApp = angular.module("photos", ["ngRoute"], _photos);

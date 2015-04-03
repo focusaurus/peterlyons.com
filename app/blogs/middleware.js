@@ -4,6 +4,7 @@ var mustache = require("mustache");
 var path = require("path");
 var rawBody = require("raw-body");
 var url = require("url");
+/* eslint no-sync:0 */
 var flickrshowTemplate = fs.readFileSync(
   path.join(__dirname, "flickrshowTemplate.html"), "utf8");
 var youtubeTemplate =
@@ -30,8 +31,8 @@ function flickr(req, res, next) {
   res.$("flickrshow").each(function(index, elem) {
     var $elem = res.$(elem);
     var href = $elem.attr("href");
-    //Need to parse this album URL, which I copy directly from a web browser
-    //https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
+    // Need to parse this album URL, which I copy directly from a web browser
+    // https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
     var slashes = url.parse(href).path.split("/");
     var locals = {
       userId: slashes[2],
@@ -61,7 +62,7 @@ function text(req, res, next) {
     length: req.headers["content-length"],
     limit: "1mb",
     encoding: "utf8"
-  }, function (error, string) {
+  }, function(error, string) {
     if (error) {
       next(error);
       return;

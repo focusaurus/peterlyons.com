@@ -3,7 +3,7 @@ var config = require("config3");
 
 function photoJSONToObject(gallery, photoJSON) {
   var photos = JSON.parse(photoJSON);
-  photos.forEach(function (photo) {
+  photos.forEach(function(photo) {
     photo.fullSizeURI = config.photos.photoURI + gallery.dirName + "/" +
       photo.name + config.photos.extension;
     photo.thumbnailURI = config.photos.photoURI + gallery.dirName + "/" +

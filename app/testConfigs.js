@@ -12,7 +12,7 @@ module.exports = [
   ["/favorites", /Imogen/],
   ["/plusparty", /Plus Party/],
   ["/jsDebug", /Lighting Up/],
-  ["/problog", new RegExp("Pete's Points")], //messes up syntax highlighting
+  ["/problog", /Pete's Points/],
   ["/persblog", /travel/],
   ["/app/photos?gallery=burning_man_2011", /Gallery/],
   ["/problog/2009/03/announcing-petes-points", /professional/],

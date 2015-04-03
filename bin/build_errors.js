@@ -8,6 +8,7 @@ var fs = require("fs");
 var jade = require("jade");
 var join = require("path").join;
 
+/* eslint no-sync:0 */
 [404, 500].forEach(function(code) {
   var filename = join(__dirname, "../app/site/error" + code + ".jade");
   var template = fs.readFileSync(filename, "utf8");

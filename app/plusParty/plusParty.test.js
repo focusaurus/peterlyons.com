@@ -2,14 +2,14 @@ var expect = require("chaimel");
 var plusParty = require("app/browser/plusParty");
 var testUtils = require("app/testUtils");
 
-describe("plusParty", function () {
-  describe("sum", function () {
+describe("plusParty", function() {
+  describe("sum", function() {
     it("should do a basic addition", function() {
       expect(plusParty.sum(21, 21)).toDeepEqual(42, "sum should add numbers");
     });
   });
 
-  describe("wrap", function () {
+  describe("wrap", function() {
     it("should wrap a number into an object with a value property", function() {
       var wrapped = plusParty.wrap(42);
       expect(typeof wrapped).toDeepEqual("object");
@@ -17,7 +17,7 @@ describe("plusParty", function () {
     });
   });
 
-  describe("parseNumbers", function () {
+  describe("parseNumbers", function() {
     it("should handle simple positive integers and whitespace", function() {
       expect(plusParty.parseNumbers("42")).toDeepEqual([42]);
       expect(plusParty.parseNumbers("42 15 666")).toDeepEqual([42, 15, 666]);
@@ -53,7 +53,7 @@ describe("plusParty", function () {
     });
   });
 
-  describe("recompute", function () {
+  describe("recompute", function() {
     it("should convert rawText into numbers and total", function() {
       var instance = {
         scope: {

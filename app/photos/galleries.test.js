@@ -11,7 +11,7 @@ var gallery = {
   dirName: "testGallery"
 };
 
-describe("app/photos/galleries", function () {
+describe("app/photos/galleries", function() {
   it("photoJSONToObject should parse and format JSON", function() {
     var photos = galleries.photoJSONToObject(gallery, mockPhotoJSON);
     expect(photos.length).toEqual(1);

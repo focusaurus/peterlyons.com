@@ -1,7 +1,7 @@
 var expect = require("chaimel");
 var slug = require("app/blogs/slug");
 
-describe("app/blogs/slug", function () {
+describe("app/blogs/slug", function() {
   it("should replace URL-unfriendly characters", function() {
     expect(slug("space to dash")).toEqual("space-to-dash");
     expect(slug("no apostrophe's")).toEqual("no-apostrophes");

@@ -140,7 +140,7 @@ var viewPostMiddleware = [
 function loadPost(URI, file, callback) {
   var post = new Post();
   post.base = config.blog.postBasePath;
-  post.load(file, URI, function (error) {
+  post.load(file, URI, function(error) {
     if (error) {
       callback(error);
       return;
@@ -153,13 +153,13 @@ function loadPost(URI, file, callback) {
 function loadBlog(URI, callback) {
   var basePath = path.join(config.blog.postBasePath, URI);
   basePath = path.normalize(basePath);
-  glob(basePath + "/**/*.json", function (error, files) {
+  glob(basePath + "/**/*.json", function(error, files) {
     if (error) {
       callback(error);
       return;
     }
     var boundLoad = loadPost.bind(null, URI);
-    async.map(files, boundLoad, function (error2, posts) {
+    async.map(files, boundLoad, function(error2, posts) {
       if (error2) {
         callback(error2);
         return;
@@ -167,7 +167,8 @@ function loadBlog(URI, callback) {
       posts = _.sortBy(posts, function(post) {
         return post.publish_date;
       }).reverse();
-      posts.forEach(function (post, index) {
+      posts.forEach(function(post, index) {
+        /* eslint no-ternary:0 */
         postLinks[post.uri()] = {
           next: index > 0 ? posts[index - 1] : null,
           previous: index < posts.length ? posts[index + 1] : null
@@ -200,7 +201,7 @@ function savePost(req, callback) {
 }
 
 function push(token, post, callback) {
-  execFile(config.blog.pushPath, [token], function (error, stdout, stderr) {
+  execFile(config.blog.pushPath, [token], function(error, stdout, stderr) {
     if (error) {
       log.error("Error pushing blog to github", error, stdout, stderr);
       callback(error);
@@ -251,11 +252,11 @@ function feedRenderPost(req, post, callback) {
     middleware.flickr,
     middleware.youtube,
     middleware.undomify,
-    function(req2, fakeRes2, next) {
+    function storeContent(req2, fakeRes2, next) {
       fakeRes2.post.content = fakeRes2.html;
       next();
     }
-  ], req, fakeRes, function (error) {
+  ], req, fakeRes, function(error) {
     if (error) {
       callback(error);
       return;
@@ -277,7 +278,7 @@ function feed(req, res, next) {
     pretty: true
   };
   var boundRender = feedRenderPost.bind(null, req);
-  async.map(recentPosts, boundRender, function (error, renderedPosts) {
+  async.map(recentPosts, boundRender, function(error, renderedPosts) {
     if (error) {
       next(error);
       return;

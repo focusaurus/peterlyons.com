@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 });
 
 /* eslint no-unused-vars:0 */
-//Express looks at function arity, so we must declare 4 arguments here
+// Express looks at function arity, so we must declare 4 arguments here
 app.use(function(error, req, res, next) {
   res.status(error.statusCode || 500);
   if (error.statusCode === 404) {

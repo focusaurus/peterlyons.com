@@ -6,7 +6,7 @@ function setup(app) {
     src: __dirname,
     compress: true,
     setup: function(renderer) {
-        return renderer.use(nib());
+      return renderer.use(nib());
     }
   }));
 }

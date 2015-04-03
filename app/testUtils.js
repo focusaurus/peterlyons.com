@@ -55,7 +55,7 @@ function pageContains(_url, _phraseVarArgs, _done) {
         expect(res.text).toInclude(
           phrase, "Document missing phrase " + phrase + res.text);
       } else {
-        //regex
+        // regex
         expect(res.text).toMatch(
           phrase, "Document does not match " + phrase.pattern);
       }

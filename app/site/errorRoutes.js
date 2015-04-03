@@ -8,9 +8,9 @@ function setup(app) {
     var code = parseInt(req.params[0], 10);
     res.status(code);
     if (code > 499) {
-        res.render("errors/error500");
+      res.render("errors/error500");
     } else {
-        res.render("errors/error404");
+      res.render("errors/error404");
     }
   });
 }

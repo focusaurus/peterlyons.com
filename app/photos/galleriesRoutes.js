@@ -26,7 +26,7 @@ function adminGalleries(req, res, next) {
       galleryDirNames = galleryDirNames.filter(function(name) {
         return jsonNames.indexOf(name) < 0;
       });
-      var newGalleries = galleryDirNames.map(function (dirName) {
+      var newGalleries = galleryDirNames.map(function(dirName) {
         return {dirName: dirName};
       });
       var allGalleries = jsonGalleries.concat(newGalleries);

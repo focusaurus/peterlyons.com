@@ -23,8 +23,8 @@ function parseNumbers(rawText) {
 
 function recompute() {
   this.scope.numbers = parseNumbers(this.scope.rawText);
-  //AngularJS repeaters require distinct objects, so we have to
-  //wrap our raw floats in objects to accommodate that
+  // AngularJS repeaters require distinct objects, so we have to
+  // wrap our raw floats in objects to accommodate that
   this.scope.wrappedNumbers = this.scope.numbers.map(wrap);
   this.scope.total = this.scope.numbers.reduce(sum, 0);
 }
@@ -39,19 +39,19 @@ function Controller($scope) {
 }
 
 function init() {
-  //Just require angular without assigning it.
-  //browserify returns an empty object, but window.angular is there
+  // Just require angular without assigning it.
+  // browserify returns an empty object, but window.angular is there
   require("angular");
   angular.module("PlusParty", []).controller("PlusPartyController", Controller);
   var ZeroClipboard = require("zeroclipboard");
   var copyButton = document.getElementById("copyToClipboard");
   var originalText = copyButton.textContent;
-  var resetText = function() {
+  function resetText() {
     copyButton.textContent = originalText;
-  };
+  }
   var client = new ZeroClipboard(copyButton);
-  client.on("ready", function () {
-    client.on("aftercopy", function () {
+  client.on("ready", function() {
+    client.on("aftercopy", function() {
       copyButton.textContent = "Copied!";
       setTimeout(resetText, 2000);
     });

@@ -10,7 +10,7 @@ var post = new Post(
 );
 post.base = "/unit/test/base";
 
-describe("Post model class", function () {
+describe("Post model class", function() {
   it("should store constructor props and compute slug", function() {
     expect(post.blog).toEqual("unitTestBlog");
     expect(post.title).toEqual("Unit Test Title");

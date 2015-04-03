@@ -3,7 +3,7 @@ var cheerio = require("cheerio");
 var expect = require("chaimel");
 var testUtils = require("app/testUtils");
 
-describe("wait for blogs to be loaded from disk", function () {
+describe("wait for blogs to be loaded from disk", function() {
   it("should wait for blogRoutes.ready event", function(done) {
     this.slow(3000);
     this.timeout(6000);

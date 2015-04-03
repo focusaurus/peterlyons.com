@@ -3,7 +3,7 @@ require("angular-mocks");
 var expect = require("chaimel");
 var CreatePost = require("app/browser/CreatePost");
 
-describe("CreatePost Controller", function () {
+describe("CreatePost Controller", function() {
   var injector;
   var options;
 
@@ -31,7 +31,7 @@ describe("CreatePost Controller", function () {
     $httpBackend.expectPOST("/convert", "#marked it down2")
       .respond(200, "<h1>marked it down2</h1>");
     injector.instantiate(CreatePost, options);
-    options.$scope.$apply(function () {
+    options.$scope.$apply(function() {
       options.$scope.contentMarkdown = "#marked it down2";
     });
     $httpBackend.flush();

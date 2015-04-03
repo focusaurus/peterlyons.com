@@ -3,8 +3,8 @@ var blogRoutes = require("app/blogs/blogRoutes");
 var bcrypt = require("bcryptjs");
 
 
-describe("blogRoutes", function () {
-  describe("presentPost", function () {
+describe("blogRoutes", function() {
+  describe("presentPost", function() {
     it("should format the date", function() {
       var presented = blogRoutes.presentPost({
         "publish_date": new Date(2014, 0, 31),
@@ -21,7 +21,7 @@ describe("blogRoutes", function () {
     });
   });
 
-  describe("BlogIndex", function () {
+  describe("BlogIndex", function() {
     it("should store URI, title, and blogTitle", function() {
       var index = new blogRoutes.BlogIndex("/uri", "blog title");
       expect(index.URI).toEqual("/uri");
@@ -30,13 +30,14 @@ describe("blogRoutes", function () {
     });
   });
 
-  describe("verifyPassword", function () {
+  describe("verifyPassword", function() {
     var password = "unit test blog password";
+    /* eslint no-sync:0 */
     var salt = bcrypt.genSaltSync(10);
     var hash = bcrypt.hashSync(password, salt);
 
     it("should callback without error with correct password", function(done) {
-      blogRoutes.verifyPassword(password, hash, function (error) {
+      blogRoutes.verifyPassword(password, hash, function(error) {
         expect(error).notToExist();
         done();
       });

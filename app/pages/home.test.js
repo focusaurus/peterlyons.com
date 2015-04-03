@@ -9,7 +9,7 @@ describe("the home page", function() {
       done(error);
     });
   });
-  it("should have the intro material", function () {
+  it("should have the intro material", function() {
     testUtils.assertSelectors($,
       "section.intro");
   });

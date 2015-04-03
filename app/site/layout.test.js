@@ -16,10 +16,10 @@ describe("the main layout", function() {
     var selector = "link[rel=stylesheet]";
     testUtils.assertSelectors($, selector);
     var hrefs = [];
-    $(selector).each(function (index, item) {
+    $(selector).each(function(index, item) {
       hrefs.push($(item).attr("href"));
     });
-    expect(_.some(hrefs, function (href) {
+    expect(_.some(hrefs, function(href) {
       return href.indexOf("fonts.googleapis.com") >= 0;
     })).toBeTrue();
   });
@@ -47,19 +47,19 @@ describe("the main layout", function() {
   });
 });
 
-describe("analytics snippet", function () {
-  before(function () {
+describe("analytics snippet", function() {
+  before(function() {
     config.analytics.enabled = true;
     config.analytics.code = "UNIT_TEST";
   });
 
-  after(function () {
+  after(function() {
     config.analytics.enabled = false;
     config.analytics.code = "";
   });
 
   it("should include the analytics snippet when enabled", function(done) {
-    testUtils.loadPage("/", function (error, $) {
+    testUtils.loadPage("/", function(error, $) {
       var selector = "script[data-id=analytics]";
       testUtils.assertSelectors($, selector);
       expect($(selector).text()).to.include("UNIT_TEST");

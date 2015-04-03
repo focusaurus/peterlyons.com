@@ -74,7 +74,7 @@ Post.prototype.load = function(metadataPath, blog, callback1) {
   this.metadataPath = metadataPath;
   this.blog = blog;
   function loadMetadata(callback) {
-    fs.readFile(self.metadataPath, "utf8", function (error, json) {
+    fs.readFile(self.metadataPath, "utf8", function(error, json) {
       if (error) {
         callback(error);
         return;
@@ -95,7 +95,7 @@ Post.prototype.load = function(metadataPath, blog, callback1) {
   function loadContent(callback) {
     var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf("."));
     var contentPath = noExt + "." + self.format;
-    fs.readFile(contentPath, "utf8", function (error, content) {
+    fs.readFile(contentPath, "utf8", function(error, content) {
       if (error) {
         callback(error);
         return;
