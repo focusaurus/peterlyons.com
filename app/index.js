@@ -35,6 +35,8 @@ app.use(compression());
 app.use(express.static(config.staticDir));
 app.use(express.static(config.wwwDir));
 app.use(express.static(config.zeroClipboardDir));
+// needed for reveal slideshows
+app.use("/reveal", express.static(config.revealDir));
 app.use(function(req, res, next) {
   next(new httpErrors.NotFound(req.path));
 });

@@ -1,4 +1,3 @@
-var cheerio = require("cheerio");
 var config = require("config3");
 var fs = require("fs");
 var jade = require("jade");
@@ -40,16 +39,10 @@ function setup(app) {
   app.get("/", function(req, res) {
     res.render("pages/home");
   });
-  app.get("/:deck(web_data|rapid_feedback|npm_gold)", function(req, res, next) {
-    app.render("pages/decks/" + req.params.deck, function(error, html) {
-      if (error) {
-        return next(error);
-      }
-      var $ = cheerio.load(html);
-      $("body").addClass("deck-container");
-      $("section").addClass("slide");
-      res.send($.html());
-    });
+  app.get(
+    "/:deck(web_data|rapid_feedback|npm_gold|12_factor_nodejs)",
+    function(req, res) {
+    res.render("pages/decks/" + req.params.deck);
   });
 }
 

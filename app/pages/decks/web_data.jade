@@ -1,345 +1,329 @@
-doctype html
-html(lang="en")
-  head
-    meta(charset="utf-8")
-    title How Data Powers the Web
-    link(href="/favicon.ico", type="image/x-icon", rel="icon")
-    link(href="/favicon.ico", type="image/x-icon", rel="shortcut icon")
-    link(rel="stylesheet", href="/deck.js/core/deck.core.css")
-    link(rel="stylesheet", href="/deck.js/extensions/menu/deck.menu.css")
-    link(rel="stylesheet", href="/deck.js/extensions/hash/deck.hash.css")
-    link(rel="stylesheet", href="/deck.js/themes/style/web-2.0.css")
-    link(rel="stylesheet", href="/deck.js/themes/transition/vertical-slide.css")
-  body
-    section
-      h2 Data, Data, Everywhere
-      h3 How data powers the web
-      h4 Session #3 of Skillshare course: Web Programming Concepts for Non-Programmers
-    section
-      h2 Pieces of the Web
-      ul
-        li HTML/CSS markup
-        li Images
-        li Code
-        li Data
-    section
-      h2 Where can we store our data?
-      ul
-        li Bare filesystem, data embedded in HTML
-        li Bare filesystem, data in raw data files
-          ul
-            li Comma Separated Values (CSV)
-            li eXtensible Markup Language (XML)
-            li JavaScript Object Notation (JSON)
-        li Database
-          ul
-            li Relational
-            li NoSQL
-        li Cloud Storage
-        li The Browser (HTML5 Local Storage)
-    section
-      h2 What's a filesystem?
-      ul
-        li Organization system for data files based on a nested tree structure (hierarchy)
-    section
-      h2 Bare filesystem, data embedded in HTML
-      ul
-        li Simple HTML files served directly by a web server
-        li No application server, no database server
-    section
-      h2 Example
-      h3 Random College Biology Department Course Syllabi
-      pre
-        code.
-          courses/2011/fall/BIO-101.html
-          courses/2011/fall/BIO-120.html
-          courses/2011/fall/BIO-210.html
-          courses/2011/fall/BIO-319.html
-          courses/2011/spring/BIO-102.html
-          courses/2011/spring/BIO-220.html
-          courses/2012/fall/BIO-101.html
-          courses/2012/fall/BIO-150.html
-          courses/2012/spring/BIO-102.html
-          courses/2012/spring/BIO-314.html
-    section
-      h2 HTML + Data notes
-      ul
-        li techncally simple, reliable, & cheap to create
-        li only presents data in one way. No queries or different views.
-        li hard to maintain over time as data grows
-        li hard to make bulk changes
-    section
-      h2 Bare filesystem, data in separate files
-      pre
-        code.
-          courses.html
-          courses.csv
-      pre
-        code.
-          year,semester,code,professor,day,time,description
-          2011,fall,BIO-101,Jones,MWF,2:00,How Life Works
-          2011,fall,BIO-120,Baker,TTh,11:00,Single-Cell Organisms
-          2011,fall,BIO-210,Schnider,MWF,10:00,Mitosis
-          2011,fall,BIO-319,Yun,MTh,9:00,The Golgi Apparatus
-          2011,spring,BIO-102,Jones,MWF,2:00,How Life Works
-          2011,spring,BIO-220,Schnider,MWF,10:00,Protein
-          2012,fall,BIO-101,Jones,MWF,2:00,How Life Works
-          2012,fall,BIO-150,Yun,MThF,12:00,Pathogens
-          2012,spring,BIO-102,Baker,TTh,3:30,Stem Cells
-          2012,spring/BIO-314,Merriman,MWF,6:00,Advanced Labratory Technique
-    section
-      h2 Simple data files
-      ul
-        li Easier to change just the data or just the HTML presentation
-        li less duplication of HTML
-        li easier to add basic filters, queries, sorting
-    section
-      h2 Comma Separated Values (CSV) Format
-      ul
-        li Analogous to a spreadsheet
-        li one set of columns, many rows, same set of fields each row
-        li works well for many data sets
-        li cannot support complex nested structures and relationships
-    section
-      h2 XML Format
-      ul
-        li Wanted one standardized format used by many programs
-        li tired of each program having its own unique data file format
-        li very portable and compatible across programming languages, OSes
-        li wanted to be both computer-readable and human-readable
-        li Extremely widespread use
-    section
-      h2 Sample XML data
-      p Similar to HTML but very strict syntax and semantic elements and attributes
-      pre
-        code.
-          &lt;course&gt;
-            &lt;code&gt;BIO-101&lt;/code&gt;
-            &lt;semester&gt;fall&lt;/semester&gt;
-            &lt;year&gt;2011&lt;/year&gt;
-            &lt;professor&gt;Jones&lt;/professor&gt;
-            &lt;day&gt;MWF&lt;/day&gt;
-            &lt;time&gt;2:00&lt;/time&gt;
-            &lt;description&gt;How Life Works&lt;/description&gt;
-          &lt;/course&gt;
-    section
-      h2 JavaScript Object Notation (JSON) Format
-      ul
-        li XML became increasingly complex and cumbersome
-        li JSON took a simpler and more pragmatic approach
-        li Friendly for JavaScript developers
-        li Now in very widespread use, especially in APIs and web applications
-        li simple data types and structures
-    section
-      h2 Sample JSON Data
-      pre
-        code.
-          {
-            "code": "BIO-101",
-            "day": "MWF",
-            "description": "How Life Works",
-            "professor": "Jones",
-            "semester": "fall",
-            "time": "2:00",
-            "year": 2011
-          }
-    section
-      h2 Relational Databases
-      ul
-        li Database: Repository of a single set of related data
-        li Schema: defines how the data is structured
-        li A set of tables comprised of rows and fields
-    section
-      h2 Relational Database Data Types
-      ul
-        li Rows & Columns
-        li Data types for columns: text, numbers, dates, boolean, sequences, etc
-        li Constraints: Primary Key, Foreign Key, Uniqueness
-        li indexes
-        li stored procedures
-    section
-      h2 ACID Transactions
-      ul
-        li Atomicity (all or nothing)
-        li Conistency (data is always valid and within constraints)
-        li Isolation (Transactions don't interfere with each other)
-        li Durability (data is always safe)
-    section
-      h2 Popular Relation Databases
-      ul
-        li MySQL
-        li PostgreSQL
-        li Oracle
-        li MS SQL Server
-        li IBM DB2
-        li Sybase
-        li MS Access
-    section
-      h2 Structured Query Language (SQL)
-      ul
-        li Usually pronounced "Sequel" or "S Q L"
-        li core set of official standards portable across RBDMSes
-        li Many DBs have proprietary extensions or variations
-        li Data Definition Language (create, drop, alter, etc)
-        li Data Manipulation Language (select, update, insert, delete, etc)
-        li Data Control Language (grant, revoke)
-        li Transaction Control Language (commit, rollback, etc)
-    section
-      h2 Example SQL Query
-      pre
-        code.
-          SELECT isbn, title, price, price * 0.06 AS sales_tax
-          FROM Book
-          WHERE price > 100.00
-          ORDER BY title;
-    section
-      h2 3-Tier Web Application Architecture
-      | Browser &harr; Web Server &harr; Application Server &harr; Database Server
-    section
-      h2 Example: PHP App Queries MySQL DB and generates HTML
-      pre
-        code.
-           &lt;?php
-           // Connects to your Database
-           mysql_connect("your.hostaddress.com", "username", "password") or die(mysql_error());
-           mysql_select_db("Database_Name") or die(mysql_error());
-           $data = mysql_query("SELECT * FROM friends WHERE pet='Cat'")
-           or die(mysql_error());
-           Print "&lt;table border cellpadding=3&gt;";
-           while($info = mysql_fetch_array( $data ))
-           {
-           Print "&lt;tr&gt;";
-           Print "&lt;th&gt;Name:&lt;/th&gt; &lt;td&gt;".$info['name'] . "&lt;/td&gt; ";
-           Print "&lt;th&gt;Color:&lt;/th&gt; &lt;td&gt;".$info['fav_color'] . "&lt;/td&gt; ";
-           Print "&lt;th&gt;Food:&lt;/th&gt; &lt;td&gt;".$info['fav_food'] . "&lt;/td&gt; ";
-           Print "&lt;th&gt;Pet:&lt;/th&gt; &lt;td&gt;".$info['pet'] . " &lt;/td&gt;&lt;/tr&gt;";
-           }
-           Print "&lt;/table&gt;";
-           ?&gt;
-    section
-      h2 Example: Ruby on Rails using ActiveRecord data to generate HTML
-      pre
-        code.
-          &lt;h1&gt;Listing Books&lt;/h1&gt;
+extends deck
+block head
+  title How Data Powers the Web
+block slides
+  section
+    h2 Data, Data, Everywhere
+    h3 How data powers the web
+    h4 Session #3 of Skillshare course: Web Programming Concepts for Non-Programmers
+  section
+    h2 Pieces of the Web
+    ul
+      li HTML/CSS markup
+      li Images
+      li Code
+      li Data
+  section
+    h2 Where can we store our data?
+    ul
+      li Bare filesystem, data embedded in HTML
+      li Bare filesystem, data in raw data files
+        ul
+          li Comma Separated Values (CSV)
+          li eXtensible Markup Language (XML)
+          li JavaScript Object Notation (JSON)
+      li Database
+        ul
+          li Relational
+          li NoSQL
+      li Cloud Storage
+      li The Browser (HTML5 Local Storage)
+  section
+    h2 What's a filesystem?
+    ul
+      li Organization system for data files based on a nested tree structure (hierarchy)
+  section
+    h2 Bare filesystem, data embedded in HTML
+    ul
+      li Simple HTML files served directly by a web server
+      li No application server, no database server
+  section
+    h2 Example
+    h3 Random College Biology Department Course Syllabi
+    pre
+      code.
+        courses/2011/fall/BIO-101.html
+        courses/2011/fall/BIO-120.html
+        courses/2011/fall/BIO-210.html
+        courses/2011/fall/BIO-319.html
+        courses/2011/spring/BIO-102.html
+        courses/2011/spring/BIO-220.html
+        courses/2012/fall/BIO-101.html
+        courses/2012/fall/BIO-150.html
+        courses/2012/spring/BIO-102.html
+        courses/2012/spring/BIO-314.html
+  section
+    h2 HTML + Data notes
+    ul
+      li techncally simple, reliable, & cheap to create
+      li only presents data in one way. No queries or different views.
+      li hard to maintain over time as data grows
+      li hard to make bulk changes
+  section
+    h2 Bare filesystem, data in separate files
+    pre
+      code.
+        courses.html
+        courses.csv
+    pre
+      code.
+        year,semester,code,professor,day,time,description
+        2011,fall,BIO-101,Jones,MWF,2:00,How Life Works
+        2011,fall,BIO-120,Baker,TTh,11:00,Single-Cell Organisms
+        2011,fall,BIO-210,Schnider,MWF,10:00,Mitosis
+        2011,fall,BIO-319,Yun,MTh,9:00,The Golgi Apparatus
+        2011,spring,BIO-102,Jones,MWF,2:00,How Life Works
+        2011,spring,BIO-220,Schnider,MWF,10:00,Protein
+        2012,fall,BIO-101,Jones,MWF,2:00,How Life Works
+        2012,fall,BIO-150,Yun,MThF,12:00,Pathogens
+        2012,spring,BIO-102,Baker,TTh,3:30,Stem Cells
+        2012,spring/BIO-314,Merriman,MWF,6:00,Advanced Labratory Technique
+  section
+    h2 Simple data files
+    ul
+      li Easier to change just the data or just the HTML presentation
+      li less duplication of HTML
+      li easier to add basic filters, queries, sorting
+  section
+    h2 Comma Separated Values (CSV) Format
+    ul
+      li Analogous to a spreadsheet
+      li one set of columns, many rows, same set of fields each row
+      li works well for many data sets
+      li cannot support complex nested structures and relationships
+  section
+    h2 XML Format
+    ul
+      li Wanted one standardized format used by many programs
+      li tired of each program having its own unique data file format
+      li very portable and compatible across programming languages, OSes
+      li wanted to be both computer-readable and human-readable
+      li Extremely widespread use
+  section
+    h2 Sample XML data
+    p Similar to HTML but very strict syntax and semantic elements and attributes
+    pre
+      code.
+        &lt;course&gt;
+          &lt;code&gt;BIO-101&lt;/code&gt;
+          &lt;semester&gt;fall&lt;/semester&gt;
+          &lt;year&gt;2011&lt;/year&gt;
+          &lt;professor&gt;Jones&lt;/professor&gt;
+          &lt;day&gt;MWF&lt;/day&gt;
+          &lt;time&gt;2:00&lt;/time&gt;
+          &lt;description&gt;How Life Works&lt;/description&gt;
+        &lt;/course&gt;
+  section
+    h2 JavaScript Object Notation (JSON) Format
+    ul
+      li XML became increasingly complex and cumbersome
+      li JSON took a simpler and more pragmatic approach
+      li Friendly for JavaScript developers
+      li Now in very widespread use, especially in APIs and web applications
+      li simple data types and structures
+  section
+    h2 Sample JSON Data
+    pre
+      code.
+        {
+          "code": "BIO-101",
+          "day": "MWF",
+          "description": "How Life Works",
+          "professor": "Jones",
+          "semester": "fall",
+          "time": "2:00",
+          "year": 2011
+        }
+  section
+    h2 Relational Databases
+    ul
+      li Database: Repository of a single set of related data
+      li Schema: defines how the data is structured
+      li A set of tables comprised of rows and fields
+  section
+    h2 Relational Database Data Types
+    ul
+      li Rows & Columns
+      li Data types for columns: text, numbers, dates, boolean, sequences, etc
+      li Constraints: Primary Key, Foreign Key, Uniqueness
+      li indexes
+      li stored procedures
+  section
+    h2 ACID Transactions
+    ul
+      li Atomicity (all or nothing)
+      li Conistency (data is always valid and within constraints)
+      li Isolation (Transactions don't interfere with each other)
+      li Durability (data is always safe)
+  section
+    h2 Popular Relation Databases
+    ul
+      li MySQL
+      li PostgreSQL
+      li Oracle
+      li MS SQL Server
+      li IBM DB2
+      li Sybase
+      li MS Access
+  section
+    h2 Structured Query Language (SQL)
+    ul
+      li Usually pronounced "Sequel" or "S Q L"
+      li core set of official standards portable across RBDMSes
+      li Many DBs have proprietary extensions or variations
+      li Data Definition Language (create, drop, alter, etc)
+      li Data Manipulation Language (select, update, insert, delete, etc)
+      li Data Control Language (grant, revoke)
+      li Transaction Control Language (commit, rollback, etc)
+  section
+    h2 Example SQL Query
+    pre
+      code.
+        SELECT isbn, title, price, price * 0.06 AS sales_tax
+        FROM Book
+        WHERE price > 100.00
+        ORDER BY title;
+  section
+    h2 3-Tier Web Application Architecture
+    | Browser &harr; Web Server &harr; Application Server &harr; Database Server
+  section
+    h2 Example: PHP App Queries MySQL DB and generates HTML
+    pre
+      code.
+         &lt;?php
+         // Connects to your Database
+         mysql_connect("your.hostaddress.com", "username", "password") or die(mysql_error());
+         mysql_select_db("Database_Name") or die(mysql_error());
+         $data = mysql_query("SELECT * FROM friends WHERE pet='Cat'")
+         or die(mysql_error());
+         Print "&lt;table border cellpadding=3&gt;";
+         while($info = mysql_fetch_array( $data ))
+         {
+         Print "&lt;tr&gt;";
+         Print "&lt;th&gt;Name:&lt;/th&gt; &lt;td&gt;".$info['name'] . "&lt;/td&gt; ";
+         Print "&lt;th&gt;Color:&lt;/th&gt; &lt;td&gt;".$info['fav_color'] . "&lt;/td&gt; ";
+         Print "&lt;th&gt;Food:&lt;/th&gt; &lt;td&gt;".$info['fav_food'] . "&lt;/td&gt; ";
+         Print "&lt;th&gt;Pet:&lt;/th&gt; &lt;td&gt;".$info['pet'] . " &lt;/td&gt;&lt;/tr&gt;";
+         }
+         Print "&lt;/table&gt;";
+         ?&gt;
+  section
+    h2 Example: Ruby on Rails using ActiveRecord data to generate HTML
+    pre
+      code.
+        &lt;h1&gt;Listing Books&lt;/h1&gt;
 
-          &lt;table&gt;
-            &lt;tr&gt;
-              &lt;th&gt;Title&lt;/th&gt;
-              &lt;th&gt;Summary&lt;/th&gt;
-              &lt;th&gt;&lt;/th&gt;
-              &lt;th&gt;&lt;/th&gt;
-              &lt;th&gt;&lt;/th&gt;
-            &lt;/tr&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;th&gt;Title&lt;/th&gt;
+            &lt;th&gt;Summary&lt;/th&gt;
+            &lt;th&gt;&lt;/th&gt;
+            &lt;th&gt;&lt;/th&gt;
+            &lt;th&gt;&lt;/th&gt;
+          &lt;/tr&gt;
 
-          &lt;% @books.each do |book| %&gt;
-            &lt;tr&gt;
-              &lt;td&gt;&lt;%= book.title %&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;%= book.content %&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;%= link_to \&#039;Show\&#039;, book %&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;%= link_to \&#039;Edit\&#039;, edit_book_path(book) %&gt;&lt;/td&gt;
-              &lt;td&gt;&lt;%= link_to \&#039;Remove\&#039;, book, :confirm =&gt; \&#039;Are you sure?\&#039;, :method =&gt; :delete %&gt;&lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;% end %&gt;
-          &lt;/table&gt;
+        &lt;% @books.each do |book| %&gt;
+          &lt;tr&gt;
+            &lt;td&gt;&lt;%= book.title %&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;%= book.content %&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;%= link_to \&#039;Show\&#039;, book %&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;%= link_to \&#039;Edit\&#039;, edit_book_path(book) %&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;%= link_to \&#039;Remove\&#039;, book, :confirm =&gt; \&#039;Are you sure?\&#039;, :method =&gt; :delete %&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;% end %&gt;
+        &lt;/table&gt;
 
-          &lt;br /&gt;
+        &lt;br /&gt;
 
-          &lt;%= link_to \&#039;New book\&#039;, new_book_path %&gt;
-    section
-      h2 NoSQL Attributes
-      ul
-        li Schemaless
-        li Distributed (shared, elastic, expandable)
-        li BASE instead of ACID
-        li MapReduce, BigTable, Dynamo, CAP Theorem
-    section
-      h2 NoSQL Databases
-      a(href="http://dbpedias.com/wiki/NoSQL:Survey_of_Distributed_Databases#Overview_2") Survey of Distributed Databases
-    section
-      h2 BASE
-      ul
-        li Basically Available
-        li Soft state
-        li Eventually consistent
-      h2 CAP Theorem
-      ul
-        li Consistency
-        li Availability
-        li Partition Tolerance
-        li (Pick only 2!)
-    section
-      h2 Map Reduce
-      ul
-        li Map:  map([2, 7, 13, 24], double) yields [4, 14, 26, 48]
-        li Reduce: sum, average, min, max
-      h2 Exercise: Sharding and MapReduce
-    section
-      img(src="http://dbpedias.com/w/images/9/90/MongoDB.JPG", alt="SQL to NoSQL")
-    section
-      h2 Cloud Storage
-      ul
-        li Amazon S3 (filesystem)
-        li Amazon RDS (SQL DB)
-        li Amazon SimpleDB (Key/Value DB)
-        li Microsoft SQL Azure
-    section
-      h2 HTML5 LocalStorage
-      ul
-        li Small area of storage on a single web browser
-        li Addresses some of the pervisions of Cookies
-        li A SQL-type database was proposed but has since been canceled
-    section
-      h2 Application Programming Interfaces (APIs)
-      ul
-        li Provide a means by which a third party program can interact with a service
-        li Exploding in popularity of late
-        li Examples: OAuth, Facebook Connect, Google Maps, Flickr, Twitter clients
-    section
-      h2 API Plumbing
-      ul
-        li HTTP is becoming the universal transport protocol
-        li messages formatted with URL Encoding, XML, or JSON
-        li AJAX: Asynchronous JavaScript and XML
-          ul
-            li JSON often used instead of XML but AJAX name predates JSON
-        li Provides independence from programming language
-    section
-      h2 References
-      ul
-        li
-          a(href="http://en.wikipedia.org/wiki/File_system") Wikipedia: File system
-        li
-          a(href="http://javamazon.com/2011/11/04/csv-vs-xml-vs-json/") CSV vs. XML vs. JSON
-        li
-          a(href="http://www.json.org/xml.html") JSON: The Fat-free Alternative to XML
-        li
-          a(href="http://en.wikipedia.org/wiki/Relational_model") Wikipedia: The Relational Model
-        li
-          a(href="http://www.orafaq.com/faq/what_are_the_difference_between_ddl_dml_and_dcl_commands") SQL: DDL, DML, DCL
-        li
-          a(href="http://en.wikipedia.org/wiki/ACID") ACID transactions
-        li
-          a(href="http://www.itl.nist.gov/div897/ctg/dm/sql_examples.htm") SQL Examples
-        li
-          a(href="http://en.wikipedia.org/wiki/SQL") Wikipedia: SQL
-        li
-          a(href="http://php.about.com/od/phpwithmysql/ss/mysql_php_3.htm") SQL Queries in PHP
-        li
-          a(href="http://en.wikipedia.org/wiki/Multitier_architecture") Wikipedia: Multitier architecture
-        li
-          a(href="http://nosql-database.org/") http://nosql-database.org/
-        li
-          a(href="http://dbpedias.com/wiki/NoSQL:Survey_of_Distributed_Databases") Survey of Distributed Databases
-        li
-          a(href="http://practicalcloudcomputing.com/post/16109041412/the-state-of-nosql-in-2012") State of NqSQL in 2012
-        li
-          a(href="http://diveintohtml5.info/storage.html") HTML5 Local Storage
-        li
-          a(href="http://en.wikipedia.org/wiki/Ajax_(programming)") Wikipedia: AJAX
-    script(src="/deck.js/jquery-1.7.2.min.js")
-    script(src="/deck.js/modernizr.custom.js")
-    script(src="/deck.js/core/deck.core.js")
-    script(src="/deck.js/extensions/menu/deck.menu.js")
-    script(src="/deck.js/extensions/hash/deck.hash.js")
-    script.
-      $.deck(".slide")
+        &lt;%= link_to \&#039;New book\&#039;, new_book_path %&gt;
+  section
+    h2 NoSQL Attributes
+    ul
+      li Schemaless
+      li Distributed (shared, elastic, expandable)
+      li BASE instead of ACID
+      li MapReduce, BigTable, Dynamo, CAP Theorem
+  section
+    h2 NoSQL Databases
+    a(href="http://dbpedias.com/wiki/NoSQL:Survey_of_Distributed_Databases#Overview_2") Survey of Distributed Databases
+  section
+    h2 BASE
+    ul
+      li Basically Available
+      li Soft state
+      li Eventually consistent
+    h2 CAP Theorem
+    ul
+      li Consistency
+      li Availability
+      li Partition Tolerance
+      li (Pick only 2!)
+  section
+    h2 Map Reduce
+    ul
+      li Map:  map([2, 7, 13, 24], double) yields [4, 14, 26, 48]
+      li Reduce: sum, average, min, max
+    h2 Exercise: Sharding and MapReduce
+  section
+    img(src="http://dbpedias.com/w/images/9/90/MongoDB.JPG", alt="SQL to NoSQL")
+  section
+    h2 Cloud Storage
+    ul
+      li Amazon S3 (filesystem)
+      li Amazon RDS (SQL DB)
+      li Amazon SimpleDB (Key/Value DB)
+      li Microsoft SQL Azure
+  section
+    h2 HTML5 LocalStorage
+    ul
+      li Small area of storage on a single web browser
+      li Addresses some of the pervisions of Cookies
+      li A SQL-type database was proposed but has since been canceled
+  section
+    h2 Application Programming Interfaces (APIs)
+    ul
+      li Provide a means by which a third party program can interact with a service
+      li Exploding in popularity of late
+      li Examples: OAuth, Facebook Connect, Google Maps, Flickr, Twitter clients
+  section
+    h2 API Plumbing
+    ul
+      li HTTP is becoming the universal transport protocol
+      li messages formatted with URL Encoding, XML, or JSON
+      li AJAX: Asynchronous JavaScript and XML
+        ul
+          li JSON often used instead of XML but AJAX name predates JSON
+      li Provides independence from programming language
+  section
+    h2 References
+    ul
+      li
+        a(href="http://en.wikipedia.org/wiki/File_system") Wikipedia: File system
+      li
+        a(href="http://javamazon.com/2011/11/04/csv-vs-xml-vs-json/") CSV vs. XML vs. JSON
+      li
+        a(href="http://www.json.org/xml.html") JSON: The Fat-free Alternative to XML
+      li
+        a(href="http://en.wikipedia.org/wiki/Relational_model") Wikipedia: The Relational Model
+      li
+        a(href="http://www.orafaq.com/faq/what_are_the_difference_between_ddl_dml_and_dcl_commands") SQL: DDL, DML, DCL
+      li
+        a(href="http://en.wikipedia.org/wiki/ACID") ACID transactions
+      li
+        a(href="http://www.itl.nist.gov/div897/ctg/dm/sql_examples.htm") SQL Examples
+      li
+        a(href="http://en.wikipedia.org/wiki/SQL") Wikipedia: SQL
+      li
+        a(href="http://php.about.com/od/phpwithmysql/ss/mysql_php_3.htm") SQL Queries in PHP
+      li
+        a(href="http://en.wikipedia.org/wiki/Multitier_architecture") Wikipedia: Multitier architecture
+      li
+        a(href="http://nosql-database.org/") http://nosql-database.org/
+      li
+        a(href="http://dbpedias.com/wiki/NoSQL:Survey_of_Distributed_Databases") Survey of Distributed Databases
+      li
+        a(href="http://practicalcloudcomputing.com/post/16109041412/the-state-of-nosql-in-2012") State of NqSQL in 2012
+      li
+        a(href="http://diveintohtml5.info/storage.html") HTML5 Local Storage
+      li
+        a(href="http://en.wikipedia.org/wiki/Ajax_(programming)") Wikipedia: AJAX

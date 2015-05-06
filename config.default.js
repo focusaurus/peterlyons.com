@@ -19,6 +19,7 @@ var config = {
   port: get("port", 9000),
   staticDir: join(__dirname, "../static"),
   titleSuffix: " | Peter Lyons",
+  revealDir: join(__dirname, "node_modules/reveal"),
   wwwDir: join(__dirname, "www"),
   zeroClipboardDir: join(__dirname, "node_modules/zeroclipboard/dist")
 };

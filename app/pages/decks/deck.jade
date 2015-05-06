@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    block head
+    link(rel="stylesheet", href="/reveal/index.css")
+    link(rel="stylesheet", href="/deck.css")
+    link(href="/favicon.jpg" type="image/jpeg" rel="icon")
+    link(rel="author" type="text/plain" href="/humans.txt")
+    meta(name="author" content="Peter Lyons")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body.reveal
+    .slides
+      block slides
+      section
+        h2 The End
+        p <a href="http://peterlyons.com">peterlyons.com</a>
+    block scripts
+      script(src="/reveal.js?v=" + appVersion)
+      if analytics.enabled
+        script(data-id="analytics")!= analytics.script()

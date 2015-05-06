@@ -64,11 +64,17 @@ function pageContains(_url, _phraseVarArgs, _done) {
   });
 }
 
+function assertDeck($) {
+  expect($(".reveal .slides section").length).toBeAbove(3);
+  assertSubstrings($, "reveal.js");
+}
+
 module.exports = {
   get: get,
   post: post,
   loadPage: loadPage,
   pageContains: pageContains,
   assertSelectors: assertSelectors,
-  assertSubstrings: assertSubstrings
+  assertSubstrings: assertSubstrings,
+  assertDeck: assertDeck
 };

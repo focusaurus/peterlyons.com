@@ -12,6 +12,7 @@ module.exports = [
   ["/favorites", /Imogen/],
   ["/plusparty", /Plus Party/],
   ["/jsDebug", /Lighting Up/],
+  ["/12_factor_nodejs", /12-Factor/],
   ["/problog", /Pete's Points/],
   ["/persblog", /travel/],
   ["/app/photos?gallery=burning_man_2011", /Gallery/],
