@@ -1,0 +1,111 @@
+extends deck
+block head
+  title Twelve-Factor Apps in node.js
+block slides
+  section
+    h2 Twelve-Factor Apps In node.js
+    h3 Peter Lyons
+  section
+    section
+      h2 About Me
+    section
+      ul
+        li Freelance Consultant
+        li Full-stack web applications
+        li node.js specialist
+        li http://peterlyons.com
+  section
+    section
+      h2 What is Twelve-Factor?
+    section
+      ul
+        li 
+          a(href="http://12factor.net") 12factor.net
+        li A methodology for application lifecycle management
+        li Based on Heroku's experience running 1000s of applications
+        li Optimized for the cloud era: IaaS, SaaS, PaaS, scale out
+        li Embodies opinions and best practices
+        ul
+          li not the only valid approach
+          li not appropriate for all applications or organizations
+  section
+    section
+      h3 Pre-PaaS Genisis of Twelve-Factor
+    section
+      h3 Deployment and Operations Before PaaS
+      ul
+        li sysadmins + ssh + bash
+        li undocumented systems, tribal knowledge
+        li manual repetition of procedures
+        li error prone
+        li easy to get into inconsistent state
+        li scary reboots and rebuilds
+        li precious golden servers
+        li relatively tight coupling between the app and the underlying OS
+        li high variance between dev/test/prod environments
+        li high variance across companies/applications
+  section
+    section
+      h2 Platform as a Service (PaaS)
+    section
+      ul
+        li takes off around 2008 (Google App Engine)
+        li How does this effect application lifecycles?
+    section
+      ul
+        li as PaaS product category blooms, industry needs to converge on automatable conventions
+        li need standard workflow
+        ul
+          li get latest source
+          li create build artifact
+          li deploy to servers
+          li restart services
+  section
+    h2 The Twelve Factors
+  section
+    section
+      h2 1. Codebase
+    section
+      ul
+        li Use git or $SCM
+        li 1 to 1 mapping repo to app
+        ul
+          li 1 repo containing multiple apps: nope
+          li 1 app built from multiple repos: nope
+        li node.js specifics
+        ul
+          li extract shared libraries to separate npm repos
+          li use private git repo URLs or npm Enterprise
+  section
+    section
+      h2 2. Dependencies
+    section
+      ul
+        li use npm package.json properly
+        li no system-level subprocesses
+        ul
+          li docker containers can help with this
+  section
+    section
+      h2 3. Config
+    section
+      ul
+        li app loads from OS environment variables
+        li In systemd, use <code>EnvFile=</code>
+        li don't group into named "environments"
+        ul
+          li ("production", "development", "staging", etc)
+        li npm module: <a href="https://www.npmjs.com/package/config3">config3</a>
+  section
+    section
+      h2 6. Processes
+    section
+      ul
+        li use systemd
+  section
+    section
+      h2 11. Logs
+    section
+      ul
+        li npm module: bole
+        li bunyan, winston also OK

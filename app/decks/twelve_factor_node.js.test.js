@@ -1,9 +1,9 @@
 var testUtils = require("app/testUtils");
 
-describe("the 12-Factor node.js slide deck", function() {
+describe("the Twelve-Factor node.js slide deck", function() {
   var $ = null;
   before(function(done) {
-    testUtils.loadPage("/12_factor_nodejs", function(error, dom) {
+    testUtils.loadPage("/twelve_factor_nodejs", function(error, dom) {
       $ = dom;
       done(error);
     });
