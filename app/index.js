@@ -22,6 +22,7 @@ if (config.enableLogger) {
   "blogs/blogRoutes",
   "plusParty/plusPartyRoutes",
   "jsDebug/jsDebugRoutes",
+  "decks/decksRoutes",
   "pages/pagesRoutes",
   "photos/photosRoutes",
   "photos/galleriesRoutes",

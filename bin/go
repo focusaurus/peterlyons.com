@@ -110,7 +110,7 @@ task::bundle() {
     -o www/plws.js \
     --debug \
     $(./bin/browserify_args.sh)
-  browserify -o www/reveal.js -e app/browser/slideshow
+  browserify -o www/reveal.js -e app/browser/deck
 }
 
 doc "* lint: enforce code style/quality with eslint"
