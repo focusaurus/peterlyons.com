@@ -13,6 +13,7 @@ module.exports = [
   ["/plusparty", /Plus Party/],
   ["/jsDebug", /Lighting Up/],
   ["/twelve_factor_nodejs", /Twelve-Factor/],
+  ["/talks", /Speaking/],
   ["/problog", /Pete's Points/],
   ["/persblog", /travel/],
   ["/app/photos?gallery=burning_man_2011", /Gallery/],
