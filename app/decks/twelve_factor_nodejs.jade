@@ -1,25 +1,47 @@
 extends deck
+mixin fig(imageUrl, authorName, authorUrl, licenseName, licenseUrl)
+  figure
+    img(src=imageUrl)
+    figcaption Photo by
+      != "&nbsp;"
+      a(href=authorUrl)= authorName
+      != "&nbsp;"
+      a(href=licenseUrl)= "(" + licenseName + ")"
+
+mixin slide(title)
+  section
+    h2= title
+    block
+
+mixin vslide(title)
+  section
+    section
+      h2= title
+    section
+      block
+
 block head
   title Twelve-Factor Apps in node.js
 block slides
-  section
-    h2 Twelve-Factor Apps In node.js
+  +slide("Twelve-Factor Apps In node.js")
     h3 Peter Lyons
+  +slide("About Me")
+    ul
+      li Freelance Consultant
+      li Full-stack web applications
+      li node.js specialist
+      li http://peterlyons.com
   section
-    section
-      h2 About Me
+    +slide("What is Twelve-Factor?")
+      +fig(
+        "https://farm6.staticflickr.com/5613/15358706278_5a28094fdc_z_d.jpg",
+        "InvernoDreaming",
+        "https://www.flickr.com/photos/invernodreaming/",
+        "CC BY-ND 2.0",
+        "https://creativecommons.org/licenses/by-nd/2.0/")
     section
       ul
-        li Freelance Consultant
-        li Full-stack web applications
-        li node.js specialist
-        li http://peterlyons.com
-  section
-    section
-      h2 What is Twelve-Factor?
-    section
-      ul
-        li 
+        li
           a(href="http://12factor.net") 12factor.net
         li A methodology for application lifecycle management
         li Based on Heroku's experience running 1000s of applications
@@ -29,8 +51,13 @@ block slides
           li not the only valid approach
           li not appropriate for all applications or organizations
   section
-    section
-      h3 Pre-PaaS Genisis of Twelve-Factor
+    +slide("Pre-PaaS Genisis of Twelve-Factor")
+      +fig(
+        "https://farm1.staticflickr.com/33/43131875_c0314382a2_z_d.jpg",
+        "Phil Hollenback",
+        "https://www.flickr.com/photos/phrenologist/",
+        "CC BY-NC 2.0",
+        "https://creativecommons.org/licenses/by-nc/2.0/")
     section
       h3 Deployment and Operations Before PaaS
       ul
@@ -45,9 +72,14 @@ block slides
         li high variance between dev/test/prod environments
         li high variance across companies/applications
   section
-    section
-      h2 Platform as a Service (PaaS)
-    section
+    +slide("Platform as a Service (PaaS)")
+      +fig(
+        "https://farm8.staticflickr.com/7474/15447707963_9f80204190_z_d.jpg",
+        "Dennis Skley",
+        "https://www.flickr.com/photos/dskley/",
+        "CC BY-ND 2.0",
+        "https://creativecommons.org/licenses/by-nd/2.0/"
+      )
       ul
         li takes off around 2008 (Google App Engine)
         li How does this effect application lifecycles?
@@ -60,11 +92,15 @@ block slides
           li create build artifact
           li deploy to servers
           li restart services
+  +slide("The Twelve Factors")
   section
-    h2 The Twelve Factors
-  section
-    section
-      h2 1. Codebase
+    +slide("1. Codebase")
+      +fig(
+        "https://farm4.staticflickr.com/3050/2960047774_6e39a980dc_z_d.jpg",
+        "Nick Quaranto",
+        "https://www.flickr.com/photos/qrush/",
+        "CC BY-SA 2.0",
+        "https://creativecommons.org/licenses/by-sa/2.0/")
     section
       ul
         li Use git or $SCM
@@ -77,8 +113,13 @@ block slides
           li extract shared libraries to separate npm repos
           li use private git repo URLs or npm Enterprise
   section
-    section
-      h2 2. Dependencies
+    +slide("2. Dependencies")
+      +fig(
+        "https://pbs.twimg.com/media/B-HNKodCcAATQbS.jpg:large",
+        "@funniesJS",
+        "https://twitter.com/funniesJS",
+        "CC BY-SA",
+        "https://creativecommons.org/licenses/by-sa/2.0/")
     section
       ul
         li use npm package.json properly
@@ -86,8 +127,13 @@ block slides
         ul
           li docker containers can help with this
   section
-    section
-      h2 3. Config
+    +slide("3. Config")
+      +fig(
+        "https://farm5.staticflickr.com/4117/4764881882_de0ebb806a_z_d.jpg",
+        "Ronan",
+        "https://www.flickr.com/photos/ronancantwell/",
+        "CC BY-NC-ND 2.0)",
+        "https://creativecommons.org/licenses/by-nc-nd/2.0/")
     section
       ul
         li app loads from OS environment variables
@@ -97,15 +143,102 @@ block slides
           li ("production", "development", "staging", etc)
         li npm module: <a href="https://www.npmjs.com/package/config3">config3</a>
   section
-    section
-      h2 6. Processes
+    +slide("4. Backing Services")
     section
       ul
-        li use systemd
+        li treat as loosely coupled
+        li connect via config params
+        li switch between first-party and third-party with config changes but no code changes
+        li sadly, most node db libraries do not make it easy to detect and gracefully handle non-working db connections
   section
-    section
-      h2 11. Logs
+    +slide("5. Build, Release, Run")
     section
       ul
-        li npm module: bole
-        li bunyan, winston also OK
+        li https://github.com/heroku/heroku-buildpack-nodejs
+        li basically "npm install" plus a dash of cacheing
+        li build -> release could be just injecting a config.local.js file
+        li Question for heroku: keeping releases secure if they contain secrets?
+        li Common antipattern: no build stage. Direct git clones/pulls on servers, builds on servers
+          li unnecessarily long downtime
+            li "npm install" can take minutes
+            li low reliability
+            li if npm is down, you app stays down while it's down
+            li low consistency
+            li if new packages are published during a rolling deploy, server3 will end up with different versions than server1
+            li high risk
+            li untested code, failed downloads, failed install scripts, etc
+            li espoused by ops-ignorant developers
+            li put this practice in the same category as people who advise ssh-ing into prod servers and live-editing PHP files
+  section
+    +slide("6. Processes")
+      +fig(
+        "https://farm2.staticflickr.com/1096/1237061197_6c7039a681_z_d.jpg",
+        "█ Slices of Light █▀ ▀ ▀",
+        "https://www.flickr.com/photos/justaslice/",
+        "CC BY-NC-ND 2.0)",
+        "https://creativecommons.org/licenses/by-nc-nd/2.0/")
+    section
+      ul
+        li Don't run as root
+        li Don't use a node-specific process supervisor
+        li Use systemd or docker restart policies
+        li don't daemonize
+        li local filesystem only as temporary, atomic operation working space as needed
+  section
+    +slide("7. Port Binding")
+    section
+      ul
+        li straightforward
+        li for web apps, FQDN can come from config
+  section
+    +slide("8. Concurrency")
+      +fig(
+        "https://farm1.staticflickr.com/233/447698435_fface3ece8_z_d.jpg?zz=1",
+        "Nguyen-Anh Le",
+        "https://www.flickr.com/photos/discopalace/",
+        "CC BY-NC-ND 2.0",
+        "https://creativecommons.org/licenses/by-nc-nd/2.0/")
+    section
+      ul
+        li scale out with the shared-nothing process model
+        li design app as distinct worker/process types
+  section
+    +slide("9. Disposability")
+    section
+      ul
+        li robust queues
+        li crash-only
+  section
+    +slide("10. Dev/prod parity")
+    section
+      ul
+        li It's a Vagrant/Docker party and everyone's invited
+  section
+    +slide("11. Logs")
+    section
+      ul
+        li bole, bunyan, winston
+  section
+    +slide("12. Admin Processes")
+    section
+      ul
+        li stick them in a bin directory
+  section
+    +slide("Other Industry Trends")
+    section
+      ul
+        li Immutable Infrastructure
+        li pets -> cattle
+        ul
+          li http://www.slideshare.net/randybias/architectures-for-open-and-scalable-clouds
+          li https://blog.engineyard.com/2014/pets-vs-cattle
+  +slide("References")
+    ul
+      li
+        a(href="http://12factor.net") 12factor.net
+      li 
+        a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
+      li
+        a(href="https://www.npmjs.com/package/config3") config3
+      li
+        a(href="https://www.docker.com/") docker containerization
