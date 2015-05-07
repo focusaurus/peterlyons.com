@@ -47,6 +47,7 @@ block slides
         li Based on Heroku's experience running 1000s of applications
         li Optimized for the cloud era: IaaS, SaaS, PaaS, scale out
         li Embodies opinions and best practices
+        li Addresses "systemic problems"
         ul
           li not the only valid approach
           li not appropriate for all applications or organizations
@@ -78,8 +79,7 @@ block slides
         "Dennis Skley",
         "https://www.flickr.com/photos/dskley/",
         "CC BY-ND 2.0",
-        "https://creativecommons.org/licenses/by-nd/2.0/"
-      )
+        "https://creativecommons.org/licenses/by-nd/2.0/")
       ul
         li takes off around 2008 (Google App Engine)
         li How does this effect application lifecycles?
@@ -105,6 +105,7 @@ block slides
       ul
         li Use git or $SCM
         li 1 to 1 mapping repo to app
+        li have at least distinct prod and stage deploments
         ul
           li 1 repo containing multiple apps: nope
           li 1 app built from multiple repos: nope
@@ -123,6 +124,8 @@ block slides
     section
       ul
         li use npm package.json properly
+        li specify exact versions
+        li use shrinkwrap if it ever starts working
         li no system-level subprocesses
         ul
           li docker containers can help with this
@@ -155,19 +158,23 @@ block slides
     section
       ul
         li https://github.com/heroku/heroku-buildpack-nodejs
-        li basically "npm install" plus a dash of cacheing
+        li basically "npm install --production" plus a dash of cacheing
         li build -> release could be just injecting a config.local.js file
-        li Question for heroku: keeping releases secure if they contain secrets?
         li Common antipattern: no build stage. Direct git clones/pulls on servers, builds on servers
           li unnecessarily long downtime
+          ul
             li "npm install" can take minutes
-            li low reliability
+          li low reliability
+          ul
             li if npm is down, you app stays down while it's down
-            li low consistency
+          li low consistency
+          ul
             li if new packages are published during a rolling deploy, server3 will end up with different versions than server1
-            li high risk
+          li high risk
+          ul
             li untested code, failed downloads, failed install scripts, etc
-            li espoused by ops-ignorant developers
+          li espoused by ops-ignorant developers
+          ul
             li put this practice in the same category as people who advise ssh-ing into prod servers and live-editing PHP files
   section
     +slide("6. Processes")
@@ -177,6 +184,39 @@ block slides
         "https://www.flickr.com/photos/justaslice/",
         "CC BY-NC-ND 2.0)",
         "https://creativecommons.org/licenses/by-nc-nd/2.0/")
+    section
+      h2 systemd service config file
+      p Install to <code>/etc/systemd/system/mynodejsapp.service</code>
+      code.block.
+        [Unit]
+        Description=My node.js App
+
+        [Service]
+        User=mynodejsapp
+        Group=mynodejsapp
+        WorkingDirectory=/opt/mynodejsapp
+        EnvironmentFile=/etc/mynodejsapp/config
+        Environment=NODE_ENV=production
+        ExecStart=/usr/bin/node cluster.js
+        Restart=always
+
+        [Install]
+        WantedBy=multi-user.target
+    section
+      h2 upstart config file (Debian/Ubuntu before 15.04)
+      p Install to <code>/etc/init/mynodejsapp.conf</code>
+      code.block.
+        description "mynodejsapp"
+
+        start on filesystem and started networking
+        respawn
+        console log
+        chdir /opt/mynodejsapp
+        setuid mynodejsapp
+        setgid mynodejsapp
+        env PATH=./node_modules/.bin:./node/bin:/usr/bin
+        env NODE_ENV=production
+        exec app/server.js
     section
       ul
         li Don't run as root
@@ -213,6 +253,8 @@ block slides
     section
       ul
         li It's a Vagrant/Docker party and everyone's invited
+        li Dev: OSX + node.js + mynodejsapp, Docker + PostgreSQL
+        li Test/Stage/Prod: Docker + node.js + mynodejsapp, Docker + PostgeSQL
   section
     +slide("11. Logs")
     section
@@ -232,6 +274,13 @@ block slides
         ul
           li http://www.slideshare.net/randybias/architectures-for-open-and-scalable-clouds
           li https://blog.engineyard.com/2014/pets-vs-cattle
+  section
+    +slide("Merits of Commercial Service")
+    section
+      ul
+        li Some are worth their weight in gold
+        li Some are long-term tax on lack of knowledge/experience
+        li Commercial offerings are often superior to beginner/intermediate in-house approaches, but inferior to expert in-house systems
   +slide("References")
     ul
       li
@@ -242,3 +291,7 @@ block slides
         a(href="https://www.npmjs.com/package/config3") config3
       li
         a(href="https://www.docker.com/") docker containerization
+      li
+        a(href="/practices") Definition and purpose of a staging environment
+      li
+        a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful
