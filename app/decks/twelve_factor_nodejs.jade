@@ -153,6 +153,8 @@ block slides
         li connect via config params
         li switch between first-party and third-party with config changes but no code changes
         li sadly, most node db libraries do not make it easy to detect and gracefully handle non-working db connections
+        li I don't think it's realistic to switch to an untested backing service with no code changes
+        li Ex: S3 is not going to have the same code as anything other than S3
   section
     +slide("5. Build, Release, Run")
     section
@@ -161,12 +163,13 @@ block slides
         li basically "npm install --production" plus a dash of cacheing
         li build -> release could be just injecting a config.local.js file
         li Common antipattern: no build stage. Direct git clones/pulls on servers, builds on servers
+        ul
           li unnecessarily long downtime
           ul
             li "npm install" can take minutes
           li low reliability
           ul
-            li if npm is down, you app stays down while it's down
+            li if npm is down, your app stays down while it's down
           li low consistency
           ul
             li if new packages are published during a rolling deploy, server3 will end up with different versions than server1
@@ -220,9 +223,9 @@ block slides
     section
       ul
         li Don't run as root
+        li don't daemonize
         li Don't use a node-specific process supervisor
         li Use systemd or docker restart policies
-        li don't daemonize
         li local filesystem only as temporary, atomic operation working space as needed
   section
     +slide("7. Port Binding")
@@ -252,6 +255,7 @@ block slides
     +slide("10. Dev/prod parity")
     section
       ul
+        li Don't use "lightweight" dev variants of backing services (sqlite3 etc)
         li It's a Vagrant/Docker party and everyone's invited
         li Dev: OSX + node.js + mynodejsapp, Docker + PostgreSQL
         li Test/Stage/Prod: Docker + node.js + mynodejsapp, Docker + PostgeSQL
@@ -260,6 +264,8 @@ block slides
     section
       ul
         li bole, bunyan, winston
+        li newline-delimited JSON to stdout
+        li let the environment deal with rotation, centralization
   section
     +slide("12. Admin Processes")
     section

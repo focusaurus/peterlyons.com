@@ -1,4 +1,3 @@
-/* eslint-env node */
 var join = require("path").join;
 var pack = require("./package");
 
