@@ -124,8 +124,13 @@ block slides
     section
       ul
         li use npm package.json properly
+        li Incorrect usage of npm accounts for 25-50% of issues Heroku sees with their node.js users
+        li <code>npm config set save-exact=true</code>
+        li <code>npm config set save=true</code>
+        li <code>npm config set save-prefix=</code>
         li specify exact versions
         li use shrinkwrap if it ever starts working
+        li never install with <code>npm -g</code> even if README say to
         li no system-level subprocesses
         ul
           li docker containers can help with this
@@ -143,7 +148,10 @@ block slides
         li In systemd, use <code>EnvFile=</code>
         li don't group into named "environments"
         ul
-          li ("production", "development", "staging", etc)
+          li production, development, staging, etc
+          li
+            a(href="https://www.npmjs.com/package/foreman") node-forman
+            | can help transition away from this
         li npm module: <a href="https://www.npmjs.com/package/config3">config3</a>
   section
     +slide("4. Backing Services")
@@ -151,10 +159,8 @@ block slides
       ul
         li treat as loosely coupled
         li connect via config params
-        li switch between first-party and third-party with config changes but no code changes
+        li switch between local and third-party providers with config changes but no code changes
         li sadly, most node db libraries do not make it easy to detect and gracefully handle non-working db connections
-        li I don't think it's realistic to switch to an untested backing service with no code changes
-        li Ex: S3 is not going to have the same code as anything other than S3
   section
     +slide("5. Build, Release, Run")
     section
@@ -162,6 +168,7 @@ block slides
         li https://github.com/heroku/heroku-buildpack-nodejs
         li basically "npm install --production" plus a dash of cacheing
         li build -> release could be just injecting a config.local.js file
+        li a build creates an artifact that you could run later, perhaps years later, regardless of what happens on the Internet/www
         li Common antipattern: no build stage. Direct git clones/pulls on servers, builds on servers
         ul
           li unnecessarily long downtime
@@ -245,6 +252,7 @@ block slides
       ul
         li scale out with the shared-nothing process model
         li design app as distinct worker/process types
+        li local state is an antipattern Heroku commonly sees
   section
     +slide("9. Disposability")
     section
@@ -301,13 +309,20 @@ block slides
       li Dev/prod parity: <a href="https://github.com/focusaurus/mjournal/blob/master/deploy/setup-docker.sh.mustache">code</a>
       li Logs: <a href="https://github.com/focusaurus/mjournal/blob/master/app/log.js">code</a>
       li Admin Processes: <a href="https://github.com/focusaurus/mjournal/blob/master/app/emails/dailySummary.js#L51">code</a>
-    
+  +slide("Thank You")
+    p 
+      a(href="https://github.com/hunterloftis") Hunter Loftis
+      |  (heroku node build pack maintainer) for review/feedback
   +slide("References")
     ul
       li
         a(href="http://12factor.net") 12factor.net
       li 
         a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
+      li
+        a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
+      li
+        a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
       li
         a(href="https://www.npmjs.com/package/config3") config3
       li
@@ -316,3 +331,5 @@ block slides
         a(href="/practices") Definition and purpose of a staging environment
       li
         a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful
+      li
+        a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
