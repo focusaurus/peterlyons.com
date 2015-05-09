@@ -1,21 +1,28 @@
-@require "typography"
+@require "adaptive"
 @require "color"
+@require "typography"
 
 .slides
   h2
     fontSize(3)
     font-family $headerFont
-
     margin-bottom 1em
+    @media mediumScreen
+      fontSize(1)
 
-  ul li
+  li
     fontSize(1)
+    @media mediumScreen
+      fontSize(-1)
     line-height 2em
     list-style-type none
 
-  figure img
+  img
     max-width 500px
     max-height 500px
+    @media mediumScreen
+      max-width 90%
+      max-height 50%
 
   figcaption
     fontSize(-2)
