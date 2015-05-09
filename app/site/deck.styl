@@ -1,13 +1,27 @@
+@require "typography"
+@require "color"
+
 .slides
   h2
+    fontSize(3)
+    font-family $headerFont
+
     margin-bottom 1em
 
   ul li
+    fontSize(1)
     line-height 2em
     list-style-type none
 
   figure img
-    max-width 50%
+    max-width 500px
+    max-height 500px
+
+  figcaption
+    fontSize(-2)
+    a
+      text-decoration none
+      color $colorLink
 
   code.block
     display block

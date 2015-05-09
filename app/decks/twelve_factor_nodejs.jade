@@ -30,7 +30,7 @@ block slides
       li Freelance Consultant
       li Full-stack web applications
       li node.js specialist
-      li http://peterlyons.com
+      li <a href="http://peterlyons.com">http://peterlyons.com</a>
   section
     +slide("What is Twelve-Factor?")
       +fig(
@@ -140,7 +140,7 @@ block slides
         "https://farm5.staticflickr.com/4117/4764881882_de0ebb806a_z_d.jpg",
         "Ronan",
         "https://www.flickr.com/photos/ronancantwell/",
-        "CC BY-NC-ND 2.0)",
+        "CC BY-NC-ND 2.0",
         "https://creativecommons.org/licenses/by-nc-nd/2.0/")
     section
       ul
@@ -192,7 +192,7 @@ block slides
         "https://farm2.staticflickr.com/1096/1237061197_6c7039a681_z_d.jpg",
         "█ Slices of Light █▀ ▀ ▀",
         "https://www.flickr.com/photos/justaslice/",
-        "CC BY-NC-ND 2.0)",
+        "CC BY-NC-ND 2.0",
         "https://creativecommons.org/licenses/by-nc-nd/2.0/")
     section
       h2 systemd service config file
@@ -274,6 +274,10 @@ block slides
         li bole, bunyan, winston
         li newline-delimited JSON to stdout
         li let the environment deal with rotation, centralization
+        li systemd/journald handle it automatically
+        li upstart "console log" handles it
+        li svlogd from runit
+        li multilog from daemontools
   section
     +slide("12. Admin Processes")
     section
@@ -317,19 +321,19 @@ block slides
     ul
       li
         a(href="http://12factor.net") 12factor.net
+      li
+        a(href="https://www.docker.com/") docker containerization
+      li
+        a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
+      li
+        a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
+      li
+        a(href="https://www.npmjs.com/package/config3") config3
       li 
         a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
       li
         a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
       li
-        a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
-      li
-        a(href="https://www.npmjs.com/package/config3") config3
-      li
-        a(href="https://www.docker.com/") docker containerization
-      li
         a(href="/practices") Definition and purpose of a staging environment
       li
         a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful
-      li
-        a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
