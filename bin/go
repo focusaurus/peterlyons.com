@@ -1,4 +1,7 @@
 #!/bin/bash
+
+ansible_version=1.9.1
+
 ##### helper functions #####
 autoinstall_wallah() {
   [[ -f wallah/bin/install_iojs ]] && return
@@ -308,7 +311,7 @@ doc "* vagrant: convenience wrapper for vagrant commands
   * autoinstalls deps"
 task::vagrant() {
   autoinstall_wallah
-  ./wallah/bin/install_pip_package ansible
+  ./wallah/bin/install_pip_package "ansible=${ansible_version}"
   exec vagrant "$@"
 }
 
@@ -318,7 +321,7 @@ doc "* ansible-playbook: convenience wrapper around ./python/bin/ansible-playboo
   * arguments are passed through to ./python/bin/ansible"
 task::ansible-playbook() {
   autoinstall_wallah
-  ./wallah/bin/install_pip_package ansible
+  ./wallah/bin/install_pip_package "ansible=${ansible_version}"
   ANSIBLE_HOST_KEY_CHECKING=False exec ansible-playbook "$@"
 }
 
