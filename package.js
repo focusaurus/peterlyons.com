@@ -23,19 +23,19 @@ function extend(target) {
 var sets = {};
 
 sets.build = {
-  "bower": "1.3.12",
-  "browserify": "9.0.3",
+  "bower": "1.4.1",
+  "browserify": "9.0.8",
   "uglify-js": "2.4.16",
   "npm-pkgr": "0.2.0"
 };
 
 sets.test = extend({
   "chaimel": "1.2.0",
-  "eslint": "0.15.0",
+  "eslint": "0.21.0",
   "eslint-formatter-comment": "1.0.0",
-  "mocha": "2.1.0",
-  "phantomjs": "1.9.15",
-  "superagent": "0.21.0",
+  "mocha": "2.2.4",
+  "phantomjs": "1.9.16",
+  "superagent": "1.2.0",
   "supertest": "0.15.0",
   "w3c-validate": "0.0.2",
   "zuul": "1.19.0"
@@ -44,13 +44,13 @@ sets.test = extend({
 sets.develop = extend({
   "bump-cli": "1.1.3",
   "promptly": "0.2.1",
-  "watchify": "2.4.0"
+  "watchify": "3.2.1"
 }, sets.build, sets.test);
 
 sets.optional = extend({
   "bistre": "1.0.1",
   "node-dev": "2.6.1",
-  "node-inspector": "0.9.0"
+  "node-inspector": "0.10.0"
 }, sets.develop);
 
 sets.production = {};
