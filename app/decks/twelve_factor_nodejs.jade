@@ -134,6 +134,8 @@ block slides
         li no system-level subprocesses
         ul
           li docker containers can help with this
+          li This is highly dubious in the long term and espouses the "Inner Platform Effect" antipattern
+          li the HTTP implementation in cURL is almost certainly far superior to the one in $YOUR_RUNTIME
   section
     +slide("3. Config")
       +fig(
@@ -319,21 +321,13 @@ block slides
       |  (heroku node build pack maintainer) for review/feedback
   +slide("References")
     ul
-      li
-        a(href="http://12factor.net") 12factor.net
-      li
-        a(href="https://www.docker.com/") docker containerization
-      li
-        a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
-      li
-        a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
-      li
-        a(href="https://www.npmjs.com/package/config3") config3
-      li 
-        a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
-      li
-        a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
-      li
-        a(href="/practices") Definition and purpose of a staging environment
-      li
-        a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful
+      li: a(href="http://12factor.net") 12factor.net
+      li: a(href="https://www.docker.com/") docker containerization
+      li: a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
+      li: a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
+      li: a(href="https://www.npmjs.com/package/config3") config3
+      li: a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
+      li: a(href="http://michaeldehaan.net/post/118717252307/immutable-infrastructure-is-the-future") Immutable Infrastructure is the Future
+      li: a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
+      li: a(href="/practices") Definition and purpose of a staging environment
+      li: a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful

@@ -7,80 +7,88 @@ block body
 
     ## General Orientation
 
-    * Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
-    * The #1 primary mandate of the software engineer is managing complexity
-    * Simple, small, consistent tools
-        * Small languages that foster consistency such as Python, jade
-        * One and preferably only one good way to do it
-        * Significant white space fosters consistency, so I am in favor of it
-        * Small core library plus good package management such as node.js with npm
-        * Big, complex, heterogeneous languages like Perl and Ruby aren't compatible with my general orientation (but I will code in Ruby when appropriate)
-    * Correctness and clarity are king
-        * readability and maintainability are more important than brevity
-    * Clever is bad. Period.
-        * Remove all magic (see [Django Pony](http://djangopony.com/))
-    * Libraries over frameworks
-        * My code invokes library methods
-        * No "your code goes here" boilerplate
-    * Right tool for the right job
-    * Slow, calm, and correct
-        * I build working software that is well-crafted
+    - Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
+    - The #1 primary mandate of the software engineer is managing complexity
+    - Simple, small, consistent tools
+      - Small languages that foster consistency such as Python, jade
+      - One and preferably only one good way to do it
+      - Significant white space fosters consistency, so I am in favor of it
+      - Small core library plus good package management such as node.js with npm
+      - Big, complex, heterogeneous languages like Perl and Ruby aren't compatible with my general orientation (but I will code in Ruby when appropriate)
+    - Correctness and clarity are king
+      - readability and maintainability are more important than brevity
+    - Clever is bad. Period.
+      - Remove all magic (see [Django Pony](http://djangopony.com/))
+    - Libraries over frameworks
+      - My code invokes library methods
+      - No "your code goes here" boilerplate
+    - Right tool for the right job
+    - Slow, calm, and correct
+      - I build working software that is well-crafted
 
     See also my [code conventions](/code_conventions)
 
     ## Data Modeling
 
-    * Integrity-first
-        * Default attitude is traditional referential integrity with transactions and strict expectations of data consistency and durability
-        * Sacrifice consistency, integrity or durability to get performance or convenience when warranted
-        * Properly coding for collections of data where individual records can vary greatly is difficult. Stick with consistent records.
-        * Disciplined data migrations should be part of the normal development process
-    * Minimalism
-        * Each field and record has perpetual maintainance cost
-        * Only add more data when clearly driven by current features
-        * Prune stale data as early as possible
-    * Conform to common system model in end-user terms
-        * Avoid abstractions
-        * Keep naming clear and consistent with the system model and user interface
-        * Model collections based on semantics as opposed to raw data similarity
+    - Integrity-first
+      - Default attitude is traditional referential integrity with transactions and strict expectations of data consistency and durability
+      - Sacrifice consistency, integrity or durability to get performance or convenience when warranted
+      - Properly coding for collections of data where individual records can vary greatly is difficult. Stick with consistent records.
+      - Disciplined data migrations should be part of the normal development process
+    - Minimalism
+      - Each field and record has perpetual maintainance cost
+      - Only add more data when clearly driven by current features
+      - Prune stale data as early as possible
+    - Conform to common system model in end-user terms
+      - Avoid abstractions
+      - Keep naming clear and consistent with the system model and user interface
+      - Model collections based on semantics as opposed to raw data similarity
 
     ## Programming Paradigm
 
-    * Multi-paradigm taking the best elements of functional, procedural, object oriented
-    * Functional programming is the dominant paradigm in my mind these days
-    * Pure functional with no side effects has great testability
-    * I think more about data and functions being separate these days as opposed to Object Oriented coupling of the two
-    * Use built-in data structures (lists, maps) for simple cases, but go to objects as soon as it is non-trivial
-    * Encapsulation and composition as opposed to complex inheritence hierarchy
-    * Prefer basic procedural conditions and loops when they are clearer than complex functional or object oriented patterns
+    - Multi-paradigm taking the best elements of functional, procedural, object oriented
+    - Functional programming is the dominant paradigm in my mind these days
+    - Pure functional with no side effects has great testability
+    - I think more about data and functions being separate these days as opposed to Object Oriented coupling of the two
+    - Use built-in data structures (lists, maps) for simple cases, but go to objects as soon as it is non-trivial
+    - Encapsulation and composition as opposed to complex inheritence hierarchy
+    - Prefer basic procedural conditions and loops when they are clearer than complex functional or object oriented patterns
 
     ## Testing
 
-    * Lots of thorough pure unit tests. Fast (no I/O). High code coverage.
-    * Modular code. Judicious use of mock objects. Dependency injection.
-    * Factories as opposed to fixtures
-    * Test only the first-party code written for this application
-    * A small handful of end to end system tests
-    * If running tests gets slow, it's probably time to split the project into smaller modules
+    - Lots of thorough pure unit tests. Fast (no I/O). High code coverage.
+    - Modular code. Judicious use of mock objects. Dependency injection.
+    - Factories as opposed to fixtures
+    - Test only the first-party code written for this application
+    - A small handful of end to end system tests
+    - If running tests gets slow, it's probably time to split the project into smaller modules
 
     ## Process
-
-    * Modern Async
-        * Read [The Async Manifesto](http://asyncmanifesto.org/)
-        * Note in this context the word "asnyc" means something very different from "async" in terms of node.js non-blocking programming.
-    * Estimates
-        * Avoid them as much as possible
-        * Build trust based on past performance instead
-        * When unavoidable, keep it simple: small, medium, large
-        * Work items must be decomposed until they fit in a single sprint (there is no extra large)
-    * Lean Startup/Minimum Viable Product. Launch and learn. Rinse and repeat.
+    
+    - I don't subscribe entirely to any specific methodology
+        - There are good ideas and practices in Agile, Scrum, KanBan, Lean, etc
+        - Most of my projects don't lend themselves to a formal methodology
+    - Key things I focus on
+      - Working, deployed software as the core deliverable
+      - Small sprints (usually weekly)
+      - Some reasonable project management tool other than email
+      - Stakeholder prioritizes the work to be done in conversation with developers
+      - Modern Async
+        - Read [The Async Manifesto](http://asyncmanifesto.org/)
+        - Note in this context the word "asnyc" means something very different from "async" in terms of node.js non-blocking programming.
+    - Estimates
+      - Avoid them as much as possible
+      - Build trust based on past performance instead
+      - When unavoidable, keep it simple: small, medium, large
+      - Work items must be decomposed until they fit in a single sprint (there is no extra large)
+    - Lean Startup/Minimum Viable Product. Launch and learn. Rinse and repeat.
 
     ## Deployment and Operations
 
-    * Clear and fully independent development, QA, stage, production environments from day one
-    * Should be able to rebuild entire app infrastructure with code and docs in the main source code repository
-    * [Semantic Versioning](http://semver.org/)
-    * Modified [12-Factor](http://www.12factor.net/) principles
+    - Clear and fully independent development, QA, stage, production environments from day one
+    - Should be able to rebuild entire app infrastructure with code and docs in the main source code repository
+    - [Semantic Versioning](http://semver.org/)
+    - Modified [12-Factor](http://www.12factor.net/) principles
 
     ### Definition and purpose of a stage environment
 
