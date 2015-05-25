@@ -17,8 +17,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.playbook = "deploy/playbook_nginx.yml"
       ansible.limit = "stage"
       ansible.extra_vars = {
-        ansible_ssh_user: 'vagrant',
-        hostname: 'stage.peterlyons.com'
+        ansible_ssh_user: "vagrant",
+        hostname: "stage.peterlyons.com"
       }
       ansible.host_key_checking = false
       # ansible.verbose = "vvv"

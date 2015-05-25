@@ -258,7 +258,7 @@ task::build() {
   cd -
   echo ✓; echo -n "vagrant rebuild…"
   ./bin/go vagrant ssh build -c \
-  "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable &>> ../npm.log'"
+  "'cd /vagrant/${build_dir}/${prefix} && ./node/bin/npm rebuild --silent --parseable --update-binary &>> ../npm.log'"
   echo ✓; echo -n "archive…"
   local dist_path="${build_dir}/${prefix}.tar.gz"
   tar -C "${build_dir}" --create --gzip --file "${dist_path}" "${prefix}"
