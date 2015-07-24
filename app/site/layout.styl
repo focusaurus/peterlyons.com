@@ -1,9 +1,5 @@
+@require "adaptive"
 @require "position"
-
-footer
-  margin-top 4em
-  p
-    margin-bottom 0
 
 body > nav
   position fixed
@@ -23,13 +19,19 @@ body > nav
   +above("l")
     display none
 
+.content
+  width 100%
+  margin 1em
+  +above("m")
+    margin 1em auto
+    width 30em
+
+footer
+  margin-top 4em
+  p
+    margin-bottom 0
+
 footer > nav
   display block
   +above("l")
     display none
-
-.content
-  width 100%
-  +above("s")
-    margin 1em auto
-    width 30em
