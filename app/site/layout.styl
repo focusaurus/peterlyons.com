@@ -1,4 +1,3 @@
-@require "adaptive"
 @require "position"
 
 footer
@@ -8,32 +7,29 @@ footer
 
 body > nav
   position fixed
-  @media mediumScreen
-    display none
-    &.open
-      display block
-      topRight()
-      z-index 10
-      background-color $colorPrimaryBackground
-      margin 0
-      border-left 1px solid $colorCodeBackground
+  display none
+  +above("l")
+    display block
+  &.open
+    display block
+    topRight()
+    z-index 10
+    background-color $colorPrimaryBackground
+    margin 0
+    border-left 1px solid $colorCodeBackground
 
 .navMenuButton
-  display none
-  @media mediumScreen
-    display inline
+  display inline
+  +above("l")
+    display none
 
 footer > nav
-  display none
-  @media mediumScreen
-    display block
+  display block
+  +above("l")
+    display none
 
 .content
-  margin 1em auto
-  width 30em
-
-@media smallScreen
-  body
-    margin 1rem
-  .content
-    width 100%
+  width 100%
+  +above("s")
+    margin 1em auto
+    width 30em

@@ -1,4 +1,3 @@
-@require "adaptive"
 $headerFont = "Julius Sans One", sans-serif
 $codeFont = Inconsolata, monospace
 
@@ -38,7 +37,9 @@ html
 
 body
   font-family "Roboto", sans-serif
-  fontSize 0
+  fontSize -1
+  +above("s")
+    fontSize 0
 
 button
   fontSize 0
@@ -62,10 +63,6 @@ code, pre
   font-family $codeFont
 
 pre
-  fontSize -1
-
-@media mediumScreen
-  body
+  fontSize -2
+  +above("s")
     fontSize -1
-  pre
-    fontSize -2

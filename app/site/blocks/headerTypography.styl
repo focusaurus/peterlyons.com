@@ -1,8 +1,7 @@
 @require "../site/typography"
-@require "../site/adaptive"
 
 header h1
   font-family $headerFont
   font-size 6rem
-  @media mediumScreen
+  +above("s")
     fontSize 2 1
