@@ -70,6 +70,7 @@ straightforward and not full of nasty surprises and tricks.
 
 _See also_ [Andy Lester's article on the two worst variable names][3].
 
+
 # General Guidelines
 
 Don't use C-style abbreviations that truncate words or omit certain letters. For example: `message->msg, index->idx, value->val, createDispatcher->crtDisp`. I find these highly problematic and irritating. First, they don't follow a single clear rule about how the abbreviation is achieved (sometimes truncation, sometimes dropping just vowels, sometimes dropping certain consonants). Secondly, they aren't clearly pronouncable. Pronouncability helps when discussing code and thinking about it in an audible voice in one's own mind. Thirdly, the premises that originated this convention (presumably ease of typing or length limits imposed by early languages and tools) are no longer relevant. All decent editors have word completion and/or code completion. Modern languages and tools don't have tiny eight-character length limits anymore. Also, as a native English speaker I find it hard enough to parse these things. I assume this is especially difficult for non-native speakers. Editor's note: Never abbreviate the word "password" in code. Don't use "pass". Don't use "passwd". Don't use "pwd". Don't use "pword". Don't do it. I will hunt you down. You must be stopped. The following exceptions are accomodating because of their extreme popularity: `database->Db (so connectToDatabase->connectToDb), identifier->Id`.
@@ -91,6 +92,8 @@ I favor the term "invalid" to "illegal" since it is more accurate and the word "
 Some folks advocate a length limit on methods or functions. They say that chunks of related code should be refactored out into a separate function and then called from the original function. I usually do not find this helpful. Generally, if code is only executed once, I don't put it into it's own function. I find long methods are perfectly readable top to bottom and actually more readable than jumping all over the place to numerous helper functions that are not referenced elsewhere. So if a function has relatively small chunks of related code one after the other, I'm fine with it being one really long function. After all, this is the essence of computation: a long list of instructions. However, things can become less readable when there is a relatively long stretch of code that goes off on a tangent that is loosely coupled to the rest of the code. In that case, it makes sense to refactor out to a dedicated function. For example: 10 lines of validation, 25 lines of parsing, 12 lines of computing A, 30 lines of computing B, 25 lines of formatting the result - this can all be in one function. However, 6 lines of validation, 4 lines of parsing, 200 lines of computing B, 3 lines of formatting the result - it makes sense to compute B in a separate function. It's long enough that it is hard to maintain context on the surronding code while reading all the code that computes B.
 
 Avoid double negatives with boolean variables. Instead, use a positive verb whose meaning is negative. `skipCache = True` is better than `noCache = True`.
+
+_See also_ [How to Name Things](http://www.slideshare.net/pirhilton/how-to-name-things-the-hardest-problem-in-programming) by Peter Hilton
 
 # Bourne Shell (bash) Conventions
 
