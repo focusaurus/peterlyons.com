@@ -31,7 +31,8 @@ sets.build = {
 
 sets.test = extend({
   "chaimel": "1.2.0",
-  "eslint": "0.21.0",
+  "eslint": "0.24.1",
+  "eslint-config-standard": "3.4.1",
   "eslint-formatter-comment": "1.0.0",
   "mocha": "2.2.4",
   "phantomjs": "1.9.16",
@@ -50,7 +51,8 @@ sets.develop = extend({
 sets.optional = extend({
   "bistre": "1.0.1",
   "node-dev": "2.6.1",
-  "node-inspector": "0.10.0"
+  "node-inspector": "0.10.0",
+  "standard": "4.5.4"
 }, sets.develop);
 
 sets.production = {};
