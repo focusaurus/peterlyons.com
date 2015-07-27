@@ -1,19 +1,19 @@
-var testUtils = require("app/testUtils");
+var testUtils = require('app/testUtils')
 
-describe("the Twelve-Factor node.js slide deck", function() {
-  var $ = null;
-  before(function(done) {
-    testUtils.loadPage("/twelve_factor_nodejs", function(error, dom) {
-      $ = dom;
-      done(error);
-    });
-  });
+describe('the Twelve-Factor node.js slide deck', function () {
+  var $ = null
+  before(function (done) {
+    testUtils.loadPage('/twelve_factor_nodejs', function (error, dom) {
+      $ = dom
+      done(error)
+    })
+  })
 
-  it("should be a slide deck", function() {
-    testUtils.assertDeck($);
-  });
+  it('should be a slide deck', function () {
+    testUtils.assertDeck($)
+  })
 
-  it("should mention some relevant words", function() {
-    testUtils.assertSubstrings($, "bole", "systemd", "config3");
-  });
-});
+  it('should mention some relevant words', function () {
+    testUtils.assertSubstrings($, 'bole', 'systemd', 'config3')
+  })
+})

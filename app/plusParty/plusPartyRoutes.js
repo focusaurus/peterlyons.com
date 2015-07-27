@@ -1,9 +1,9 @@
-function plusParty(req, res) {
-  res.render("plusParty/plusParty.jade");
+function plusParty (req, res) {
+  res.render('plusParty/plusParty.jade')
 }
 
-function setup(app) {
-  app.get("/plusparty", plusParty);
+function setup (app) {
+  app.get('/plusparty', plusParty)
 }
 
-module.exports = setup;
+module.exports = setup

@@ -1,25 +1,25 @@
-var testUtils = require("app/testUtils");
+var testUtils = require('app/testUtils')
 
-describe("the photos page", function() {
-  var $ = null;
+describe('the photos page', function () {
+  var $ = null
 
-  before(function(done) {
+  before(function (done) {
     testUtils.loadPage(
-        "/app/photos?gallery=burning_man_2011", function(error, dom) {
-      $ = dom;
-      done(error);
-    });
-  });
+      '/app/photos?gallery=burning_man_2011', function (error, dom) {
+        $ = dom
+        done(error)
+      })
+  })
 
-  it("should have the photo surrounding structure", function() {
+  it('should have the photo surrounding structure', function () {
     testUtils.assertSelectors(
-      $, "h1#photo", "figure", "figcaption", "#nextPrev", "a.thumbnail");
-  });
+      $, 'h1#photo', 'figure', 'figcaption', '#nextPrev', 'a.thumbnail')
+  })
 
-  it("should redirect to the newest gallery", function(done) {
-    testUtils.get("/app/photos")
+  it('should redirect to the newest gallery', function (done) {
+    testUtils.get('/app/photos')
       .expect(302)
-      .expect("location", "/app/photos?gallery=burning_man_2011")
-      .end(done);
-  });
-});
+      .expect('location', '/app/photos?gallery=burning_man_2011')
+      .end(done)
+  })
+})

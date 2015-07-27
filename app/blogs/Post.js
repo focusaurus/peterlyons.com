@@ -1,137 +1,137 @@
-var _ = require("lodash");
-var async = require("async");
-var fs = require("fs");
-var markdown = require("markdown-js").makeHtml;
-var mkdirp = require("mkdirp");
-var moment = require("moment");
-var path = require("path");
-var slug = require("app/blogs/slug");
+var _ = require('lodash')
+var async = require('async')
+var fs = require('fs')
+var markdown = require('markdown-js').makeHtml
+var mkdirp = require('mkdirp')
+var moment = require('moment')
+var path = require('path')
+var slug = require('app/blogs/slug')
 
 /* eslint camelcase:0 */
-function Post(blog, title, publish_date, format) {
-  this.blog = blog;
-  this.title = title;
-  this.publish_date = publish_date;
-  this.format = format;
-  this.name = slug(this.title);
+function Post (blog, title, publish_date, format) {
+  this.blog = blog
+  this.title = title
+  this.publish_date = publish_date
+  this.format = format
+  this.name = slug(this.title)
 }
 
-Post.prototype.metadata = function() {
+Post.prototype.metadata = function () {
   return {
     publish_date: this.publish_date,
     name: this.name,
     title: this.title,
     format: this.format
-  };
-};
+  }
+}
 
-Post.prototype.uri = function() {
-  var publishMoment = moment(this.publish_date);
+Post.prototype.uri = function () {
+  var publishMoment = moment(this.publish_date)
   return path.join(this.blog,
-    publishMoment.format("YYYY"), publishMoment.format("MM"), this.name);
-};
+    publishMoment.format('YYYY'), publishMoment.format('MM'), this.name)
+}
 
-Post.prototype.contentPath = function() {
-  return this.uri() + "." + this.format;
-};
+Post.prototype.contentPath = function () {
+  return this.uri() + '.' + this.format
+}
 
-Post.prototype.metadataPath = function() {
-  return this.uri() + ".json";
-};
+Post.prototype.metadataPath = function () {
+  return this.uri() + '.json'
+}
 
-Post.prototype.dirPath = function() {
-  return path.dirname(path.join(this.base, this.contentPath()));
-};
+Post.prototype.dirPath = function () {
+  return path.dirname(path.join(this.base, this.contentPath()))
+}
 
-Post.prototype.viewPath = function() {
-  return path.join(this.base, this.uri() + "." + this.format);
-};
+Post.prototype.viewPath = function () {
+  return path.join(this.base, this.uri() + '.' + this.format)
+}
 
-Post.prototype.loadMetadata = function(metadataPath, blog, callback) {
-  var self = this;
-  this.metadataPath = metadataPath;
-  this.blog = blog;
-  fs.exists(this.metadataPath, function(exists) {
+Post.prototype.loadMetadata = function (metadataPath, blog, callback) {
+  var self = this
+  this.metadataPath = metadataPath
+  this.blog = blog
+  fs.exists(this.metadataPath, function (exists) {
     if (!exists) {
-      return;
+      return
     }
-    fs.readFile(metadataPath, "utf8", function(error, jsonString) {
-      var metadata;
+    fs.readFile(metadataPath, 'utf8', function (error, jsonString) {
+      var metadata
       if (error) {
-        return callback(error);
+        return callback(error)
       }
-      metadata = JSON.parse(jsonString);
-      _.extend(self, metadata);
-      self.publish_date = new Date(self.publish_date);
-      self.view = self.uri() + "." + self.format;
-      callback();
-    });
-  });
-};
+      metadata = JSON.parse(jsonString)
+      _.extend(self, metadata)
+      self.publish_date = new Date(self.publish_date)
+      self.view = self.uri() + '.' + self.format
+      callback()
+    })
+  })
+}
 
-Post.prototype.load = function(metadataPath, blog, callback1) {
-  var self = this;
-  this.metadataPath = metadataPath;
-  this.blog = blog;
-  function loadMetadata(callback) {
-    fs.readFile(self.metadataPath, "utf8", function(error, json) {
+Post.prototype.load = function (metadataPath, blog, callback1) {
+  var self = this
+  this.metadataPath = metadataPath
+  this.blog = blog
+  function loadMetadata (callback) {
+    fs.readFile(self.metadataPath, 'utf8', function (error, json) {
       if (error) {
-        callback(error);
-        return;
+        callback(error)
+        return
       }
       try {
-        _.extend(self, JSON.parse(json));
-        self.publish_date = new Date(self.publish_date);
-        self.view = (self.uri()) + "." + self.format;
-        callback();
-        return;
+        _.extend(self, JSON.parse(json))
+        self.publish_date = new Date(self.publish_date)
+        self.view = (self.uri()) + '.' + self.format
+        callback()
+        return
       } catch (exception) {
-        callback(exception);
-        return;
+        callback(exception)
+        return
       }
-    });
+    })
   }
 
-  function loadContent(callback) {
-    var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf("."));
-    var contentPath = noExt + "." + self.format;
-    fs.readFile(contentPath, "utf8", function(error, content) {
+  function loadContent (callback) {
+    var noExt = self.metadataPath.substr(0, self.metadataPath.lastIndexOf('.'))
+    var contentPath = noExt + '.' + self.format
+    fs.readFile(contentPath, 'utf8', function (error, content) {
       if (error) {
-        callback(error);
-        return;
+        callback(error)
+        return
       }
-      self.content = content;
-      if (self.format === "md") {
-        self.content = markdown(content);
+      self.content = content
+      if (self.format === 'md') {
+        self.content = markdown(content)
       }
-      callback();
-    });
+      callback()
+    })
   }
 
-  async.series([loadMetadata, loadContent], callback1);
-};
+  async.series([loadMetadata, loadContent], callback1)
+}
 
-Post.prototype.save = function(callback) {
-  var self = this;
-  var contentPath = path.join(this.base, this.contentPath());
-  var metadataPath = path.join(this.base, this.metadataPath());
-  mkdirp(this.dirPath(), function(error) {
-    var work;
+Post.prototype.save = function (callback) {
+  var self = this
+  var contentPath = path.join(this.base, this.contentPath())
+  var metadataPath = path.join(this.base, this.metadataPath())
+  mkdirp(this.dirPath(), function (error) {
+    var work
     if (error) {
-      return callback(error);
+      return callback(error)
     }
     work = [
-     async.apply(fs.writeFile, contentPath, self.content),
-     async.apply(
-       fs.writeFile, metadataPath, JSON.stringify(self.metadata(), null, 2))
-    ];
-    async.parallel(work, function(error2) {
+      async.apply(fs.writeFile, contentPath, self.content),
+      async.apply(
+        fs.writeFile, metadataPath, JSON.stringify(self.metadata(), null, 2))
+    ]
+    async.parallel(work, function (error2) {
       if (error2) {
-        return callback(error2);
+        return callback(error2)
       }
-      return callback(null, self);
-    });
-  });
-};
+      return callback(null, self)
+    })
+  })
+}
 
-module.exports = Post;
+module.exports = Post
