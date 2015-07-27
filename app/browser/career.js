@@ -9,7 +9,9 @@ function sort (event) {
   var lastPhase = nodeList[nodeList.length - 1]
   var parent = lastPhase.parentNode
   var elementAfterPhases = lastPhase.nextSibling
-  var phases = [];[].forEach.call(document.querySelectorAll('.phase'), function (phase) {
+  var phases = []
+  var phaseEls = document.querySelectorAll('.phase')
+  Array.prototype.forEach.call(phaseEls, function (phase) {
     phases.unshift(phase)
   })
   var fragment = document.createDocumentFragment()

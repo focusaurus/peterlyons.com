@@ -60,6 +60,7 @@ describe('analytics snippet', function () {
 
   it('should include the analytics snippet when enabled', function (done) {
     testUtils.loadPage('/', function (error, $) {
+      expect(error).notToExist()
       var selector = 'script[data-id=analytics]'
       testUtils.assertSelectors($, selector)
       expect($(selector).text()).to.include('UNIT_TEST')

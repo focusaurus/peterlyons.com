@@ -14,6 +14,8 @@ function closeNav () {
 document.querySelector('.navMenuButton').addEventListener('click', toggleNav)
 document.querySelector('nav.site .close').addEventListener('click', closeNav)
 
-var selector = "nav a[href='" + document.location.pathname + "']";[].forEach.call(document.querySelectorAll(selector), function (el) {
+var selector = "nav a[href='" + document.location.pathname + "']"
+var navEls = document.querySelectorAll(selector)
+Array.prototype.forEach.call(navEls, function (el) {
   el.classList.add('current')
 })

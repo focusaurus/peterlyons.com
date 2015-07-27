@@ -10,7 +10,7 @@ describe('plusParty', function () {
   })
 
   describe('wrap', function () {
-    it('should wrap a number into an object with a value property', function () {
+    it('should wrap number into object with a value property', function () {
       var wrapped = plusParty.wrap(42)
       expect(typeof wrapped).toDeepEqual('object')
       expect(wrapped.value).toDeepEqual(42)

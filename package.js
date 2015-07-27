@@ -60,8 +60,10 @@ sets.production = {}
 function main () {
   var setName = process.argv[2] || 'develop'
   extend(pack.dependencies, sets[setName])
+  /* eslint-disable no-sync */
   fs.writeFileSync(
     join(__dirname, 'package.json'), JSON.stringify(pack, null, 2), 'utf8')
+  /* eslint-enable no-sync */
 }
 
 if (require.main === module) {

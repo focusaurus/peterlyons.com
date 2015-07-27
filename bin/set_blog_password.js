@@ -6,8 +6,9 @@ var promptly = require('promptly')
 
 var outPath = join(__dirname, '../../data', 'blog_password.bcrypt')
 
-/* eslint no-sync:0 */
-function save (error, newPassword) {
+/* eslint-disable no-sync */
+/* eslint-disable no-process-exit */
+function save (nope, newPassword) {
   var salt = bcrypt.genSaltSync(10)
   var hash = bcrypt.hashSync(newPassword, salt)
   fs.writeFileSync(outPath, hash, 'utf8')

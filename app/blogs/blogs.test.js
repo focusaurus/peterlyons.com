@@ -62,6 +62,7 @@ describe('the preview converter', function () {
       .set('Accept', 'text/html')
       .expect(200)
       .end(function (error, res) {
+        expect(error).notToExist()
         expect('<h1>Header One</h1>').toEqual(res.text.trim())
         done()
       })
@@ -74,6 +75,7 @@ describe('the preview converter', function () {
       .set('Accept', 'text/html')
       .expect(200)
       .end(function (error, res) {
+        expect(error).notToExist()
         var $ = cheerio.load(res.text)
         expect($('youtube')).toHaveLength(0)
         expect($('iframe')).toHaveLength(2)

@@ -65,7 +65,8 @@ function updateGalleries (req, res) {
     return gallery.startDate
   })
   galleries.reverse()
-  fs.writeFile('../data/galleries.json', JSON.stringify(gals), function (error) {
+  var galJson = JSON.stringify(gals)
+  fs.writeFile('../data/galleries.json', galJson, function (error) {
     if (error) {
       res.send(error, 503)
       return

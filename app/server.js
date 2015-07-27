@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-process-exit */
 var bole = require('bole')
 var log = bole(__filename)
 bole.output({level: 'debug', stream: process.stdout})
