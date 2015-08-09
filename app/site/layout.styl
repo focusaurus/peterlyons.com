@@ -20,10 +20,14 @@ body > nav
     display none
 
 .content
-  width 100%
   margin 1em
   +above("m")
     margin 1em auto
+    width 30em
+  +above("l")
+    // This is carefully calculated to avoid overlap with side nav menu
+    width 23em
+  +above("xl")
     width 30em
 
 footer
