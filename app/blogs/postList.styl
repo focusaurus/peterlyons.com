@@ -19,9 +19,11 @@
     border-bottom none
 
 .postTitle
-  fontSize(1, 2)
-  font-weight bold
   text-decoration none
+  font-weight bold
+  fontSize(-1, 2)
+  +above("m")
+    fontSize(0, 2)
   &:hover
     text-decoration underline
 
