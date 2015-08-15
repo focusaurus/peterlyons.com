@@ -28,9 +28,12 @@
       file: path=/etc/nginx/sites-enabled/default state=absent
     -
       name: configure nginx
-      template: src=nginx-site.j2
-        dest=/etc/nginx/sites-enabled/{{hostname}}
-        owner=root group=root mode=0644
+      template:
+        src: "nginx-site.j2"
+        dest: "/etc/nginx/sites-enabled/{{hostname}}"
+        owner: "root"
+        group: "root"
+        mode: "0644"
       notify:
         - restart nginx
     -
@@ -39,9 +42,11 @@
     -
       name: configure monit for nginx
       copy:
-        src=nginx_peterlyons.com.monitrc
-        dest=/etc/monit/conf.d/nginx_peterlyons.com.monitrc
-        owner=root group=root mode=0644
+        src: "nginx_peterlyons.com.monitrc"
+        dest: "/etc/monit/conf.d/nginx_peterlyons.com.monitrc"
+        owner: "root"
+        group: "root"
+        mode: "0644"
       notify:
         - restart monit
     -
