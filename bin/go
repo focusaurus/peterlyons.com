@@ -265,7 +265,7 @@ task::build() {
   echo ✓
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
-  echo "  ./bin/go deploy ${dist_path} deploy/hosts/vagrant_stage.yml"
+  echo "  ./bin/go deploy ${dist_path} deploy/host_vagrant_stage.yml"
 }
 
 
