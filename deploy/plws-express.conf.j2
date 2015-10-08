@@ -7,6 +7,6 @@ console log
 chdir {{app_root}}/current
 setuid {{express_user}}
 setgid {{express_user}}
-env PATH=./node_modules/.bin:./node/bin:/usr/bin
+env PATH=./node_modules/.bin:./node/bin:/usr/bin:/bin
 env NODE_ENV=production
 exec app/server.js
