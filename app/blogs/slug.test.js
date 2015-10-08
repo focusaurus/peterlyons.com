@@ -4,7 +4,7 @@ var slug = require('app/blogs/slug')
 describe('app/blogs/slug', function () {
   it('should replace URL-unfriendly characters', function () {
     expect(slug('space to dash')).toEqual('space-to-dash')
-    expect(slug("no apostrophe's")).toEqual('no-apostrophes')
+    expect(slug('no apostrophe\'s')).toEqual('no-apostrophes')
     expect(slug('dot.to.dash')).toEqual('dot-to-dash')
     expect(slug('double--dash--to--dash')).toEqual('double-dash-to-dash')
     expect(slug('no!bang')).toEqual('nobang')

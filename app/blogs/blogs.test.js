@@ -119,7 +119,7 @@ describe('a blog feed XML', function () {
   })
 
   it('should have the right feed > title content', function () {
-    expect($('feed > title').text()).toEqual("Pete's Points")
+    expect($('feed > title').text()).toEqual('Pete\'s Points')
   })
 
   it('should have 10 recent posts', function () {
