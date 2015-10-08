@@ -20,7 +20,9 @@ describe('CreatePost Controller', function () {
       title: 'Post Title',
       content: '#marked it down'
     }
-    options.localStorage = {postDraft: JSON.stringify(postDraft)}
+    options.localStorage = {
+      postDraft: JSON.stringify(postDraft)
+    }
     injector.instantiate(CreatePost, options)
     expect(options.$scope.title).toEqual(postDraft.title)
     expect(options.$scope.contentMarkdown).toEqual(postDraft.content)

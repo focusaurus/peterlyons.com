@@ -3,7 +3,10 @@ var MemoryStorage = require('connect-cache/lib/storages/memory')
 var TTL = 60 * 1000
 var cacheMW = cache({
   rules: [
-    {regex: /\.css$/, ttl: TTL}
+    {
+      regex: /\.css$/,
+      ttl: TTL
+    }
   ],
   storage: new MemoryStorage()
 })
