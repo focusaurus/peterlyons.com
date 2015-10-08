@@ -9,7 +9,8 @@
     "esformatter-var-each"
   ],
   "quotes": {
-    "type": "single"
+    "type": "single",
+    "avoidEscape": true
   },
   "semicolons": {
 
