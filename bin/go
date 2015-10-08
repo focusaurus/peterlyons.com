@@ -1,4 +1,11 @@
 #!/bin/bash
+set -o errexit    # always exit on error
+set -o errtrace   # trap errors in functions as well
+set -o pipefail   # don't ignore exit codes when piping output
+# set -x          # enable debugging
+# NOTE my standard "strict mode" bash boilerplate is missing a few things here:
+# - IFS is not changed because it screws up the task::bundle function
+# - set -o posix is not called because it disallows colons in function names
 
 ansible_version=1.9.1
 
