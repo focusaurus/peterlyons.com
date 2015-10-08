@@ -223,7 +223,7 @@ function savePost (req, callback) {
 
 function newBlogFinalize (token, post, callback) {
   var script = config.blog.newBlogFinalizePath
-  execFile(script, [], function (error, stdout, stderr) {
+  execFile(script, [token], function (error, stdout, stderr) {
     if (error) {
       log.error({
         err: error,
