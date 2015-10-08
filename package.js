@@ -50,6 +50,11 @@ sets.develop = extend({
 
 sets.optional = extend({
   'bistre': '1.0.1',
+  'esformatter-literal-notation': '1.0.1',
+  'esformatter-parseint': '1.0.3',
+  'esformatter-quotes': '1.0.3',
+  'esformatter-var-each': '2.1.0',
+  'esformatter': '0.7.3',
   'node-dev': '2.6.1',
   'node-inspector': '0.10.0',
   'standard': '4.5.4'
