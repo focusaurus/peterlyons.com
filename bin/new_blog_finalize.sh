@@ -36,5 +36,5 @@ git format-patch master --stdout > "/tmp/${branch}.patch"
 git checkout master
 # this will be a fast forward merge, which is good
 git merge "${branch}"
-#@bug git push "https://${1}:x-oauth-basic@github.com/focusaurus/data.git" master
-#@bug git branch -d "${branch}"
+git push "https://${1}:x-oauth-basic@github.com/focusaurus/data.git" master
+git branch -d "${branch}"
