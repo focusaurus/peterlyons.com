@@ -3,7 +3,7 @@
 /package.json
 /python
 /.vagrant
-/iojs-v*.tar.gz
+/*.tar.gz
 /bower_components
 /log/*.log
 /www

@@ -17,7 +17,7 @@ Basically, the site supports content in the following formats:
 
 Over the years, I've tried out various deployment methodologies and file layouts. I tried a full-on static site generator with all the generated files in the git repo, and have now decided I do not like that approach. Thus this site serves dynamic content primarily with tiny bits of caching at the few spots where we get decent bang for our caching buck.
 
-# Related repositories
+## Related repositories
 
 The site requires 3 git repositories to fully function
 
@@ -27,20 +27,38 @@ The site requires 3 git repositories to fully function
 
 The data and static repositories aren't particularly interesting. All the interesting code is in this repository.
 
-#Build Notes
+## New Developer Setup (OS X Scripted)
+
+- run `./bin/install_prereqs.sh`
+
+## New Developer Setup (Manual or custom)
+
+- Install prereqs (homebrew is the recommended approach on OS X)
+  - git
+  - nvm
+  - ansible (python virtualenv recommended)
+  - vagrant
+  - tar (included with OS X)
+  - curl (included with OS X)
+- Use nvm to install node
+  - cd to repo root directory
+  - `nvm install`
+- `npm install`
+
+## Build Notes
 
 * do work in the develop branch
 * when ready to cut a release candidate, get develop into a clean committed state
 * make sure you are backmerged from master (normally this should always be true)
-* run `./bin/go release_candidate <patch|minor|major>`
+* run `./bin/release_candidate.sh <patch|minor|major>`
   * (patch is the default)*
 * make sure the build and stage vagrant boxes are up with `vagrant up`
-* create a build on the vagrant "build" vm with `./bin/go build`
-* deploy that to the vagrant "stage" vm from your laptop via `./bin/go deploy build/<build>.tar.gz deploy/host_vagrant_stage.yml`*
+* create a build on the vagrant "build" vm with `./bin/build.sh`
+* deploy that to the vagrant "stage" vm from your laptop via `./bin/deploy.sh build/<build>.tar.gz deploy/host_vagrant_stage.yml`*
   * vagrant sudo password is "password"
 * Test that and if all looks good you can finalize the release with
-* `./bin/go release`
-* deploy to prod with `./bin/go deploy build/<build>.tar.gz deploy/host_production.yml`
+* `./bin/release.sh`
+* deploy to prod with `./bin/deploy.sh build/<build>.tar.gz deploy/host_production.yml`
 
 # License: MIT
 Copyright (c) 2013 Peter Lyons

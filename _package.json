@@ -9,13 +9,9 @@
   },
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
   "main": "app/server.js",
-  "engines": {
-    "iojs": "2.0.1",
-    "node": "0.10.36"
-  },
   "scripts": {
-    "start": "./bin/go express",
-    "test": "./bin/go test"
+    "start": "./bin/start.sh",
+    "test": "./bin/test.sh"
   },
   "files": [],
   "browser": {

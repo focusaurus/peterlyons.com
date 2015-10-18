@@ -10,7 +10,6 @@ function get (name, defaultValue) {
 var config = {
   appURI: '/app',
   appVersion: pack.version,
-  nodeVersion: pack.engines.node,
   enableLogger: process.env.NODE_ENV !== 'test',
   errorPages: IS_PRODUCTION,
   hostname: get('hostname', '127.0.0.1'),
