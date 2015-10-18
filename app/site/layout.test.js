@@ -45,6 +45,11 @@ describe('the main layout', function () {
       .expect('Content-Encoding', 'gzip')
       .end(done)
   })
+
+  it('should include HTML comment with app version', function () {
+    testUtils.assertSelectors($, 'meta[name=x-app-version]')
+    expect($('meta[name=x-app-version]').attr('value')).toEqual(pack.version)
+  })
 })
 
 describe('analytics snippet', function () {
