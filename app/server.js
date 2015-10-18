@@ -28,4 +28,3 @@ app.listen(config.port, config.ip, function (error) {
   }
   log.info(_.pick(config, 'baseURL'), 'express server listening')
 })
-// require('app/inspector')
