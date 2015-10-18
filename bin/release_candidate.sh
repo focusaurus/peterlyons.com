@@ -1,10 +1,10 @@
 #!/bin/bash
+
+# begin git work to prepare for a build/test/release
+# Usage: release_candidate.sh <patch|minor|major>"
+
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
-
-# doc "* release_candidate: begin git work to prepare for a build/test/release
-#   * (aliased as "rc")
-#   * Usage: $(basename $0) release_candidate <patch|minor|major>"
 echo "Creating a new release candidate"
 git checkout develop
 git pull origin develop

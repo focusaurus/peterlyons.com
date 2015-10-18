@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# installs prerequisite packages for local development
+
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
 

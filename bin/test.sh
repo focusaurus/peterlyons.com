@@ -1,13 +1,16 @@
 #!/bin/bash
-cd "$(dirname "$0")/.."
-source ./bin/lib/strict_mode.sh
-unset IFS # This screws up groups variable quoting/parsing
 
-# doc "* test [node|browser|debug]: run automated test suite and linting
-#   * no args runs them all
-#   * otherwise run the groups provided
-#     * debug: run mocha tests with immediate breakpoint for debugging"
+# run automated test suite and linting
+# Usage: test.sh [node|browser|debug]:
+# no args runs them all
+# otherwise run the groups provided
+# debug: run mocha tests with immediate breakpoint for debugging"
+
+
 main() {
+  cd "$(dirname "$0")/.."
+  source ./bin/lib/strict_mode.sh
+  unset IFS # This screws up groups variable quoting/parsing
   local groups="${@-node browser}"
   for group in ${groups}; do
     if type "test_${group}" &>/dev/null; then
@@ -21,10 +24,9 @@ main() {
 }
 
 test_node() {
-  set -e
   echo "node.js mocha unit tests…"
   echo -n "browserifying…"
-  ./bin/bundle.sh
+  ./bin/build_dev_js.sh
   echo ✓
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
@@ -39,7 +41,7 @@ test_browser() {
   set +e
   echo -n browser tests…
   local browser="--phantom"
-  #use this for real browser
+  # use this for real browser
   # local browser="--local $(config3 tests.port)"
   zuul ${browser} --ui mocha-bdd --open \
     $(find ./app -name '*btest.js' -print0 | xargs -0)

@@ -1,5 +1,6 @@
-#!/usr/bin/env mocha
+#!/usr/bin/env mocha --reporter spec
 /* eslint-env mocha */
+process.env.NODE_ENV = 'test'
 require('app/blogs/blogsAreLoaded.test')
 var request = require('supertest')(require('app'))
 var testConfigs = require('app/testConfigs')

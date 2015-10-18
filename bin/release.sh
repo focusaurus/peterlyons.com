@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# git mechanics to finalize a release candidate to an official release
+
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
 

@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# bundles browser js for devlopment
+
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
 unset IFS # This screws up our shell quoting

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# doc "* build: build a distribution archive for deployment
-#   * Usage: $(basename $0) build <HEAD|WORK|TAG>
-#     * $(basename $0) build HEAD will use the last commit on the current branch
-#     * $(basename $0) build WORK will use uncommited local changes
-#     * $(basename $0) build TAG will use the code in the given git tag"
+# create a build archive of the app for deployment
+# Usage: build.sh <HEAD|WORK|TAG>
+#   build.sh HEAD will use the last commit on the current branch
+#   build.sh WORK will use uncommited local changes
+#   build.sh TAG will use the code in the given git tag"
 
 main() {
   cd "$(dirname "$0")/.."

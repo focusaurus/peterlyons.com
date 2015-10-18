@@ -1,5 +1,8 @@
 #!/bin/bash
+
+# removes all generated build artifacts
+
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
-# doc "* clean: delete the build directory"
+
 rm -rf ./build ./www/*
