@@ -1,3 +1,5 @@
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+
 set -o errexit    # always exit on error
 set -o errtrace   # trap errors in functions as well
 set -o pipefail   # don't ignore exit codes when piping output
