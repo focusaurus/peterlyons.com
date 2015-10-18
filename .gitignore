@@ -1,6 +1,5 @@
 /node
 /build
-/package.json
 /python
 /.vagrant
 /*.tar.gz

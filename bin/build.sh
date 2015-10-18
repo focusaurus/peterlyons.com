@@ -42,14 +42,10 @@ main() {
     --file "${node_archive}"
   cd "${build_dir}/${prefix}"
   # Run OSX node and npm utilites but within the linux build dir
-  ./package.js build
-  # npm-pkgr --strategy=copy --production --silent --parseable &> "../npm.log"
-  npm install
+  npm install --production
   bower install --production
   ./bin/build_js.sh
   npm dedupe
-  ./package.js production
-  npm prune --production
   # npm prune removes our symlink, add it back
   ln -nsf ../app node_modules/app
   #remove development-only files
