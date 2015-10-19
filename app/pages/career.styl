@@ -9,3 +9,19 @@
       border 1px solid $colorHeader
     &:disabled
       color $colorHeader
+
+.testimonial
+  p
+    margin-top 1em
+    margin-bottom 2em
+  .testimonial-body
+    max-height 10em
+    overflow-y hidden
+    &.expanded
+      max-height initial
+
+  .expand-control
+    display block
+    text-align right
+    &.hidden
+      display none
