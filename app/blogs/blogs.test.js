@@ -63,7 +63,7 @@ describe('the preview converter', function () {
       .expect(200)
       .end(function (error, res) {
         expect(error).notToExist()
-        expect('<h1>Header One</h1>').toEqual(res.text.trim())
+        expect('<h1 id="header-one">Header One</h1>').toEqual(res.text.trim())
         done()
       })
   })
