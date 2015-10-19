@@ -55,11 +55,10 @@ Jersey shore scene. During my tenure, we recorded three CDs.
 <img class="band" src="/images/confunktion_junction_cover.jpg"
 alt="Confunktion Junction Album Cover"/>
 
-#Confunktion Junction
+# Confunktion Junction
 I also used to perform with a great soul/funk band called Confunktion Junction.
 <div class="clear"></div>
 
 * [Confunktion Junction CD Baby Artist page](http://cdbaby.com/Artist/ConfunktionJunction)
 * [EP on CD Baby](http://cdbaby.com/cd/confunktion)
 * 2002 - 2007
-

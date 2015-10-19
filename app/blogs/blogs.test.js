@@ -57,7 +57,7 @@ describe('a blog index page', function () {
 describe('the preview converter', function () {
   it('should convert markdown to HTML', function (done) {
     testUtils.post('/convert')
-      .send('#Header One')
+      .send('# Header One')
       .set('Content-Type', 'text/x-markdown')
       .set('Accept', 'text/html')
       .expect(200)

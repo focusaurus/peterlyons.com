@@ -14,7 +14,7 @@ without explaining the underlying reasoning.
 
 All these conventions reinforce certain core tenets.
 
-##Readability is King
+## Readability is King
 
 Most of these conventions are about making the code maintainer's job as fast and easy as possible. The faster and more accurately the code maintainer
 (whether it's the same person as the author or not) can change the code, the
@@ -24,19 +24,19 @@ some minor bugs that can easily be found and fixed. The fact is, if your code
 is hard enough to read, someone will eventually decide to rewrite it, giving
 you negative return on the time invested in the first version of the program.
 
-##Precision
+## Precision
 
 Regardless of whether you like to think of code as more like art or more like science (I prefer the latter), code needs to be accurate and precise. There should not be careless code or comments strewn around the code. Code should look like it was created by an engineer. And not like the engineer who probably wrote it - an overtired kid scarfing junk food over a messy desk late at night; it should look like it was written by an old school 1950s chemist in a pristine lab coat who carefully labels every vial in her lab before she fills it. Even if you fancy yourself a "hacker", I think most of us agree that beautiful code just sparkles with precision and clarity and elegance.
 
-##Make One Choice
+## Make One Choice
 
 Many programming laguages support several different ways or syntaxes for the same thing. This is unfortunate, in my opinion, especially for the silly ones. Avoid these silly syntax variations and favor consistently using the most common format. This is also expressed in [PEP 20][2]'s "There should be one-- and preferably only one --obvious way to do it.".
 
-##When In Doubt, Alphabetize
+## When In Doubt, Alphabetize
 
 For a sequence of statements where execution or declaration order doesn't matter, if the list is small and very clearly can be organized logically, do that. But if the list is long or has no very clear inherent organization, alphabetize
 
-##Think In Small Chunks
+## Think In Small Chunks
 
 People have varying mental capacities to keep things in their short term memory. Certain complex or compound statements urge the reader to fill up their short term memory with lots of intermediate products in order to comprehend a single complex statement. I find this difficult and especially frustrating when I'm reading someone else's code. And the code is broken. And I'm tired and up late because that code is broken. And the author decided to write some fancy 200-character lambda expression with seven intermediate variables. Here's a real example I encountered at work (altered to protect the guilty):
 
@@ -45,7 +45,7 @@ People have varying mental capacities to keep things in their short term memory.
 That's a single expression! Completely unreadable to me. Clever, but worse
 than worthless.
 
-##Fewer Expressions Per Line
+## Fewer Expressions Per Line
 
 Error messages often include a line number. However, if you get to that line of source code and it is 200 characters long and contains ten complex sub-expressions, you may need to break it up into ten lines of code and rerun it to understand which expression causes the error. If the error is hard (or impossible) to reproduce, you are in for some guesswork.
 

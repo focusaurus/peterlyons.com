@@ -23,7 +23,7 @@
     "httperrors": "0.7.1",
     "jade": "1.9.2",
     "lodash": "3.3.0",
-    "markdown-js": "0.0.3",
+    "marked": "0.3.5",
     "mkdirp": "0.5.0",
     "moment": "2.10.2",
     "mustache": "1.1.0",
