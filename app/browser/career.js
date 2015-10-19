@@ -1,4 +1,4 @@
-function nodeListEach(nodeList, fn) {
+function nodeListEach (nodeList, fn) {
   Array.prototype.forEach.call(nodeList, fn)
 }
 
