@@ -41,7 +41,6 @@
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {
     "bistre": "1.0.1",
-    "bump-cli": "1.1.3",
     "chaimel": "1.2.0",
     "esformatter": "0.7.3",
     "esformatter-literal-notation": "1.0.1",

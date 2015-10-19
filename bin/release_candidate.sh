@@ -8,11 +8,7 @@ source ./bin/lib/strict_mode.sh
 echo "Creating a new release candidate"
 git checkout develop
 git pull origin develop
-bump _package.json --"${1-patch}"
-local version=$(config3 appVersion)
-git add _package.json
-git commit -m "bump version for ${version} release"
-git tag "v${version}"
+npm version "${1-patch}"
 cat <<-EOF
 Ready
 Next steps are:
