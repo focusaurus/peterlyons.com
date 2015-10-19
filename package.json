@@ -73,5 +73,5 @@
     "start": "./bin/start.sh",
     "test": "./bin/test.sh"
   },
-  "version": "5.19.1"
+  "version": "5.20.0"
 }
