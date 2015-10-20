@@ -4,7 +4,7 @@ block variables
 block body
   h1= title
   :markdown
-    ##The Debugger is a Fantastic Comprehension Aid
+    ## The Debugger is a Fantastic Comprehension Aid
 
     For most of my time as a programmer, I've been in the "no fancy tools camp". I spurned IDEs (and still do), complex build tools, any flavor of a "project" file an editor needed to supplement the filesystem layout, code analyzers, coverage tools, and all that ilk. I got things done by printing to stdout, kept it simple, and moved on. Not that I haven't tried all of these things at some point or another, but I found all of them were so awkward and cumbersome that not a single one of them stayed in my tool box beyond that initial experimentation or a single project.
 
@@ -14,15 +14,15 @@ block body
 
     However, my main goal with this post is not to convince you to use the debugger because it will allow you to find a fix specific bugs more quickly. I want to convince you that stepping through your program in the debugger is a fundamentally valuable experience that will massively increase your understanding of the JavaScript language, the runtime, your own code, and the libraries you are using. It's exploratory, connected, illuminated, and surprising. The analogy I make is if writing to stdout is shining a flashlight on a particular variable value in your program, running the debugger is a bright lantern lighting up huge areas for you. You will see things without having to be specifically looking for them in a particular place a priori.
 
-    #How to Use the Debugger
+    # How to Use the Debugger
 
-    ##Get a Good UI Setup
+    ## Get a Good UI Setup
 
     Invest a little time to get a good window layout and workflow for seeing the web page you are developing and the debugger. The debugger can dock to the bottom of the window, the right hand side, or separate into its own window.
 
     Enable source maps and explore the other advanced settings under the gear icon.
 
-    ##Learn the Primary Debugger Concepts
+    ## Learn the Primary Debugger Concepts
 
     These are your bread and butter primary tools.
 
@@ -32,14 +32,14 @@ block body
     * watch expressions
     * the call stack
 
-    ##Learn the Secondary Debugger Concepts
+    ## Learn the Secondary Debugger Concepts
 
     You don't need these very often, but under certain circumstances, they are essential to tracking things down effectively.
 
     * conditional breakpoints
     * pause on exceptions
 
-    ##Debugger Quirks
+    ## Debugger Quirks
 
     Some lines won't accept breakpoints. I don't exactly understand all of these, so please post a comment if you can explain. Sometimes I think it's just syntax where a single expression spans multiple lines and Chrome elects one of those lines (the last one I guess) as the one where a breakpoint can go. Other times I suspect the optimizing compiler has altered the underlying code such that a breakpoint doesn't make sense there anymore, but that's just a hunch that could be entirely incorrect.
 
@@ -49,7 +49,7 @@ block body
 
     Overall the UI is pretty cumbersome and could be made much better with some more usability studies.
 
-    #Write Debugger-friendly Code
+    # Write Debugger-friendly Code
 
     Stick to one statement per line, and avoid complex nested expressions. Rather, put interesting values into variables where they can easily be inspected. So instead of this:
 
@@ -70,7 +70,7 @@ block body
 
     I'm not a big fan of the chaining style in general, but in particular it's a pain when working in the debugger.
 
-    #Debugging Server Side node.js code with node-inspector
+    # Debugging Server Side node.js code with node-inspector
 
     So this is pretty much the Holy Grail in my opinion. This is a huge selling point of node for me. There's a module in npm called [node-inspector](https://npmjs.org/package/node-inspector) that allows you to use the Chrome debugger to debug your server side node.js code.
 
@@ -88,13 +88,13 @@ block body
 
     If you need to fix a bug that is crashing your program before you can even get it started and connect the debugger, use `--debug-brk` which tells v8 to pause the program before the very first line is interpretted so you can get node-inspector connected and step through.
 
-    #Debugging Your Mocha Tests in node-inspector
+    # Debugging Your Mocha Tests in node-inspector
 
     [mocha](http://visionmedia.github.io/mocha/) supports the same `--debug` and `--debug-brk` arguments as node, so you can also debug your tests within node-inspector. Double victory!
 
     To avoid port collisions, you can provide an alternate port to the process for your mocha tests. This can be done with `mocha --debug-brk=6666`, for example if you want to leave your application process's debugger listening on 5858 while you run mocha tests at the same time debugging them via port 6666.
 
-    #Custom Ports for Mulitple Projects
+    # Custom Ports for Mulitple Projects
 
     It is common for node developers to switch between many small projects frequently. Thus to keep things neatly separated, I often follow the following scheme when allocating ports. First an example:
 
@@ -114,7 +114,7 @@ block body
 
     However, I don't recommend this setup until you are really comfortable with the basics. Keep it simple and use the default ports when you are new to these tools.
 
-    #Recommended Reading
+    # Recommended Reading
 
     * [Chrome Developer Tools Docs](https://developers.google.com/chrome-developer-tools/?csw=1)
     * [HTML5 Rocks Introduction to Chrome Developer Tools](http://www.html5rocks.com/en/tutorials/developertools/part1/)
@@ -122,7 +122,7 @@ block body
     * [Debugging Asynchronous JavaScript with Chrome DevTools](http://www.html5rocks.com/en/tutorials/developertools/async-call-stack/)
     * [Watch Me Code Debugging Screencasts by Derrick Bailey](http://sub.watchmecode.net/debugging-javascript/)
 
-    #Lab
+    # Lab
 
   button.jsDebug.breakpointButton Click to experiment with breakpoints
   button.jsDebug.stepSync Step Over Sync Code
