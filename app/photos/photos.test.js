@@ -4,11 +4,11 @@ describe('the photos page', function () {
   var $ = null
 
   before(function (done) {
-    testUtils.loadPage(
-      '/app/photos?gallery=burning_man_2011', function (error, dom) {
-        $ = dom
-        done(error)
-      })
+    var url = '/app/photos?gallery=burning_man_2011'
+    testUtils.loadPage(url, function (error, dom) {
+      $ = dom
+      done(error)
+    })
   })
 
   it('should have the photo surrounding structure', function () {
