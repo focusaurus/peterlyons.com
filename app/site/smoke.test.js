@@ -1,6 +1,6 @@
-var testUtils = require('app/testUtils')
-var testConfigs = require('app/testConfigs')
 require('../blogs/blogsAreLoaded.test')
+var testConfigs = require('app/testConfigs')
+var testUtils = require('app/testUtils')
 
 describe('smoke tests for most pages on the site', function () {
   testConfigs.forEach(function (testConfig) {

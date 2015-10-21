@@ -1,19 +1,7 @@
-var blogRoutes = require('app/blogs/blogRoutes')
+require('./blogsAreLoaded.test') // needed to make sure content is loaded
 var cheerio = require('cheerio')
 var expect = require('chaimel')
 var testUtils = require('app/testUtils')
-
-describe('wait for blogs to be loaded from disk', function () {
-  it('should wait for blogRoutes.ready event', function (done) {
-    this.slow(3000)
-    this.timeout(6000)
-    if (blogRoutes.loaded) {
-      done()
-      return
-    }
-    blogRoutes.events.on('ready', done)
-  })
-})
 
 describe('a blog post page', function () {
   var $ = null

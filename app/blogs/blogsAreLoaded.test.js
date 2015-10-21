@@ -10,6 +10,6 @@ describe('wait for blogs to be loaded from disk', function () {
       done()
       return
     }
-    blogRoutes.events.on('ready', done)
+    blogRoutes.events.once('ready', done)
   })
 })
