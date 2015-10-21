@@ -3,6 +3,7 @@
     "browser": true
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "inject": true
   }
 }
