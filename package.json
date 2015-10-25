@@ -30,6 +30,8 @@
     "nib": "1.1.0",
     "process-title": "0.0.0",
     "raw-body": "2.0.0",
+    "react": "0.14.0",
+    "react-dom": "0.14.0",
     "reveal": "0.0.4",
     "rupture": "0.6.1",
     "sharify": "0.1.6",
@@ -40,6 +42,7 @@
   },
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {
+    "babel": "5.8.29",
     "bistre": "1.0.1",
     "chaimel": "1.2.0",
     "esformatter": "0.7.3",

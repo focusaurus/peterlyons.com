@@ -25,6 +25,7 @@ if (config.enableLogger) {
   'decks/decksRoutes',
   'pages/pagesRoutes',
   'photos/photosRoutes',
+  'photosReact/photosReactRoutes',
   'photos/galleriesRoutes',
   'site/cssRoutes',
   'site/errorRoutes'
@@ -42,9 +43,8 @@ app.use(function (req, res, next) {
   next(new httpErrors.NotFound(req.path))
 })
 
-/* eslint no-unused-vars:0 */
 // Express looks at function arity, so we must declare 4 arguments here
-app.use(function (error, req, res, next) {
+app.use(function (error, req, res, next) { // eslint-disable-line no-unused-vars
   res.status(error.statusCode || 500)
   if (error.statusCode === 404) {
     res.render('site/error404')
