@@ -1,0 +1,8 @@
+extends ../site/layout
+block variables
+  - title = gallery.displayName + " Photo Gallery"
+block body
+  != photoGalleryHtml
+block append scripts
+  != sharify.script()
+  //- script require("app/browser/viewGallery").init();
