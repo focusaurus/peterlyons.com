@@ -3,13 +3,13 @@ import React from 'react'
 function links(previousPhoto, nextPhoto) {
   var links = []
   if (previousPhoto) {
-    links.push(<a href={previousPhoto.pageURI}>
+    links.push(<a href={previousPhoto.pageURI} key='previous'>
       &lt;$lt;prevous&nbsp;
     </a>)
   }
 
   if (nextPhoto) {
-    links.push(<a href={nextPhoto.pageURI}>
+    links.push(<a href={nextPhoto.pageURI} key='next'>
       next&gt;&gt;
     </a>)
   }

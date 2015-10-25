@@ -20,7 +20,7 @@ const Thumbnails = React.createClass({
   render: function() {
     var thumbnails = this.props.gallery.photos.map(function (photo) {
       return (
-        <a className='thumbnail' href={photo.pageURI}>
+        <a className='thumbnail' href={photo.pageURI} key={photo.pageURI}>
           <img
             className='thumbnail'
             src={photo.thumbnailURI}

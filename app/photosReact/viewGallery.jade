@@ -3,6 +3,6 @@ block variables
   - title = gallery.displayName + " Photo Gallery"
 block body
   != photoGalleryHtml
-block append scripts
+block prepend scripts
   != sharify.script()
   //- script require("app/browser/viewGallery").init();

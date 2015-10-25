@@ -1,7 +1,7 @@
-import GalleryList from './GalleryList'
-import Photo from './Photo'
+import GalleryList from './GalleryList.jsx'
+import Photo from './Photo.jsx'
 import React from 'react'
-import Thumbnails from './Thumbnails'
+import Thumbnails from './Thumbnails.jsx'
 
 const PhotoGallery = React.createClass({
   render: function() {
