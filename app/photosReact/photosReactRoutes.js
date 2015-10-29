@@ -35,7 +35,7 @@ function photosReact (req, res, next) {
       galleries,
       gallery
     })
-    var photoGalleryHtml = server.renderToStaticMarkup(element)
+    var photoGalleryHtml = server.renderToString(element)
     res.render('photosReact/viewGallery', {
       photoGalleryHtml,
       gallery

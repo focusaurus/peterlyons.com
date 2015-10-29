@@ -1,6 +1,6 @@
 import React from 'react'
 
-function links(previousPhoto, nextPhoto) {
+function links (previousPhoto, nextPhoto) {
   var links = []
   if (previousPhoto) {
     links.push(<a href={previousPhoto.pageURI}>
@@ -16,18 +16,29 @@ function links(previousPhoto, nextPhoto) {
   return links
 }
 const Thumbnails = React.createClass({
-
-  render: function() {
+  viewPhoto: function (event) {
+    event.preventDefault()
+    var photoName = event.target.parentElement.attributes['data-name'].value
+    console.log('clicked', photoName)
+    this.props.onChangePhoto(photoName)
+  },
+  render: function () {
+    var self = this
     var thumbnails = this.props.gallery.photos.map(function (photo) {
-      return (
-        <a className='thumbnail' href={photo.pageURI} key={photo.pageURI}>
+    return (
+        <a
+          className='thumbnail'
+          href={photo.pageURI}
+          data-name={photo.name}
+          key={photo.pageURI}
+          onClick={self.viewPhoto}>
           <img
             className='thumbnail'
             src={photo.thumbnailURI}
             alt={photo.caption}
             title={photo.caption}></img>
         </a>
-      )
+        )
     })
     const gallery = this.props.gallery
     const photo = this.props.photo

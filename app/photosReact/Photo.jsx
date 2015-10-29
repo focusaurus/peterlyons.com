@@ -16,10 +16,12 @@ function links(previousPhoto, nextPhoto) {
   return links
 }
 const Photo = React.createClass({
-
-  render: function() {
-    const gallery = this.props.gallery
-    const photo = this.props.photo
+  getInitialState: function getInitialState () {
+    return this.props
+  },
+  render: function render () {
+    const gallery = this.state.gallery
+    const photo = this.state.photo
     const index = gallery.photos.indexOf(photo)
     const previousPhoto = gallery.photos[index - 1]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
