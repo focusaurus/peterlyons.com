@@ -1,3 +1,24 @@
+mixin fig(imageUrl, authorName, authorUrl, licenseName, licenseUrl)
+  figure
+    img(src=imageUrl)
+    figcaption Photo by
+      != "&nbsp;"
+      a(href=authorUrl)= authorName
+      != "&nbsp;"
+      a(href=licenseUrl)= "(" + licenseName + ")"
+
+mixin slide(title)
+  section
+    h2= title
+    block
+
+mixin vslide(title)
+  section
+    section
+      h2= title
+    section
+      block
+
 doctype html
 html(lang="en")
   head
