@@ -9,7 +9,7 @@ echo "Creating a new release candidate"
 git checkout develop
 git pull origin develop
 npm version "${1-patch}"
-local version=$(config3 appVersion)
+version=$(config3 appVersion)
 cat <<-EOF
 Ready
 Next steps are:
