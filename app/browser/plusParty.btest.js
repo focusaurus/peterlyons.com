@@ -1,5 +1,7 @@
 require('angular')
 require('angular-mocks')
+require('es5-shim') // phantomjs shim
+
 var expect = require('chaimel')
 var plusParty = require('app/browser/plusParty')
 
@@ -9,7 +11,7 @@ describe('plusParty', function () {
   })
   it('wrap should work', function () {
     var wrapped = plusParty.wrap(42)
-    expect(wrapped).to.be.have.property('value', 42)
+    expect(wrapped).toHaveProperty('value', 42)
   })
 })
 
@@ -26,8 +28,8 @@ describe('PlusParty Controller', function () {
 
   it('should set up scope with rawText and numbers array', function () {
     injector.instantiate(plusParty.Controller, options)
-    expect(options.$scope.rawText.toLowerCase()).to.contain('paste some')
-    expect(options.$scope.numbers).to.be.an('array')
-    expect(options.$scope.numbers).to.be.empty()
+    expect(options.$scope.rawText.toLowerCase()).toContain('paste some')
+    expect(options.$scope.numbers).toBeAn('array')
+    expect(options.$scope.numbers).toBeEmpty()
   })
 })
