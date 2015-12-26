@@ -1,5 +1,5 @@
 <img class="band" src="/images/gora_gora_orkestar.png" alt="Gora Gora Orkestar"/>
-<img class="band" src="/images/gora_gora_orkestar.jpg" alt="Gora Gora Orkestar"/>
+<img class="band ggo" src="/images/gora_gora_orkestar_2015_10.jpg" alt="Gora Gora Orkestar"/>
 
 Gora Gora Orkestar is a large brass band playing a variety of styles from around the world including Balkan folk music, Roma, and New Orleans Second Line Funk.
 

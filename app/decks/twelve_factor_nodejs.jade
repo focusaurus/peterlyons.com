@@ -30,7 +30,7 @@ block slides
     h5 May 19, 2015
   +slide("About Me")
     ul
-      li Freelance Consultant
+      li Independent Consultant
       li Full-stack web applications
       li node.js specialist
       li <a href="http://peterlyons.com">http://peterlyons.com</a>
@@ -175,22 +175,23 @@ block slides
         li build -> release could be just injecting a config.local.js file
         li a build creates an artifact that you could run later, perhaps years later, regardless of what happens on the Internet/www
         li Common antipattern: no build stage. Direct git clones/pulls on servers, builds on servers
+    section
+      ul
+        li unnecessarily long downtime
         ul
-          li unnecessarily long downtime
-          ul
-            li "npm install" can take minutes
-          li low reliability
-          ul
-            li if npm is down, your app stays down while it's down
-          li low consistency
-          ul
-            li if new packages are published during a rolling deploy, server3 will end up with different versions than server1
-          li high risk
-          ul
-            li untested code, failed downloads, failed install scripts, etc
-          li espoused by ops-ignorant developers
-          ul
-            li put this practice in the same category as people who advise ssh-ing into prod servers and live-editing PHP files
+          li "npm install" can take minutes
+        li low reliability
+        ul
+          li if npm is down, your app stays down while it's down
+        li low consistency
+        ul
+          li if new packages are published during a rolling deploy, server3 will end up with different versions than server1
+        li high risk
+        ul
+          li untested code, failed downloads, failed install scripts, etc
+        li espoused by ops-ignorant developers
+        ul
+          li put this practice in the same category as people who advise ssh-ing into prod servers and live-editing PHP files
   section
     +slide("6. Processes")
       +fig(
@@ -304,33 +305,41 @@ block slides
         li Some are worth their weight in gold
         li Some are long-term tax on lack of knowledge/experience
         li Commercial offerings are often superior to beginner/intermediate in-house approaches, but inferior to expert in-house systems
-  +slide("Sample App Tour of mjournal")
-    ol
-      li Codebase: <a href="https://github.com/focusaurus/mjournal">code</a>
-      li Dependencies: <a href="https://github.com/focusaurus/mjournal/blob/master/package.json">code</a>
-      li Config: <a href="https://github.com/focusaurus/mjournal/blob/master/config.default.js">code</a>
-      li Backing Services: <a href="https://github.com/focusaurus/mjournal/blob/master/config.default.js">code</a>
-      li Build, Release, Run: <a href="https://github.com/focusaurus/mjournal/blob/master/bin/go#L168">code</a>
-      li Processes: <a href="https://github.com/focusaurus/mjournal/blob/master/deploy/setup-docker.sh.mustache">code</a>
-      li Port Binding: <a href="https://github.com/focusaurus/mjournal/blob/master/app/server.js#L34">code</a>
-      li Concurrency: (Oops!) <a href="https://github.com/focusaurus/mjournal/blob/master/app/emails/scheduled.js">code</a>
-      li Disposability: <a href="https://github.com/focusaurus/mjournal/blob/master/app/server.js#L42">code</a>
-      li Dev/prod parity: <a href="https://github.com/focusaurus/mjournal/blob/master/deploy/setup-docker.sh.mustache">code</a>
-      li Logs: <a href="https://github.com/focusaurus/mjournal/blob/master/app/log.js">code</a>
-      li Admin Processes: <a href="https://github.com/focusaurus/mjournal/blob/master/app/emails/dailySummary.js#L51">code</a>
+  section
+    +slide("Sample App Tour of mjournal")
+    section
+      ol
+        li Codebase: <a href="https://github.com/focusaurus/mjournal">code</a>
+        li Dependencies: <a href="https://github.com/focusaurus/mjournal/blob/master/package.json">code</a>
+        li Config: <a href="https://github.com/focusaurus/mjournal/blob/master/config.default.js">code</a>
+        li Backing Services: <a href="https://github.com/focusaurus/mjournal/blob/master/config.default.js">code</a>
+        li Build, Release, Run: <a href="https://github.com/focusaurus/mjournal/blob/master/bin/go#L168">code</a>
+        li Processes: <a href="https://github.com/focusaurus/mjournal/blob/master/deploy/setup-docker.sh.mustache">code</a>
+    section
+      ol(start="7")
+        li Port Binding: <a href="https://github.com/focusaurus/mjournal/blob/master/app/server.js#L34">code</a>
+        li Concurrency: (Oops!) <a href="https://github.com/focusaurus/mjournal/blob/master/app/emails/scheduled.js">code</a>
+        li Disposability: <a href="https://github.com/focusaurus/mjournal/blob/master/app/server.js#L42">code</a>
+        li Dev/prod parity: <a href="https://github.com/focusaurus/mjournal/blob/master/deploy/setup-docker.sh.mustache">code</a>
+        li Logs: <a href="https://github.com/focusaurus/mjournal/blob/master/app/log.js">code</a>
+        li Admin Processes: <a href="https://github.com/focusaurus/mjournal/blob/master/app/emails/dailySummary.js#L51">code</a>
   +slide("Thank You")
     p 
       a(href="https://github.com/hunterloftis") Hunter Loftis
       |  (heroku node build pack maintainer) for review/feedback
-  +slide("References")
-    ul
-      li: a(href="http://12factor.net") 12factor.net
-      li: a(href="https://www.docker.com/") docker containerization
-      li: a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
-      li: a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
-      li: a(href="https://www.npmjs.com/package/config3") config3
-      li: a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
-      li: a(href="http://michaeldehaan.net/post/118717252307/immutable-infrastructure-is-the-future") Immutable Infrastructure is the Future
-      li: a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
-      li: a(href="/practices") Definition and purpose of a staging environment
-      li: a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful
+  section
+    +slide("References")
+    section
+      ul
+        li: a(href="http://12factor.net") 12factor.net
+        li: a(href="https://www.docker.com/") docker containerization
+        li: a(href="https://github.com/heroku/heroku-docker") Heroku Docker Plugin
+        li: a(href="https://www.npmjs.com/package/throng") throng module for cluster worker management
+        li: a(href="https://www.npmjs.com/package/config3") config3
+    section
+      ul
+        li: a(href="https://strongloop.com/strongblog/node-js-deploy-production-best-practice") StrongLoop node.js Deployment Best Practices
+        li: a(href="http://michaeldehaan.net/post/118717252307/immutable-infrastructure-is-the-future") Immutable Infrastructure is the Future
+        li: a(href="http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path") My Post About Avoiding npm -g
+        li: a(href="/practices") Definition and purpose of a staging environment
+        li: a(href="/problog/2010/02/environment-variables-considered-harmful") Environment Variables Considered Harmful

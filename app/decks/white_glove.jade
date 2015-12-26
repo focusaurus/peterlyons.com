@@ -1,0 +1,54 @@
+extends deck
+block head
+  title Finding Inconsistencies in Your MongoDB Data
+block slides
+  +slide("Finding Inconsistencies in Your MongoDB Data")
+    h3 Peter Lyons
+    hr
+    h4 Denver MongoDB Meetup Group
+    h5 November 3, 2015
+  +slide("About Me")
+    ul
+      li Independent Consultant
+      li Full-stack web applications
+      li node.js specialist
+      li Built several production apps on MongoDB
+      li <a href="http://peterlyons.com">http://peterlyons.com</a>
+  section
+    +slide("Schemaless - Yay?")
+      ul
+        li Short development time
+        li Emphasizes coding vs pre-planning schema
+        li <strong>However</strong>, comes with some risks
+        ul
+          li No protection against developer mistakes
+          li Easy to end up with undocumented schema and tribal knowledge
+          li Easy to end up with inconsistent data
+  section
+    +slide("Problem: Discovery")
+      ul
+        li First day on unfamiliar codebase
+        li What does the data look like?
+        li Caters to my data-driven development approach
+  section
+    +slide("Problem: Inconsistent Data")
+      ul
+        li <code>User.email</code> started out as a string
+        li Requirement came down to support multiple emails
+        li Code changed to store new users as an array instead
+        li No support to follow-through with this change across all instances of the database, all areas of the codebase
+  section
+    +slide("White Glove")
+      ul
+        li I started coding a tool to help with these challenges
+      blockquote
+        | Release early. Release often. And listen to your customers. -- Eric Raymond
+      ul
+        li Demos
+  section
+    +slide("Questions, Comments, Suggestions")
+  +slide("References")
+    ul
+      li: a(href="https://github.com/focusaurus/white-glove") White Glove on github
+      li: a(href="https://npmjs.com/package/white-glove") White Glove on npm
+      li: a(href="https://www.youtube.com/watch?v=T1O3ikmTEdA") Peter Norvig: How Computers Learn

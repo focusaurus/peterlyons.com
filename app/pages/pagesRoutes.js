@@ -25,7 +25,7 @@ function setup (app) {
         'block variables',
         '  - title = "' + title + '"',
         'block body',
-        '  :markdown',
+        '  :marked',
         '    ' + markdownText.split('\n').join('\n    ')
       ].join('\n')
       var tplFunction = jade.compile(jadeText, {

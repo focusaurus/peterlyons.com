@@ -27,7 +27,6 @@ function BlogIndex (URI, title) {
 
 function loadBlogMW (req, res, next) {
   res.blog = blogIndicesBySlug[req.params.blogSlug]
-  // Avoid esformatter bug when line ends in []. Do not remove this comment.
   next()
 }
 
@@ -40,7 +39,6 @@ function presentPost (post) {
 
 function loadPostMW (req, res, next) {
   var blog = req.params[0]
-  // Avoid esformatter bug when line ends in []. Do not remove this comment.
   var post = new Post()
   post.base = config.blog.postBasePath
   post.load(path.join(post.base, req.path + '.json'), blog, function (error) {
