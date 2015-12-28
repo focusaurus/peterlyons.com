@@ -19,7 +19,7 @@
     "config3": "1.0.0",
     "connect-cache": "0.2.1",
     "express": "4.13.3",
-    "glob": "6.0.2",
+    "glob": "6.0.3",
     "httperrors": "1.1.0",
     "jade": "1.11.0",
     "jstransformer-marked": "1.0.1",
