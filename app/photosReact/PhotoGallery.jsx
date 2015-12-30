@@ -28,14 +28,13 @@ const PhotoGallery = React.createClass({
     }
   },
   render: function () {
-    console.log('PhotoGallery rendering', this.state.photo.name) // @bug
     const index = this.state.gallery.photos.indexOf(this.state.photo)
     this.state.previousPhoto = this.state.gallery.photos[index - 1]
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
     return (
       <div className='galleryApp' onKeyDown={this.onKeyDown}>
+        <h1 id="photo">{this.state.gallery.displayName}</h1>
         <Photo
-          gallery={this.state.gallery}
           photo={this.state.photo}
           previousPhoto={this.state.previousPhoto}
           nextPhoto={this.state.nextPhoto}
@@ -48,7 +47,6 @@ const PhotoGallery = React.createClass({
       )
   },
   viewPhoto: function viewPhoto (photoName) {
-    console.log('viewPhoto', photoName) // @bug
     const match = {
       name: photoName
     }
