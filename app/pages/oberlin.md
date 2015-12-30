@@ -76,7 +76,7 @@ can download and enjoy.
 <td>(4:15)</td>
 </tr>
 <tr>
-<td class="performers">Jonathan Solars, violin<br />John Tarcza, marimba</td><td>&nbsp;</td>
+<td class="performers">Jonathan Solars, violin<br>John Tarcza, marimba</td><td>&nbsp;</td>
 </tr>
 </table>
 <h1>Junior Recital</h1>
@@ -118,7 +118,7 @@ Matthew S. Quayle
 </td></tr><tr><td colspan="2">
 <a href="/snd/quayle_04.mp3">Homecoming/State of the Union</a>
 </td></tr><tr><td class="performers" colspan="2">
-Edward Choi, clarinet<br />Reagan Fletcher, percussion
+Edward Choi, clarinet<br>Reagan Fletcher, percussion
 </td></tr>
 <tr><td><b>
 Sonata Op. 29
