@@ -44,7 +44,11 @@ function photosReact (req, res, next) {
 }
 
 function setup (app) {
-  app.get('/photos-react', sharify, loadGallery, photosReact)
+  const mw = [sharify, loadGallery, photosReact]
+  app.get('/photos-react', mw)
+  if (config.photos.serveDirect) {
+    app.get('/app/photos-react', mw)
+  }
 }
 
 module.exports = setup

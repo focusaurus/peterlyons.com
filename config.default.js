@@ -8,7 +8,7 @@ function get (name, defaultValue) {
 }
 
 var config = {
-  appURI: '',
+  appURI: '/app',
   appVersion: pack.version,
   enableLogger: process.env.NODE_ENV !== 'test',
   errorPages: IS_PRODUCTION,
