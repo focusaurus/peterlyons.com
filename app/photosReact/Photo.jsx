@@ -27,39 +27,21 @@ const Photo = React.createClass({
     }
     return links
   },
+
   onNavigate: function (event) {
     event.preventDefault()
     var photoName = event.target.attributes['data-name'].value
     this.props.viewPhoto(photoName)
   },
-  onKeyDown: function onKeyDown (event) {
-    console.log('you typed', event.key) // @bug
-    switch (event.key) {
-      case 'ArrowRight':
-        if (this.state.nextPhoto) {
-          this.props.viewPhoto(this.state.nextPhoto.name)
-        }
-        break
-      case 'ArrowLeft':
-        if (this.state.previousPhoto) {
-          this.props.viewPhoto(this.state.previousPhoto.name)
-        }
-        break
-    }
-  },
+
   render: function render () {
     const gallery = this.props.gallery
     const photo = this.props.photo
-    console.log('Photo.render', photo.name) // @bug
-    const index = gallery.photos.indexOf(photo)
-    this.state.previousPhoto = gallery.photos[index - 1]
-    this.state.nextPhoto = gallery.photos[index + 1]
-    // Avoid esformatter bug when line ends in []. Do not remove this comment.
     return (
-      <div className="photo" onKeyDown={this.onKeyDown}>
+      <div className="photo">
       <h1 id="photo">{gallery.displayName}</h1>
       <div id='nextPrev'>
-        {this.links(this.state.previousPhoto, this.state.nextPhoto)}
+        {this.links(this.props.previousPhoto, this.props.nextPhoto)}
       </div>
       <figure>
         <img src={photo.fullSizeURI} alt={photo.caption} title={photo.caption}>
