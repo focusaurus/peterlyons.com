@@ -35,11 +35,9 @@ const Photo = React.createClass({
   },
 
   render: function render () {
-    const gallery = this.props.gallery
     const photo = this.props.photo
     return (
       <div className="photo">
-      <h1 id="photo">{gallery.displayName}</h1>
       <div id='nextPrev'>
         {this.links(this.props.previousPhoto, this.props.nextPhoto)}
       </div>
@@ -54,17 +52,3 @@ const Photo = React.createClass({
 })
 
 export default Photo
-// .galleryApp(data-ng-app="photos", data-ng-controller="GalleryController", data-ng-cloak)
-//   h1#photo(data-ng-bind-template="photo Photo Gallery: {{gallery.displayName}}")
-//   #nextPrev
-//     a(data-ng-href="{{previousPhoto.pageURI}}", data-ng-if="previousPhoto") &lt;&lt;previous&nbsp;
-//     a(data-ng-href="{{nextPhoto.pageURI}}", data-ng-if="nextPhoto") next&gt;&gt;
-//   figure
-//     //- src is to appease the W3C HTML validator
-//     img(
-//       data-ng-src="{{photo.fullSizeURI}}",
-//       src=gallery.photos[0].fullSizeURI,
-//       alt="{{photo.caption}}",
-//       title="{{photo.caption}}",
-//     )
-//     figcaption {{photo.caption}}
