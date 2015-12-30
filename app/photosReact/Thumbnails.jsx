@@ -1,21 +1,5 @@
 import React from 'react'
 
-function links (previousPhoto, nextPhoto) {
-  var links = []
-  if (previousPhoto) {
-    links.push(<a href={previousPhoto.pageURI}>
-      &lt;$lt;prevous&nbsp;
-    </a>)
-  }
-
-  if (nextPhoto) {
-    links.push(<a href={nextPhoto.pageURI}>
-      next&gt;&gt;
-    </a>)
-  }
-  return links
-}
-
 const Thumbnails = React.createClass({
   onClickPhoto: function (event) {
     event.preventDefault()
