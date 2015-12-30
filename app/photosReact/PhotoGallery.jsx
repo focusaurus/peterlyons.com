@@ -12,13 +12,33 @@ const PhotoGallery = React.createClass({
       photo: this.props.gallery.photos[0]
     }
   },
+  onKeyDown: function onKeyDown (event) {
+    console.log('you typed', event.key) // @bug
+    switch (event.key) {
+      case 'ArrowRight':
+        if (this.state.nextPhoto) {
+          this.viewPhoto(this.state.nextPhoto.name)
+        }
+        break
+      case 'ArrowLeft':
+        if (this.state.previousPhoto) {
+          this.viewPhoto(this.state.previousPhoto.name)
+        }
+        break
+    }
+  },
   render: function () {
     console.log('PhotoGallery rendering', this.state.photo.name) // @bug
+    const index = this.state.gallery.photos.indexOf(this.state.photo)
+    this.state.previousPhoto = this.state.gallery.photos[index - 1]
+    this.state.nextPhoto = this.state.gallery.photos[index + 1]
     return (
-      <div className='galleryApp'>
+      <div className='galleryApp' onKeyDown={this.onKeyDown}>
         <Photo
           gallery={this.state.gallery}
           photo={this.state.photo}
+          previousPhoto={this.state.previousPhoto}
+          nextPhoto={this.state.nextPhoto}
           viewPhoto={this.viewPhoto}/>
         <Thumbnails
           gallery={this.state.gallery}
