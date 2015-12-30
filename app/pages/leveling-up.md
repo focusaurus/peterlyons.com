@@ -460,7 +460,7 @@ Things to note:
     * There is no need to do this though. Use a third party application such as [SlimTimer](http://slimtimer.com).
 * However, whether using a third party tool or your journal, I recommend publishing a summarized daily activity log. Below is an example of mine, which I created by using a Python script to parse the time stamps and `WIKI SUMMARY:` lines from my journal and then post them to our internal MoinMoin wiki. This is a handy reference for me and makes it easy for my managers to see the key tasks I have accomplished. The log should just be a handful of bullet points, probably never more than eight even on a crazy day; often just one bullet point is all you need.
 
-<img src="/images/2011/daily_activity_log_redacted_cropped.png" alt="Daily Activity Log" />
+<img src="/images/2011/daily_activity_log_redacted_cropped.png" alt="Daily Activity Log">
 
 Over time, your journal becomes an awesome treasure trove of knowledge. Do NOT worry about managing it. I kept a journal steadily for 6.5 years and my final text file was 207,470 lines long and 5 MB uncompressed. It compresses with bzip2 down to 1.2 MB. Just keep the journal going essentially for ever. Be sure to back it up by including it in a source code management system that has remote backups (git) and/or email a copy of it to yourself periodically.
 
@@ -505,7 +505,7 @@ The details of this email are important. It must be a HTML mail, not plain text.
 
 Here is a sample status email I sent:
 
-<img src="/images/2011/weekly_status_email_redacted_cropped.png" alt="Weekly status email sample" />
+<img src="/images/2011/weekly_status_email_redacted_cropped.png" alt="Weekly status email sample">
 
 Key things to note:
 
@@ -571,7 +571,7 @@ Peter Lyons has worked as a software developer and technology consultant since 2
 
 If you are uncertain about the veracity or value of the tips in this article, I offer up this graph of my salary as evidence in their favor. Assuming my starting salary straight out of college as "1" and computing the rest as multiples of that, here's what the growth looked like. Thus the chart doesn't show my specific earnings, just how they grew over time. This includes both base salary and cash bonuses. This does not include any form of stock, although I earned a bunch of that as well. By 2011 when I decided to take my career in a very different direction, I was earning over 4.6 times what I earned straight out of college.
 
-<img src="/images/2011/salary_chart.png" alt="Bar chart of salary over time" />
+<img src="/images/2011/salary_chart.png" alt="Bar chart of salary over time">
 
 # Comments
 
