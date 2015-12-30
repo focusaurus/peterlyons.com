@@ -8,7 +8,7 @@ function get (name, defaultValue) {
 }
 
 var config = {
-  appURI: '/app',
+  appURI: '',
   appVersion: pack.version,
   enableLogger: process.env.NODE_ENV !== 'test',
   hostname: get('hostname', '127.0.0.1'),
@@ -30,7 +30,7 @@ config.analytics = {
 
 config.photos = {
   photoURI: '/photos/',
-  galleryURI: config.appURI + '/photos',
+  galleryURI: config.appURI + '/photos-react',
   galleryDir: config.staticDir + '/photos',
   thumbExtension: '-TN.jpg',
   extension: '.jpg',

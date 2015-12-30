@@ -1,4 +1,4 @@
-// @TODO navigation, carrer, create post, deck, plusParty
+// @TODO navigation, career, create post, deck, plusParty
 function dispatch (path) {
   path = path || window.location.pathname
   switch (path) {

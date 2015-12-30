@@ -6,25 +6,34 @@ var _ = require('lodash')
 
 const PhotoGallery = React.createClass({
   getInitialState: function () {
-    return this.props
+    return {
+      gallery: this.props.gallery,
+      galleries: this.props.galleries,
+      photo: this.props.gallery.photos[0]
+    }
   },
   render: function () {
+    console.log('PhotoGallery rendering', this.state.photo.name) // @bug
     return (
       <div className='galleryApp'>
         <Photo
           gallery={this.state.gallery}
-          photo={this.state.gallery.photos[0]} />
+          photo={this.state.photo} />
         <Thumbnails
           gallery={this.state.gallery}
-          onChangePhoto={this.onChangePhoto}/>
+          viewPhoto={this.viewPhoto}/>
         <GalleryList galleries={this.state.galleries} />
       </div>
       )
   },
-  onChangePhoto: function onChangePhoto (photoName) {
-    this.state.gallery.photo = _.find(
-      this.state.gallery.photos, {name: photoName})
-    this.setState(this.state)
+  viewPhoto: function viewPhoto (photoName) {
+    console.log('viewPhoto', photoName) // @bug
+    const match = {
+      name: photoName
+    }
+    var newState = _.clone(this.state)
+    newState.photo = _.find(this.state.gallery.photos, match) || this.state.photo
+    this.setState(newState)
   }
 })
 

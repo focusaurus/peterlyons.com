@@ -1,10 +1,10 @@
 import React from 'react'
 
-function links(previousPhoto, nextPhoto) {
+function links (previousPhoto, nextPhoto) {
   var links = []
   if (previousPhoto) {
     links.push(<a href={previousPhoto.pageURI} key='previous'>
-      &lt;$lt;prevous&nbsp;
+      &lt;&lt;prevous&nbsp;
     </a>)
   }
 
@@ -16,15 +16,12 @@ function links(previousPhoto, nextPhoto) {
   return links
 }
 const Photo = React.createClass({
-  getInitialState: function getInitialState () {
-    return this.props
-  },
   render: function render () {
-    const gallery = this.state.gallery
-    const photo = this.state.photo
+    const gallery = this.props.gallery
+    const photo = this.props.photo
+    console.log('Photo.render', photo.name) // @bug
     const index = gallery.photos.indexOf(photo)
     const previousPhoto = gallery.photos[index - 1]
-    // Avoid esformatter bug when line ends in []. Do not remove this comment.
     const nextPhoto = gallery.photos[index + 1]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
     return (
