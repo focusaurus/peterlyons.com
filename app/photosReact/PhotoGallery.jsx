@@ -18,11 +18,12 @@ const PhotoGallery = React.createClass({
       <div className='galleryApp'>
         <Photo
           gallery={this.state.gallery}
-          photo={this.state.photo} />
+          photo={this.state.photo}
+          viewPhoto={this.viewPhoto}/>
         <Thumbnails
           gallery={this.state.gallery}
           viewPhoto={this.viewPhoto}/>
-        <GalleryList galleries={this.state.galleries} />
+        <GalleryList galleries={this.state.galleries}/>
       </div>
       )
   },

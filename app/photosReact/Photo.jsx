@@ -1,21 +1,32 @@
 import React from 'react'
 
-function links (previousPhoto, nextPhoto) {
-  var links = []
-  if (previousPhoto) {
-    links.push(<a href={previousPhoto.pageURI} key='previous'>
-      &lt;&lt;prevous&nbsp;
-    </a>)
-  }
-
-  if (nextPhoto) {
-    links.push(<a href={nextPhoto.pageURI} key='next'>
-      next&gt;&gt;
-    </a>)
-  }
-  return links
-}
 const Photo = React.createClass({
+  links: function links (previousPhoto, nextPhoto) {
+    var links = []
+    if (previousPhoto) {
+      links.push(<a
+        href={previousPhoto.pageURI}
+        onClick={this.onNavigate}
+        data-name={previousPhoto.name}>
+        &larr;prevous&nbsp;
+      </a>)
+    }
+
+    if (nextPhoto) {
+      links.push(<a
+        href={nextPhoto.pageURI}
+        onClick={this.onNavigate}
+        data-name={nextPhoto.name}>
+        next&rarr;
+      </a>)
+    }
+    return links
+  },
+  onNavigate: function (event) {
+    event.preventDefault()
+    var photoName = event.target.attributes['data-name'].value
+    this.props.viewPhoto(photoName)
+  },
   render: function render () {
     const gallery = this.props.gallery
     const photo = this.props.photo
@@ -28,7 +39,7 @@ const Photo = React.createClass({
       <div className="photo">
       <h1 id="photo">{gallery.displayName}</h1>
       <div id='nextPrev'>
-        {links(previousPhoto, nextPhoto)}
+        {this.links(previousPhoto, nextPhoto)}
       </div>
       <figure>
         <img src={photo.fullSizeURI} alt={photo.caption} title={photo.caption}>
