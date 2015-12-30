@@ -15,31 +15,31 @@ function links (previousPhoto, nextPhoto) {
   }
   return links
 }
+
 const Thumbnails = React.createClass({
-  viewPhoto: function (event) {
+  onClickPhoto: function (event) {
     event.preventDefault()
     var photoName = event.target.parentElement.attributes['data-name'].value
-    console.log('clicked', photoName)
-    this.props.onChangePhoto(photoName)
+    this.props.viewPhoto(photoName)
   },
   render: function () {
     var self = this
     var thumbnails = this.props.gallery.photos.map(function (photo) {
-    return (
-        <a
-          className='thumbnail'
-          href={photo.pageURI}
-          data-name={photo.name}
-          key={photo.pageURI}
-          onClick={self.viewPhoto}>
-          <img
+      return (
+          <a
             className='thumbnail'
-            src={photo.thumbnailURI}
-            alt={photo.caption}
-            title={photo.caption}></img>
-        </a>
-        )
-    })
+            href={photo.pageURI}
+            data-name={photo.name}
+            key={photo.pageURI}
+            onClick={self.onClickPhoto}>
+            <img
+              className='thumbnail'
+              src={photo.thumbnailURI}
+              alt={photo.caption}
+              title={photo.caption}></img>
+          </a>
+          )
+      })
     const gallery = this.props.gallery
     const photo = this.props.photo
     const index = gallery.photos.indexOf(photo)
