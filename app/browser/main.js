@@ -2,6 +2,7 @@
 function dispatch (path) {
   path = path || window.location.pathname
   switch (path) {
+    case '/app/photos-react':
     case '/photos-react':
       require('../photosReact/browser-main')
       break
