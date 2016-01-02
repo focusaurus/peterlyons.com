@@ -1,12 +1,16 @@
 import React from 'react'
 
 function links (year) {
-  return year.galleries.map(function (gallery) {
+  return year.galleries.map((gallery) => {
     return (
       <a
       className='gallerylink'
       href={'?gallery=' + encodeURIComponent(gallery.dirName)}
-      key={gallery.dirName}>
+      key={gallery.dirName}
+      onClick={(event) => {
+        event.preventDefault()
+        this.props.viewGallery(gallery.dirName)
+      }}>
         {gallery.displayName}
       </a>
       )
@@ -40,11 +44,11 @@ function getYears (galleries) {
 const GalleryList = React.createClass({
   render: function () {
     const years = getYears(this.props.galleries)
-    const yearNodes = years.map(function (year) {
+    const yearNodes = years.map((year) => {
       return (
         <div key={year.name}>
           <h2 className='year'>{year.name}</h2>
-          {links(year)}
+          {links.call(this, year)}
         </div>
         )
     })

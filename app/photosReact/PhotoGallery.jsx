@@ -2,7 +2,8 @@ import GalleryList from './GalleryList.jsx'
 import Photo from './Photo.jsx'
 import React from 'react'
 import Thumbnails from './Thumbnails.jsx'
-var _ = require('lodash')
+const _ = require('lodash')
+const request = require('superagent')
 
 const PhotoGallery = React.createClass({
   getInitialState: function () {
@@ -31,18 +32,21 @@ const PhotoGallery = React.createClass({
     const index = this.state.gallery.photos.indexOf(this.state.photo)
     this.state.previousPhoto = this.state.gallery.photos[index - 1]
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
+    // Avoid esformatter bug when line ends in []. Do not remove this comment.
     return (
       <div className='galleryApp' onKeyDown={this.onKeyDown}>
         <h1 id="photo">{this.state.gallery.displayName}</h1>
         <Photo
-          photo={this.state.photo}
-          previousPhoto={this.state.previousPhoto}
-          nextPhoto={this.state.nextPhoto}
-          viewPhoto={this.viewPhoto}/>
+      photo={this.state.photo}
+      previousPhoto={this.state.previousPhoto}
+      nextPhoto={this.state.nextPhoto}
+      viewPhoto={this.viewPhoto}/>
         <Thumbnails
-          gallery={this.state.gallery}
-          viewPhoto={this.viewPhoto}/>
-        <GalleryList galleries={this.state.galleries}/>
+      gallery={this.state.gallery}
+      viewPhoto={this.viewPhoto}/>
+    <GalleryList
+      galleries={this.state.galleries}
+      viewGallery={this.viewGallery}/>
       </div>
       )
   },
@@ -53,6 +57,23 @@ const PhotoGallery = React.createClass({
     var newState = _.clone(this.state)
     newState.photo = _.find(this.state.gallery.photos, match) || this.state.photo
     this.setState(newState)
+  },
+  viewGallery: function viewGallery (galleryDirName) {
+    request('/galleries/' + galleryDirName)
+      .end((error, res) => {
+        if (error) {
+          console.error(error)
+          return
+        }
+        const gallery = res.body
+        this.setState({
+          gallery,
+          galleries: this.props.galleries,
+          photo: gallery.photos[0]
+        })
+        window.document.title = gallery.displayName + ' Photo Gallery'
+        window.location.hash = '#photo'
+      })
   }
 })
 
