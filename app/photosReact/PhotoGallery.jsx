@@ -4,6 +4,7 @@ import React from 'react'
 import Thumbnails from './Thumbnails.jsx'
 const _ = require('lodash')
 const request = require('superagent')
+const querystring = require('querystring')
 
 const PhotoGallery = React.createClass({
   getInitialState: function () {
@@ -54,9 +55,12 @@ const PhotoGallery = React.createClass({
     const match = {
       name: photoName
     }
-    var newState = _.clone(this.state)
+    const newState = _.clone(this.state)
     newState.photo = _.find(this.state.gallery.photos, match) || this.state.photo
     this.setState(newState)
+    const query = {gallery: this.state.gallery.dirName, photo: this.state.photo.name}
+    const newUrl = location.pathname + '?' + querystring.stringify(query) + '#photo'
+    window.history.pushState(this.state, document.title, newUrl)
   },
   viewGallery: function viewGallery (galleryDirName) {
     request('/galleries/' + galleryDirName)
