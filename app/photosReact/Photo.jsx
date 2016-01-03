@@ -9,9 +9,8 @@ const Photo = React.createClass({
     if (previousPhoto) {
       links.push(<a
       href={previousPhoto.pageURI}
-      onClick={this.onNavigate}
-      key='previous'
-      data-name={previousPhoto.name}>
+      onClick={(event) => {event.preventDefault();this.props.viewPhoto(previousPhoto.name)}}
+      key='previous'>
         &larr;prevous&nbsp;
       </a>)
     }
@@ -19,19 +18,12 @@ const Photo = React.createClass({
     if (nextPhoto) {
       links.push(<a
       href={nextPhoto.pageURI}
-      onClick={this.onNavigate}
-      key='next'
-      data-name={nextPhoto.name}>
+      onClick={(event) => {event.preventDefault();this.props.viewPhoto(nextPhoto.name)}}
+      key='next'>
         next&rarr;
       </a>)
     }
     return links
-  },
-
-  onNavigate: function (event) {
-    event.preventDefault()
-    var photoName = event.target.attributes['data-name'].value
-    this.props.viewPhoto(photoName)
   },
 
   render: function render () {
