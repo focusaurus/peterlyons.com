@@ -58,9 +58,7 @@ const PhotoGallery = React.createClass({
     const newState = _.clone(this.state)
     newState.photo = _.find(this.state.gallery.photos, match) || this.state.photo
     this.setState(newState)
-    const query = {gallery: this.state.gallery.dirName, photo: this.state.photo.name}
-    const newUrl = location.pathname + '?' + querystring.stringify(query) + '#photo'
-    window.history.pushState(this.state, document.title, newUrl)
+    setTimeout(this.navigate)
   },
   viewGallery: function viewGallery (galleryDirName) {
     request('/galleries/' + galleryDirName)
@@ -75,9 +73,17 @@ const PhotoGallery = React.createClass({
           galleries: this.props.galleries,
           photo: gallery.photos[0]
         })
-        window.document.title = gallery.displayName + ' Photo Gallery'
-        window.location.hash = '#photo'
+        this.navigate()
       })
+  },
+  navigate: function navigate () {
+    window.document.title = this.state.gallery.displayName + ' Photo Gallery'
+    const query = {
+      gallery: this.state.gallery.dirName,
+      photo: this.state.photo.name
+    }
+    const newUrl = location.pathname + '?' + querystring.stringify(query) + '#photo'
+    window.history.pushState(this.state, document.title, newUrl)
   }
 })
 
