@@ -1,6 +1,6 @@
 import React from 'react'
 
-function links (year) {
+function links (props, year) {
   return year.galleries.map((gallery) => {
     return (
       <a
@@ -9,12 +9,12 @@ function links (year) {
       key={gallery.dirName}
       onClick={(event) => {
         event.preventDefault()
-        this.props.viewGallery(gallery.dirName)
+        props.viewGallery(gallery.dirName)
       }}>
         {gallery.displayName}
       </a>
       )
-  })
+    })
 }
 
 function getYears (galleries) {
@@ -40,20 +40,17 @@ function getYears (galleries) {
   return years
 }
 
-
-const GalleryList = React.createClass({
-  render: function () {
-    const years = getYears(this.props.galleries)
-    const yearNodes = years.map((year) => {
-      return (
-        <div key={year.name}>
-          <h2 className='year'>{year.name}</h2>
-          {links.call(this, year)}
-        </div>
-        )
+function GalleryList (props) {
+  const years = getYears(props.galleries)
+  const yearNodes = years.map((year) => {
+    return (
+      <div key={year.name}>
+        <h2 className='year'>{year.name}</h2>
+        {links(props, year)}
+      </div>
+      )
     })
     return <nav className='photos'>{yearNodes}</nav>
   }
-})
 
-export default GalleryList
+  export default GalleryList
