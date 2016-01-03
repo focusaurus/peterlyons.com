@@ -17,7 +17,8 @@ function links (props) {
     links.push(<a
     href={props.nextPhoto.pageURI}
     onClick={(event) => {
-      event.preventDefault();props.viewPhoto(props.nextPhoto.name)
+      event.preventDefault()
+      props.viewPhoto(props.nextPhoto.name)
     }}
     key='next'>
         next&rarr;
