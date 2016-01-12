@@ -61,7 +61,7 @@
     "superagent": "1.6.1",
     "supertest": "1.1.0",
     "w3c-validate": "0.0.2",
-    "watchify": "3.6.1",
+    "watchify": "3.7.0",
     "zuul": "3.8.0"
   },
   "files": [],
