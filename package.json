@@ -62,7 +62,7 @@
     "supertest": "1.1.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
-    "zuul": "3.8.0"
+    "zuul": "3.9.0"
   },
   "files": [],
   "homepage": "http://peterlyons.com",
