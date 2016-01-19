@@ -58,7 +58,7 @@
     "phantomjs": "1.9.19",
     "promptly": "0.2.1",
     "standard": "5.4.1",
-    "superagent": "1.6.1",
+    "superagent": "1.7.0",
     "supertest": "1.1.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
