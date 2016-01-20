@@ -15,7 +15,7 @@
     "bower": "1.7.1",
     "browserify": "12.0.1",
     "cheerio": "0.19.0",
-    "compression": "1.6.0",
+    "compression": "1.6.1",
     "config3": "1.0.0",
     "connect-cache": "0.2.1",
     "express": "4.13.3",
