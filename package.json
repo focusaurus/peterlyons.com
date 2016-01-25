@@ -18,7 +18,7 @@
     "compression": "1.6.0",
     "config3": "1.0.0",
     "connect-cache": "0.2.1",
-    "express": "4.13.3",
+    "express": "4.13.4",
     "glob": "6.0.4",
     "httperrors": "1.2.0",
     "jade": "1.11.0",
