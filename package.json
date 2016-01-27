@@ -44,7 +44,7 @@
     "bistre": "1.0.1",
     "chai": "3.4.1",
     "chaimel": "3.0.0",
-    "es5-shim": "4.4.1",
+    "es5-shim": "4.5.2",
     "esformatter": "0.8.1",
     "esformatter-literal-notation": "1.0.1",
     "esformatter-parseint": "1.0.3",
