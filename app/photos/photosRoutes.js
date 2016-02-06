@@ -15,7 +15,7 @@ function renderPhotos (req, res, next) {
       return g.dirName === req.query.gallery
     })
     if (!matchGallery.length) {
-      var mostRecent = _.sortByAll(
+      var mostRecent = _.sortBy(
         galleries, 'startDate')[galleries.length - 1]
       res.redirect(req.path + '?gallery=' +
         encodeURIComponent(mostRecent.dirName))
