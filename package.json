@@ -55,7 +55,7 @@
     "eslint-formatter-comment": "2.0.0",
     "mocha": "2.4.2",
     "node-dev": "2.7.1",
-    "phantomjs": "1.9.19",
+    "phantomjs": "2.1.2",
     "promptly": "0.2.1",
     "standard": "5.4.1",
     "superagent": "1.7.1",
