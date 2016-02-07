@@ -1,6 +1,6 @@
 {
   "extends": [
-    "./node_modules/eslint-config-standard/eslintrc.json"
+    "standard"
   ],
   "rules": {
     "block-scoped-var": 2,
@@ -15,7 +15,7 @@
     "no-sync": 1,
     "no-ternary": 2,
     "no-undefined": 2,
-    "no-warning-comments": [2, {"terms": ["@bug"]}],
+    "no-warning-comments": [2, {"terms": ["@bug", "xxx"]}],
     "valid-jsdoc": 2
   }
 }
