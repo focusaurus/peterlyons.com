@@ -1,9 +1,10 @@
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the Web Data Slide Deck', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/web_data', function (error, dom) {
+    request.loadPage('/web_data', function (error, dom) {
       $ = dom
       done(error)
     })

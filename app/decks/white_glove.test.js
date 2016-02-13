@@ -1,9 +1,10 @@
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the Finding Inconsistencies MongoDB slide deck', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/white_glove', function (error, dom) {
+    request.loadPage('/white_glove', function (error, dom) {
       $ = dom
       done(error)
     })

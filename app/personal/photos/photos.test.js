@@ -1,3 +1,4 @@
+var request = require('../request')
 var testUtils = require('../../testUtils')
 
 describe('the photos page', function () {
@@ -5,7 +6,7 @@ describe('the photos page', function () {
 
   before(function (done) {
     var url = '/app/photos?gallery=burning_man_2011'
-    testUtils.loadPage(url, function (error, dom) {
+    request.loadPage(url, function (error, dom) {
       $ = dom
       done(error)
     })

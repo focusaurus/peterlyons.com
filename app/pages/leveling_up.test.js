@@ -1,10 +1,11 @@
+var request = require('../request')
 var expect = require('chaimel')
 var testUtils = require('app/testUtils')
 
 describe('the Leveling Up article', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/leveling_up', function (error, dom) {
+    request.loadPage('/leveling_up', function (error, dom) {
       $ = dom
       done(error)
     })

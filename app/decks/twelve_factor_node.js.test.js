@@ -1,9 +1,10 @@
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the Twelve-Factor node.js slide deck', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/twelve_factor_nodejs', function (error, dom) {
+    request.loadPage('/twelve_factor_nodejs', function (error, dom) {
       $ = dom
       done(error)
     })

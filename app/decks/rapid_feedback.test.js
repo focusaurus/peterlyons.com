@@ -1,9 +1,10 @@
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the Rapid Feedback Slide Deck', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/rapid_feedback', function (error, dom) {
+    request.loadPage('/rapid_feedback', function (error, dom) {
       $ = dom
       done(error)
     })

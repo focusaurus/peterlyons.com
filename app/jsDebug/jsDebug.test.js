@@ -1,10 +1,11 @@
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the jsDebug', function () {
   var $ = null
 
   before(function (done) {
-    testUtils.loadPage('/jsDebug', function (error, dom) {
+    request.loadPage('/jsDebug', function (error, dom) {
       $ = dom
       done(error)
     })

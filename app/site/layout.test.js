@@ -2,12 +2,13 @@ var _ = require('lodash')
 var config = require('config3')
 var expect = require('chaimel')
 var pack = require('../../package')
+var request = require('../request')
 var testUtils = require('app/testUtils')
 
 describe('the main layout', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/', function (error, dom) {
+    request.loadPage('/', function (error, dom) {
       $ = dom
       done(error)
     })
@@ -64,7 +65,7 @@ describe('analytics snippet', function () {
   })
 
   it('should include the analytics snippet when enabled', function (done) {
-    testUtils.loadPage('/', function (error, $) {
+    request.loadPage('/', function (error, $) {
       expect(error).notToExist()
       var selector = 'script[data-id=analytics]'
       testUtils.assertSelectors($, selector)

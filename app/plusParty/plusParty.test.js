@@ -1,6 +1,6 @@
 var expect = require('chaimel')
 var plusParty = require('app/browser/plusParty')
-var testUtils = require('app/testUtils')
+var request = require('../request')
 
 describe('plusParty', function () {
   describe('sum', function () {
@@ -71,7 +71,7 @@ describe('plusParty', function () {
 
 describe('the plus party page', function () {
   it('should serve the zeroclipboard swf file', function (done) {
-    testUtils.get('/ZeroClipboard.swf')
+    request.get('/ZeroClipboard.swf')
       .expect('Content-Type', 'application/x-shockwave-flash')
       .expect(200)
       .end(done)

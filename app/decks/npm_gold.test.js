@@ -1,9 +1,10 @@
 var testUtils = require('app/testUtils')
+var request = require('../request')
 
 describe('the NPM Gold Slide Deck', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/npm_gold', function (error, dom) {
+    request.loadPage('/npm_gold', function (error, dom) {
       $ = dom
       done(error)
     })
