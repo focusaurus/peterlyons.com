@@ -1,0 +1,42 @@
+extends ../../site/layout
+block variables
+  - title = gallery.displayName + " Photo Gallery"
+block body
+  h1 New Photos are on Flickr
+  p.
+    Note that starting in the fall of 2011,
+    my photos are available on
+    <a href="http://www.flickr.com/photos/88096431@N00/">my Flickr photo stream</a>.
+    I enjoyed writing and maintaining my own photo software for a decade or so,
+    but it's time to move on.
+  .galleryApp(data-ng-app="photos", data-ng-controller="GalleryController", data-ng-cloak)
+    h1#photo(data-ng-bind-template="photo Photo Gallery: {{gallery.displayName}}")
+    #nextPrev
+      a(data-ng-href="{{previousPhoto.pageURI}}", data-ng-if="previousPhoto") &lt;&lt;previous&nbsp;
+      a(data-ng-href="{{nextPhoto.pageURI}}", data-ng-if="nextPhoto") next&gt;&gt;
+    figure
+      //- src is to appease the W3C HTML validator
+      img(
+        data-ng-src="{{photo.fullSizeURI}}",
+        src=gallery.photos[0].fullSizeURI,
+        alt="{{photo.caption}}",
+        title="{{photo.caption}}",
+      )
+      figcaption {{photo.caption}}
+    a.thumbnail(data-ng-repeat="photo in gallery.photos", data-ng-href="{{photo.pageURI}}")
+      //- src is to appease the W3C HTML validator
+      img.thumbnail(
+        data-ng-src="{{photo.thumbnailURI}}",
+        src=gallery.photos[0].thumbnailURI,
+        alt="{{photo.caption}}",
+        title="{{photo.caption}}"
+      )
+    nav.photos
+      div(data-ng-repeat="year in years")
+        h2.year(data-ng-bind="year.name")
+        a.gallerylink(data-ng-repeat="gallery in year.galleries",
+          data-ng-href="?gallery={{gallery.dirName}}") {{gallery.displayName}}
+
+block append scripts
+  != sharify.script()
+  script require("app/browser/viewGallery").init();

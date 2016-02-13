@@ -26,7 +26,12 @@ html(lang="en")
   body
     //-.adaptive
     button.navMenuButton &equiv;
-    include blocks/navigation
+    if proSite
+      h2 PRO
+      include blocks/navigation
+    else
+      h2 PERSONAL
+      include ../personal/navigation
     .content
       include blocks/header
       block body

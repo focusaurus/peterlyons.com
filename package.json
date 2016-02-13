@@ -41,7 +41,6 @@
   },
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {
-    "bistre": "1.0.1",
     "chai": "3.5.0",
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",

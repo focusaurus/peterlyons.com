@@ -14,7 +14,8 @@ var config = {
   errorPages: IS_PRODUCTION,
   hostname: get('hostname', '127.0.0.1'),
   ip: get('IP', '127.0.0.1'),
-  port: get('port', 9000),
+  proPort: get('proport', 9000),
+  persPort: get('persport', 9001),
   staticDir: join(__dirname, '../static'),
   titleSuffix: ' | Peter Lyons',
   revealDir: join(__dirname, 'node_modules/reveal'),
@@ -37,9 +38,19 @@ config.photos = {
   serveDirect: !IS_PRODUCTION
 }
 
+config.blogs = [{
+  basePath: join(__dirname, '../data/posts/problog'),
+  prefix: '/problog',
+  title: 'Pete\'s Points',
+  subtitle: 'A blog about web development, programming, technology'
+}, {
+  basePath: join(__dirname, '../data/posts/persblog'),
+  prefix: '/persblog',
+  title: 'The Stretch of Vitality',
+  subtitle: 'Sporadic musing and accounts of my personal life'
+}]
 config.blog = {
   hashPath: join(__dirname, '../data/blog_password.bcrypt'),
-  postBasePath: join(__dirname, '../data/posts'),
   newBlogPreparePath: join(__dirname, 'bin/new_blog_prepare.sh'),
   newBlogFinalizePath: join(__dirname, 'bin/new_blog_finalize.sh')
 }

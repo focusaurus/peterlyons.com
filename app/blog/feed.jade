@@ -1,0 +1,19 @@
+doctype xml
+feed(xmlns="http://www.w3.org/2005/Atom")
+  title= blog.title
+  - var URL = "http://" + hostname + blog.prefix + "/feed"
+  link(href=URL, rel="self")
+  link(href=URL)
+  //- Note that W3C Validator does not allow whitespace within these tags
+  //- but jade indents the closing tag, so we go raw dog
+  != "<updated>" + posts[0].publish_date.toISOString() + "</updated>"
+  != "<id>http://" + hostname + blog.prefix + "/feed</id>"
+  author
+    name Peter Lyons
+  each post in posts
+    entry
+      title= post.title
+      link(href="http://" + hostname + post.uri())
+      != "<updated>" + post.publish_date.toISOString() + "</updated>"
+      != "<id>" + baseURL + post.uri() + "</id>"
+      content(type="html")= post.content || ""

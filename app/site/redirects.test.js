@@ -5,7 +5,7 @@ describe('legacy URLs with .html suffix should redirect', function () {
   pages.forEach(function (page) {
     it(page + ' should redirect without .html', function (done) {
       var noHtml = page.slice(0, page.length - '.html'.length)
-      testUtils.get(page).expect(302).expect('location', noHtml).end(done)
+      testUtils.get(page).expect(301).expect('location', noHtml).end(done)
     })
   })
 })

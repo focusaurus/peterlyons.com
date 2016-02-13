@@ -2,7 +2,7 @@ var fs = require('fs')
 var path = require('path')
 
 function template (extension) {
-  return function (req, res, next) {
+  return function templateMiddleware (req, res, next) {
     var viewPath = req.path
     var redirect = /\.html$/.test(viewPath)
     if (redirect) {
@@ -21,7 +21,7 @@ function template (extension) {
         return
       }
       if (redirect) {
-        res.redirect(viewPath)
+        res.redirect(301, viewPath)
         return
       }
       res.render(templatePath)

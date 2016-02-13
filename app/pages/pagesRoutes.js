@@ -1,4 +1,3 @@
-var config = require('config3')
 var fs = require('fs')
 var jade = require('jade')
 var path = require('path')
@@ -6,13 +5,10 @@ var templateMiddleware = require('./templateMiddleware')
 
 var titles = {
   'code_conventions': 'Code Conventions',
-  'leveling_up': 'Leveling Up: Career Advancement for Software Developers',
-  oberlin: 'Music from Oberlin',
-  bands: 'My Bands'
+  'leveling_up': 'Leveling Up: Career Advancement for Software Developers'
 }
 
 function setup (app) {
-  app.locals.titleSuffix = config.titleSuffix
   app.engine('md', function (mdPath, options, callback) {
     fs.readFile(mdPath, 'utf8', function (error, markdownText) {
       if (error) {
