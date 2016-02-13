@@ -66,5 +66,4 @@ config.tests = {
   mochaPath: join(__dirname, 'node_modules/mocha')
 }
 
-config.baseURL = 'http://' + config.hostname + ':' + config.port
 module.exports = config

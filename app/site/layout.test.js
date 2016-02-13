@@ -40,7 +40,7 @@ describe('the main layout', function () {
   })
 
   it('should have the browserified JavaScript', function (done) {
-    testUtils.get('/plws.js?v=' + pack.version)
+    request.get('/plws.js?v=' + pack.version)
       .expect(200)
       .expect('Content-Type', 'application/javascript')
       .expect('Content-Encoding', 'gzip')

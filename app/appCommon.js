@@ -12,7 +12,6 @@ function locals (req, res, next) {
     res.locals,
     _.pick(
       config,
-      'baseURL',
       'appURI',
       'appVersion',
       'analytics',

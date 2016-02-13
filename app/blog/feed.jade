@@ -15,5 +15,5 @@ feed(xmlns="http://www.w3.org/2005/Atom")
       title= post.title
       link(href="http://" + hostname + post.uri())
       != "<updated>" + post.publish_date.toISOString() + "</updated>"
-      != "<id>" + baseURL + post.uri() + "</id>"
+      != "<id>http://" + hostname + post.uri() + "</id>"
       content(type="html")= post.content || ""

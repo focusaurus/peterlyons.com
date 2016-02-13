@@ -18,7 +18,7 @@ describe('the photos page', function () {
   })
 
   it('should redirect to the newest gallery', function (done) {
-    testUtils.get('/app/photos')
+    request.get('/app/photos')
       .expect(302)
       .expect('location', '/app/photos?gallery=burning_man_2011')
       .end(done)

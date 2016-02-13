@@ -18,18 +18,18 @@ function debugLog (message) {
 }
 
 function domify (req, res, next) {
-  res.$ = cheerio.load(res.html)
+  res.locals.$ = cheerio.load(res.locals.postContent)
   next()
 }
 
 function undomify (req, res, next) {
-  res.html = res.$.html() + '\n'
+  res.locals.postContent = res.locals.$.html() + '\n'
   next()
 }
 
 function flickr (req, res, next) {
-  res.$('flickrshow').each(function (index, elem) {
-    var $elem = res.$(elem)
+  res.locals.$('flickrshow').each(function (index, elem) {
+    var $elem = res.locals.$(elem)
     var href = $elem.attr('href')
     // Need to parse this album URL, which I copy directly from a web browser
     // https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
@@ -45,8 +45,8 @@ function flickr (req, res, next) {
 }
 
 function youtube (req, res, next) {
-  res.$('youtube').each(function (index, elem) {
-    var $elem = res.$(elem)
+  res.locals.$('youtube').each(function (index, elem) {
+    var $elem = res.locals.$(elem)
     var URL = $elem.attr('href')
     return $elem.replaceWith(youtubeTemplate.replace(/\{URL\}/, URL))
   })
@@ -54,7 +54,7 @@ function youtube (req, res, next) {
 }
 
 function send (req, res) {
-  res.send(res.html)
+  res.send(res.locals.postContent)
 }
 
 function text (req, res, next) {
