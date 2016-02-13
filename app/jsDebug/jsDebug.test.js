@@ -14,11 +14,4 @@ describe('the jsDebug', function () {
   it('should have the screencast youtube video', function () {
     testUtils.assertSelectors($, 'iframe', 'button.stepSync')
   })
-
-  it('should redirect to the newest gallery', function (done) {
-    request.get('/app/photos')
-      .expect(302)
-      .expect('location', '/app/photos?gallery=burning_man_2011')
-      .end(done)
-  })
 })

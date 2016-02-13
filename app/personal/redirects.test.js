@@ -1,4 +1,4 @@
-var request = require('../request')
+var request = require('./request')
 
 describe('legacy URLs with .html suffix should redirect', function () {
   var pages = ['/bands.html', '/oberlin.html']

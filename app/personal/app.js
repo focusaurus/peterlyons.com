@@ -18,6 +18,7 @@ app.get('/oberlin', render('oberlin'))
 app.get('/bands', render('bands'))
 app.get('/favorites', render('favorites'))
 app.use(require('./photos/photosRoutes'))
+app.use(require('./redirects'))
 var persblog = new Blog({
   basePath: join(__dirname, '../../../data/posts/persblog'),
   prefix: '/persblog',
