@@ -51,7 +51,7 @@ function tail (app) {
       res.render('site/error404')
     } else {
       res.render('site/error500')
-      log.error(error, req)
+      log.error(error, req.path)
     }
   })
 }
