@@ -2,7 +2,7 @@ require('angular')
 require('angular-mocks')
 require('es5-shim') // phantomjs shim
 var expect = require('chaimel')
-var CreatePost = require('app/browser/CreatePost')
+var CreatePost = require('./CreatePost')
 
 describe('CreatePost Controller', function () {
   var injector

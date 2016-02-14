@@ -1,6 +1,6 @@
 var request = require('../request')
 var expect = require('chaimel')
-var testUtils = require('app/testUtils')
+var testUtils = require('../testUtils')
 
 describe('the Leveling Up article', function () {
   var $ = null

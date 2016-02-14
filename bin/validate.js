@@ -2,7 +2,7 @@
 /* eslint-env mocha */
 process.env.NODE_ENV = 'test'
 var request = require('supertest')(require('app'))
-var testConfigs = require('app/testConfigs')
+var testConfigs = require('../app/testConfigs')
 var w3c = require('w3c-validate').createValidator()
 
 describe('The HTML of each page', function () {

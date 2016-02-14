@@ -22,7 +22,7 @@ var paths = [
   'decks/decksRoutes'
 ]
 paths.forEach(function (routesPath) {
-  require('app/' + routesPath)(app)
+  require('./' + routesPath)(app)
 })
 
 app.get('/', function (req, res) {

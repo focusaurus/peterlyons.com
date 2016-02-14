@@ -5,7 +5,7 @@ function init () {
   require('angular-sanitize')
   var createPostApp = window.createPostApp = angular.module(
     'createPostApp', ['ngSanitize'])
-  createPostApp.controller('CreatePost', require('app/browser/CreatePost'))
+  createPostApp.controller('CreatePost', require('./CreatePost'))
   createPostApp.value('localStorage', window.localStorage)
 }
 module.exports = init
