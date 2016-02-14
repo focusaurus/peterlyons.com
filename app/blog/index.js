@@ -235,6 +235,10 @@ function Blog (options) {
   app.get('/feed', feed)
   app.get('/flushCache', flushCache)
   app.get(new RegExp('/\\d{4}/\\d{2}/\\w+'), viewPostMiddleware)
+  app.use(function (req, res, next) {
+    next(new httpErrors.NotFound(req.path))
+  })
+  app.use(require('../errors/errorHandler'))
   this.load()
 }
 util.inherits(Blog, events.EventEmitter)

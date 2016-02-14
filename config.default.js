@@ -11,7 +11,6 @@ var config = {
   appURI: '/app',
   appVersion: pack.version,
   enableLogger: process.env.NODE_ENV !== 'test',
-  errorPages: IS_PRODUCTION,
   hostname: get('hostname', '127.0.0.1'),
   ip: get('IP', '127.0.0.1'),
   proPort: get('proport', 9000),

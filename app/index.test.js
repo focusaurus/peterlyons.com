@@ -11,11 +11,4 @@ describe('the express web server basics', function () {
       .expect('Content-Type', 'application/pdf')
       .end(done)
   })
-
-  it('should have the CSS', function (done) {
-    request.get('/screen.css')
-      .expect(200)
-      .expect('Content-Type', 'text/css; charset=utf-8')
-      .end(done)
-  })
 })

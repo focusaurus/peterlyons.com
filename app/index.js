@@ -56,6 +56,7 @@ pages.forEach(function (page) {
   }
 })
 
+app.use(require('./errors/errorRoutes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows
 app.use('/reveal', express.static(config.revealDir))
