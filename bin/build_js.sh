@@ -7,5 +7,9 @@ source ./bin/lib/strict_mode.sh
 unset IFS # This screws up our shell quoting
 export PATH=$PWD/node_modules/.bin:$PATH
 
-browserify $(./bin/browserify_args.sh) "$@" | uglifyjs --compress > www/plws.js
-browserify -e app/browser/deck | uglifyjs --compress > www/reveal.js
+browserify $(./bin/browserify_args.sh) "$@" | \
+  uglifyjs --compress --keep-fnames --screw-ie8 \
+  > www/plws.js
+browserify -e app/browser/deck | \
+  uglifyjs --compress --keep-fnames --screw-ie8 \
+  > www/reveal.js
