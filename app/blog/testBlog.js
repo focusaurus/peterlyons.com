@@ -21,7 +21,6 @@ function testBlog (callback) {
 
   app.use('/utb', blog.app)
   blog.app.use(function (error, req, res, next) {
-    console.log('error middleware', error) // fixme
     res.status(error.statusCode).send(error.message)
   })
   blog.on('ready', function () {

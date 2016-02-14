@@ -45,4 +45,13 @@ describe('Post model class', function () {
   it('URI should be correct', function () {
     expect(post.uri()).toEqual('/unit-test-blog/2014/01/unit-test-title')
   })
+
+  it('should handle non-existent metadata correctly', function (done) {
+    var post = new Post()
+    post.loadMetadata('/tmp/no-such-metadata.json', function (error) {
+      expect(error).toBeAnInstanceOf(Error)
+      expect(error.code).toEqual('ENOENT')
+      done()
+    })
+  })
 })

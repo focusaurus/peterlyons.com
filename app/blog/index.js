@@ -79,7 +79,7 @@ function markdownToHTML (req, res, next) {
 }
 
 function renderPost (req, res, next) {
-  res.app.render('viewPost', res.locals, function (error, html2) {
+  res.app.render('blog/viewPost', res.locals, function (error, html2) {
     if (error) {
       next(error)
       return
@@ -173,7 +173,7 @@ function feed (req, res, next) {
       posts: renderedPosts,
       hostname: req.hostname
     }
-    res.app.render('feed', locals, function (error2, feedXML) {
+    res.app.render('blog/feed', locals, function (error2, feedXML) {
       if (error2) {
         next(error2)
         return
@@ -201,7 +201,7 @@ function Blog (options) {
   var app = this.app = express()
   app.locals.blog = this
   app.set('view engine', 'jade')
-  app.set('views', __dirname)
+  app.set('views', path.join(__dirname, '..'))
   // var problog = new BlogIndex('problog', 'Pete\'s Points')
   // var persblog = new BlogIndex('persblog', 'The Stretch of Vitality')
   // blogIndicesBySlug[problog.URI] = problog
@@ -224,11 +224,11 @@ function Blog (options) {
   // app.use('/blogs', express.static(path.join(__dirname, '/browser')))
   app.get('/', function renderIndex (req, res) {
     res.locals.posts = res.app.locals.blog.posts
-    res.render('index')
+    res.render('blog/index')
   })
   app.route('/post')
     .get(function (req, res) {
-      res.render('post')
+      res.render('blog/post')
     })
     .post(createPost.handler)
   app.post('/convert', convertMiddleware)

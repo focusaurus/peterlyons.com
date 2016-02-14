@@ -49,20 +49,21 @@ Post.prototype.metadata = function () {
 Post.prototype.loadMetadata = function (metadataPath, callback) {
   var self = this
   this.metadataPath = metadataPath
-  fs.exists(this.metadataPath, function (exists) {
-    if (!exists) {
+  fs.readFile(metadataPath, 'utf8', function (error, jsonString) {
+    if (error) {
+      callback(error)
       return
     }
-    fs.readFile(metadataPath, 'utf8', function (error, jsonString) {
-      var metadata
-      if (error) {
-        return callback(error)
-      }
+    var metadata
+    try {
       metadata = JSON.parse(jsonString)
-      _.extend(self, metadata)
-      self.publish_date = new Date(self.publish_date)
-      callback()
-    })
+    } catch (parseError) {
+      callback(parseError)
+      return
+    }
+    _.extend(self, metadata)
+    self.publish_date = new Date(self.publish_date)
+    callback()
   })
 }
 
