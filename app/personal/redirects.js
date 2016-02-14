@@ -1,8 +1,3 @@
-// var pathMap = {
-//   '/oberlin.html': '/oberlin',
-//   '/bands.html': '/bands'
-// }
-
 function noHtml (req, res, next) {
   if (/\.html$/.test(req.path)) {
     var to = req.path.slice(0, req.path.length - 5)

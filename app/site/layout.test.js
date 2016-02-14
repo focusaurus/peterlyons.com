@@ -49,7 +49,7 @@ describe('the main layout', function () {
 
   it('should include HTML comment with app version', function () {
     testUtils.assertSelectors($, 'meta[name=x-app-version]')
-    expect($('meta[name=x-app-version]').attr('value')).toEqual(pack.version)
+    expect($('meta[name=x-app-version]').attr('content')).toEqual(pack.version)
   })
 })
 
