@@ -54,11 +54,6 @@ config.blog = {
   newBlogFinalizePath: join(__dirname, 'bin/new_blog_finalize.sh')
 }
 
-config.inspector = {
-  enabled: !IS_PRODUCTION,
-  webPort: config.port + 2
-}
-
 config.tests = {
   port: get('testPort', 9002),
   debugPort: get('testDebugPort', 9004),
