@@ -16,12 +16,6 @@ var util = require('util')
 
 var postLinks = {}
 
-// function BlogIndex (URI, title) {
-//   this.URI = URI
-//   this.title = title || ''
-//   this.blogTitle = this.title
-// }
-
 function loadPostMW (req, res, next) {
   var blog = res.app.locals.blog
   var post = new Post(blog)

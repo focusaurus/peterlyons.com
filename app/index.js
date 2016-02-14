@@ -7,7 +7,6 @@ var path = require('path')
 
 var app = express()
 appCommon.head(app)
-app.engine('md', require('./markdownEngine'))
 app.locals.proSite = true
 var problog = new Blog({
   basePath: path.join(__dirname, '../data/posts/problog'),
@@ -16,20 +15,6 @@ var problog = new Blog({
   subtitle: 'A blog about web development, programming, technology'
 })
 app.use(problog.prefix, problog.app)
-
-// config.blogs.forEach(function (blogConfig) {
-//   var blog = new Blog(blogConfig)
-//   app.use(blogConfig.prefix, blog.app)
-//   // Some poor coupling here as the blog sub-app is rendered within the
-//   // main site layout.jade template, thus needs some locals referenced there
-//   _.extend(blog.app.locals, _.pick(app.locals, 'analytics', 'titleSuffix'))
-//   blog.on('error', function (error) {
-//     log.error('Error with blog ' + blogConfig.prefix, error)
-//   })
-//   blog.on('ready', function () {
-//     log.info('blog at ' + blogConfig.prefix + ' is ready')
-//   })
-// })
 
 var paths = [
   'plusParty/plusPartyRoutes',
