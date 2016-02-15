@@ -7,12 +7,15 @@ var path = require('path')
 
 var app = express()
 appCommon.head(app)
-app.locals.proSite = true
 var problog = new Blog({
-  basePath: path.join(__dirname, '../data/posts/problog'),
+  basePath: path.join(__dirname, '../../data/posts/problog'),
   prefix: '/problog',
   title: "Pete's Points",
   subtitle: 'A blog about web development, programming, technology'
+})
+app.use(function (req, res, next) {
+  res.locals.proSite = true
+  next()
 })
 app.use(problog.prefix, problog.app)
 
