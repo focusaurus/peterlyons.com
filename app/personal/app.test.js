@@ -1,7 +1,7 @@
 var request = require('./request')
 
 var testConfigs = [
-  ['/', /home/],
+  ['/', /personal site/],
   ['/bands', /Afronauts/],
   ['/oberlin', /Edison/],
   ['/favorites', /Imogen/],

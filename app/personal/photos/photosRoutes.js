@@ -8,32 +8,27 @@ var sharify = require('sharify')
 var router = new express.Router()
 
 function renderPhotos (req, res, next) {
-  _galleries.getGalleries(function (error, galleries) {
-    if (error) {
-      next(error)
-      return
+  var galleries = _galleries.galleries
+  var matchGallery = galleries.filter(function (g) {
+    return g.dirName === req.query.gallery
+  })
+  if (!matchGallery.length) {
+    var mostRecent = _.sortBy(
+      galleries, 'startDate')[galleries.length - 1]
+    res.redirect(req.path + '?gallery=' +
+      encodeURIComponent(mostRecent.dirName))
+    return
+  }
+  _galleries.loadBySlug(matchGallery[0].dirName, function (error2, gallery) {
+    if (error2) {
+      return res.status(500).send(error2)
     }
-    var matchGallery = galleries.filter(function (g) {
-      return g.dirName === req.query.gallery
+    _.extend(res.locals.sharify.data, {
+      gallery: gallery,
+      galleries: galleries
     })
-    if (!matchGallery.length) {
-      var mostRecent = _.sortBy(
-        galleries, 'startDate')[galleries.length - 1]
-      res.redirect(req.path + '?gallery=' +
-        encodeURIComponent(mostRecent.dirName))
-      return
-    }
-    _galleries.loadBySlug(matchGallery[0].dirName, function (error2, gallery) {
-      if (error2) {
-        return res.status(500).send(error2)
-      }
-      _.extend(res.locals.sharify.data, {
-        gallery: gallery,
-        galleries: galleries
-      })
-      res.render('personal/photos/viewGallery', {
-        gallery: gallery
-      })
+    res.render('personal/photos/viewGallery', {
+      gallery: gallery
     })
   })
 }

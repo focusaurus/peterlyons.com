@@ -1,5 +1,6 @@
 var fs = require('fs')
 var config = require('config3')
+var galleries = require(config.photos.galleryDataPath)
 
 function photoJSONToObject (gallery, photoJSON) {
   var photos = JSON.parse(photoJSON)
@@ -14,47 +15,27 @@ function photoJSONToObject (gallery, photoJSON) {
   return photos
 }
 
-function getGalleries (callback) {
-  return fs.readFile(config.photos.galleryDataPath, function (error, data) {
-    if (error) {
-      return callback(error)
-    }
-    var galleries = []
-    try {
-      galleries = JSON.parse(data)
-    } catch (oops) {
-      return callback(new Error('Invalid galleries JSON'))
-    }
-    callback(null, galleries)
-  })
-}
-
 function loadBySlug (slug, callback) {
-  return getGalleries(function (error, galleries) {
-    if (error) {
-      return callback(error)
+  var matches = galleries.filter(function (gallery2) {
+    return gallery2.dirName === slug
+  })
+  if (!matches.length) {
+    return callback()
+  }
+  var gallery = matches[0]
+  var jsonPath = config.photos.galleryDir + '/' + gallery.dirName +
+    '/photos.json'
+  fs.readFile(jsonPath, function (error2, photoJSON) {
+    if (error2) {
+      return callback(error2)
     }
-    var matches = galleries.filter(function (gallery2) {
-      return gallery2.dirName === slug
-    })
-    if (!matches.length) {
-      return callback()
-    }
-    var gallery = matches[0]
-    var jsonPath = config.photos.galleryDir + '/' + gallery.dirName +
-      '/photos.json'
-    return fs.readFile(jsonPath, function (error2, photoJSON) {
-      if (error2) {
-        return callback(error2)
-      }
-      gallery.photos = photoJSONToObject(gallery, photoJSON)
-      return callback(null, gallery)
-    })
+    gallery.photos = photoJSONToObject(gallery, photoJSON)
+    callback(null, gallery)
   })
 }
 
 module.exports = {
-  getGalleries: getGalleries,
+  galleries: galleries,
   loadBySlug: loadBySlug,
   photoJSONToObject: photoJSONToObject
 }
