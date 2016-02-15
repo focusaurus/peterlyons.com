@@ -5,7 +5,7 @@ upstream express-{{hostname}} {
 }
 
 server {
-  listen 80 default;
+  listen 80;
   server_name {{hostname}};
   charset utf-8;
   access_log /var/log/nginx.{{hostname}}.access.log;
@@ -13,7 +13,7 @@ server {
   gzip_types text/plain text/css application/javascript application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
 
   location / {
-    root {{www_root}};
+    root {{{www_root}}};
     try_files $uri $uri.html $uri/index.html @app;
   }
 

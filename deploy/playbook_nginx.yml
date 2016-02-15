@@ -2,45 +2,40 @@
 - include: playbook_ansible_prereqs.yml
 -
   hosts: all
-  gather_facts: no
-  sudo: yes
   vars:
     project: plws
-    express_port: "{{ lookup('pipe', '../node_modules/.bin/config3 port') }}"
     app_root: /opt/peter_lyons_web_site
-    www_root: /opt/peter_lyons_web_site/static
     data_root: /opt/peter_lyons_web_site/data
-    third_party: /opt/peter_lyons_web_site/current/thirdParty
   handlers:
     -
       include: handlers.yml
   tasks:
-    -
-      name: install nginx and monit
+    - name: install nginx and monit
       apt: pkg={{item}}
       with_items:
         #web server
         - nginx
         #For monitoring
         - monit
-    -
-      name: ensure there is no default nginx site
+    - name: ensure there is no default nginx site
       file: path=/etc/nginx/sites-enabled/default state=absent
-    -
-      name: configure nginx
-      template:
-        src: "nginx-site.j2"
-        dest: "/etc/nginx/sites-enabled/{{hostname}}"
-        owner: "root"
+    - name: symlink nginx config {{item}}
+      file:
+        force: true
         group: "root"
         mode: "0644"
+        owner: "root"
+        path: '/etc/nginx/sites-enabled/{{subdomain}}{{item}}'
+        src: '{{app_root}}/current/nginx-{{subdomain}}{{item}}'
+        state: 'link'
       notify:
         - restart nginx
-    -
-      name: start nginx
+      with_items:
+        - "peterlyons.com"
+        - "peterlyons.org"
+    - name: start nginx
       service: name=nginx state=started enabled=yes
-    -
-      name: configure monit for nginx
+    - name: configure monit for nginx
       copy:
         src: "nginx_peterlyons.com.monitrc"
         dest: "/etc/monit/conf.d/nginx_peterlyons.com.monitrc"
@@ -49,6 +44,5 @@
         mode: "0644"
       notify:
         - restart monit
-    -
-      name: start monit
+    - name: start monit
       service: name=monit state=started enabled=yes

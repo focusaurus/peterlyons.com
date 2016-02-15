@@ -50,11 +50,35 @@ main() {
   # Run OSX node and npm utilites but within the linux build dir
   npm install --silent --production
   bower install --silent --production
+
   ./bin/build_js.sh
   npm dedupe
   npm prune --silent --production
   # npm prune removes our symlink, add it back
   ln -nsf ../app node_modules/app
+  echo ✓; echo -n "nginx configs…"
+
+  ./bin/config_json.js \
+    --hostname=peterlyons.com \
+    --express_port=$(config3 proPort) \
+    --www_root=/opt/peter_lyons_web_site/static | \
+    mustache - deploy/nginx-site.mustache > nginx-peterlyons.com
+  ./bin/config_json.js \
+    --hostname=peterlyons.org \
+    --express_port=$(config3 persPort) \
+    --www_root=/opt/peter_lyons_web_site/static | \
+    mustache - deploy/nginx-site.mustache > nginx-peterlyons.org
+  ./bin/config_json.js \
+    --hostname=stage.peterlyons.com \
+    --express_port=$(config3 proPort) \
+    --www_root=/opt/peter_lyons_web_site/static | \
+    mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.com
+  ./bin/config_json.js \
+    --hostname=stage.peterlyons.org \
+    --express_port=$(config3 persPort) \
+    --www_root=/opt/peter_lyons_web_site/static | \
+    mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.org
+
   # remove development-only files
   rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules app/blog/unit-test-blog1
   find ./app -name \*.test.js | xargs rm

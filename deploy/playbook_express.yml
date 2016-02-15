@@ -1,11 +1,9 @@
 ---
 - include: playbook_ansible_prereqs.yml
--
-  hosts: all
-  gather_facts: no
-  sudo: yes
+- hosts: all
   vars:
-    express_port: "{{ lookup('pipe', '../node_modules/.bin/config3 port') }}"
+    express_port_pro: '{{ lookup("pipe", "../node_modules/.bin/config3 proPort") }}'
+    express_port_pers: '{{ lookup("pipe", "../node_modules/.bin/config3 persPort") }}'
     express_user: plws
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
@@ -13,87 +11,77 @@
     config_dir: /etc/peterlyons.com
     repo_base: https://github.com/focusaurus
   handlers:
-    -
-      include: handlers.yml
+    - include: handlers.yml
   tasks:
-    -
-      name: install prerequisites
+    - name: install prerequisites
       apt: pkg={{item}}
       with_items:
         #static/data repo access
         - git-core
         #For monitoring
         - monit
-    -
-      name: create {{express_user}} group
+    - name: create {{express_user}} group
       group: name={{express_user}}
-    -
-      name: create {{express_user}} user
+    - name: create {{express_user}} user
       user: name={{express_user}} createhome=no group={{express_user}}
-    -
-      name: create directory {{app_root}}
+    - name: create directory {{app_root}}
       file:
-        path: "{{app_root}}"
-        state: "directory"
-        owner: "root"
-        group: "{{express_user}}"
-        mode: "0755"
-    -
-      name: clone data repo
+        path: '{{app_root}}'
+        state: 'directory'
+        owner: 'root'
+        group: '{{express_user}}'
+        mode: '0755'
+    - name: clone data repo
       git:
-        repo: "{{repo_base}}/data.git"
-        dest: "{{data_root}}"
-        version: "master"
-        force: "no"
-    -
-      name: clone static repo
+        repo: '{{repo_base}}/data.git'
+        dest: '{{data_root}}'
+        version: 'master'
+        force: 'no'
+    - name: clone static repo
       git:
-        repo: "{{repo_base}}/static.git"
+        repo: '{{repo_base}}/static.git'
         accept_hostkey: True
         depth: 1
-        dest: "{{www_root}}"
-        version: "master"
-    -
-      name: create directory {{config_dir}}
+        dest: '{{www_root}}'
+        version: 'master'
+    - name: create directory {{config_dir}}
       file:
-        path: "{{config_dir}}"
-        state: "directory"
-        owner: "root"
-        group: "{{express_user}}"
-        mode: "0750"
-    # Note this will clobber the final values in prod, so disable it
-    # -
-    #   name: create express configuration file
-    #   template: src=config.js.j2 dest={{config_dir}}/config.js
-    #     owner=root group={{express_user}} mode=0640
-    -
-      name: upload the app distribution archive
+        path: '{{config_dir}}'
+        state: 'directory'
+        owner: 'root'
+        group: '{{express_user}}'
+        mode: '0750'
+    -   name: create express configuration file
+        file:
+          path: '{{config_dir}}/config.js'
+          owner: 'root'
+          group: '{{express_user}}'
+          mode: '0440'
+          state: 'touch'
+
+    - name: upload the app distribution archive
       unarchive:
-        src: "../{{dist}}"
-        dest: "{{app_root}}"
+        src: '../{{dist}}'
+        dest: '{{app_root}}'
       notify:
         - restart express
-    -
-      name: activate the deployment
-      command: "{{app_root}}/{{dist_name}}/bin/activate_deployment.sh {{express_user}}"
-    -
-      name: configure upstart job for plws-express
+    - name: activate the deployment
+      command: '{{app_root}}/{{dist_name}}/bin/activate_deployment.sh {{express_user}}'
+    - name: configure upstart job for plws-express
       template:
-        src: "plws-express.conf.j2"
-        dest: "/etc/init/plws-express.conf"
-        owner: "root"
-        group: "root"
-        mode: "0644"
-    -
-      name: configure monit for express
+        src: 'plws-express.conf.j2'
+        dest: '/etc/init/plws-express.conf'
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
+    - name: configure monit for express
       template:
-        src: "plws-express.monitrc.j2"
-        dest: "/etc/monit/conf.d/plws-express.monitrc"
-        owner: "root"
-        group: "root"
-        mode: "0644"
+        src: 'plws-express.monitrc.j2'
+        dest: '/etc/monit/conf.d/plws-express.monitrc'
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
       notify:
         - restart monit
-    -
-      name: start monit
+    - name: start monit
       service: name=monit state=started enabled=yes
