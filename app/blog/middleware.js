@@ -1,12 +1,12 @@
 var cheerio = require('cheerio')
 var fs = require('fs')
-var mustache = require('mustache')
+var jade = require('jade')
 var path = require('path')
 var rawBody = require('raw-body')
 var url = require('url')
 /* eslint no-sync:0 */
-var flickrshowTemplate = fs.readFileSync(
-  path.join(__dirname, 'flickrshowTemplate.html'), 'utf8')
+var flickrshow = fs.readFileSync(
+  path.join(__dirname, 'flickrshow.jade'), 'utf8')
 var youtubeTemplate =
 "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>"
 
@@ -38,7 +38,7 @@ function flickr (req, res, next) {
       userId: slashes[2],
       setId: slashes[4]
     }
-    var flickrHtml = mustache.render(flickrshowTemplate, locals)
+    var flickrHtml = jade.render(flickrshow, locals)
     return $elem.replaceWith(flickrHtml)
   })
   next()
