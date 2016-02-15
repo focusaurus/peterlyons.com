@@ -83,11 +83,11 @@ In log files favor fewer distinct log statements, but pack a lot of data into ea
 
 Don't code statements that are optional or will automatically be handled by the system (examples below)
 
-The official guidelines I link to disallow this already, but just to be clear, don't use ASCII art layout tricks with extra spaces to try to beautify or create vertical alignment in your code.
+The official guidelines I link to disallow this already, but just to be clear, don't use ASCII art layout tricks with extra spaces to try to beautify or create vertical alignment in your code. I actually find vertically-aligned code harder, not easier to read since the variable name and its assigned value are horizontally separated, it's easy to criss-cross lines when scanning them. But mostly I hate this because it's a pain to maintain. The majority of existing code out there does not vertically align things and we read it easily enough, so don't bother with vertical alignment.
 
-Don't leave decoys. This applies to files, directories, classes, methods, properties, variables, database tables, database table columns, etc. If something is unused and unneeded because it was coded and never actually tied into the execution path of the program, delete it. If it was previously used and isn't any more, delete it. All this decoy stuff just waste's the reader's time trying to understand it or assuming it does get executed and wasting time (potentially lots of time). If it's perfectly valid code that you might need later, you can pull it from your source control system later. If you really can't part with it, create a clearly labeled "graveyard" file or directory or package where you can stash it where it is clear that it is not executing.
+Don't leave decoys. This applies to files, directories, classes, methods, properties, variables, database tables, database table columns, etc. If something is unused and unneeded because it was coded and never actually tied into the execution path of the program, delete it. If it was previously used and isn't any more, delete it. All this decoy stuff just waste's the reader's time trying to understand it or assuming it does get executed and wasting time (potentially lots of time). If it's perfectly valid code that you might need later, you can pull it from your source control system later. If you really can't part with it, create a clearly labeled "graveyard" file or directory or package where you can stash it where it is clear that it is not executing. This is especially relevant to my consultancy work where I typically come into an exsiting project and have to reverse engineer how it works. I could easily spend hours figuring out the outgoing email subsystem from the code that is there and only later realize it's never actually invoked anymore by the surrounding application which switched to using an email SaaS 6 months ago.
 
-I favor the term "invalid" to "illegal" since it is more accurate and the word "illegal" has a very specific connotation to me
+I favor the term "invalid" to "illegal" since it is more accurate and the word "illegal" has a very specific connotation to me. Also let's avoid names and language with terrible social connotations (slave/master, kill, suicide, etc).
 
 Some folks advocate a length limit on methods or functions. They say that chunks of related code should be refactored out into a separate function and then called from the original function. I usually do not find this helpful. Generally, if code is only executed once, I don't put it into it's own function. I find long methods are perfectly readable top to bottom and actually more readable than jumping all over the place to numerous helper functions that are not referenced elsewhere. So if a function has relatively small chunks of related code one after the other, I'm fine with it being one really long function. After all, this is the essence of computation: a long list of instructions. However, things can become less readable when there is a relatively long stretch of code that goes off on a tangent that is loosely coupled to the rest of the code. In that case, it makes sense to refactor out to a dedicated function. For example: 10 lines of validation, 25 lines of parsing, 12 lines of computing A, 30 lines of computing B, 25 lines of formatting the result - this can all be in one function. However, 6 lines of validation, 4 lines of parsing, 200 lines of computing B, 3 lines of formatting the result - it makes sense to compute B in a separate function. It's long enough that it is hard to maintain context on the surronding code while reading all the code that computes B.
 
@@ -129,13 +129,13 @@ Prefer double quotes for most strings. This is mostly unconventional as I usuall
 
 - JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
 - This also fosters consistency with java, c, python, ruby, and coffeescript.
--Aprostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
+- Apostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
 
 I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
 
 * no shift key required
   * Valid point, but not enough to convince me. I use sticky keys anyway so no big whoop.
-* Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>`;
+* Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>'`;
   * I think with the rise of templating systems, this type of code has become extinct and justifiably so.
 
 # CoffeeScript Conventions
