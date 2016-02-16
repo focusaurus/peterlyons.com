@@ -1,5 +1,5 @@
 var request = require('../request')
-var testUtils = require('../testUtils')
+var testUtils = require('../test-utils')
 
 describe('the Rapid Feedback Slide Deck', function () {
   var $ = null

@@ -3,7 +3,7 @@ var config = require('config3')
 var expect = require('chaimel')
 var pack = require('../../package')
 var request = require('../request')
-var testUtils = require('../testUtils')
+var testUtils = require('../test-utils')
 
 describe('the main layout', function () {
   var $ = null

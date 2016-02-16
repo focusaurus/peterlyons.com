@@ -2,7 +2,7 @@ var bcrypt = require('bcryptjs')
 var createPost = require('./create-post')
 var expect = require('chaimel')
 var testBlog = require('./test-blog')
-var testUtils = require('../testUtils')
+var testUtils = require('../test-utils')
 
 describe('createPost.verifyPassword', function () {
   var password = 'unit test blog password'

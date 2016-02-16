@@ -1,4 +1,4 @@
-var testUtils = require('../testUtils')
+var testUtils = require('../test-utils')
 var request = require('../request')
 
 describe('the home page', function () {

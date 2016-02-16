@@ -1,5 +1,5 @@
 var request = require('../request')
-var testUtils = require('../testUtils')
+var testUtils = require('../test-utils')
 
 describe('the Finding Inconsistencies MongoDB slide deck', function () {
   var $ = null
