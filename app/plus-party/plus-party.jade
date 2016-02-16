@@ -2,7 +2,7 @@ extends ../site/layout
 block variables
   - title = "Plus Party: Get Your Addition On!";
 block body
-  div.plusParty(data-ng-app="PlusParty", data-ng-controller="PlusPartyController")
+  div.plus-party(data-ng-app="PlusParty", data-ng-controller="PlusPartyController")
     h1= title
     p Paste some numbers into the box. It's OK if they have other text around them. All the numbers will be parsed out and totaled up for you.
     textarea(data-ng-model="rawText")

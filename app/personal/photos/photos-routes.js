@@ -27,7 +27,7 @@ function renderPhotos (req, res, next) {
       gallery: gallery,
       galleries: galleries
     })
-    res.render('personal/photos/viewGallery', {
+    res.render('personal/photos/view-gallery', {
       gallery: gallery
     })
   })

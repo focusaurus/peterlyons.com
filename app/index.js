@@ -19,18 +19,12 @@ app.use(function (req, res, next) {
 })
 app.use(problog.prefix, problog.app)
 
-var paths = [
-  'plusParty/plusPartyRoutes',
-  'jsDebug/jsDebugRoutes',
-  'decks/decksRoutes'
-]
-paths.forEach(function (routesPath) {
-  require('./' + routesPath)(app)
-})
-
 app.get('/', function (req, res) {
   res.render('pages/home')
 })
+require('./plus-party/plus-party-routes')(app)
+require('./js-debug/js-debug-routes')(app)
+require('./decks/decks-routes')(app)
 // Add routes for each template in "pages" directory
 var pagesPath = path.join(__dirname, 'pages')
 var pages = fs.readdirSync(pagesPath) // eslint-disable-line no-sync
@@ -45,7 +39,7 @@ pages.forEach(function (page) {
 })
 
 app.use(require('./redirects'))
-app.use(require('./errors/errorRoutes'))
+app.use(require('./errors/error-routes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows
 app.use('/reveal', express.static(config.revealDir))

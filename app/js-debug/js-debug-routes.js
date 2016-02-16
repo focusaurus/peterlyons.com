@@ -1,5 +1,5 @@
 function jsDebug (req, res) {
-  res.render('jsDebug/jsDebug')
+  res.render('js-debug/js-debug')
 }
 
 function randomDelay (req, res) {

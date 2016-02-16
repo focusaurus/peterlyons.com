@@ -232,7 +232,7 @@ function Blog (options) {
   app.use(function (req, res, next) {
     next(new httpErrors.NotFound(req.path))
   })
-  app.use(require('../errors/errorHandler'))
+  app.use(require('../errors/error-handler'))
   this.load()
 }
 util.inherits(Blog, events.EventEmitter)

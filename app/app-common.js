@@ -40,7 +40,7 @@ function tail (app) {
   app.use(function (req, res, next) {
     next(new httpErrors.NotFound(req.path))
   })
-  app.use(require('./errors/errorHandler'))
+  app.use(require('./errors/error-handler'))
 }
 
 module.exports = {
