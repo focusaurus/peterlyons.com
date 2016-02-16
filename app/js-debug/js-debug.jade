@@ -161,7 +161,7 @@ block append scripts
     function stepAsync() {
       console.log("OK, now we're going to step over some async code");
       var request = new XMLHttpRequest();
-      request.open("GET", "/jsDebug/randomDelay?requestNumber=1", true);
+      request.open("GET", "/js-debug/random-delay?requestNumber=1", true);
       request.send();
       console.log("OMG WTF happens when we hit the next line?");
       // define and assign now, execute later

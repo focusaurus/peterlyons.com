@@ -5,7 +5,7 @@ describe('the jsDebug', function () {
   var $ = null
 
   before(function (done) {
-    request.loadPage('/jsDebug', function (error, dom) {
+    request.loadPage('/js-debug', function (error, dom) {
       $ = dom
       done(error)
     })
@@ -13,5 +13,12 @@ describe('the jsDebug', function () {
 
   it('should have the screencast youtube video', function () {
     testUtils.assertSelectors($, 'iframe', 'button.stepSync')
+  })
+
+  it('should redirect /jsDebug to /js-debug', function (done) {
+    request.get('/jsDebug')
+      .expect(301)
+      .expect('Location', '/js-debug')
+      .end(done)
   })
 })

@@ -38,7 +38,7 @@ pages.forEach(function (page) {
   }
 })
 
-app.use(require('./redirects'))
+app.use(require('./personal-redirects'))
 app.use(require('./errors/error-routes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows

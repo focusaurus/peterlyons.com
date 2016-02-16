@@ -11,7 +11,7 @@ module.exports = [
   ['/oberlin', /Edison/],
   ['/favorites', /Imogen/],
   ['/plusparty', /Plus Party/],
-  ['/jsDebug', /Lighting Up/],
+  ['/js-debug', /Lighting Up/],
   ['/twelve_factor_nodejs', /Twelve-Factor/],
   ['/talks', /Speaking/],
   ['/problog', /Pete's Points/],

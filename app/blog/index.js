@@ -196,26 +196,6 @@ function Blog (options) {
   app.locals.blog = this
   app.set('view engine', 'jade')
   app.set('views', path.join(__dirname, '..'))
-  // var problog = new BlogIndex('problog', 'Pete\'s Points')
-  // var persblog = new BlogIndex('persblog', 'The Stretch of Vitality')
-  // blogIndicesBySlug[problog.URI] = problog
-  // blogIndicesBySlug[persblog.URI] = persblog
-  // function _load (blog, next) {
-  //   loadBlog(blog.URI, function (error, posts) {
-  //     blog.posts = posts
-  //     next(error)
-  //   })
-  // }
-  // function doneLoading (error) {
-  //   if (error) {
-  //     throw error
-  //   }
-  //   setup.loaded = true
-  //   setup.events.emit('ready')
-  // }
-  // async.forEach([problog, persblog], _load, doneLoading)
-
-  // app.use('/blogs', express.static(path.join(__dirname, '/browser')))
   app.get('/', function renderIndex (req, res) {
     res.locals.posts = res.app.locals.blog.posts
     res.render('blog/index')
@@ -227,7 +207,7 @@ function Blog (options) {
     .post(createPost.handler)
   app.post('/convert', convertMiddleware)
   app.get('/feed', feed)
-  app.get('/flushCache', flushCache)
+  app.get('/flush-cache', flushCache)
   app.get(new RegExp('/\\d{4}/\\d{2}/\\w+'), viewPostMiddleware)
   app.use(function (req, res, next) {
     next(new httpErrors.NotFound(req.path))
