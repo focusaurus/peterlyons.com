@@ -27,7 +27,7 @@ repoint_current_symlink() {
 cd $(dirname "$0")/..
 set_baseline_permissions "${1-plws}" .
 chmod ug+x ./node/bin/* ./node_modules/.bin/* ./bin/* ./app/server.js
-chmod a+rx . ./node_modules ./node_modules/zeroclipboard thirdParty
+chmod a+rx . ./node_modules ./node_modules/zeroclipboard third-party
 chmod a+r ./node_modules/zeroclipboard/*
 
 set_baseline_permissions "${1-plws}" ../data

@@ -3,7 +3,7 @@ var fs = require('fs')
 var join = require('path').join
 
 var snippetPath = join(
-  __dirname, '..', '..', '..', 'thirdParty', 'googleAnalytics.js')
+  __dirname, '..', '..', '..', 'third-party', 'googleAnalytics.js')
 /* eslint no-sync:0 */
 var snippet = fs.readFileSync(snippetPath, 'utf8')
 
