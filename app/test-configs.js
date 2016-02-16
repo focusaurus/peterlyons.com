@@ -4,20 +4,13 @@ module.exports = [
   ['/contact', /pete@peterlyons.com/],
   ['/stacks', /JavaScript/],
   ['/practices', /Craftsmanship/],
-  ['/bands', /Afronauts/],
   ['/code-conventions', /readability/],
   ['/leveling-up', /Pillar 1/],
   ['/web-prog', /PHP/],
-  ['/oberlin', /Edison/],
-  ['/favorites', /Imogen/],
   ['/plus-party', /Plus Party/],
   ['/js-debug', /Lighting Up/],
   ['/twelve-factor-nodejs', /Twelve-Factor/],
   ['/talks', /Speaking/],
   ['/problog', /Pete's Points/],
-  ['/persblog', /travel/],
-  ['/app/photos?gallery=burning_man_2011', /Gallery/],
-  ['/problog/2009/03/announcing-petes-points', /professional/],
-  ['/persblog/2007/10/petes-travel-adventure-2007-begins-friday-october-5th',
-    /Alitalia/]
+  ['/problog/2009/03/announcing-petes-points', /professional/]
 ]

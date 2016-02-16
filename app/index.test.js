@@ -12,3 +12,5 @@ describe('the express web server basics', function () {
       .end(done)
   })
 })
+
+request.smoke(require('./test-configs'))

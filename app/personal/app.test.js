@@ -7,8 +7,7 @@ var testConfigs = [
   ['/favorites', /Imogen/],
   ['/persblog', /travel/],
   ['/app/photos?gallery=burning_man_2011', /Gallery/],
-  ['/persblog/2007/10/petes-travel-adventure-2007-begins-friday-october-5th',
-    /Alitalia/]
+  ['/persblog/2007/10/hometown-dracula', /Randall/]
 ]
 
 request.smoke(testConfigs)
