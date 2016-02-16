@@ -3,7 +3,7 @@ require('angular-mocks')
 require('es5-shim') // phantomjs shim
 
 var expect = require('chaimel')
-var plusParty = require('./plusParty')
+var plusParty = require('./plus-party')
 
 describe('plusParty', function () {
   it('sum should work', function () {

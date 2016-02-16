@@ -1,6 +1,6 @@
 var Blog = require('./')
 var expect = require('chaimel')
-var testBlog = require('./testBlog')
+var testBlog = require('./test-blog')
 
 describe('Blog constructor', function () {
   it('should accept and store options properly', function () {

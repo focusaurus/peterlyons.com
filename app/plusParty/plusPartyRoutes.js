@@ -1,5 +1,5 @@
 function plusParty (req, res) {
-  res.render('plusParty/plusParty.jade')
+  res.render('plusParty/plus-party.jade')
 }
 
 function setup (app) {

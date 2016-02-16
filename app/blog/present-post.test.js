@@ -1,4 +1,4 @@
-var presentPost = require('./presentPost')
+var presentPost = require('./present-post')
 var expect = require('chaimel')
 
 describe('presentPost', function () {

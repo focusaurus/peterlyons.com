@@ -1,5 +1,5 @@
 var expect = require('chaimel')
-var testBlog = require('./testBlog')
+var testBlog = require('./test-blog')
 
 describe('a blog feed XML', function () {
   var $ = null

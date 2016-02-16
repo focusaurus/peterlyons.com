@@ -1,6 +1,6 @@
 var _ = require('lodash')
 var async = require('async')
-var createPost = require('./createPost')
+var createPost = require('./create-post')
 var events = require('events')
 var express = require('express')
 var fs = require('fs')
@@ -10,8 +10,8 @@ var log = require('bole')(__filename)
 var markdown = require('marked')
 var middleware = require('./middleware')
 var path = require('path')
-var Post = require('./Post')
-var presentPost = require('./presentPost')
+var Post = require('./post')
+var presentPost = require('./present-post')
 var util = require('util')
 
 var postLinks = {}
@@ -73,7 +73,7 @@ function markdownToHTML (req, res, next) {
 }
 
 function renderPost (req, res, next) {
-  res.app.render('blog/viewPost', res.locals, function (error, html2) {
+  res.app.render('blog/view-post', res.locals, function (error, html2) {
     if (error) {
       next(error)
       return

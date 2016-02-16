@@ -1,5 +1,5 @@
 var expect = require('chaimel')
-var plusParty = require('../browser/plusParty')
+var plusParty = require('../browser/plus-party')
 var request = require('../request')
 
 describe('plusParty', function () {

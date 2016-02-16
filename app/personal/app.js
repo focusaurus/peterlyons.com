@@ -1,4 +1,4 @@
-var appCommon = require('../appCommon')
+var appCommon = require('../app-common')
 var Blog = require('../blog')
 var compression = require('compression')
 var express = require('express')

@@ -5,7 +5,7 @@ var config = require('config3')
 var execFile = require('child_process').execFile
 var fs = require('fs')
 var log = require('bole')(__filename)
-var Post = require('./Post')
+var Post = require('./post')
 
 function verifyPassword (password, hash, callback) {
   bcrypt.compare(password, hash, function (error, correctPassword) {

@@ -1,4 +1,4 @@
-var testBlog = require('./testBlog')
+var testBlog = require('./test-blog')
 var expect = require('chaimel')
 var cheerio = require('cheerio')
 
