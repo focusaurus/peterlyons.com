@@ -1,10 +1,10 @@
 var request = require('../request')
 var testUtils = require('../test-utils')
 
-describe('the Twelve-Factor node.js slide deck', function () {
+describe('the Finding Inconsistencies MongoDB slide deck', function () {
   var $ = null
   before(function (done) {
-    request.loadPage('/twelve_factor_nodejs', function (error, dom) {
+    request.loadPage('/white-glove', function (error, dom) {
       $ = dom
       done(error)
     })
@@ -15,6 +15,7 @@ describe('the Twelve-Factor node.js slide deck', function () {
   })
 
   it('should mention some relevant words', function () {
-    testUtils.assertSubstrings($, 'bole', 'systemd', 'config3')
+    testUtils.assertSubstrings(
+      $, 'Schemaless', 'inconsistent', 'data', 'MongoDB')
   })
 })

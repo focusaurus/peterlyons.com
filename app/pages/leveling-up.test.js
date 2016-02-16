@@ -5,7 +5,7 @@ var testUtils = require('../test-utils')
 describe('the Leveling Up article', function () {
   var $ = null
   before(function (done) {
-    request.loadPage('/leveling_up', function (error, dom) {
+    request.loadPage('/leveling-up', function (error, dom) {
       $ = dom
       done(error)
     })

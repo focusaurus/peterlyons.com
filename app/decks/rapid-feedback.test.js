@@ -1,10 +1,10 @@
 var request = require('../request')
 var testUtils = require('../test-utils')
 
-describe('the Web Data Slide Deck', function () {
+describe('the Rapid Feedback Slide Deck', function () {
   var $ = null
   before(function (done) {
-    request.loadPage('/web_data', function (error, dom) {
+    request.loadPage('/rapid-feedback', function (error, dom) {
       $ = dom
       done(error)
     })
@@ -14,7 +14,7 @@ describe('the Web Data Slide Deck', function () {
     testUtils.assertDeck($)
   })
 
-  it('should mention some DBs', function () {
-    testUtils.assertSubstrings($, 'Oracle', 'SQL Server', 'Dynamo')
+  it('should mention some ruby stuff', function () {
+    testUtils.assertSubstrings($, 'ruby', 'rails', 'stackoverflow')
   })
 })

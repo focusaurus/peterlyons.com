@@ -4,7 +4,7 @@ var request = require('../request')
 describe('the NPM Gold Slide Deck', function () {
   var $ = null
   before(function (done) {
-    request.loadPage('/npm_gold', function (error, dom) {
+    request.loadPage('/npm-gold', function (error, dom) {
       $ = dom
       done(error)
     })

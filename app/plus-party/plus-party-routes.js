@@ -3,7 +3,7 @@ function plusParty (req, res) {
 }
 
 function setup (app) {
-  app.get('/plusparty', plusParty)
+  app.get('/plus-party', plusParty)
 }
 
 module.exports = setup

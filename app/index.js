@@ -4,6 +4,7 @@ var config = require('config3')
 var express = require('express')
 var fs = require('fs')
 var path = require('path')
+var redirector = require('./redirector')
 
 var app = express()
 appCommon.head(app)
@@ -39,6 +40,11 @@ pages.forEach(function (page) {
 })
 
 app.use(require('./personal-redirects'))
+app.get('/plusparty', redirector('/plus-party'))
+// Permanent redirect any legacy snake_case URLs to kebab-case
+app.get(/^\/[a-z0-9]+_/, function kebabify (req, res) {
+  res.redirect(301, req.path.replace(/_/g, '-'))
+})
 app.use(require('./errors/error-routes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows
