@@ -2,7 +2,7 @@ var appCommon = require('./app-common')
 var Blog = require('./blog')
 var config = require('config3')
 var express = require('express')
-var fs = require('fs')
+var glob = require('glob')
 var path = require('path')
 var redirector = require('./redirector')
 
@@ -27,16 +27,14 @@ require('./plus-party/plus-party-routes')(app)
 require('./js-debug/js-debug-routes')(app)
 require('./decks/decks-routes')(app)
 // Add routes for each template in "pages" directory
-var pagesPath = path.join(__dirname, 'pages')
-var pages = fs.readdirSync(pagesPath) // eslint-disable-line no-sync
+var pagesPattern = path.join(__dirname, 'pages', '*.jade')
+var pages = glob.sync(pagesPattern) // eslint-disable-line no-sync
 pages.forEach(function (page) {
-  if (/\.(jade|md)$/.test(page)) {
-    var ext = path.extname(page)
-    var base = path.basename(page, ext)
-    app.get('/' + base, function (req, res) {
-      res.render(path.join('pages', page))
-    })
-  }
+  var ext = path.extname(page)
+  var base = path.basename(page, ext)
+  app.get('/' + base, function (req, res) {
+    res.render(path.join('pages', base))
+  })
 })
 
 app.use(require('./personal-redirects'))

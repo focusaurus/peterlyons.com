@@ -1,0 +1,7 @@
+extends ../site/layout
+block variables
+  - title = "node.js training for your team"
+block body
+  include:marked nodejs-training.md
+  a.button(href="mailto:pete@peterlyons.com?subject=node.js training")
+    | Schedule a course

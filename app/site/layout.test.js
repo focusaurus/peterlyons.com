@@ -30,6 +30,13 @@ describe('the main layout', function () {
       'header h1', 'body .content', 'nav.site', '.license')
   })
 
+  it('should include the pro nav links', function () {
+    var body = $.html()
+    expect(body).toInclude('Code Conventions')
+    expect(body).toInclude('Career')
+    expect(body).toInclude('Projects')
+  })
+
   it('should have the normal title', function () {
     expect($('title').text()).toEqual('Peter Lyons: node.js expert consultant')
   })
