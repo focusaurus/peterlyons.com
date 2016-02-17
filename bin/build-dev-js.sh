@@ -12,9 +12,9 @@ PATH="${PATH}:${PWD}/node_modules/.bin"
 "${1-browserify}" \
   -o www/plws.js \
   --debug \
-  $(./bin/browserify_args.sh)
+  $(./bin/browserify-args.sh)
 "${1-browserify}" \
   -o www/plws.js \
   --debug \
-  $(./bin/browserify_args.sh)
+  $(./bin/browserify-args.sh)
 browserify -o www/reveal.js -e app/browser/deck

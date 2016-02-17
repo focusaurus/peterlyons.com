@@ -6,4 +6,4 @@
   tasks:
     -
       name: install ansible prerequisites
-      script: ansible_prereqs.sh creates=/root/.ansible_prereqs_installed
+      script: ansible-prereqs.sh creates=/root/.ansible-prereqs-installed

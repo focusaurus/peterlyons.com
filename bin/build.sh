@@ -51,29 +51,29 @@ main() {
   npm install --silent --production
   bower install --silent --production
 
-  ./bin/build_js.sh
+  ./bin/build-js.sh
   npm dedupe
   npm prune --silent --production
   # npm prune removes our symlink, add it back
   ln -nsf ../app node_modules/app
   echo ✓; echo -n "nginx configs…"
 
-  ./bin/config_json.js \
+  ./bin/config-json.js \
     --hostname=peterlyons.com \
     --express_port=$(config3 proPort) \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-peterlyons.com
-  ./bin/config_json.js \
+  ./bin/config-json.js \
     --hostname=peterlyons.org \
     --express_port=$(config3 persPort) \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-peterlyons.org
-  ./bin/config_json.js \
+  ./bin/config-json.js \
     --hostname=stage.peterlyons.com \
     --express_port=$(config3 proPort) \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.com
-  ./bin/config_json.js \
+  ./bin/config-json.js \
     --hostname=stage.peterlyons.org \
     --express_port=$(config3 persPort) \
     --www_root=/opt/peter_lyons_web_site/static | \
@@ -98,7 +98,7 @@ EOF
 
   ls -lh "${dist_path}"
   echo "To deploy to stage, run:"
-  echo "  ./bin/deploy.sh ${dist_path} deploy/host_vagrant_stage.yml"
+  echo "  ./bin/deploy.sh ${dist_path} deploy/host-vagrant-stage.yml"
 }
 
 main "$@"

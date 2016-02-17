@@ -1,6 +1,6 @@
 # peterlyons.com web site
 
-This repo contains a node.js/express.js web application I use to power my personal/professional web site at [http://peterlyons.com](http://peterlyons.com).
+This repo contains a node.js/express.js web application I use to power my professional web site at [http://peterlyons.com]() and personal site at [http://peterlyons.org]()
 
 [![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
 
@@ -31,7 +31,7 @@ The data and static repositories aren't particularly interesting. All the intere
 
 ## New Developer Setup (OS X Scripted)
 
-- run `./bin/install_prereqs.sh`
+- run `./bin/install-prereqs.sh`
 
 ## New Developer Setup (Manual or custom)
 
@@ -52,7 +52,7 @@ The data and static repositories aren't particularly interesting. All the intere
 - do work in the develop branch
 - when ready to cut a release candidate, get develop into a clean committed state
 - make sure you are backmerged from master (normally this should always be true)
-- run `./bin/release_candidate.sh <patch|minor|major>`
+- run `./bin/release-candidate.sh <patch|minor|major>`
   - (patch is the default)*
 - make sure the build and stage vagrant boxes are up with `vagrant up`
 - create a build `./bin/build.sh <version>`
@@ -61,11 +61,11 @@ The data and static repositories aren't particularly interesting. All the intere
      - they must be at least added via `git add` but don't need to be committed
    - also supported is `HEAD` or any other git commit refspec
      - Any of these flavors will build using files from git exclusively regardless of the state of your working directory
-- deploy that to the vagrant "stage" vm from your laptop via `./bin/deploy.sh build/<build>.tar.gz deploy/host_vagrant_stage.yml`
+- deploy that to the vagrant "stage" vm from your laptop via `./bin/deploy.sh build/<build>.tar.gz deploy/host-vagrant-stage.yml`
   - vagrant sudo password is `password`
 - Test that and if all looks good you can finalize the release with
 - `./bin/release.sh`
-- deploy to prod with `./bin/deploy.sh build/<build>.tar.gz deploy/host_production.yml`
+- deploy to prod with `./bin/deploy.sh build/<build>.tar.gz deploy/host-production.yml`
 
 # License: MIT
 Copyright (c) 2013 Peter Lyons

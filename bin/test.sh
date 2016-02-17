@@ -26,7 +26,7 @@ main() {
 test_node() {
   echo "node.js mocha unit tests…"
   echo -n "browserifying…"
-  ./bin/build_dev_js.sh
+  ./bin/build-dev-js.sh
   echo ✓
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then

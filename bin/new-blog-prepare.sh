@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage: new_blog_prepare.sh
+# Usage: new-blog-prepare.sh
 
 # Programmatically manipulating a git repository is rife with edge cases.
 # Handling all the race conditions and edge cases would be very complex.

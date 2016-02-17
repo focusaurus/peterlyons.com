@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # begin git work to prepare for a build/test/release
-# Usage: release_candidate.sh <patch|minor|major>"
+# Usage: release-candidate.sh <patch|minor|major>"
 
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh

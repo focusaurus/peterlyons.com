@@ -1,5 +1,5 @@
 ---
-- include: playbook_ansible_prereqs.yml
+- include: playbook-ansible-prereqs.yml
 - hosts: all
   vars:
     express_port_pro: '{{ lookup("pipe", "../node_modules/.bin/config3 proPort") }}'
@@ -66,7 +66,7 @@
       notify:
         - restart express
     - name: activate the deployment
-      command: '{{app_root}}/{{dist_name}}/bin/activate_deployment.sh {{express_user}}'
+      command: '{{app_root}}/{{dist_name}}/bin/activate-deployment.sh {{express_user}}'
     - name: configure upstart job for plws-express
       template:
         src: 'plws-express.conf.j2'

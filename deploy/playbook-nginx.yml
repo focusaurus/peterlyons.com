@@ -1,5 +1,5 @@
 ---
-- include: playbook_ansible_prereqs.yml
+- include: playbook-ansible-prereqs.yml
 -
   hosts: all
   vars:
@@ -37,8 +37,8 @@
       service: name=nginx state=started enabled=yes
     - name: configure monit for nginx
       copy:
-        src: "nginx_peterlyons.com.monitrc"
-        dest: "/etc/monit/conf.d/nginx_peterlyons.com.monitrc"
+        src: "nginx-peterlyons.com.monitrc"
+        dest: "/etc/monit/conf.d/nginx-peterlyons.com.monitrc"
         owner: "root"
         group: "root"
         mode: "0644"
