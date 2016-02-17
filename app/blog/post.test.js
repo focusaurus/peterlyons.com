@@ -1,5 +1,5 @@
 var expect = require('chaimel')
-var Post = require('./Post')
+var Post = require('./post')
 
 var blog = {
   basePath: '/tmp/unit-test-blog',
