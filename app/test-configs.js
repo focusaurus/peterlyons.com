@@ -11,7 +11,5 @@ module.exports = [
   ['/js-debug', /Lighting Up/],
   ['/twelve-factor-nodejs', /Twelve-Factor/],
   ['/nodejs-training', /node\.js training/],
-  ['/talks', /Speaking/],
-  ['/problog', /Pete's Points/],
-  ['/problog/2009/03/announcing-petes-points', /professional/]
+  ['/talks', /Speaking/]
 ]
