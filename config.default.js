@@ -33,21 +33,9 @@ config.photos = {
   galleryDir: config.staticDir + '/photos',
   thumbExtension: '-TN.jpg',
   extension: '.jpg',
-  galleryDataPath: join(__dirname, '../data/galleries.json'),
   serveDirect: !IS_PRODUCTION
 }
 
-config.blogs = [{
-  basePath: join(__dirname, '../data/posts/problog'),
-  prefix: '/problog',
-  title: 'Pete\'s Points',
-  subtitle: 'A blog about web development, programming, technology'
-}, {
-  basePath: join(__dirname, '../data/posts/persblog'),
-  prefix: '/persblog',
-  title: 'The Stretch of Vitality',
-  subtitle: 'Sporadic musing and accounts of my personal life'
-}]
 config.blog = {
   hashPath: join(__dirname, '../data/blog_password.bcrypt'),
   newBlogPreparePath: join(__dirname, 'bin/new_blog_prepare.sh'),

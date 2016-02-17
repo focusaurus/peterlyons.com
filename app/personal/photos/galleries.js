@@ -1,6 +1,6 @@
 var fs = require('fs')
 var config = require('config3')
-var galleries = require(config.photos.galleryDataPath)
+var galleries = require('./galleries-data')
 
 function photoJSONToObject (gallery, photoJSON) {
   var photos = JSON.parse(photoJSON)

@@ -2,6 +2,8 @@
 
 This repo contains a node.js/express.js web application I use to power my personal/professional web site at [http://peterlyons.com](http://peterlyons.com).
 
+[![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
+
 ![Technical Architecture Diagram](doc/peterlyons.com_technical_architecture_2014-12-21.png)
 Basically, the site supports content in the following formats:
 

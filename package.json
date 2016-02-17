@@ -58,10 +58,14 @@
     "watchify": "3.7.0",
     "zuul": "3.9.0"
   },
+  "engines": {
+    "node": "v5.6.0"
+  },
   "files": [],
   "homepage": "http://peterlyons.com",
   "main": "app/server.js",
   "name": "peterlyons.com",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/focusaurus/peterlyons.com.git"
