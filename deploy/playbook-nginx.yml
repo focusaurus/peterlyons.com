@@ -36,8 +36,9 @@
     - name: start nginx
       service: name=nginx state=started enabled=yes
     - name: 'remove old monit config'
-      file: '/etc/monit/config.d/nginx_peterlyons.com.monitrc'
-      state: 'absent'
+      file:
+        path: '/etc/monit/config.d/nginx_peterlyons.com.monitrc'
+        state: 'absent'
     - name: configure monit for nginx
       copy:
         src: "nginx-peterlyons.com.monitrc"
