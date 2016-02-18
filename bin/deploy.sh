@@ -20,7 +20,7 @@ main() {
     --ask-sudo-pass \
     --extra-vars "dist=${dist_path}" \
     --extra-vars "dist_name=${dist_name}" \
-    ./deploy/playbook_full_stack.yml
+    ./deploy/playbook-full-stack.yml
 }
 
 main "$@"

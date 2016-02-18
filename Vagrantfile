@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "stage" do |stage|
     config.vm.network :private_network, ip: "10.9.8.31"
     config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "deploy/playbook_nginx.yml"
+      ansible.playbook = "deploy/playbook-nginx.yml"
       ansible.limit = "stage"
       ansible.extra_vars = {
         ansible_ssh_user: "vagrant",
