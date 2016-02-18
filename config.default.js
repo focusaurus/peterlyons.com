@@ -24,7 +24,8 @@ var config = {
 
 config.analytics = {
   enabled: IS_PRODUCTION,
-  code: ''
+  proCode: '',
+  persCode: ''
 }
 
 config.photos = {

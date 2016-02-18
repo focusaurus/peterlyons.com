@@ -43,4 +43,4 @@ html(lang="en")
       block scripts
         script(src="/plws.js?v=" + appVersion)
         if analytics.enabled
-          script(data-id="analytics")!= analytics.script()
+          script(data-id="analytics")!= analytics.script(analytics.code)

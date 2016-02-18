@@ -16,6 +16,7 @@ var problog = new Blog({
 })
 app.use(function (req, res, next) {
   res.locals.proSite = true
+  res.locals.analytics.code = config.analytics.proCode
   next()
 })
 app.use(problog.prefix, problog.app)

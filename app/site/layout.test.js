@@ -63,7 +63,7 @@ describe('the main layout', function () {
 describe('analytics snippet', function () {
   before(function () {
     config.analytics.enabled = true
-    config.analytics.code = 'UNIT_TEST'
+    config.analytics.proCode = 'UNIT_TEST'
   })
 
   after(function () {

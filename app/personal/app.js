@@ -1,11 +1,17 @@
 var appCommon = require('../app-common')
 var Blog = require('../blog')
 var compression = require('compression')
+var config = require('config3')
 var express = require('express')
 var join = require('path').join
 
 var app = express()
 appCommon.head(app)
+
+app.use(function analyticsMW (req, res, next) {
+  res.locals.analytics.code = config.analytics.persCode
+  next()
+})
 
 function render (view) {
   return function renderMW (req, res) {
