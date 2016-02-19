@@ -52,7 +52,7 @@
     "node-dev": "3.0.0",
     "phantomjs": "2.1.3",
     "promptly": "0.2.1",
-    "standard": "6.0.5",
+    "standard": "6.0.7",
     "supertest": "1.1.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
