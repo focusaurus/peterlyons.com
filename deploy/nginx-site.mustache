@@ -21,6 +21,7 @@ server {
     rewrite /app(.*) $1 break;
     error_page 404 /error404.html;
     error_page 502 503 504 /error500.html;
+    proxy_set_header Host $host;
     proxy_redirect off;
     proxy_pass http://express-{{hostname}};
   }
