@@ -23,6 +23,7 @@ function locals (req, res, next) {
 function head (app) {
   app.set('view engine', 'jade')
   app.set('views', __dirname)
+  app.set('trust proxy', true)
   if (config.enableLogger) {
     app.use(function logger (req, res, next) {
       log.debug(req)
