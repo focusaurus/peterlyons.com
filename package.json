@@ -36,7 +36,7 @@
     "sharify": "0.1.6",
     "stylish": "0.6.0",
     "stylus": "0.53.0",
-    "uglify-js": "2.6.1",
+    "uglify-js": "2.6.2",
     "zeroclipboard": "2.2.0"
   },
   "description": "The node/express web app for the peterlyons.com web site",
