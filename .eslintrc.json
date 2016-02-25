@@ -15,7 +15,6 @@
     "no-sync": 1,
     "no-ternary": 2,
     "no-undefined": 2,
-    "no-warning-comments": [2, {"terms": ["@bug", "xxx"]}],
-    "valid-jsdoc": 2
+    "no-warning-comments": [2]
   }
 }
