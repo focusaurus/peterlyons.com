@@ -13,7 +13,7 @@ function testBlog (callback) {
     prefix: '/utb',
     subtitle: 'Unit Test Subtitle 1'
   })
-  // TODO crap coupling here
+  // crap coupling here. Sorry.
   blog.app.locals.analytics = {
     enabled: false
   }
