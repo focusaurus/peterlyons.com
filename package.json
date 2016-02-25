@@ -29,7 +29,7 @@
     "moment": "2.11.2",
     "mustache": "2.2.1",
     "nib": "1.1.0",
-    "process-title": "0.0.0",
+    "process-title": "1.0.0",
     "raw-body": "2.1.5",
     "reveal": "0.0.4",
     "rupture": "0.6.1",
