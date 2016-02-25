@@ -44,7 +44,7 @@
     "chai": "3.5.0",
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
-    "es5-shim": "4.5.4",
+    "es5-shim": "4.5.5",
     "eslint": "2.2.0",
     "eslint-config-standard": "5.1.0",
     "eslint-formatter-comment": "2.0.0",
