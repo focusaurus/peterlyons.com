@@ -2,13 +2,15 @@
 - include: playbook-ansible-prereqs.yml
 -
   hosts: all
+  become: true
   vars:
     project: plws
     app_root: /opt/peter_lyons_web_site
     data_root: /opt/peter_lyons_web_site/data
   handlers:
-    -
-      include: handlers.yml
+    - name: reload nginx
+      service: name=nginx state=reloaded
+    - include: handlers.yml
   tasks:
     - name: install nginx and monit
       apt: pkg={{item}}

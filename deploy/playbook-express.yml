@@ -1,6 +1,7 @@
 ---
 - include: playbook-ansible-prereqs.yml
 - hosts: all
+  become: true
   vars:
     express_port_pro: '{{ lookup("pipe", "../node_modules/.bin/config3 proPort") }}'
     express_port_pers: '{{ lookup("pipe", "../node_modules/.bin/config3 persPort") }}'
@@ -11,6 +12,8 @@
     config_dir: /etc/peterlyons.com
     repo_base: https://github.com/focusaurus
   handlers:
+    - name: restart express
+      service: name=plws-express state=restarted
     - include: handlers.yml
   tasks:
     - name: install prerequisites

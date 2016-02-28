@@ -17,7 +17,6 @@ main() {
   export ANSIBLE_HOST_KEY_CHECKING=False
   ansible-playbook \
     -i "${inventory}" \
-    --ask-sudo-pass \
     --extra-vars "dist=${dist_path}" \
     --extra-vars "dist_name=${dist_name}" \
     ./deploy/playbook-full-stack.yml
