@@ -60,7 +60,7 @@
     "zuul": "3.9.0"
   },
   "engines": {
-    "node": "v5.6.0"
+    "node": "v5.7.0"
   },
   "files": [],
   "homepage": "http://peterlyons.com",
