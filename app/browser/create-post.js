@@ -33,8 +33,9 @@ CreatePost.prototype.changeContentMarkdown = function changeContentMarkdown () {
     title: this.$scope.title
   }
   this.localStorage.postDraft = JSON.stringify(postDraft)
+  // Using relative path here to handle varying blog prefixes
   this.$http.post(
-    '/convert', this.$scope.contentMarkdown, MARKDOWN_OPTIONS
+    'convert', this.$scope.contentMarkdown, MARKDOWN_OPTIONS
   ).success(function (contentHtml) {
     self.$scope.contentHtml = self.$sce.trustAsHtml(contentHtml)
   })

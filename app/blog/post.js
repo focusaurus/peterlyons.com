@@ -95,17 +95,15 @@ Post.prototype.load = function (metadataPath, callback1) {
 
 Post.prototype.save = function (callback) {
   var self = this
-  var contentPath = join(this.blog.basePath, this.contentPath())
-  var metadataPath = join(this.blog.basePath, this.metadataPath())
   mkdirp(this.dirPath(), function (error) {
-    var work
     if (error) {
-      return callback(error)
+      callback(error)
+      return
     }
-    work = [
-      async.apply(fs.writeFile, contentPath, self.content),
-      async.apply(
-        fs.writeFile, metadataPath, JSON.stringify(self.metadata(), null, 2))
+    var metadataJson = JSON.stringify(self.metadata(), null, 2)
+    var work = [
+      async.apply(fs.writeFile, self.contentPath(), self.content),
+      async.apply(fs.writeFile, self.metadataPath(), metadataJson)
     ]
     async.parallel(work, function (error2) {
       if (error2) {
