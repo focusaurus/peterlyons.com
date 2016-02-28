@@ -31,7 +31,7 @@ describe('CreatePost Controller', function () {
 
   it('should convert markdown to HTML when changed', function () {
     var $httpBackend = injector.get('$httpBackend')
-    $httpBackend.expectPOST('/convert', '#marked it down2')
+    $httpBackend.expectPOST('convert', '#marked it down2')
       .respond(200, '<h1>marked it down2</h1>')
     injector.instantiate(CreatePost, options)
     options.$scope.$apply(function () {
