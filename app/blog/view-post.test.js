@@ -42,6 +42,8 @@ describe('a blog post page', function () {
 
   it('should have disqus comments', function () {
     expect($('#disqus_thread').length).toEqual(1)
+    // look for disqus_shortname
+    expect($('#comments').html()).toContain('peterlyons-utb')
   })
 })
 

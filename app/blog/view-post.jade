@@ -21,7 +21,7 @@ block body
         a#toggleComments(href="#") Show Comments
   section#comments.none
     #disqus_thread
-    != '<script>var disqus_shortname = "peterlyons-' + post.blog + '";</script>'
+    != '<script>var disqus_shortname = "peterlyons-' + post.blog.prefix.slice(1) + '";</script>'
     script.
       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
       var disqus_developer = 1;
