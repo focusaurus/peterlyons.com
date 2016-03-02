@@ -18,4 +18,13 @@ describe('personal URLs should redirect to .org', function () {
         .end(done)
     })
   })
+
+  it('should maintain photo gallery path and query', function (done) {
+    var page = '/app/photos?gallery=fall_2009&photo=020_paint_and_blinds'
+    request
+      .get(page)
+      .expect(301)
+      .expect('location', 'http://peterlyons.org' + page)
+      .end(done)
+  })
 })

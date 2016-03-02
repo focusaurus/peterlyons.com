@@ -1,5 +1,5 @@
 function personal (req) {
-  return 'http://peterlyons.org' + req.path
+  return 'http://peterlyons.org' + req.url
 }
 
 var matchers = []
@@ -12,7 +12,7 @@ matchers.push([/^\/photos/i, personal])
 
 function redirectHandler (req, res, next) {
   for (var i = 0; i < matchers.length; i++) {
-    if (matchers[i][0].test(req.path)) {
+    if (matchers[i][0].test(req.url)) {
       res.redirect(301, matchers[i][1](req))
       return
     }
