@@ -1,12 +1,26 @@
 #!/bin/bash
 
 # Run integration tests against deployed app
-# Will test stage by default, but pass command line args
-# peterlyons.com peterlyons.org
-# to test production
+# Will test local dev by default, but pass command line arg
+# "stage" or "production" to test remote systems
 
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
 
-URL="${1-stage.peterlyons.com}" mocha app/integration-tests.js
-URL="${2-stage.peterlyons.org}" mocha app/personal/integration-tests.js
+case "$1" in
+  stage)
+    pro=stage.peterlyons.com
+    pers=stage.peterlyons.org
+    ;;
+  production)
+    pro=peterlyons.com
+    pers=peterlyons.org
+    ;;
+  *)
+    pro=localhost:9000
+    pers=localhost:9001
+    ;;
+esac
+
+URL="${pro}" mocha app/integration-tests.js
+URL="${pers}" mocha app/personal/integration-tests.js
