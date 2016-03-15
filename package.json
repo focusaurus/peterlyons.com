@@ -35,7 +35,7 @@
     "rupture": "0.6.1",
     "sharify": "0.1.6",
     "stylish": "0.6.0",
-    "stylus": "0.54.0",
+    "stylus": "0.54.2",
     "uglify-js": "2.6.2",
     "zeroclipboard": "2.2.0"
   },
@@ -45,7 +45,7 @@
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
     "es5-shim": "4.5.7",
-    "eslint": "2.3.0",
+    "eslint": "2.4.0",
     "eslint-config-standard": "5.1.0",
     "eslint-formatter-comment": "2.0.0",
     "html-validator": "1.0.0",
@@ -60,7 +60,7 @@
     "zuul": "3.10.1"
   },
   "engines": {
-    "node": "v5.7.0"
+    "node": "v5.8.0"
   },
   "files": [],
   "homepage": "http://peterlyons.com",
