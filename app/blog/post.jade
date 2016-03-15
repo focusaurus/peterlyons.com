@@ -6,13 +6,13 @@ block body
     .error(ng-if="error")
       strong BORKED! {{error}}
     .saved(ng-if="savedPost") New post saved at&nbsp;
-      a(ng-href="/{{savedPost.uri}}") {{savedPost.title}}
+      a(ng-href="{{savedPost.uri}}") {{savedPost.title}}
     section.preview(ng-bind-html="contentHtml")
     hr
     label
       | title
       input(name="title", ng-model="title")
-    textarea.content(cols="80", rows="25", ng-model="contentMarkdown")
+    textarea.content(cols="80", rows="15", ng-model="contentMarkdown")
     label
       | password to save (github token)
       input(type="password", ng-model="password")
