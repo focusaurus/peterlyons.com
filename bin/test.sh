@@ -24,10 +24,10 @@ main() {
 }
 
 test_node() {
-  echo "node.js mocha unit tests…"
   echo -n "browserifying…"
   ./bin/build-dev-js.sh
   echo ✓
+  echo "node.js mocha unit tests…"
   export NODE_ENV=test
   if [[ $# -eq 0 ]]; then
     mocha $(find ./app -name \*.test.js -print0 | sort | xargs -0)
