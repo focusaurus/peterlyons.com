@@ -34,18 +34,6 @@ function links (props) {
 
 function Photo (props) {
   const photo = props.photo
-  // return (
-  //   <div className="photo">
-  //     <div id='nextPrev'>
-  //       {links(props)}
-  //     </div>
-  //     <figure>
-  //       <img src={photo.fullSizeURI} alt={photo.caption} title={photo.caption}>
-  //       </img>
-  //       <figcaption>{photo.caption}</figcaption>
-  //     </figure>
-  //   </div>
-  //   )
   return RD.div({className: 'photo'},
     RD.div({id: 'nextPrev'}, links(props)),
     RD.figure(null,

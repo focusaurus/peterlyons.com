@@ -5,18 +5,6 @@ const RD = React.DOM
 
 function links (props, year) {
   return year.galleries.map((gallery) => {
-    // return (
-    //   <a
-    //   className='gallerylink'
-    //   href={'?gallery=' + encodeURIComponent(gallery.dirName)}
-    //   key={gallery.dirName}
-    //   onClick={(event) => {
-    //     event.preventDefault()
-    //     props.viewGallery(gallery.dirName)
-    //   }}>
-    //     {gallery.displayName}
-    //   </a>
-    //   )
     return RD.a({
       className: 'gallerylink',
       href: '?gallery=' + encodeURIComponent(gallery.dirName),
@@ -53,15 +41,6 @@ function getYears (galleries) {
 
 function GalleryList (props) {
   const years = getYears(props.galleries)
-  // const yearNodes = years.map((year) => {
-  //   return (
-  //     <div key={year.name}>
-  //       <h2 className='year'>{year.name}</h2>
-  //       {links(props, year)}
-  //     </div>
-  //     )
-  //   })
-  // return <nav className='photos'>{yearNodes}</nav>
   const yearNodes = years.map((year) => {
     return RD.div({key: year.name},
       RD.h2({className: 'year'}, year.name),
