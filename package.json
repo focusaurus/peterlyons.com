@@ -46,9 +46,9 @@
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
     "es5-shim": "4.5.7",
+    "eslint": "2.4.0",
     "eslint-config-standard": "5.1.0",
     "eslint-formatter-comment": "2.0.0",
-    "eslint": "2.4.0",
     "html-validator": "1.0.0",
     "mktmp": "1.0.1",
     "mocha": "2.4.5",
@@ -58,6 +58,7 @@
     "reactify": "1.1.1",
     "standard": "6.0.8",
     "superagent": "1.6.1",
+    "supertest": "1.2.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
     "zuul": "3.10.1"
