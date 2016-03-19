@@ -2,12 +2,13 @@ var _ = require('lodash')
 var config = require('config3')
 var expect = require('chaimel')
 var pack = require('../../package')
-var testUtils = require('app/testUtils')
+var request = require('../request')
+var testUtils = require('../test-utils')
 
 describe('the main layout', function () {
   var $ = null
   before(function (done) {
-    testUtils.loadPage('/', function (error, dom) {
+    request.loadPage('/', function (error, dom) {
       $ = dom
       done(error)
     })
@@ -29,6 +30,13 @@ describe('the main layout', function () {
       'header h1', 'body .content', 'nav.site', '.license')
   })
 
+  it('should include the pro nav links', function () {
+    var body = $.html()
+    expect(body).toInclude('Code Conventions')
+    expect(body).toInclude('Career')
+    expect(body).toInclude('Projects')
+  })
+
   it('should have the normal title', function () {
     expect($('title').text()).toEqual('Peter Lyons: node.js expert consultant')
   })
@@ -39,7 +47,7 @@ describe('the main layout', function () {
   })
 
   it('should have the browserified JavaScript', function (done) {
-    testUtils.get('/plws.js?v=' + pack.version)
+    request.get('/plws.js?v=' + pack.version)
       .expect(200)
       .expect('Content-Type', 'application/javascript')
       .expect('Content-Encoding', 'gzip')
@@ -48,14 +56,14 @@ describe('the main layout', function () {
 
   it('should include HTML comment with app version', function () {
     testUtils.assertSelectors($, 'meta[name=x-app-version]')
-    expect($('meta[name=x-app-version]').attr('value')).toEqual(pack.version)
+    expect($('meta[name=x-app-version]').attr('content')).toEqual(pack.version)
   })
 })
 
 describe('analytics snippet', function () {
   before(function () {
     config.analytics.enabled = true
-    config.analytics.code = 'UNIT_TEST'
+    config.analytics.proCode = 'UNIT_TEST'
   })
 
   after(function () {
@@ -64,7 +72,7 @@ describe('analytics snippet', function () {
   })
 
   it('should include the analytics snippet when enabled', function (done) {
-    testUtils.loadPage('/', function (error, $) {
+    request.loadPage('/', function (error, $) {
       expect(error).notToExist()
       var selector = 'script[data-id=analytics]'
       testUtils.assertSelectors($, selector)

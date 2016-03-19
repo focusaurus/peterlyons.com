@@ -8,13 +8,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # development box intended for ongoing development
   config.vm.define "build", primary: true do |build|
     config.vm.network :private_network, ip: "10.9.8.30"
-    config.vm.provision "shell", path: "./deploy/provision_build_box.sh"
+    config.vm.provision "shell", path: "./deploy/provision-build-box.sh"
   end
   # stage box intended for configuration closely matching production
   config.vm.define "stage" do |stage|
     config.vm.network :private_network, ip: "10.9.8.31"
     config.vm.provision "ansible" do |ansible|
-      ansible.playbook = "deploy/playbook_nginx.yml"
+      ansible.playbook = "deploy/playbook-nginx.yml"
       ansible.limit = "stage"
       ansible.extra_vars = {
         ansible_ssh_user: "vagrant",

@@ -1,57 +1,53 @@
-var _ = require('lodash')
-var compression = require('compression')
+var appCommon = require('./app-common')
+var Blog = require('./blog')
 var config = require('config3')
 var express = require('express')
-var httpErrors = require('httperrors')
-var log = require('bole')(__filename)
+var glob = require('glob')
+var path = require('path')
+var redirector = require('./redirector')
 
 var app = express()
-app.set('view engine', 'jade')
-app.set('views', __dirname)
-app.locals = _.extend(
-  {}, _.pick(config, 'baseURL', 'appURI', 'appVersion', 'analytics'))
-app.locals.analytics.script = require('app/site/blocks/analytics')
+appCommon.head(app)
+var problog = new Blog({
+  basePath: path.join(__dirname, '../../data/posts/problog'),
+  prefix: '/problog',
+  title: "Pete's Points",
+  subtitle: 'A blog about web development, programming, technology'
+})
+app.use(function (req, res, next) {
+  res.locals.proSite = true
+  res.locals.analytics.code = config.analytics.proCode
+  next()
+})
+app.use(problog.prefix, problog.app)
 
-if (config.enableLogger) {
-  app.use(function logger (req, res, next) {
-    log.debug(req)
-    next()
+app.get('/', function (req, res) {
+  res.render('pages/home')
+})
+require('./plus-party/plus-party-routes')(app)
+require('./js-debug/js-debug-routes')(app)
+require('./decks/decks-routes')(app)
+// Add routes for each template in "pages" directory
+var pagesPattern = path.join(__dirname, 'pages', '*.jade')
+var pages = glob.sync(pagesPattern) // eslint-disable-line no-sync
+pages.forEach(function (page) {
+  var ext = path.extname(page)
+  var base = path.basename(page, ext)
+  app.get('/' + base, function (req, res) {
+    res.render(path.join('pages', base))
   })
-}
-[
-  'blogs/blogRoutes',
-  'plusParty/plusPartyRoutes',
-  'jsDebug/jsDebugRoutes',
-  'decks/decksRoutes',
-  'pages/pagesRoutes',
-  'photos/photosRoutes',
-  'photosReact/photosReactRoutes',
-  'photos/galleriesRoutes',
-  'site/cssRoutes',
-  'site/errorRoutes'
-].forEach(function (routesPath) {
-  require('app/' + routesPath)(app)
 })
 
-app.use(compression())
-app.use(express.static(config.staticDir))
-app.use(express.static(config.wwwDir))
+app.use(require('./personal-redirects'))
+app.get('/plusparty', redirector('/plus-party'))
+// Permanent redirect any legacy snake_case URLs to kebab-case
+app.get(/^\/[a-z0-9]+_/, function kebabify (req, res) {
+  res.redirect(301, req.path.replace(/_/g, '-'))
+})
+app.use(require('./errors/error-routes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows
 app.use('/reveal', express.static(config.revealDir))
-app.use(function (req, res, next) {
-  next(new httpErrors.NotFound(req.path))
-})
-
-// Express looks at function arity, so we must declare 4 arguments here
-app.use(function (error, req, res, next) { // eslint-disable-line no-unused-vars
-  res.status(error.statusCode || 500)
-  if (error.statusCode === 404) {
-    res.render('site/error404')
-  } else {
-    res.render('site/error500')
-    log.error(error, req)
-  }
-})
+appCommon.tail(app)
 
 module.exports = app

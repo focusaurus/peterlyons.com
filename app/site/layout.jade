@@ -22,19 +22,25 @@ html(lang="en")
     meta(name="keywords" content="peter lyons, pete lyons, web development, node.js, developer, coder, freelance, consultant, boulder, colorado, startups, saxophone, oberlin")
     meta(name="author" content="Peter Lyons")
     meta(name="viewport" content="width=device-width, initial-scale=1")
-    meta(name="x-app-version" value=appVersion)
+    meta(name="x-app-version" content=appVersion)
   body
     //-.adaptive
     button.navMenuButton &equiv;
-    include blocks/navigation
+    if proSite
+      include blocks/navigation
+    else
+      include ../personal/navigation
     .content
       include blocks/header
       block body
       footer.navigationHorizontal
-        include blocks/navigation
+        if proSite
+          include blocks/navigation
+        else
+          include ../personal/navigation
       footer.license
         include blocks/license
       block scripts
         script(src="/plws.js?v=" + appVersion)
         if analytics.enabled
-          script(data-id="analytics")!= analytics.script()
+          script(data-id="analytics")!= analytics.script(analytics.code)

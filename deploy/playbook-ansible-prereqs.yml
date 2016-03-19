@@ -1,0 +1,8 @@
+---
+-
+  hosts: all
+  become: true
+  tasks:
+    -
+      name: install ansible prerequisites
+      script: ansible-prereqs.sh creates=/root/.ansible-prereqs-installed

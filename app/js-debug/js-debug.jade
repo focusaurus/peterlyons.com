@@ -1,0 +1,197 @@
+extends ../site/layout
+block variables
+  - title = "Lighting Up Your JavaScript With the Debugger";
+block body
+  h1= title
+  :marked
+    ## The Debugger is a Fantastic Comprehension Aid
+
+    For most of my time as a programmer, I've been in the "no fancy tools camp". I spurned IDEs (and still do), complex build tools, any flavor of a "project" file an editor needed to supplement the filesystem layout, code analyzers, coverage tools, and all that ilk. I got things done by printing to stdout, kept it simple, and moved on. Not that I haven't tried all of these things at some point or another, but I found all of them were so awkward and cumbersome that not a single one of them stayed in my tool box beyond that initial experimentation or a single project.
+
+    However, things have changed with the current state of the Chrome developer tools debugger. I now use this tool constantly and find it to be an absolutely key piece of my arsenal. It's definitely in my top five most valuable tools list. It's not absolutely necessary, but getting by without it now feels like groping around in the dark when there's a perfectly good light switch available.
+
+    I attribute this mostly to the fact that Chrome made this tool built-in to the browser and ready to go with the click of a context menu. No plugin. No extension. No special developer build. No configuration file. It's just there and it works.
+
+    However, my main goal with this post is not to convince you to use the debugger because it will allow you to find a fix specific bugs more quickly. I want to convince you that stepping through your program in the debugger is a fundamentally valuable experience that will massively increase your understanding of the JavaScript language, the runtime, your own code, and the libraries you are using. It's exploratory, connected, illuminated, and surprising. The analogy I make is if writing to stdout is shining a flashlight on a particular variable value in your program, running the debugger is a bright lantern lighting up huge areas for you. You will see things without having to be specifically looking for them in a particular place a priori.
+
+    # How to Use the Debugger
+
+    ## Get a Good UI Setup
+
+    Invest a little time to get a good window layout and workflow for seeing the web page you are developing and the debugger. The debugger can dock to the bottom of the window, the right hand side, or separate into its own window.
+
+    Enable source maps and explore the other advanced settings under the gear icon.
+
+    ## Learn the Primary Debugger Concepts
+
+    These are your bread and butter primary tools.
+
+    * basic breakpoints
+    * step over, step into, step out of
+    * asynchronous code flow
+    * watch expressions
+    * the call stack
+
+    ## Learn the Secondary Debugger Concepts
+
+    You don't need these very often, but under certain circumstances, they are essential to tracking things down effectively.
+
+    * conditional breakpoints
+    * pause on exceptions
+
+    ## Debugger Quirks
+
+    Some lines won't accept breakpoints. I don't exactly understand all of these, so please post a comment if you can explain. Sometimes I think it's just syntax where a single expression spans multiple lines and Chrome elects one of those lines (the last one I guess) as the one where a breakpoint can go. Other times I suspect the optimizing compiler has altered the underlying code such that a breakpoint doesn't make sense there anymore, but that's just a hunch that could be entirely incorrect.
+
+    Reloading the page sometimes causes a phantom breakpoint to appear and the code to pause.
+
+    If you edit the code in the browser while it's running, breakpoints tied to line numbers can get out of alignment.
+
+    Overall the UI is pretty cumbersome and could be made much better with some more usability studies.
+
+    # Write Debugger-friendly Code
+
+    Stick to one statement per line, and avoid complex nested expressions. Rather, put interesting values into variables where they can easily be inspected. So instead of this:
+
+        findWinningTeam(getTeamScores(teams), getRuleSet(lookupConfig(configName));
+
+    Make this more debugger-friendly (and more maintainer-friendly in general).
+
+        var config = lookupConfig(configName);
+        var ruleSet = getRuleSet(config);
+        var scores = getTeamScores(teams);
+        findWinningTeam(scores, ruleSet);
+
+    This is much easier to add breakpoints and inspect those intermediate values and step over line by line.
+
+    At the moment JavaScript code that heavily uses method chaining is frustrating in the debugger. Something like this is hard to step through and requires a series of step in and step out operations.
+
+        get("/users").header("Accept", "application/json").auth(user, password).end(function (error, users) {});
+
+    I'm not a big fan of the chaining style in general, but in particular it's a pain when working in the debugger.
+
+    # Debugging Server Side node.js code with node-inspector
+
+    So this is pretty much the Holy Grail in my opinion. This is a huge selling point of node for me. There's a module in npm called [node-inspector](https://npmjs.org/package/node-inspector) that allows you to use the Chrome debugger to debug your server side node.js code.
+
+    The setup can be confusing because there are a bunch of different processes and ports to keep straight in your head, so let me break it down.
+
+    * Your node server program runs one process, which includes v8
+    * Running node with one of the `--debug` argument variants tells node/v8 to enable the debugger and have it listen for connections on a port, which is 5858 by default.
+    * Your node server program listens on some port for its requests. For a typical web application, this might be port 3000, for example.
+    * So that's 1 node process listening for browsers on port 3000 and a debugger user interface on 5858
+    * Now, to use node-inspector, we run that as a second process via `./node_modules/.bin/node-inspector`
+    * That starts up another process that runs a web server listening on port 8080 by default.
+    * When we browse to http://localhost:8080/debug?port=5858 we will see the node-inspector web UI, which is basically just the chrome debugger and the query string tells node-inspector to make a connection to the v8 debugger listening on port 5858 and that's how everything gets wired up together properly and we're off and running
+
+    <img src="/problog/images/2014/node-inspector-connections.png" alt="diagram of node-inspector connections">
+
+    If you need to fix a bug that is crashing your program before you can even get it started and connect the debugger, use `--debug-brk` which tells v8 to pause the program before the very first line is interpretted so you can get node-inspector connected and step through.
+
+    # Debugging Your Mocha Tests in node-inspector
+
+    [mocha](http://visionmedia.github.io/mocha/) supports the same `--debug` and `--debug-brk` arguments as node, so you can also debug your tests within node-inspector. Double victory!
+
+    To avoid port collisions, you can provide an alternate port to the process for your mocha tests. This can be done with `mocha --debug-brk=6666`, for example if you want to leave your application process's debugger listening on 5858 while you run mocha tests at the same time debugging them via port 6666.
+
+    # Custom Ports for Mulitple Projects
+
+    It is common for node developers to switch between many small projects frequently. Thus to keep things neatly separated, I often follow the following scheme when allocating ports. First an example:
+
+    * 9000 - my app's web server
+    * 9001 - v8 debugger for my app's web server
+    * 9002 - node-inspector web port
+    * 9003 - v8 debugger for my mocha tests
+    * 9004 and up - any databases or other services my app needs
+
+    So written as a formula that is:
+
+    * base - my app's web server
+    * base + 1 - v8 debugger for my app's web server
+    * base + 2 - node-inspector web port
+    * base + 3 - v8 debugger for my mocha tests
+    * base + 4 and up - any databases or other services my app needs
+
+    However, I don't recommend this setup until you are really comfortable with the basics. Keep it simple and use the default ports when you are new to these tools.
+
+    # Recommended Reading
+
+    * [Chrome Developer Tools Docs](https://developers.google.com/chrome-developer-tools/?csw=1)
+    * [HTML5 Rocks Introduction to Chrome Developer Tools](http://www.html5rocks.com/en/tutorials/developertools/part1/)
+    * [Lesser-Known JavaScript Debugging Techniques](http://amasad.me/2014/03/09/lesser-known-javascript-debugging-techniques/)
+    * [Debugging Asynchronous JavaScript with Chrome DevTools](http://www.html5rocks.com/en/tutorials/developertools/async-call-stack/)
+    * [Watch Me Code Debugging Screencasts by Derrick Bailey](http://sub.watchmecode.net/debugging-javascript/)
+
+    # Lab
+
+  button.js-debug.breakpointButton Click to experiment with breakpoints
+  button.js-debug.stepSync Step Over Sync Code
+  button.js-debug.stepAsync Step Over Async Code
+  button.js-debug.multipleAsync Multiple Async Operations
+
+  h1 Screencast Demos
+
+  iframe(width="560", height="315", src="//www.youtube.com/embed/b9KifHCZ0QM",  allowfullscreen="")
+
+block append scripts
+  script.
+    ///// Basic Breakpoint Usage /////
+    function breakpointButton(event) {
+      console.log("Thanks for clicking the button labeled '" +
+        event.target.textContent + "'");
+    }
+    document.querySelector(".breakpointButton").addEventListener(
+       "click", breakpointButton);
+
+    ///// Stepping Over Synchronous Code /////
+    function stepSync() {
+      var words = "one two three four five".split(" ");
+      for (var i = 0; i < words.length; i++) {
+        console.log("Stepping through a for loop with word", words[i]);
+      }
+      words.forEach(function (word) {
+        console.log("Stepping through a forEach with word", word);
+      });
+    }
+
+    document.querySelector(".stepSync").addEventListener(
+      "click", stepSync);
+
+    ///// Stepping Over Asynchronous Code /////
+    function stepAsync() {
+      console.log("OK, now we're going to step over some async code");
+      var request = new XMLHttpRequest();
+      request.open("GET", "/js-debug/random-delay?requestNumber=1", true);
+      request.send();
+      console.log("OMG WTF happens when we hit the next line?");
+      // define and assign now, execute later
+      request.onload = function() {
+        console.log("Server said: ", this.response);
+      }
+      console.log(
+        "OMG brain asplode this line executes BEFORE the line above it!");
+    }
+    document.querySelector(".stepAsync").addEventListener(
+       "click", stepAsync);
+
+
+    ///// Multiple Async Operations /////
+    function loaded() {
+      console.log("Server said:", this.response);
+    }
+
+    function multipleAsync() {
+      var requestNumber = 1;
+      for (var requestNumber = 1; requestNumber < 5; requestNumber++) {
+        var request = new XMLHttpRequest();
+        request.open("GET",
+          "/jsDebug/randomDelay?requestNumber=" + requestNumber, true);
+        console.log("Sending request", requestNumber);
+        request.onload = loaded;
+        request.send();
+        console.log("Request " + requestNumber + " sent");
+      }
+    }
+
+    document.querySelector(".multipleAsync").addEventListener(
+       "click", multipleAsync);

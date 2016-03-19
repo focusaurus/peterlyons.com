@@ -11,10 +11,10 @@ var config = {
   appURI: '/app',
   appVersion: pack.version,
   enableLogger: process.env.NODE_ENV !== 'test',
-  errorPages: IS_PRODUCTION,
   hostname: get('hostname', '127.0.0.1'),
   ip: get('IP', '127.0.0.1'),
-  port: get('port', 9000),
+  proPort: get('proport', 9000),
+  persPort: get('persport', 9001),
   staticDir: join(__dirname, '../static'),
   titleSuffix: ' | Peter Lyons',
   revealDir: join(__dirname, 'node_modules/reveal'),
@@ -24,7 +24,8 @@ var config = {
 
 config.analytics = {
   enabled: IS_PRODUCTION,
-  code: ''
+  proCode: '',
+  persCode: ''
 }
 
 config.photos = {
@@ -33,20 +34,13 @@ config.photos = {
   galleryDir: config.staticDir + '/photos',
   thumbExtension: '-TN.jpg',
   extension: '.jpg',
-  galleryDataPath: join(__dirname, '../data/galleries.json'),
   serveDirect: !IS_PRODUCTION
 }
 
 config.blog = {
   hashPath: join(__dirname, '../data/blog_password.bcrypt'),
-  postBasePath: join(__dirname, '../data/posts'),
-  newBlogPreparePath: join(__dirname, 'bin/new_blog_prepare.sh'),
-  newBlogFinalizePath: join(__dirname, 'bin/new_blog_finalize.sh')
-}
-
-config.inspector = {
-  enabled: !IS_PRODUCTION,
-  webPort: config.port + 2
+  newBlogPreparePath: join(__dirname, 'bin/new-blog-prepare.sh'),
+  newBlogFinalizePath: join(__dirname, 'bin/new-blog-finalize.sh')
 }
 
 config.tests = {
@@ -55,5 +49,4 @@ config.tests = {
   mochaPath: join(__dirname, 'node_modules/mocha')
 }
 
-config.baseURL = 'http://' + config.hostname + ':' + config.port
 module.exports = config

@@ -1,0 +1,54 @@
+---
+- include: playbook-ansible-prereqs.yml
+-
+  hosts: all
+  become: true
+  vars:
+    project: plws
+    app_root: /opt/peter_lyons_web_site
+    data_root: /opt/peter_lyons_web_site/data
+  handlers:
+    - name: reload nginx
+      service: name=nginx state=reloaded
+    - include: handlers.yml
+  tasks:
+    - name: install nginx and monit
+      apt: pkg={{item}}
+      with_items:
+        #web server
+        - nginx
+        #For monitoring
+        - monit
+    - name: ensure there is no default nginx site
+      file: path=/etc/nginx/sites-enabled/default state=absent
+    - name: symlink nginx config {{item}}
+      file:
+        force: true
+        group: "root"
+        mode: "0644"
+        owner: "root"
+        path: '/etc/nginx/sites-enabled/{{subdomain}}{{item}}'
+        src: '{{app_root}}/current/nginx-{{subdomain}}{{item}}'
+        state: 'link'
+      notify:
+        - restart nginx
+      with_items:
+        - "peterlyons.com"
+        - "peterlyons.org"
+    - name: start nginx
+      service: name=nginx state=started enabled=yes
+    - name: 'remove old monit config'
+      file:
+        path: '/etc/monit/config.d/nginx_peterlyons.com.monitrc'
+        state: 'absent'
+    - name: configure monit for nginx
+      copy:
+        src: "nginx-peterlyons.com.monitrc"
+        dest: "/etc/monit/conf.d/nginx-peterlyons.com.monitrc"
+        owner: "root"
+        group: "root"
+        mode: "0644"
+      notify:
+        - restart monit
+    - name: start monit
+      service: name=monit state=started enabled=yes
