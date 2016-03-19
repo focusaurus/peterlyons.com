@@ -1,5 +1,5 @@
 const React = require('react')
-const RD = require('react-dom')
+const RD = React.DOM
 
 function links (props, year) {
   return year.galleries.map((gallery) => {
@@ -26,6 +26,7 @@ function links (props, year) {
 }
 
 function getYears (galleries) {
+  'use strict'
   var byYear = {}
   galleries.forEach(function (gallery2) {
     var year = gallery2.startDate.split('-')[0]
@@ -37,7 +38,7 @@ function getYears (galleries) {
 
   var years = []
   for (var year2 in byYear) {
-    const galleriesInYear = byYear[year2]
+    let galleriesInYear = byYear[year2]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
     years.push({
       name: year2,
@@ -58,7 +59,7 @@ function GalleryList (props) {
   //     </div>
   //     )
   //   })
-  //   return <nav className='photos'>{yearNodes}</nav>
+  // return <nav className='photos'>{yearNodes}</nav>
   const yearNodes = years.map((year) => {
     return RD.div({key: year.name},
       RD.h2({className: 'year'}, year.name),
