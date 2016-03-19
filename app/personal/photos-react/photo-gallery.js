@@ -35,7 +35,8 @@ const PhotoGallery = React.createClass({
     }
   },
   render: function () {
-    const index = this.state.gallery.photos.indexOf(this.state.photo)
+    const index = _.findIndex(
+      this.state.gallery.photos, {name: this.state.photo.name})
     this.state.previousPhoto = this.state.gallery.photos[index - 1]
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
