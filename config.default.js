@@ -10,7 +10,7 @@ function get (name, defaultValue) {
 var config = {
   appURI: '/app',
   appVersion: pack.version,
-  enableLogger: process.env.NODE_ENV !== 'test',
+  enableLogger: false, // process.env.NODE_ENV !== 'test',
   hostname: get('hostname', '127.0.0.1'),
   ip: get('IP', '127.0.0.1'),
   proPort: get('proport', 9000),
