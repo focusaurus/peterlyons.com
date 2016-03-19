@@ -17,11 +17,10 @@ const PhotoGallery = React.createClass({
     return {
       gallery: this.props.gallery,
       galleries: this.props.galleries,
-      photo: this.props.gallery.photos[0]
+      photo: this.props.photo || this.props.gallery.photos[0]
     }
   },
   onKeyDown: function onKeyDown (event) {
-    console.log('you typed', event.key) // @bug
     switch (event.key) {
       case 'ArrowRight':
         if (this.state.nextPhoto) {
@@ -110,6 +109,7 @@ const PhotoGallery = React.createClass({
       querystring.stringify(query) +
       '#photo'
     window.history.pushState(this.state, document.title, newUrl)
+    document.getElementById('photo').scrollIntoView()
   }
 })
 

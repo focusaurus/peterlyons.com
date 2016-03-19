@@ -1,4 +1,6 @@
+const pd = require('./prevent-default')
 const React = require('react')
+
 const RD = React.DOM
 
 function links (props, year) {
@@ -18,10 +20,10 @@ function links (props, year) {
     return RD.a({
       className: 'gallerylink',
       href: '?gallery=' + encodeURIComponent(gallery.dirName),
-      onClick: (event) => {
-        event.preventDefault()
+      key: gallery.dirName,
+      onClick: pd((event) => {
         props.viewGallery(gallery.dirName)
-      }}, gallery.displayName)
+      })}, gallery.displayName)
   })
 }
 

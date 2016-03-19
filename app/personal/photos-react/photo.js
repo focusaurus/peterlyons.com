@@ -1,3 +1,4 @@
+const pd = require('./prevent-default')
 const React = require('react')
 
 const RD = React.DOM
@@ -8,10 +9,9 @@ function links (props) {
   if (props.previousPhoto) {
     let attrs = {
       href: props.previousPhoto.pageURI,
-      onClick: (event) => {
-        event.preventDefault()
+      onClick: pd((event) => {
         props.viewPhoto(props.previousPhoto.name)
-      },
+      }),
       key: 'previous',
       dangerouslySetInnerHTML: {__html: '&larr;previous&nbsp;'}
     }
@@ -21,10 +21,9 @@ function links (props) {
   if (props.nextPhoto) {
     let attrs = {
       href: props.nextPhoto.pageURI,
-      onClick: (event) => {
-        event.preventDefault()
+      onClick: pd((event) => {
         props.viewPhoto(props.nextPhoto.name)
-      },
+      }),
       key: 'next',
       dangerouslySetInnerHTML: {__html: 'next&rarr;'}
     }
@@ -47,7 +46,7 @@ function Photo (props) {
   //     </figure>
   //   </div>
   //   )
-  return RD.div({className: 'photo', id: 'photo'},
+  return RD.div({className: 'photo'},
     RD.div({id: 'nextPrev'}, links(props)),
     RD.figure(null,
       RD.img({
