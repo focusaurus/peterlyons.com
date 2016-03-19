@@ -1,18 +1,21 @@
-var _ = require('lodash')
-var config = require('config3')
-var galleries = require('../photos/galleries-data')
-var _galleries = require('../photos/galleries')
-var PhotoGallery = require('./photo-gallery')
-var react = require('react')
-var server = require('react-dom/server')
-var sharify = require('sharify')
+const _ = require('lodash')
+const config = require('config3')
+const express = require('express')
+const galleries = require('../photos/galleries-data')
+const _galleries = require('../photos/galleries')
+const PhotoGallery = require('./photo-gallery')
+const React = require('react')
+const server = require('react-dom/server')
+const sharify = require('sharify')
+
+const router = new express.Router()
 
 function loadGallery (req, res, next) {
   var matchGallery = galleries.filter(function (g) {
     return g.dirName === req.query.gallery
   })
   if (!matchGallery.length) {
-    var sorted = _.sortByAll(galleries, 'startDate')
+    var sorted = _.sortBy(galleries, 'startDate')
     var mostRecent = _.last(sorted)
     var url = req.path + '?gallery=' + encodeURIComponent(mostRecent.dirName)
     res.redirect(url)
@@ -27,28 +30,18 @@ function photosReact (req, res, next) {
     if (error) {
       return res.status(500).send(error)
     }
-    _.extend(res.locals.sharify.data, {
-      gallery: gallery,
-      galleries: galleries
-    })
-    const element = react.createElement(PhotoGallery, {
-      galleries,
-      gallery
-    })
-    var photoGalleryHtml = server.renderToString(element)
-    res.render('photos-react/viewGallery', {
-      photoGalleryHtml,
-      gallery
-    })
+    _.extend(res.locals.sharify.data, {gallery, galleries})
+    const element = React.createElement(PhotoGallery, {galleries, gallery})
+    var photoGalleryHtml = server.renderToStaticMarkup(element)
+    res.render(
+      'personal/photos-react/view-gallery', {photoGalleryHtml, gallery})
   })
 }
 
-function setup (app) {
-  const mw = [sharify, loadGallery, photosReact]
-  app.get('/photos-react', mw)
-  if (config.photos.serveDirect) {
-    app.get('/app/photos-react', mw)
-  }
+const mw = [sharify, loadGallery, photosReact]
+router.get('/photos-react', mw)
+if (config.photos.serveDirect) {
+  router.get('/app/photos-react', mw)
 }
 
-module.exports = setup
+module.exports = router

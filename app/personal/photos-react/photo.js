@@ -1,5 +1,6 @@
 const React = require('react')
-const RD = require('react-dom')
+
+const RD = React.DOM
 
 function links (props) {
   'use strict'
@@ -11,9 +12,10 @@ function links (props) {
         event.preventDefault()
         props.viewPhoto(props.previousPhoto.name)
       },
-      key: 'previous'
+      key: 'previous',
+      dangerouslySetInnerHTML: {__html: '&larr;previous&nbsp;'}
     }
-    links.push(RD.a(attrs, '&larr;prevous&nbsp;'))
+    links.push(RD.a(attrs))
   }
 
   if (props.nextPhoto) {
@@ -23,9 +25,10 @@ function links (props) {
         event.preventDefault()
         props.viewPhoto(props.nextPhoto.name)
       },
-      key: 'next'
+      key: 'next',
+      dangerouslySetInnerHTML: {__html: 'next&rarr;'}
     }
-    links.push(RD.a(attrs, 'next&rarr;'))
+    links.push(RD.a(attrs))
   }
   return links
 }
@@ -44,7 +47,7 @@ function Photo (props) {
   //     </figure>
   //   </div>
   //   )
-  return RD.div({className: 'photo'},
+  return RD.div({className: 'photo', id: 'photo'},
     RD.div({id: 'nextPrev'}, links(props)),
     RD.figure(null,
       RD.img({

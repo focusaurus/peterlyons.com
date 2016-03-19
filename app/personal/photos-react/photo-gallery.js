@@ -6,10 +6,11 @@ const _ = require('lodash')
 const GalleryList = require('./gallery-list')
 const Photo = require('./photo')
 const querystring = require('querystring')
-const RD = require('react-dom')
 const React = require('react')
 const request = require('superagent')
 const Thumbnails = require('./thumbnails')
+
+const RD = React.DOM
 
 const PhotoGallery = React.createClass({
   getInitialState: function () {
@@ -56,7 +57,7 @@ const PhotoGallery = React.createClass({
     //   </div>
     //   )
 
-    RD.div(
+    return RD.div(
       {className: 'galleryApp', onKeyDown: this.onKeyDown},
       RD.h1({id: 'photo'}, this.state.gallery.displayName),
       React.createElement(Photo, {

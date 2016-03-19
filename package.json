@@ -6,12 +6,6 @@
     "angular-route": "./bower_components/angular-route/angular-route.js",
     "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js"
   },
-  "browserify": {
-    "transform": [
-      "babelify",
-      "reactify"
-    ]
-  },
   "dependencies": {
     "async": "1.5.2",
     "autoprefixer-stylus": "0.9.2",
@@ -49,9 +43,6 @@
   },
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {
-    "babel": "5.8.29",
-    "babelify": "6.4.0",
-    "bistre": "1.0.1",
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
     "es5-shim": "4.5.7",

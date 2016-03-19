@@ -1,5 +1,6 @@
 const React = require('react')
-const RD = require('react-dom')
+
+const RD = React.DOM
 
 function Thumbnails (props) {
   var thumbnails = props.gallery.photos.map(function (photo) {
