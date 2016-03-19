@@ -12,7 +12,7 @@ function dispatch (path) {
       break
     case '/persblog/post':
     case '/problog/post':
-      require('./create-post')
+      require('./post')
       break
     case '/plus-party':
       require('./plus-party')

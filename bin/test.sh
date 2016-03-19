@@ -25,7 +25,7 @@ main() {
 
 test_node() {
   echo -n "browserifying…"
-  ./bin/build-dev-js.sh
+  ./bin/build-js.sh production
   echo ✓
   echo "node.js mocha unit tests…"
   export NODE_ENV=test

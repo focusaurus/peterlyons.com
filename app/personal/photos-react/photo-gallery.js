@@ -1,18 +1,14 @@
-// import GalleryList from './gallery-list'
-// import Photo from './photo'
-// import React from 'react'
-// import Thumbnails from './thumbnails'
-const _ = require('lodash')
-const GalleryList = require('./gallery-list')
-const Photo = require('./photo')
-const querystring = require('querystring')
-const React = require('react')
-const request = require('superagent')
-const Thumbnails = require('./thumbnails')
+var _ = require('lodash')
+var GalleryList = require('./gallery-list')
+var Photo = require('./photo')
+var querystring = require('querystring')
+var React = require('react')
+var request = require('superagent')
+var Thumbnails = require('./thumbnails')
 
-const RD = React.DOM
+var RD = React.DOM
 
-const PhotoGallery = React.createClass({
+var PhotoGallery = React.createClass({
   getInitialState: function () {
     return {
       gallery: this.props.gallery,
@@ -35,64 +31,58 @@ const PhotoGallery = React.createClass({
     }
   },
   render: function () {
-    const index = _.findIndex(
-      this.state.gallery.photos, {name: this.state.photo.name})
+    var index = _.findIndex(
+      this.state.gallery.photos, {
+        name: this.state.photo.name
+      })
     this.state.previousPhoto = this.state.gallery.photos[index - 1]
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
-    // return (
-    //   <div className='galleryApp' onKeyDown={this.onKeyDown}>
-    //     <h1 id="photo">{this.state.gallery.displayName}</h1>
-    //     <Photo
-    //   photo={this.state.photo}
-    //   previousPhoto={this.state.previousPhoto}
-    //   nextPhoto={this.state.nextPhoto}
-    //   viewPhoto={this.viewPhoto}/>
-    //     <Thumbnails
-    //   gallery={this.state.gallery}
-    //   viewPhoto={this.viewPhoto}/>
-    // <GalleryList
-    //   galleries={this.state.galleries}
-    //   viewGallery={this.viewGallery}/>
-    //   </div>
-    //   )
 
     return RD.div(
-      {className: 'galleryApp', onKeyDown: this.onKeyDown},
-      RD.h1({id: 'photo'}, this.state.gallery.displayName),
+      {
+        className: 'gallery-app',
+        onKeyDown: this.onKeyDown
+      },
+      RD.h1({
+        id: 'photo'
+      }, this.state.gallery.displayName),
       React.createElement(Photo, {
         photo: this.state.photo,
         previousPhoto: this.state.previousPhoto,
         nextPhoto: this.state.nextPhoto,
-        viewPhoto: this.viewPhoto }),
+        viewPhoto: this.viewPhoto
+      }),
       React.createElement(Thumbnails, {
         gallery: this.state.gallery,
-        viewPhoto: this.viewPhoto }),
+        viewPhoto: this.viewPhoto
+      }),
       React.createElement(GalleryList, {
         galleries: this.state.galleries,
-        viewGallery: this.viewGallery })
+        viewGallery: this.viewGallery
+      })
     )
   },
   viewPhoto: function viewPhoto (photoName) {
-    const match = {
+    var match = {
       name: photoName
     }
-    const newState = _.clone(this.state)
+    var newState = _.clone(this.state)
     newState.photo = _.find(this.state.gallery.photos, match) ||
-      this.state.photo
+    this.state.photo
     this.setState(newState)
     setTimeout(this.navigate)
   },
   viewGallery: function viewGallery (galleryDirName) {
     request('/galleries/' + galleryDirName)
-      .end((error, res) => {
+      .end(function (error, res) {
         if (error) {
           console.error(error)
           return
         }
-        const gallery = res.body
+        var gallery = res.body
         this.setState({
-          gallery,
+          gallery: gallery,
           galleries: this.props.galleries,
           photo: gallery.photos[0]
         })
@@ -101,11 +91,11 @@ const PhotoGallery = React.createClass({
   },
   navigate: function navigate () {
     window.document.title = this.state.gallery.displayName + ' Photo Gallery'
-    const query = {
+    var query = {
       gallery: this.state.gallery.dirName,
       photo: this.state.photo.name
     }
-    const newUrl = window.location.pathname +
+    var newUrl = window.location.pathname +
       '?' +
       querystring.stringify(query) +
       '#photo'

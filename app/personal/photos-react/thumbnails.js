@@ -1,7 +1,7 @@
-const pd = require('./prevent-default')
-const React = require('react')
+var pd = require('./prevent-default')
+var React = require('react')
 
-const RD = React.DOM
+var RD = React.DOM
 
 function Thumbnails (props) {
   var thumbnails = props.gallery.photos.map(function (photo) {
@@ -9,7 +9,7 @@ function Thumbnails (props) {
       className: 'thumbnail',
       href: photo.pageURI,
       key: photo.pageURI,
-      onClick: pd((event) => {
+      onClick: pd(function (event) {
         props.viewPhoto(photo.name)
       })},
       RD.img({

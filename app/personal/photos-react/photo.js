@@ -1,15 +1,15 @@
-const pd = require('./prevent-default')
-const React = require('react')
+var pd = require('./prevent-default')
+var React = require('react')
 
-const RD = React.DOM
+var RD = React.DOM
 
 function links (props) {
   'use strict'
   var links = []
   if (props.previousPhoto) {
-    let attrs = {
+    var attrs = {
       href: props.previousPhoto.pageURI,
-      onClick: pd((event) => {
+      onClick: pd(function (event) {
         props.viewPhoto(props.previousPhoto.name)
       }),
       key: 'previous',
@@ -19,21 +19,21 @@ function links (props) {
   }
 
   if (props.nextPhoto) {
-    let attrs = {
+    var attrs2 = {
       href: props.nextPhoto.pageURI,
-      onClick: pd((event) => {
+      onClick: pd(function (event) {
         props.viewPhoto(props.nextPhoto.name)
       }),
       key: 'next',
       dangerouslySetInnerHTML: {__html: 'next&rarr;'}
     }
-    links.push(RD.a(attrs))
+    links.push(RD.a(attrs2))
   }
   return links
 }
 
 function Photo (props) {
-  const photo = props.photo
+  var photo = props.photo
   return RD.div({className: 'photo'},
     RD.div({id: 'nextPrev'}, links(props)),
     RD.figure(null,
