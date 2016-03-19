@@ -1,6 +1,6 @@
 #!/bin/bash
-set -x
-# bundles browser js for production
+
+# bundles browser js via browserify & uglifyjs
 
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict_mode.sh
@@ -15,8 +15,11 @@ if [[ "$1" == "production" ]]; then
   uglify_args="--compress --mangle --keep-fnames --screw-ie8"
 fi
 
+printf 'building ./www/reveal.js…'
 browserify --entry app/browser/deck | uglifyjs ${uglify_args} > www/reveal.js
+echo ✓
 
+printf "${bundler}…"
 ${bundler} \
   --outfile "${out}" \
   --entry app/browser/navigation \
