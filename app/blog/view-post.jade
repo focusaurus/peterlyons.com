@@ -18,7 +18,7 @@ block body
           | Next post &nbsp;
           a.next(href=post.next.uri())= post.next.title
       li
-        a#toggleComments(href="#") Show Comments
+        a#toggleComments(href="#") Show Disqus Blog Comments
   section#comments.none
     #disqus_thread
     != '<script>var disqus_shortname = "peterlyons-' + post.blog.prefix.slice(1) + '";</script>'
@@ -42,7 +42,7 @@ block append scripts
       }
       var classList = document.querySelector("#comments").classList;
       var hidden = classList.contains("none");
-      var newText = hidden ? "Hide Comments" : "Show Comments";
+      var newText = hidden ? "Hide Comments" : "Show Disqus Blog Comments";
       document.querySelector("#toggleComments").textContent = newText;
       if (hidden) {
         classList.remove("none");
