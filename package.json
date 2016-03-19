@@ -37,8 +37,9 @@
     "nib": "1.1.0",
     "process-title": "1.0.0",
     "raw-body": "2.1.6",
+    "react-dom": "0.14.7",
     "react": "0.14.0",
-    "react-dom": "0.14.0",
+    "react": "0.14.7",
     "reveal": "0.0.4",
     "rupture": "0.6.1",
     "sharify": "0.1.6",
@@ -74,15 +75,14 @@
     "promptly": "1.1.0",
     "reactify": "1.1.1",
     "standard": "6.0.8",
-    "superagent": "1.2.0",
-    "supertest": "0.15.0",
+    "superagent": "1.6.1",
     "supertest": "1.2.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
     "zuul": "3.10.1"
   },
   "engines": {
-    "node": "v5.8.0"
+    "node": "v5.9.0"
   },
   "files": [],
   "homepage": "http://peterlyons.com",

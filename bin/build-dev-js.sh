@@ -8,7 +8,8 @@ unset IFS # This screws up our shell quoting
 
 PATH="${PATH}:${PWD}/node_modules/.bin"
 
-watchify \
+browserify -o www/reveal.js -e app/browser/deck
+"${1-browserify}" \
   -o www/plws.js \
   --debug \
   $(./bin/browserify-args.sh)

@@ -1,8 +1,8 @@
 var _ = require('lodash')
 var config = require('config3')
-var galleries = require(config.photos.galleryDataPath)
+var galleries = require('../photos/galleries-data')
 var _galleries = require('../photos/galleries')
-var PhotoGallery = require('./PhotoGallery')
+var PhotoGallery = require('./photo-gallery')
 var react = require('react')
 var server = require('react-dom/server')
 var sharify = require('sharify')
@@ -36,7 +36,7 @@ function photosReact (req, res, next) {
       gallery
     })
     var photoGalleryHtml = server.renderToString(element)
-    res.render('photosReact/viewGallery', {
+    res.render('photos-react/viewGallery', {
       photoGalleryHtml,
       gallery
     })
