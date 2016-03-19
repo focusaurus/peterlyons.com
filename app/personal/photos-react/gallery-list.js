@@ -1,15 +1,15 @@
-const pd = require('./prevent-default')
-const React = require('react')
+var pd = require('./prevent-default')
+var React = require('react')
 
-const RD = React.DOM
+var RD = React.DOM
 
 function links (props, year) {
-  return year.galleries.map((gallery) => {
+  return year.galleries.map(function (gallery) {
     return RD.a({
       className: 'gallerylink',
       href: '?gallery=' + encodeURIComponent(gallery.dirName),
       key: gallery.dirName,
-      onClick: pd((event) => {
+      onClick: pd(function (event) {
         props.viewGallery(gallery.dirName)
       })}, gallery.displayName)
   })
@@ -28,7 +28,7 @@ function getYears (galleries) {
 
   var years = []
   for (var year2 in byYear) {
-    let galleriesInYear = byYear[year2]
+    var galleriesInYear = byYear[year2]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
     years.push({
       name: year2,
@@ -40,8 +40,8 @@ function getYears (galleries) {
 }
 
 function GalleryList (props) {
-  const years = getYears(props.galleries)
-  const yearNodes = years.map((year) => {
+  var years = getYears(props.galleries)
+  var yearNodes = years.map(function (year) {
     return RD.div({key: year.name},
       RD.h2({className: 'year'}, year.name),
       links(props, year)

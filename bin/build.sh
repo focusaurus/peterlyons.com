@@ -51,7 +51,7 @@ main() {
   npm install --silent --production
   bower install --silent --production
 
-  ./bin/build-js.sh
+  ./bin/build-js.sh production
   npm dedupe
   npm prune --silent --production
   # npm prune removes our symlink, add it back
