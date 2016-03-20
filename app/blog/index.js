@@ -1,5 +1,6 @@
 var _ = require('lodash')
 var async = require('async')
+var CreatePost = require('./create-post-react').CreatePost
 var createPost = require('./create-post')
 var events = require('events')
 var express = require('express')
@@ -12,6 +13,7 @@ var middleware = require('./middleware')
 var path = require('path')
 var Post = require('./post')
 var presentPost = require('./present-post')
+var server = require('react-dom/server')
 var util = require('util')
 
 var postLinks = {}
@@ -203,6 +205,12 @@ function Blog (options) {
   app.route('/post')
     .get(function (req, res) {
       res.render('blog/post')
+    })
+    .post(createPost.handler)
+  app.route('/post-react')
+    .get(function (req, res) {
+      var bodyHtml = server.renderToStaticMarkup(CreatePost)
+      res.render('blog/create-post-react', {bodyHtml: bodyHtml})
     })
     .post(createPost.handler)
   app.post('/convert', convertMiddleware)
