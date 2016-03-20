@@ -2,34 +2,41 @@ var _ = require('lodash')
 var _galleries = require('./galleries')
 var config = require('config3')
 var express = require('express')
+var galleries = require('./galleries-data')
 var path = require('path')
+var PhotoGallery = require('./photo-gallery')
+var React = require('react')
+var server = require('react-dom/server')
 var sharify = require('sharify')
 
 var router = new express.Router()
 
-function renderPhotos (req, res, next) {
-  var galleries = _galleries.galleries
-  var matchGallery = galleries.filter(function (g) {
-    return g.dirName === req.query.gallery
-  })
-  if (!matchGallery.length) {
-    var mostRecent = _.sortBy(
-      galleries, 'startDate')[galleries.length - 1]
-    res.redirect(req.path + '?gallery=' +
-      encodeURIComponent(mostRecent.dirName))
+function loadGallery (req, res, next) {
+  var matchGallery = _.find(galleries, {dirName: req.query.gallery})
+  if (!matchGallery) {
+    var sorted = _.sortBy(galleries, 'startDate')
+    var mostRecent = _.last(sorted)
+    var url = req.path + '?gallery=' + encodeURIComponent(mostRecent.dirName)
+    res.redirect(url)
     return
   }
-  _galleries.loadBySlug(matchGallery[0].dirName, function (error2, gallery) {
-    if (error2) {
-      return res.status(500).send(error2)
+  res.locals.gallery = matchGallery
+  next()
+}
+
+function photosReact (req, res, next) {
+  _galleries.loadBySlug(res.locals.gallery.dirName, function (error, gallery) {
+    if (error) {
+      return res.status(500).send(error)
     }
-    _.extend(res.locals.sharify.data, {
-      gallery: gallery,
-      galleries: galleries
-    })
-    res.render('personal/photos/view-gallery', {
-      gallery: gallery
-    })
+    var photo = _.find(gallery.photos, {name: req.query.photo}) ||
+      gallery.photos[0]
+    _.extend(res.locals.sharify.data, {gallery, galleries, photo})
+    var element = React.createElement(
+      PhotoGallery, {galleries, gallery, photo})
+    var photoGalleryHtml = server.renderToStaticMarkup(element)
+    res.render(
+      'personal/photos/view-gallery', {photoGalleryHtml, gallery})
   })
 }
 
@@ -49,9 +56,10 @@ function getGallery (req, res) {
 
 router.use('/photos', express.static(path.join(__dirname, '../browser')))
 router.get('/galleries/:slug', getGallery)
-router.get('/photos', sharify, renderPhotos)
+var mw = [sharify, loadGallery, photosReact]
+router.get('/photos', mw)
 if (config.photos.serveDirect) {
-  router.get('/app/photos', sharify, renderPhotos)
+  router.get('/app/photos', mw)
 }
 
 module.exports = router

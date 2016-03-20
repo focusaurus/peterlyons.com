@@ -1,6 +1,6 @@
 var ReactDOM = require('react-dom')
 var ReactTestUtils = require('react-addons-test-utils')
-var PlusParty = require('./plus-party-react')
+var PlusParty = require('./plus-party')
 var expect = require('chaimel')
 
 describe('PlusParty', function () {

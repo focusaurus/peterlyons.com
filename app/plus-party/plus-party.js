@@ -1,6 +1,4 @@
-var _ = require('lodash')
 var React = require('react')
-var ReactDOM = require('react-dom')
 
 var COMMA_RE = /,/g
 var DATE_RE = /\b\d{1,2}\/\d{1,2}\/(\d{2}|\d{4})\b/g
@@ -23,10 +21,6 @@ function parseNumbers (rawText) {
     numbers.push(number)
   }
   return numbers
-}
-
-function init () {
-  ReactDOM.render(exports.PlusParty, document.querySelector('.plus-party'))
 }
 
 function numberItem (number, index) {
@@ -86,4 +80,3 @@ var PlusParty = React.createClass({
 exports.PlusParty = React.createElement(PlusParty)
 exports.sum = sum
 exports.parseNumbers = parseNumbers
-exports.init = init

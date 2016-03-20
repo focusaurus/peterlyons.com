@@ -30,7 +30,7 @@ config.analytics = {
 
 config.photos = {
   photoURI: '/photos/',
-  galleryURI: config.appURI + '/photos-react',
+  galleryURI: config.appURI + '/photos',
   galleryDir: config.staticDir + '/photos',
   thumbExtension: '-TN.jpg',
   extension: '.jpg',
