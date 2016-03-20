@@ -13,6 +13,7 @@ var middleware = require('./middleware')
 var path = require('path')
 var Post = require('./post')
 var presentPost = require('./present-post')
+var React = require('react')
 var server = require('react-dom/server')
 var util = require('util')
 
@@ -209,7 +210,8 @@ function Blog (options) {
     .post(createPost.handler)
   app.route('/post-react')
     .get(function (req, res) {
-      var bodyHtml = server.renderToStaticMarkup(CreatePost)
+      var element = React.createElement(CreatePost)
+      var bodyHtml = server.renderToStaticMarkup(element)
       res.render('blog/create-post-react', {bodyHtml: bodyHtml})
     })
     .post(createPost.handler)
