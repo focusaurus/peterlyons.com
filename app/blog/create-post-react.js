@@ -75,7 +75,7 @@ var CreatePost = React.createClass({
       RD.textarea({
         className: 'content',
         value: this.state.contentMarkdown,
-        onChange: _.throttle(this.setContent, 2000),
+        onChange: this.setContent,
         cols: '80',
         rows: '15'
       }),
@@ -108,7 +108,7 @@ var CreatePost = React.createClass({
     })
   },
 
-  preview: function preview () {
+  preview: _.debounce(function preview () {
     var self = this
     request
       // Using relative path here to handle varying blog prefixes
@@ -122,7 +122,7 @@ var CreatePost = React.createClass({
         }
         self.setState({contentHtml: res.text})
       })
-  },
+  }, 500),
 
   saveDraft: function saveDraft () {
     var postDraft = {
