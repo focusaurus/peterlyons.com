@@ -42,7 +42,7 @@ test_browser() {
   echo -n browser tests…
   local browser="--phantom"
   # use this for real browser
-  local browser="--local $(config3 tests.port)"
+  # local browser="--local $(config3 tests.port)"
   zuul ${browser} --ui mocha-bdd --no-coverage --open \
     $(find ./app -name '*btest.js' -print0 | xargs -0)
   echo ✓

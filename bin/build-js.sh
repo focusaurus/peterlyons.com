@@ -25,9 +25,8 @@ ${bundler} \
   --entry app/browser/navigation \
   --require app/pages/career-main \
   --require app/plus-party/plus-party-main \
-  --require app/plus-party/plus-party-react \
   --require app/blog/create-post-react \
-  --require app/personal/photos-react/browser-main
+  --require app/personal/photos/browser-main
 
 if [[ "$1" == "production" ]]; then
   temp=$(mktemp -t plws-build-XXXX)

@@ -1,9 +1,0 @@
-extends ../../site/layout
-block variables
-  - title = gallery.displayName + " Photo Gallery"
-block body
-  != photoGalleryHtml
-block prepend scripts
-  != sharify.script()
-block append scripts
-  script require('app/personal/photos-react/browser-main')
