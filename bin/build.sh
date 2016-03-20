@@ -49,7 +49,6 @@ main() {
   cd "${build_dir}/${prefix}"
   # Run OSX node and npm utilites but within the linux build dir
   npm install --silent --production
-  bower install --silent --production
 
   ./bin/build-js.sh production
   npm dedupe

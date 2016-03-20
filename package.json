@@ -1,11 +1,5 @@
 {
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
-  "browser": {
-    "angular": "./bower_components/angular/angular.js",
-    "angular-mocks": "./bower_components/angular-mocks/angular-mocks.js",
-    "angular-route": "./bower_components/angular-route/angular-route.js",
-    "angular-sanitize": "./bower_components/angular-sanitize/angular-sanitize.js"
-  },
   "dependencies": {
     "async": "1.5.2",
     "autoprefixer-stylus": "0.9.2",
@@ -13,7 +7,6 @@
     "body-parser": "1.15.0",
     "bole": "2.0.0",
     "boolean": "0.1.0",
-    "bower": "1.7.7",
     "browserify": "13.0.0",
     "cheerio": "0.19.0",
     "compression": "1.6.1",
