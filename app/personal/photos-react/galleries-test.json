@@ -1,0 +1,58 @@
+[
+  {
+    "dirName": "unit_test_gallery_1",
+    "displayName": "Unit Test Gallery 1",
+    "photos": [
+      {
+        "caption": "Test model I built",
+        "fullSizeURI": "/photos/burning_man_2011/001_hexayurt_model.jpg",
+        "name": "001_hexayurt_model",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=001_hexayurt_model",
+        "thumbnailURI": "/photos/burning_man_2011/001_hexayurt_model-TN.jpg"
+      },
+      {
+        "caption": "This is my shelter for Burning Man 2011",
+        "fullSizeURI": "/photos/burning_man_2011/002_hexayurt.jpg",
+        "name": "002_hexayurt",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=002_hexayurt",
+        "thumbnailURI": "/photos/burning_man_2011/002_hexayurt-TN.jpg"
+      },
+      {
+        "caption": "It's 6 feet in the center and across the base",
+        "fullSizeURI": "/photos/burning_man_2011/003_hexayurt.jpg",
+        "name": "003_hexayurt",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=003_hexayurt",
+        "thumbnailURI": "/photos/burning_man_2011/003_hexayurt-TN.jpg"
+      }
+    ],
+    "startDate": "2011-08-24T06:00:00.000Z"
+  },
+  {
+    "dirName": "unit_test_gallery_2",
+    "displayName": "Unit Test Gallery 2",
+    "photos": [
+      {
+        "caption": "Test model I built",
+        "fullSizeURI": "/photos/burning_man_2011/001_hexayurt_model.jpg",
+        "name": "001_hexayurt_model",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=001_hexayurt_model",
+        "thumbnailURI": "/photos/burning_man_2011/001_hexayurt_model-TN.jpg"
+      },
+      {
+        "caption": "This is my shelter for Burning Man 2011",
+        "fullSizeURI": "/photos/burning_man_2011/002_hexayurt.jpg",
+        "name": "002_hexayurt",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=002_hexayurt",
+        "thumbnailURI": "/photos/burning_man_2011/002_hexayurt-TN.jpg"
+      },
+      {
+        "caption": "It's 6 feet in the center and across the base",
+        "fullSizeURI": "/photos/burning_man_2011/003_hexayurt.jpg",
+        "name": "003_hexayurt",
+        "pageURI": "/app/photos-react?gallery=burning_man_2011&photo=003_hexayurt",
+        "thumbnailURI": "/photos/burning_man_2011/003_hexayurt-TN.jpg"
+      }
+    ],
+    "startDate": "2011-07-01T06:00:00.000Z"
+  }
+]

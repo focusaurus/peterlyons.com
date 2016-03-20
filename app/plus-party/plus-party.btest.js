@@ -34,6 +34,7 @@ describe('PlusParty', function () {
     ReactTestUtils.Simulate.change(
       pp.refs.rawText, {target: {value: 'nope 42 biscuits 7 8.5'}})
     expect(ul.children.length).toEqual(3)
+    expect(container.querySelector('.total').innerText).toEqual('57.5')
   })
 
   after(function () {
