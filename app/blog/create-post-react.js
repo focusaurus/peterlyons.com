@@ -6,91 +6,34 @@ var ReactDOM = require('react-dom')
 
 var RD = React.DOM
 
-// .createPost(ng-app="createPostApp", ng-controller="CreatePost", ng-cloak)
-//   .error(ng-if="error")
-//     strong BORKED! {{error}}
-//   .saved(ng-if="savedPost") New post saved at&nbsp
-//     a(ng-href="{{savedPost.uri}}") {{savedPost.title}}
-//   section.preview(ng-bind-html="contentHtml")
-//   hr
-//   label
-//     | title
-//     input(name="title", ng-model="title")
-//   textarea.content(cols="80", rows="15", ng-model="contentMarkdown")
-//   label
-//     | password to save (github token)
-//     input(type="password", ng-model="password")
-//   button(ng-click="save()", ng-disabled="!password" ng-bind="saveButtonLabel")
-
 var CreatePost = React.createClass({
   getInitialState: function getInitialState () {
-    return {
+    var savedPost
+    var state = {
       title: 'new-post-title-here',
       contentMarkdown: 'write some **markdown** here',
       savedPost: null,
       error: false,
       password: null,
-      saveButtonLabel: 'Save'
+      saveButtonLabel: 'Save',
+      // usually this is window.localStorage
+      storage: this.props.storage || {}
     }
-  },
-
-  merge: require('../merge'),
-
-  setTitle: function setTitle (event) {
-    this.setState({title: event.target.value})
-  },
-
-  setPassword: function setPassword (event) {
-    this.setState({password: event.target.value})
-  },
-
-  preview: function preview (event) {
-    var self = this
-    this.setState({
-      error: null,
-      contentMarkdown: event.target.value
-    })
-    var postDraft = {
-      content: event.target.value,
-      title: this.state.title
+    // Side effect
+    try {
+      savedPost = JSON.parse(state.storage.postDraft)
+    } catch (_error) {
+      /* eslint no-empty:0 */
     }
-    // this.localStorage.postDraft = JSON.stringify(postDraft)
-    // Using relative path here to handle varying blog prefixes
-    request
-      .post('convert')
-      .type('text/x-markdown')
-      .send(postDraft.content)
-      .end(function (error, res) {
-        if (error) {
-          self.setState({error: res && res.text || error.message})
-          return
-        }
-        self.setState({contentHtml: res.text})
-      })
+    if (savedPost) {
+      state.contentMarkdown = savedPost.content
+      state.title = savedPost.title
+    }
+    return state
   },
 
-  save: function save () {
-    var self = this
-    this.setState({
-      savedPost: null,
-      error: null,
-      saveButtonLabel: 'Saving…'
-    })
-    var body = _.pick(this.state, 'title', 'contentMarkdown', 'password')
-    request
-      // the POST URI should be the same as the current page
-      .post(window.location.pathname)
-      .send(body)
-      .end(function (error, res) {
-        self.setState({saveButtonLabel: 'Save'})
-        window.scrollTo(0, 0)
-        if (error) {
-          self.setState({error: res && res.text || error.message})
-          return
-        }
-        //   delete self.localStorage.postDraft
-        self.setState({savedPost: res.body})
-      })
+  componentDidMount: function componentDidMount () {
+    this.preview()
   },
 
   render: function render () {
@@ -132,7 +75,7 @@ var CreatePost = React.createClass({
       RD.textarea({
         className: 'content',
         value: this.state.contentMarkdown,
-        onChange: _.throttle(this.preview, 2000),
+        onChange: _.throttle(this.setContent, 2000),
         cols: '80',
         rows: '15'
       }),
@@ -151,13 +94,80 @@ var CreatePost = React.createClass({
         this.state.saveButtonLabel
       )
     )
+  },
+
+  setTitle: function setTitle (event) {
+    this.setState({title: event.target.value}, this.saveDraft)
+  },
+
+  setContent: function setContent (event) {
+    var self = this
+    this.setState({contentMarkdown: event.target.value}, function done () {
+      self.preview()
+      self.saveDraft()
+    })
+  },
+
+  preview: function preview () {
+    var self = this
+    request
+      // Using relative path here to handle varying blog prefixes
+      .post('convert')
+      .type('text/x-markdown')
+      .send(this.state.contentMarkdown)
+      .end(function (error, res) {
+        if (error) {
+          self.setState({error: res && res.text || error.message})
+          return
+        }
+        self.setState({contentHtml: res.text})
+      })
+  },
+
+  saveDraft: function saveDraft () {
+    var postDraft = {
+      content: this.state.contentMarkdown,
+      title: this.state.title
+    }
+    // Side effect
+    this.state.storage.postDraft = JSON.stringify(postDraft)
+  },
+
+  setPassword: function setPassword (event) {
+    this.setState({password: event.target.value})
+  },
+
+  save: function save () {
+    var self = this
+    this.setState({
+      savedPost: null,
+      error: null,
+      saveButtonLabel: 'Saving…'
+    })
+    var body = _.pick(this.state, 'title', 'contentMarkdown', 'password')
+    request
+      // the POST URI should be the same as the current page
+      .post(window.location.pathname)
+      .send(body)
+      .end(function (error, res) {
+        self.setState({saveButtonLabel: 'Save'})
+        window.scrollTo(0, 0)
+        if (error) {
+          self.setState({error: res && res.text || error.message})
+          return
+        }
+        // side effect
+        delete this.state.storage.postDraft
+        self.setState({savedPost: res.body})
+      })
   }
 })
 
 function init () {
-  var element = document.querySelector('.create-post-container')
-  ReactDOM.render(exports.CreatePost, element)
+  var reactEl = React.createElement(CreatePost, {storage: window.localStorage})
+  var domEl = document.querySelector('.create-post-container')
+  ReactDOM.render(reactEl, domEl)
 }
 
-exports.CreatePost = React.createElement(CreatePost)
+exports.CreatePost = CreatePost
 exports.init = init
