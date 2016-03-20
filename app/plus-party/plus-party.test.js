@@ -1,5 +1,5 @@
 var expect = require('chaimel')
-var plusParty = require('../browser/plus-party')
+var plusParty = require('./plus-party-react')
 var request = require('../request')
 
 describe('plusParty', function () {
@@ -42,21 +42,6 @@ describe('plusParty', function () {
       expect(plusParty.parseNumbers('12/31/1984')).toDeepEqual([])
       expect(
         plusParty.parseNumbers('6 09/20/78 17')).toDeepEqual([6, 17])
-    })
-  })
-
-  describe('recompute', function () {
-    it('should convert rawText into numbers and total', function () {
-      var instance = {
-        scope: {
-          rawText: 'I need 42 chickens and 7 mice'
-        }
-      }
-      plusParty.recompute.call(instance)
-      expect(instance.scope.numbers).toDeepEqual([42, 7])
-      expect(instance.scope.wrappedNumbers[0].value).toDeepEqual(42)
-      expect(instance.scope.wrappedNumbers[1].value).toDeepEqual(7)
-      expect(instance.scope.total).toDeepEqual(49)
     })
   })
 })
