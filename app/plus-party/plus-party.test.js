@@ -9,14 +9,6 @@ describe('plusParty', function () {
     })
   })
 
-  describe('wrap', function () {
-    it('should wrap number into object with a value property', function () {
-      var wrapped = plusParty.wrap(42)
-      expect(typeof wrapped).toDeepEqual('object')
-      expect(wrapped.value).toDeepEqual(42)
-    })
-  })
-
   describe('parseNumbers', function () {
     it('should handle simple positive integers and whitespace', function () {
       expect(plusParty.parseNumbers('42')).toDeepEqual([42])
