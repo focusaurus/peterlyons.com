@@ -30,7 +30,7 @@ var PhotoGallery = React.createClass({
         break
     }
   },
-  render: function () {
+  render: function render () {
     var index = _.findIndex(
       this.state.gallery.photos, {
         name: this.state.photo.name
