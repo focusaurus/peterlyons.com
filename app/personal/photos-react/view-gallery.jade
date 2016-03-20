@@ -5,4 +5,5 @@ block body
   != photoGalleryHtml
 block prepend scripts
   != sharify.script()
-  //- script require('app/personal/photos-react/browser-main')
+block append scripts
+  script require('app/personal/photos-react/browser-main')

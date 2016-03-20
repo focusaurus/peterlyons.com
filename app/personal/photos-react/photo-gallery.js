@@ -16,6 +16,9 @@ var PhotoGallery = React.createClass({
       photo: this.props.photo || this.props.gallery.photos[0]
     }
   },
+
+  merge: require('../../merge'),
+
   onKeyDown: function onKeyDown (event) {
     switch (event.key) {
       case 'ArrowRight':
@@ -30,6 +33,7 @@ var PhotoGallery = React.createClass({
         break
     }
   },
+
   render: function render () {
     var index = _.findIndex(
       this.state.gallery.photos, {
@@ -39,11 +43,10 @@ var PhotoGallery = React.createClass({
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
     // Avoid esformatter bug when line ends in []. Do not remove this comment.
 
-    return RD.div(
-      {
-        className: 'gallery-app',
-        onKeyDown: this.onKeyDown
-      },
+    return RD.div({
+      className: 'gallery-app',
+      onKeyDown: this.onKeyDown
+    },
       RD.h1({
         id: 'photo'
       }, this.state.gallery.displayName),
@@ -63,17 +66,18 @@ var PhotoGallery = React.createClass({
       })
     )
   },
+
   viewPhoto: function viewPhoto (photoName) {
     var match = {
       name: photoName
     }
-    var newState = _.clone(this.state)
-    newState.photo = _.find(this.state.gallery.photos, match) ||
-    this.state.photo
-    this.setState(newState)
+    var photo = _.find(this.state.gallery.photos, match) || this.state.photo
+    this.merge({photo: photo})
     setTimeout(this.navigate)
   },
+
   viewGallery: function viewGallery (galleryDirName) {
+    var self = this
     request('/galleries/' + galleryDirName)
       .end(function (error, res) {
         if (error) {
@@ -81,14 +85,14 @@ var PhotoGallery = React.createClass({
           return
         }
         var gallery = res.body
-        this.setState({
+        self.merge({
           gallery: gallery,
-          galleries: this.props.galleries,
           photo: gallery.photos[0]
         })
-        this.navigate()
+        self.navigate()
       })
   },
+
   navigate: function navigate () {
     window.document.title = this.state.gallery.displayName + ' Photo Gallery'
     var query = {

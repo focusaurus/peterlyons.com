@@ -38,11 +38,7 @@ var PlusParty = React.createClass({
     return {rawText: initialText, copyAlert: false}
   },
 
-  merge: function merge (values) {
-    var newState = _.extend({}, this.state, values)
-    this.setState(newState)
-    return this
-  },
+  merge: require('../merge'),
 
   onChange: function onChange (event) {
     this.merge({rawText: event.target.value})
