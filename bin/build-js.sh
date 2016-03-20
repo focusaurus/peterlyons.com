@@ -27,6 +27,7 @@ ${bundler} \
   --require app/browser/post \
   --require app/browser/plus-party \
   --require app/plus-party/plus-party-react \
+  --require app/blog/create-post-react \
   --require app/personal/photos-react/browser-main
 
 if [[ "$1" == "production" ]]; then

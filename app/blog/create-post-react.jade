@@ -1,0 +1,8 @@
+extends ../site/layout
+block variables
+  - title = "Write a new blog post"
+block body
+  .create-post-container
+    != bodyHtml
+block append scripts
+  script require('app/blog/create-post-react').init()
