@@ -16,16 +16,15 @@ if [[ "$1" == "production" ]]; then
 fi
 
 printf 'building ./www/reveal.js…'
-browserify --entry app/browser/deck | uglifyjs ${uglify_args} > www/reveal.js
+browserify --entry app/decks/deck-main | uglifyjs ${uglify_args} > www/reveal.js
 echo ✓
 
 printf "${bundler}…"
 ${bundler} \
   --outfile "${out}" \
   --entry app/browser/navigation \
-  --require app/browser/career \
-  --require app/browser/post \
-  --require app/browser/plus-party \
+  --require app/pages/career-main \
+  --require app/plus-party/plus-party-main \
   --require app/plus-party/plus-party-react \
   --require app/blog/create-post-react \
   --require app/personal/photos-react/browser-main

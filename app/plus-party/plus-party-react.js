@@ -61,8 +61,11 @@ var PlusParty = React.createClass({
       buttonText = 'Copied!'
     }
     return RD.div({className: 'plus-party'},
-      RD.textarea(
-        {onChange: this.onChange, value: this.state.rawText}),
+      RD.textarea({
+        onChange: this.onChange,
+        value: this.state.rawText,
+        ref: 'rawText'
+      }),
       RD.button({
         id: 'copyToClipboard',
         'data-clipboard-text': total,
