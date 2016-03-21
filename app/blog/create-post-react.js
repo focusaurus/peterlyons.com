@@ -2,7 +2,6 @@ var _ = require('lodash')
 var boolean = require('boolean')
 var React = require('react')
 var request = require('superagent')
-var ReactDOM = require('react-dom')
 
 var RD = React.DOM
 
@@ -163,11 +162,4 @@ var CreatePost = React.createClass({
   }
 })
 
-function init () {
-  var reactEl = React.createElement(CreatePost, {storage: window.localStorage})
-  var domEl = document.querySelector('.create-post-container')
-  ReactDOM.render(reactEl, domEl)
-}
-
-exports.CreatePost = CreatePost
-exports.init = init
+module.exports = CreatePost
