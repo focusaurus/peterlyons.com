@@ -73,6 +73,7 @@ var CreatePost = React.createClass({
         })),
       RD.textarea({
         className: 'content',
+        ref: 'content',
         value: this.state.contentMarkdown,
         onChange: this.setContent,
         cols: '80',

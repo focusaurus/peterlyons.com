@@ -1,0 +1,6 @@
+browserify:
+  # - external: react-dom
+  # - external: react-dom/server
+  # - external: react-addons-test-utils
+  - external: react/lib/ReactContext
+  - external: react/lib/ExecutionEnvironment

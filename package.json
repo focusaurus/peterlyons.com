@@ -45,6 +45,7 @@
     "chai": "3.5.0",
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
+    "enzyme": "2.1.0",
     "es5-shim": "4.5.7",
     "esformatter-literal-notation": "1.0.1",
     "esformatter-parseint": "1.0.3",
