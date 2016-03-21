@@ -24,11 +24,11 @@ printf "${bundler}…"
 ${bundler} \
   --outfile "${out}" \
   --entry app/browser/navigation \
+  --require app/blog/create-post-main \
   --require app/pages/career-main \
   --require app/pages/home-main \
-  --require app/plus-party/plus-party-main \
-  --require app/blog/create-post-react \
-  --require app/personal/photos/photos-main
+  --require app/personal/photos/photos-main \
+  --require app/plus-party/plus-party-main
 
 if [[ "$1" == "production" ]]; then
   temp=$(mktemp -t plws-build-XXXX)
