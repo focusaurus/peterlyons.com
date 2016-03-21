@@ -1,7 +1,7 @@
 var React = require('react')
 var PhotoGallery = require('./photo-gallery')
 var expect = require('chaimel')
-var galleries = require('./galleries-test.json')
+var galleries = require('./galleries-test')
 var enzyme = require('enzyme')
 
 describe('PhotoGallery', function () {
