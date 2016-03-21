@@ -26,7 +26,12 @@ ${bundler} \
   --require app/pages/career-main \
   --require app/plus-party/plus-party-main \
   --require app/blog/create-post-react \
-  --require app/personal/photos/browser-main
+  --require app/personal/photos/browser-main \
+  --external react-dom \
+  --external react-dom/server \
+  --external react-addons-test-utils \
+  --external react/lib/ReactContext \
+  --external react/lib/ExecutionEnvironment
 
 if [[ "$1" == "production" ]]; then
   temp=$(mktemp -t plws-build-XXXX)
