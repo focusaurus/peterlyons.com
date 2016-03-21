@@ -1,5 +1,5 @@
 var bcrypt = require('bcryptjs')
-var createPost = require('./create-post')
+var createPost = require('./create-post-routes')
 var expect = require('chaimel')
 var testBlog = require('./test-blog')
 var testUtils = require('../test-utils')
