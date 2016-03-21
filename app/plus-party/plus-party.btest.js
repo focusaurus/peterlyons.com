@@ -1,43 +1,33 @@
-var ReactDOM = require('react-dom')
-var ReactTestUtils = require('react-addons-test-utils')
 var PlusParty = require('./plus-party')
 var expect = require('chaimel')
+var enzyme = require('enzyme')
 
 describe('PlusParty', function () {
-  var container
-  var pp
+  var wrapper
 
   before(function () {
-    container = document.createElement('div')
-    container.classList.add('plus-party-test')
-    container.style.display = 'none'
-    document.body.appendChild(container)
-  })
-
-  it('should render in DOM properly', function () {
-    pp = ReactDOM.render(PlusParty.PlusParty, container)
+    wrapper = enzyme.mount(PlusParty.PlusParty)
   })
 
   it('should have the correct initial total', function () {
-    var total = container.querySelector('.total')
-    expect(total.innerText).toEqual('6')
+    var total = wrapper.find('.total')
+    expect(total.node.innerText).toEqual('6')
   })
 
   it('should update total correctly', function () {
-    var total = container.querySelector('.total')
-    ReactTestUtils.Simulate.change(pp.refs.rawText, {target: {value: '5 6 7'}})
-    expect(total.innerText).toEqual('18')
+    var total = wrapper.find('.total')
+    wrapper.find('textarea').simulate('change', {target: {value: '5 6 7'}})
+    expect(total.node.innerText).toEqual('18')
   })
 
   it('should parse out numbers correctly', function () {
-    var ul = container.querySelector('ul')
-    ReactTestUtils.Simulate.change(
-      pp.refs.rawText, {target: {value: 'nope 42 biscuits 7 8.5'}})
-    expect(ul.children.length).toEqual(3)
-    expect(container.querySelector('.total').innerText).toEqual('57.5')
-  })
-
-  after(function () {
-    document.body.removeChild(container)
+    var ul = wrapper.find('ul')
+    wrapper.find('textarea')
+      .simulate('change', {target: {value: 'nope 42 biscuits 7 8.5'}})
+    expect(wrapper.find('.total').node.innerText).toEqual('57.5')
+    expect(ul.children().length).toEqual(3)
+    expect(ul.childAt(0).node.innerText).toEqual('42.00')
+    expect(ul.childAt(1).node.innerText).toEqual('7.00')
+    expect(ul.childAt(2).node.innerText).toEqual('8.50')
   })
 })
