@@ -1,37 +1,20 @@
 var CreatePost = require('./create-post-react')
-// var expect = require('chaimel')
-// var fauxJax = require('faux-jax')
-// var sinon = require('sinon')
+var expect = require('chaimel')
 var React = require('react')
-var ReactDOM = require('react-dom')
-// var ReactTestUtils = require('react-addons-test-utils')
-// var enzyme = require('enzyme')
+var enzyme = require('enzyme')
 
 describe('Blog CreatePost', function () {
-  // var wrapper
-  var container
-  // var cp
-  // var server
-
-  before(function () {
-    container = document.createElement('div')
-    container.classList.add('create-post-react-test')
-    container.style.display = 'none'
-    document.body.appendChild(container)
-    // server = sinon.fakeServer.create()
-  })
+  var cpElement = React.createElement(CreatePost)
 
   it('should render in DOM properly', function () {
-    // var wrapper = enzyme.mount(CreatePost)
-    // cp = ReactDOM.render(React.createElement(CreatePost), container)
-    ReactDOM.render(React.createElement(CreatePost), container)
+    enzyme.mount(cpElement)
   })
 
-  // it('should have the correct initial title', function () {
-  //   var wrapper = enzyme.mount(CreatePost)
-  //   var title = wrapper.find('input[name="title"]')
-  //   expect(title.value).toEqual('new-post-title-here')
-  // })
+  it('should have the correct initial title', function () {
+    var wrapper = enzyme.mount(cpElement)
+    var title = wrapper.find('input[name="title"]')
+    expect(title.node.value).toEqual('new-post-title-here')
+  })
   //
   // it('should preview markdown to HTML', function (done) {
   //   // fauxJax.install()
@@ -54,9 +37,4 @@ describe('Blog CreatePost', function () {
   //     done()
   //   }, 1000)
   // })
-
-  after(function () {
-    document.body.removeChild(container)
-    // server.restore()
-  })
 })
