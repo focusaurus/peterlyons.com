@@ -15,6 +15,34 @@ describe('Blog CreatePost', function () {
     var title = wrapper.find('input[name="title"]')
     expect(title.node.value).toEqual('new-post-title-here')
   })
+
+  it('should track title changes', function () {
+    var wrapper = enzyme.mount(cpElement)
+    var title = wrapper.find('input[name="title"]')
+    title.simulate('change', {target: {value: 'new title 1'}})
+    expect(wrapper.state()).toHaveProperty('title', 'new title 1')
+  })
+
+  it('should track password changes', function () {
+    var wrapper = enzyme.mount(cpElement)
+    var password = wrapper.find('input[type="password"]')
+    password.simulate('change', {target: {value: 'new password 1'}})
+    expect(wrapper.state()).toHaveProperty('password', 'new password 1')
+  })
+
+  it('should disable save button initially', function () {
+    var wrapper = enzyme.mount(cpElement)
+    var save = wrapper.find('button')
+    expect(save.node.disabled).toBeTrue()
+  })
+
+  it('should enable save button when password is set', function () {
+    var wrapper = enzyme.mount(cpElement)
+    var save = wrapper.find('button')
+    var password = wrapper.find('input[type="password"]')
+    password.simulate('change', {target: {value: 'a'}})
+    expect(save.node.disabled).toBeFalse()
+  })
   //
   // it('should preview markdown to HTML', function (done) {
   //   // fauxJax.install()

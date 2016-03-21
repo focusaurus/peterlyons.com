@@ -1,5 +1,4 @@
 var _ = require('lodash')
-var boolean = require('boolean')
 var React = require('react')
 var request = require('superagent')
 
@@ -89,7 +88,7 @@ var CreatePost = React.createClass({
       ),
       RD.button({
         onClick: this.save,
-        disabled: boolean(this.state.password)
+        disabled: (this.state.password || '').length < 1
       },
         this.state.saveButtonLabel
       )
