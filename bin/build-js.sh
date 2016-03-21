@@ -12,7 +12,7 @@ out="./www/plws.js"
 uglify_args=""
 if [[ "$1" == "production" ]]; then
   bundler="browserify"
-  uglify_args="--compress --mangle --keep-fnames --screw-ie8"
+  uglify_args="--compress warnings=false --mangle --keep-fnames --screw-ie8"
 fi
 
 printf 'building ./www/reveal.js…'
