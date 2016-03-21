@@ -6,7 +6,6 @@
     "bcryptjs": "2.3.0",
     "body-parser": "1.15.0",
     "bole": "2.0.0",
-    "boolean": "0.1.0",
     "browserify": "13.0.0",
     "cheerio": "0.19.0",
     "compression": "1.6.1",
