@@ -1,6 +1,6 @@
 var _ = require('lodash')
 var async = require('async')
-var CreatePost = require('./create-post-react').CreatePost
+var CreatePost = require('./create-post-react')
 var errors = require('httperrors')
 var events = require('events')
 var express = require('express')

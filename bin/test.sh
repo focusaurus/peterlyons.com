@@ -38,7 +38,6 @@ test_node() {
 }
 
 test_browser() {
-  set +e
   echo -n browser tests…
   local browser="--phantom"
   # use this for real browser
