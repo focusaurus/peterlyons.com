@@ -17,6 +17,7 @@ fi
 
 printf 'building ./www/reveal.js…'
 browserify --entry app/decks/deck-main | uglifyjs ${uglify_args} > www/reveal.js
+gzip --stdout www/reveal.js > www/reveal.js.gz
 echo ✓
 
 printf "${bundler}…"
@@ -24,14 +25,10 @@ ${bundler} \
   --outfile "${out}" \
   --entry app/browser/navigation \
   --require app/pages/career-main \
+  --require app/pages/home-main \
   --require app/plus-party/plus-party-main \
   --require app/blog/create-post-react \
-  --require app/personal/photos/photos-main \
-  --external react-dom \
-  --external react-dom/server \
-  --external react-addons-test-utils \
-  --external react/lib/ReactContext \
-  --external react/lib/ExecutionEnvironment
+  --require app/personal/photos/photos-main
 
 if [[ "$1" == "production" ]]; then
   temp=$(mktemp -t plws-build-XXXX)
