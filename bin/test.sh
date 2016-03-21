@@ -11,6 +11,7 @@ main() {
   cd "$(dirname "$0")/.."
   source ./bin/lib/strict_mode.sh
   unset IFS # This screws up groups variable quoting/parsing
+  export PATH="${PWD}/node_modules/.bin:$PATH"
   local groups="${@-node browser}"
   for group in ${groups}; do
     if type "test_${group}" &>/dev/null; then
