@@ -31,6 +31,7 @@
     "sharify": "0.1.6",
     "stylish": "0.6.0",
     "stylus": "0.54.2",
+    "superagent": "1.8.2",
     "uglify-js": "2.6.2",
     "zeroclipboard": "2.2.0"
   },
@@ -51,7 +52,6 @@
     "react-addons-test-utils": "0.14.7",
     "reactify": "1.1.1",
     "standard": "6.0.8",
-    "superagent": "1.6.1",
     "supertest": "1.2.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
