@@ -1,14 +1,11 @@
 var _ = require('lodash')
 var async = require('async')
 var CreatePost = require('./create-post-react').CreatePost
-var createPost = require('./create-post')
+var errors = require('httperrors')
 var events = require('events')
 var express = require('express')
-var fs = require('fs')
 var glob = require('glob')
-var httpErrors = require('httperrors')
 var log = require('bole')(__filename)
-var markdown = require('marked')
 var middleware = require('./middleware')
 var path = require('path')
 var Post = require('./post')
@@ -24,7 +21,7 @@ function loadPostMW (req, res, next) {
   var post = new Post(blog)
   post.load(path.join(blog.basePath, req.path + '.json'), function (error) {
     if (error && error.code === 'ENOENT') {
-      next(new httpErrors.NotFound(req.path))
+      next(new errors.NotFound(req.path))
       return
     }
     if (error) {
@@ -41,71 +38,11 @@ function loadPostMW (req, res, next) {
   })
 }
 
-function html (req, res, next) {
-  if (!/\.html$/.test(res.contentPath)) {
-    next()
-    return
-  }
-  fs.readFile(res.contentPath, 'utf8', function (error, htmlText) {
-    if (error && error.code === 'ENOENT') {
-      next(new httpErrors.NotFound(req.path))
-      return
-    }
-    res.locals.postContent = htmlText
-    next(error)
-  })
-}
-
-function markdownToHTML (req, res, next) {
-  if (!/\.md$/.test(res.contentPath)) {
-    next()
-    return
-  }
-  fs.readFile(res.contentPath, 'utf8', function (error, markdownText) {
-    if (error && error.code === 'ENOENT') {
-      next(new httpErrors.NotFound(req.path))
-      return
-    }
-    if (error) {
-      next(error)
-      return
-    }
-    res.locals.postContent = markdown(markdownText)
-    next(error)
-  })
-}
-
-function renderPost (req, res, next) {
-  res.app.render('blog/view-post', res.locals, function (error, html2) {
-    if (error) {
-      next(error)
-      return
-    }
-    res.locals.postContent = html2
-    next()
-  })
-}
-
-function previewMarkdown (req, res, next) {
-  res.locals.postContent = markdown(req.text)
-  next()
-}
-
-var convertMiddleware = [
-  middleware.text,
-  previewMarkdown,
-  middleware.domify,
-  middleware.flickr,
-  middleware.youtube,
-  middleware.undomify,
-  middleware.send
-]
-
 var viewPostMiddleware = [
   loadPostMW,
-  html,
-  markdownToHTML,
-  renderPost,
+  middleware.html,
+  middleware.markdownToHTML,
+  middleware.renderPost,
   middleware.domify,
   middleware.flickr,
   middleware.youtube,
@@ -122,62 +59,6 @@ function loadPost (blog, file, callback) {
     }
     post.presented = presentPost(post)
     callback(null, post)
-  })
-}
-
-function feedRenderPost (req, res, post, callback) {
-  var fakeRes = {
-    post: post,
-    contentPath: post.contentPath(),
-    locals: _.cloneDeep(res.locals)
-  }
-  async.applyEachSeries([
-    html,
-    markdownToHTML,
-    middleware.domify,
-    middleware.flickr,
-    middleware.youtube,
-    middleware.undomify,
-    function storeContent (req2, fakeRes2, next) {
-      fakeRes2.post.content = fakeRes2.html
-      next()
-    }
-  ], req, fakeRes, function (error) {
-    if (error) {
-      callback(error)
-      return
-    }
-    callback(null, post)
-  })
-}
-
-function feed (req, res, next) {
-  var blog = res.app.locals.blog
-  res.type('xml')
-  if (blog.cachedFeedXML) {
-    res.send(blog.cachedFeedXML)
-    return
-  }
-  var recentPosts = blog.posts.slice(0, 10)
-  var boundRender = feedRenderPost.bind(null, req, res)
-  async.map(recentPosts, boundRender, function (error, renderedPosts) {
-    if (error) {
-      next(error)
-      return
-    }
-    var locals = {
-      pretty: true,
-      posts: renderedPosts,
-      hostname: req.hostname
-    }
-    res.app.render('blog/feed', locals, function (error2, feedXML) {
-      if (error2) {
-        next(error2)
-        return
-      }
-      blog.cachedFeedXML = feedXML
-      res.send(feedXML)
-    })
   })
 }
 
@@ -205,22 +86,17 @@ function Blog (options) {
   })
   app.route('/post')
     .get(function (req, res) {
-      res.render('blog/post')
-    })
-    .post(createPost.handler)
-  app.route('/post-react')
-    .get(function (req, res) {
       var element = React.createElement(CreatePost)
       var bodyHtml = server.renderToStaticMarkup(element)
-      res.render('blog/create-post-react', {bodyHtml: bodyHtml})
+      res.render('blog/create-post', {bodyHtml: bodyHtml})
     })
-    .post(createPost.handler)
-  app.post('/convert', convertMiddleware)
-  app.get('/feed', feed)
+    .post(require('./create-post-routes').handler)
+  app.post('/convert', middleware.convert)
+  app.get('/feed', require('./feed-route'))
   app.get('/flush-cache', flushCache)
   app.get(new RegExp('/\\d{4}/\\d{2}/\\w+'), viewPostMiddleware)
   app.use(function (req, res, next) {
-    next(new httpErrors.NotFound(req.path))
+    next(new errors.NotFound(req.path))
   })
   app.use(require('../errors/error-handler'))
   this.load()

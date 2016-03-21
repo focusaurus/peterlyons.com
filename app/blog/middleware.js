@@ -1,9 +1,12 @@
 var cheerio = require('cheerio')
+var errors = require('httperrors')
 var fs = require('fs')
 var jade = require('jade')
+var markdown = require('marked')
 var path = require('path')
 var rawBody = require('raw-body')
 var url = require('url')
+
 /* eslint no-sync:0 */
 var flickrshow = fs.readFileSync(
   path.join(__dirname, 'flickrshow.jade'), 'utf8')
@@ -19,11 +22,6 @@ function debugLog (message) {
 
 function domify (req, res, next) {
   res.locals.$ = cheerio.load(res.locals.postContent)
-  next()
-}
-
-function undomify (req, res, next) {
-  res.locals.postContent = res.locals.$.html() + '\n'
   next()
 }
 
@@ -44,13 +42,54 @@ function flickr (req, res, next) {
   next()
 }
 
-function youtube (req, res, next) {
-  res.locals.$('youtube').each(function (index, elem) {
-    var $elem = res.locals.$(elem)
-    var URL = $elem.attr('href')
-    return $elem.replaceWith(youtubeTemplate.replace(/\{URL\}/, URL))
+function html (req, res, next) {
+  if (!/\.html$/.test(res.contentPath)) {
+    next()
+    return
+  }
+  fs.readFile(res.contentPath, 'utf8', function (error, htmlText) {
+    if (error && error.code === 'ENOENT') {
+      next(new errors.NotFound(req.path))
+      return
+    }
+    res.locals.postContent = htmlText
+    next(error)
   })
+}
+
+function markdownToHTML (req, res, next) {
+  if (!/\.md$/.test(res.contentPath)) {
+    next()
+    return
+  }
+  fs.readFile(res.contentPath, 'utf8', function (error, markdownText) {
+    if (error && error.code === 'ENOENT') {
+      next(new errors.NotFound(req.path))
+      return
+    }
+    if (error) {
+      next(error)
+      return
+    }
+    res.locals.postContent = markdown(markdownText)
+    next(error)
+  })
+}
+
+function previewMarkdown (req, res, next) {
+  res.locals.postContent = markdown(req.text)
   next()
+}
+
+function renderPost (req, res, next) {
+  res.app.render('blog/view-post', res.locals, function (error, html2) {
+    if (error) {
+      next(error)
+      return
+    }
+    res.locals.postContent = html2
+    next()
+  })
 }
 
 function send (req, res) {
@@ -72,12 +111,37 @@ function text (req, res, next) {
   })
 }
 
-module.exports = {
-  debugLog: debugLog,
-  domify: domify,
-  flickr: flickr,
-  send: send,
-  text: text,
-  undomify: undomify,
-  youtube: youtube
+function undomify (req, res, next) {
+  res.locals.postContent = res.locals.$.html() + '\n'
+  next()
 }
+
+function youtube (req, res, next) {
+  res.locals.$('youtube').each(function (index, elem) {
+    var $elem = res.locals.$(elem)
+    var URL = $elem.attr('href')
+    return $elem.replaceWith(youtubeTemplate.replace(/\{URL\}/, URL))
+  })
+  next()
+}
+
+exports.debugLog = debugLog
+exports.domify = domify
+exports.flickr = flickr
+exports.html = html
+exports.markdownToHTML = markdownToHTML
+exports.previewMarkdown = previewMarkdown
+exports.renderPost = renderPost
+exports.send = send
+exports.text = text
+exports.undomify = undomify
+exports.youtube = youtube
+exports.convert = [
+  text,
+  previewMarkdown,
+  domify,
+  flickr,
+  youtube,
+  undomify,
+  send
+]
