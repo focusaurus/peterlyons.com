@@ -1,43 +1,30 @@
 var React = require('react')
-var ReactDOM = require('react-dom')
-// var ReactTestUtils = require('react-addons-test-utils')
 var PhotoGallery = require('./photo-gallery')
 var expect = require('chaimel')
 var galleries = require('./galleries-test.json')
+var enzyme = require('enzyme')
 
 describe('PhotoGallery', function () {
-  var container
-
+  var wrapper
   before(function () {
-    container = document.createElement('div')
-    container.classList.add('photos-test')
-    container.style.display = 'none'
-    document.body.appendChild(container)
-  })
-
-  it('should render in DOM properly', function () {
     var element = React.createElement(PhotoGallery, {
       galleries: galleries,
       gallery: galleries[0],
       photo: galleries[0].photos[2]
     })
-    ReactDOM.render(element, container)
+    wrapper = enzyme.mount(element)
   })
 
   it('should have the correct list of galleries', function () {
-    var galleries = container.querySelectorAll('a.gallerylink')
-    expect(galleries.length).toEqual(2)
-    expect(galleries[1].innerText).toEqual('Unit Test Gallery 2')
+    var galleries = wrapper.find('a.gallerylink')
+    expect(galleries).toHaveLength(2)
+    expect(galleries.get(1).innerText).toEqual('Unit Test Gallery 2')
   })
 
   it('should have the correct thumbnails', function () {
-    var thumbnails = container.querySelectorAll('a.thumbnail')
-    expect(thumbnails.length).toEqual(3)
-    expect(thumbnails[0].href).toInclude(
+    var thumbnails = wrapper.find('a.thumbnail')
+    expect(thumbnails).toHaveLength(3)
+    expect(thumbnails.get(0).href).toInclude(
       '/app/photos?gallery=burning_man_2011&photo=001_hexayurt_model')
-  })
-
-  after(function () {
-    document.body.removeChild(container)
   })
 })
