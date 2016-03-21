@@ -17,8 +17,6 @@ var PhotoGallery = React.createClass({
     }
   },
 
-  merge: require('../../merge'),
-
   onKeyDown: function onKeyDown (event) {
     switch (event.key) {
       case 'ArrowRight':
@@ -71,7 +69,7 @@ var PhotoGallery = React.createClass({
       name: photoName
     }
     var photo = _.find(this.state.gallery.photos, match) || this.state.photo
-    this.merge({photo: photo})
+    this.setState({photo: photo})
     setTimeout(this.navigate)
   },
 
@@ -84,7 +82,7 @@ var PhotoGallery = React.createClass({
           return
         }
         var gallery = res.body
-        self.merge({
+        self.setState({
           gallery: gallery,
           photo: gallery.photos[0]
         })
