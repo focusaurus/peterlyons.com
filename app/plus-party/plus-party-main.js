@@ -1,8 +1,4 @@
-var ReactDOM = require('react-dom')
 var plusParty = require('./plus-party')
+var ReactDOM = require('react-dom')
 
-function init () {
-  ReactDOM.render(plusParty.PlusParty, document.querySelector('.plus-party'))
-}
-
-exports.init = init
+ReactDOM.render(plusParty.PlusParty, document.querySelector('.plus-party'))
