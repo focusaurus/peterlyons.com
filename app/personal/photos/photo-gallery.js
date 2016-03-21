@@ -18,13 +18,15 @@ var PhotoGallery = React.createClass({
   },
 
   onKeyDown: function onKeyDown (event) {
-    switch (event.key) {
+    switch (event.code || event.keyCode) {
       case 'ArrowRight':
+      case 39:
         if (this.state.nextPhoto) {
           this.viewPhoto(this.state.nextPhoto.name)
         }
         break
       case 'ArrowLeft':
+      case 37:
         if (this.state.previousPhoto) {
           this.viewPhoto(this.state.previousPhoto.name)
         }
@@ -40,10 +42,7 @@ var PhotoGallery = React.createClass({
     this.state.previousPhoto = this.state.gallery.photos[index - 1]
     this.state.nextPhoto = this.state.gallery.photos[index + 1]
 
-    return RD.div({
-      className: 'gallery-app',
-      onKeyDown: this.onKeyDown
-    },
+    return RD.div({className: 'gallery-app'},
       RD.h1({
         id: 'photo'
       }, this.state.gallery.displayName),
@@ -102,7 +101,16 @@ var PhotoGallery = React.createClass({
       '#photo'
     window.history.pushState(this.state, document.title, newUrl)
     document.getElementById('photo').scrollIntoView()
+  },
+
+  componentDidMount: function componentDidMount () {
+    window.addEventListener('keydown', this.onKeyDown)
+  },
+
+  componentWillUnmount: function componentWillUnmount () {
+    window.removeEventListener('keydown', this.onKeyDown)
   }
+
 })
 
 module.exports = PhotoGallery
