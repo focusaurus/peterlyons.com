@@ -39,7 +39,6 @@
     "chaimel": "3.0.0",
     "cheerio": "0.20.0",
     "enzyme": "2.1.0",
-    "es5-shim": "4.5.7",
     "eslint": "2.4.0",
     "eslint-config-standard": "5.1.0",
     "eslint-formatter-comment": "2.0.0",
@@ -56,7 +55,7 @@
     "supertest": "1.2.0",
     "w3c-validate": "0.0.2",
     "watchify": "3.7.0",
-    "zuul": "3.10.1"
+    "zuul": "3.6.0"
   },
   "engines": {
     "node": "v5.9.0"

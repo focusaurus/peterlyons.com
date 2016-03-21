@@ -12,9 +12,10 @@ main() {
   source ./bin/lib/strict_mode.sh
   unset IFS # This screws up groups variable quoting/parsing
   local groups="${@-node browser}"
+  shift
   for group in ${groups}; do
     if type "test_${group}" &>/dev/null; then
-      eval "test_${group}"
+      eval "test_${group}" "$@"
     else
       echo "Usage: $0 <node|browser|debug>" 1>&2
       exit 1
@@ -40,8 +41,10 @@ test_node() {
 test_browser() {
   echo -n browser tests…
   local browser="--phantom"
-  # use this for real browser
-  # local browser="--local $(config3 tests.port)"
+  if [[ "$1" == "local" ]]; then
+    # use this for real browser
+    local browser="--local $(config3 tests.port)"
+  fi
   zuul ${browser} --ui mocha-bdd --no-coverage --open \
     $(find ./app -name '*btest.js' -print0 | xargs -0)
   echo ✓
