@@ -15,18 +15,16 @@ var PlusParty = React.createClass({
     return {rawText: initialText, copyAlert: false}
   },
 
-  merge: require('../merge'),
-
   onChange: function onChange (event) {
-    this.merge({rawText: event.target.value})
+    this.setState({rawText: event.target.value})
   },
 
   stopAlert: function stopAlert () {
-    this.merge({copyAlert: false})
+    this.setState({copyAlert: false})
   },
 
   onClick: function onClick () {
-    this.merge({copyAlert: true})
+    this.setState({copyAlert: true})
     setTimeout(this.stopAlert, 2000)
   },
 
