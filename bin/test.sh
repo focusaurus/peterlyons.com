@@ -12,7 +12,6 @@ main() {
   source ./bin/lib/strict_mode.sh
   unset IFS # This screws up groups variable quoting/parsing
   local groups="${@-node browser}"
-  shift
   for group in ${groups}; do
     if type "test_${group}" &>/dev/null; then
       eval "test_${group}" "$@"
