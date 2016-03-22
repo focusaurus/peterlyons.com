@@ -8,8 +8,6 @@
     app_root: /opt/peter_lyons_web_site
     data_root: /opt/peter_lyons_web_site/data
   handlers:
-    - name: reload nginx
-      service: name=nginx state=reloaded
     - include: handlers.yml
   tasks:
     - name: install nginx and monit
@@ -37,6 +35,8 @@
         - "peterlyons.org"
     - name: start nginx
       service: name=nginx state=started enabled=yes
+    - name: reload nginx
+      service: name=nginx state=reloaded
     - name: 'remove old monit config'
       file:
         path: '/etc/monit/config.d/nginx_peterlyons.com.monitrc'
