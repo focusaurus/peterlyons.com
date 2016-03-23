@@ -156,7 +156,7 @@ var CreatePost = React.createClass({
           return
         }
         // side effect
-        delete this.state.storage.postDraft
+        delete self.state.storage.postDraft
         self.setState({savedPost: res.body})
       })
   }
