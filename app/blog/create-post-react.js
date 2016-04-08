@@ -143,7 +143,8 @@ var CreatePost = React.createClass({
       error: null,
       saveButtonLabel: 'Saving…'
     })
-    var body = _.pick(this.state, 'title', 'contentMarkdown', 'password')
+    var body = _.pick(this.state, 'title', 'password')
+    body.content = this.state.contentMarkdown
     request
       // the POST URI should be the same as the current page
       .post(window.location.pathname)

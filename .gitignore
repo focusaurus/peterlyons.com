@@ -5,5 +5,5 @@
 /*.tar.gz
 /log/*.log
 /www
-/test/app-browser-tests.js
 *.retry
+config.local.*
