@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # bundles browser js via browserify & uglifyjs
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 source ./bin/lib/strict_mode.sh
 unset IFS # This screws up our shell quoting
 export PATH="${PWD}/node_modules/.bin:$PATH"
@@ -20,7 +20,7 @@ browserify --entry app/decks/deck-main | uglifyjs ${uglify_args} > www/reveal.js
 gzip --stdout www/reveal.js > www/reveal.js.gz
 echo ✓
 
-printf "${bundler}…"
+echo -n "${bundler}…"
 ${bundler} \
   --outfile "${out}" \
   --entry app/browser/navigation \

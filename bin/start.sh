@@ -1,6 +1,6 @@
-#!/bin/bash
-cd "$(dirname "$0")/.."
+#!/usr/bin/env bash
+cd "$(dirname "$0")/.." || exit
 source ./bin/lib/strict_mode.sh
 export PATH="${PWD}/node_modules/.bin:$PATH"
 
-node-dev --debug ./app/server.js | tee -a ./log/app.log
+node-dev --debug . | tee -a ./log/app.log

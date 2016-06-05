@@ -44,9 +44,7 @@ config.blog = {
 }
 
 config.tests = {
-  port: get('testPort', 9002),
-  debugPort: get('testDebugPort', 9004),
-  mochaPath: join(__dirname, 'node_modules/mocha')
+  port: get('testPort', 9002)
 }
 
 module.exports = config
