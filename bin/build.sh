@@ -7,12 +7,13 @@
 #   build.sh TAG will use the code in the given git tag"
 
 main() {
-  cd "$(dirname "$0")/.."
+  cd "$(dirname "$0")/.." || exit 10
   source ./bin/lib/strict_mode.sh
 
   local git_ref="${1-HEAD}"
   local build_dir="build"
-  local prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
+  local prefix
+  prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"
 
   # OSX build support. BSD tar vs GNU tar issue
   if [[ "$(uname)" == "Darwin" ]]; then
@@ -32,9 +33,11 @@ main() {
   fi
 
   echo ✓; echo -n "node…"
-  local node_version="$(cat .nvmrc)"
+  local node_version
+  node_version="$(cat .nvmrc)"
   local node_archive="node-v${node_version}-linux-x86.tar.gz"
-  local node_url=$(echo "https://nodejs.org/dist/v" \
+  local node_url
+  node_url=$(echo "https://nodejs.org/dist/v" \
   "${node_version}/node-v${node_version}-linux-x86.tar.gz" | tr -d " ")
   if [[ ! -f "${node_archive}" ]]; then
     curl --silent --fail --location --remote-name "${node_url}"
@@ -46,7 +49,7 @@ main() {
   # pre-cache the local node_modules in the build dir to avoid web downloads
   tar --create --file - node_modules | \
     tar --directory "${build_dir}/${prefix}" --extract --file -
-  cd "${build_dir}/${prefix}"
+  cd "${build_dir}/${prefix}" || exit 10
   # Run OSX node and npm utilites but within the linux build dir
   npm install --silent --production
 
@@ -59,35 +62,35 @@ main() {
 
   ./bin/config-json.js \
     --hostname=peterlyons.com \
-    --express_port=$(config3 proPort) \
+    --express_port="$(config3 proPort)" \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-peterlyons.com
   ./bin/config-json.js \
     --hostname=peterlyons.org \
-    --express_port=$(config3 persPort) \
+    --express_port="$(config3 persPort)" \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-peterlyons.org
   ./bin/config-json.js \
     --hostname=stage.peterlyons.com \
-    --express_port=$(config3 proPort) \
+    --express_port="$(config3 proPort)" \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.com
   ./bin/config-json.js \
     --hostname=stage.peterlyons.org \
-    --express_port=$(config3 persPort) \
+    --express_port="$(config3 persPort)" \
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.org
 
   # remove development-only files
   rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules app/blog/unit-test-blog1
-  find ./app -name \*.test.js | xargs rm
-  cd -
+  find ./app -name \*.test.js -print0 | xargs -0 rm
+  cd - || exit 10
 
   echo ✓; echo -n "vagrant rebuild…"
   cat <<EOF | vagrant ssh build
 set -e
 cd "/vagrant/${build_dir}/${prefix}"
-./node/bin/npm rebuild --silent --parseable --update-binary &>> "/vagrant/${build_dir}/npm.log"
+PATH="\${PWD}/node/bin:\${PATH}" ./node/bin/npm rebuild --silent --parseable --update-binary &>> "/vagrant/${build_dir}/npm.log"
 EOF
 
   echo ✓; echo -n "archive…"
