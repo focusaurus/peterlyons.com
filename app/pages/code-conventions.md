@@ -5,7 +5,7 @@ Hopefully folks will find them helpful. I will try to explain the reasoning
 behind each convention clearly. I have found the rationale omitted from many
 coding convention guidelines and found that to be frustrating.
 
-See also [Google's Python Style Guide][1]. Overall it is spot on and goes into
+See also [Google's Python Style Guide](http://google-styleguide.googlecode.com/svn/trunk/pyguide.html). Overall it is spot on and goes into
 good detail and examples. There are a few points I disagree with, but they are
 not super important. My main gripe is there are some points they assert
 without explaining the underlying reasoning.
@@ -68,8 +68,9 @@ later you refactor the code so this variable contains `ip:port`, you need to
 rename the variable to `serverIPPort`. It's worth the effort to keep the code
 straightforward and not full of nasty surprises and tricks.
 
-_See also_ [Andy Lester's article on the two worst variable names][3].
+_See also_ [Andy Lester's article on the two worst variable names]( http://www.oreillynet.com/onlamp/blog/2004/03/the_worlds_two_worst_variable.html ).
 
+_See also_ [Long Names Are Long](http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/)
 
 # General Guidelines
 
@@ -97,46 +98,35 @@ _See also_ [How to Name Things](http://www.slideshare.net/pirhilton/how-to-name-
 
 # Bourne Shell (bash) Conventions
 
-I have now adopted [Google's Shell Style Guide][7], which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
+I have now adopted [Google's Shell Style Guide](https://google.github.io/styleguide/shell.xml), which I find to be quite excellent. There are a few things that break with tradition, but overall I liked it so much that I decided to go with it, including `lowercase_with_underscores` for variable names.
 
-The one thing I don't conform to is google omits the filename extension from executable scripts. I tried this, but too much tooling (linters and editor syntax highlighting) key off the filename extension, and I don't mind it, so I put filename extensions on my scripts.
+There are a few conventions I don't conform to, though. Google omits the filename extension from executable scripts. I tried this, but too much tooling (linters and editor syntax highlighting) key off the filename extension, and I don't mind it, so I put filename extensions on my scripts. I also use `kebab-case.sh` filenames whereas google prefers `snake_case`. This is because web URL slugs seem to have settled on dashes in URLs and sticking to that feels more consistent. Plus, dash is easier to type than underscore.
 
 Many of my existing projects have code written to my own conventions before I found the Google Shell Style Guide, but I'm updating them as opportunity presents itself.
 
-[shell check](http://ShellCheck.net) has a handy little online linter.
+[shell check](http://ShellCheck.net) has a handy little online linter. There is also a [shell script auto-formatter called shfmt](https://github.com/mvdan/sh) which can come in handy.
 
 # JavaScript Conventions
 
 Oh God, it's a mess out there, folks. Things are pretty much hopelessly broken in JS land, but here are my conventions, as utterly pointless as they may ultimately be.
 
-- 2-space for indent
-  - node style
-  - 4 spaces is more than necessary
+- StandardJS [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+  - It's reasonably conventional, and has the best tooling
+  - I do wish StandardJS had chosen double quotes instead of single quotes, but it didn't so I follow the convention and use single quotes.
+    - JSON requires double quotes. Double quotes in JS makes for less pain converting between JSON and JavaScript. This is important to me.
+    - This also fosters consistency with java, c, python, ruby, and coffeescript.
+    - Apostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
 - unix linefeed line endings (no carriage return)
 - Declare variables one-per line each with it's own var keyword
   - Easiest to maintain.
   - Declaring multiple variables with one `var` probably relates back to the convention of declaring all variables at the top of each function, which I do not do and find quite harmful, so declare your variables to keep their codespan as small as possible and use a `var` keyword each time.
   - Comma-first is just bizarre. Keep these people in the same room with the AngularJS dependency injection syntax people.
-- Use semicolons. ASI is a compensation mechanism for sloppy code. Yes, the ASI rules are for edge cases and easy enough to remember, but not learning and remembering weird rules is easier than learning and remembering weird rules.
 - CommonJS + Browserify FTW
   - AMD is completely unacceptable and counterproductive
   - requirejs is entirely terrible
 - Prefer code that does not need comments, then inline comments as needed, and jsdoc for really formal APIs or very tricky cases.
 
 The only linter I've ever been able to work with successfully is [eslint](http://eslint.org/), which I recommend for all projects. I also suggest configuring your text editor to lint with eslint on the fly. You can see [my .eslintrc rules here](https://github.com/focusaurus/peterlyons.com/blob/master/.eslintrc).
-
-Prefer double quotes for most strings. This is mostly unconventional as I usually see single quotes preferred, however, my reasoning is as follows.
-
-- JSON requires double quotes. This makes for less pain converting between JSON and JavaScript. This is important to me.
-- This also fosters consistency with java, c, python, ruby, and coffeescript.
-- Apostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
-
-I suspect the 2 biggest reasons a lot of JavaScript developers prefer single quotes are
-
-* no shift key required
-  * Valid point, but not enough to convince me. I use sticky keys anyway so no big whoop.
-* Easy to embed HTML with double-quoted attributes like `var tag = '<a href="/foo.html">foo</a>'`;
-  * I think with the rise of templating systems, this type of code has become extinct and justifiably so.
 
 # CoffeeScript Conventions
 
@@ -268,7 +258,7 @@ Why?
 
 # Java Conventions
 
-Follow [Oracle's Java Code Conventions][5] for formatting rules, etc.
+Follow [Oracle's Java Code Conventions](http://www.oracle.com/technetwork/java/codeconvtoc-136057.html) for formatting rules, etc.
 
 I prefer `Collection.isEmpty()` over `Collection.size() == 0` because it is more directly expressive of the intent.
 
@@ -289,12 +279,7 @@ Prefer string interpolation to building up strings with operators
 # Comments
 
 This article pre-dates my blog, but you can post any comments you have on this
-article [on the corresponding entry on my technology blog][6].
+article [on the corresponding entry on my technology blog](/problog/2009/03/code-conventions).
 
-   [1]: http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
    [2]: http://www.python.org/dev/peps/pep-0020/
-   [3]: http://www.oreillynet.com/onlamp/blog/2004/03/the_worlds_two_worst_variable.html
    [4]: http://www.python.org/dev/peps/pep-0008/
-   [5]: http://www.oracle.com/technetwork/java/codeconvtoc-136057.html
-   [6]: /problog/2009/03/code-conventions
-   [7]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
