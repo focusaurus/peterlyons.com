@@ -24,13 +24,13 @@ fontSize(size, lineHeightRatio=1.5)
   pixels = 20 if size ==  0 //Base size 0 for main body content
   pixels = 24 if size ==  1
   pixels = 28 if size ==  2
-  pixels = 36 if size ==  3
-  pixels = 48 if size ==  4
-  pixels = 60 if size ==  5
-  pixels = 80  if size > 5
+  pixels = 32 if size ==  3
+  pixels = 36 if size ==  4
+  pixels = 48 if size ==  5
+  pixels = 60  if size > 5
   font-size unit(pixels, px)
   // font-size unit((pixels/10), rem)
-  line-height unit((pixels *  lineHeightRatio), px)
+  // line-height unit((pixels *  lineHeightRatio), px)
   //line-height unit((pixels * lineHeightRatio / 10), rem)
 
 html
@@ -40,9 +40,10 @@ html
 body
   font-family "Roboto", sans-serif
   fontSize -2
+  line-height 2em
   +above("s")
     fontSize -1
-  +above("m")
+  +above("xl")
     fontSize 0
 
 button
