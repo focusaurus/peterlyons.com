@@ -74,8 +74,14 @@ function Blog (options) {
     return new Blog()
   }
   events.EventEmitter.call(this)
-  _.extend(this, _.pick(options, 'title', 'subtitle', 'basePath', 'prefix'))
+  _.extend(this, _.pick(options,
+    'title',
+    'subtitle',
+    'basePath',
+    'prefix',
+    'staticPath'))
   this.basePath = path.normalize(this.basePath)
+  this.staticPath = this.staticPath && path.normalize(this.staticPath)
   var app = this.app = express()
   app.locals.blog = this
   app.set('view engine', 'jade')
@@ -95,6 +101,9 @@ function Blog (options) {
   app.get('/feed', require('./feed-route'))
   app.get('/flush-cache', flushCache)
   app.get(new RegExp('/\\d{4}/\\d{2}/\\w+'), viewPostMiddleware)
+  if (this.staticPath) {
+    app.use(express.static(this.staticPath))
+  }
   app.use(function (req, res, next) {
     next(new errors.NotFound(req.path))
   })

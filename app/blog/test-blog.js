@@ -9,6 +9,7 @@ var app = express()
 function testBlog (callback) {
   var blog = new Blog({
     basePath: join(__dirname, 'unit-test-blog1'),
+    staticPath: join(__dirname, 'unit-test-blog1'),
     title: 'Unit Test Blog 1',
     prefix: '/utb',
     subtitle: 'Unit Test Subtitle 1'

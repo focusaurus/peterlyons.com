@@ -25,6 +25,18 @@ describe('a request for a non-existent blog post name', function () {
   })
 })
 
+describe('a static image request', function () {
+  it('should 200', function (done) {
+    testBlog(function (ignore, request) {
+      request
+        .get('/utb/images/one.png')
+        .expect(200)
+        .expect('Content-Type', 'image/png')
+        .end(done)
+    })
+  })
+})
+
 describe('the preview converter', function () {
   var request
   before(function (done) {

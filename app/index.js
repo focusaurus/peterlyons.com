@@ -11,8 +11,9 @@ appCommon.head(app)
 var problog = new Blog({
   basePath: path.join(__dirname, '../../data/posts/problog'),
   prefix: '/problog',
-  title: "Pete's Points",
-  subtitle: 'A blog about web development, programming, technology'
+  staticPath: path.join(__dirname, '../../static/problog'),
+  subtitle: 'A blog about web development, programming, technology',
+  title: "Pete's Points"
 })
 app.use(function (req, res, next) {
   res.locals.proSite = true
