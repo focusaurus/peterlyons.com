@@ -84,7 +84,7 @@ Under the hood, here's what's happening.
 
 # Debugging Server Side node.js code with node-inspector
 
-This section applies to node version prior to v6.3.0.
+This section applies to node versions prior to v6.3.0.
 
 So this is pretty much the Holy Grail in my opinion. This is a huge selling point of node for me. There's a module in npm called [node-inspector](https://npmjs.org/package/node-inspector) that allows you to use the Chrome debugger to debug your server side node.js code.
 
@@ -109,6 +109,13 @@ To use node --inspect (v6.3.0 or later), you can run your [mocha](http://visionm
 For earlier versions of node using node-inspector, mocha supports the same `--debug` and `--debug-brk` arguments as node, so you can also debug your tests within node-inspector. Double victory!
 
 To avoid port collisions, you can provide an alternate port to the process for your mocha tests. This can be done with `mocha --debug-brk=6666`, for example if you want to leave your application process's debugger listening on 5858 while you run mocha tests at the same time debugging them via port 6666.
+
+
+# Debugging tape Tests
+
+You can run tape tests in the debugger by running node directly instead of the tape CLI program, and telling node to run the tape entrypoint script.
+
+`node --inspect --debug-brk $(npm bin)/tape my-test.js`
 
 # Some Workflow Tips
 
