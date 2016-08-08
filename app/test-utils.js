@@ -1,8 +1,8 @@
-var expect = require('chaimel')
+const expect = require('chaimel')
 
 function assertSelectors () {
-  var $ = arguments[0]
-  var selectors = Array.prototype.slice.call(arguments, 1)
+  const $ = arguments[0]
+  const selectors = Array.prototype.slice.call(arguments, 1)
   selectors.forEach(function (selector) {
     expect($(selector)).toHaveLengthAbove(
       0, 'Document missing selector ' + selector)
@@ -10,9 +10,9 @@ function assertSelectors () {
 }
 
 function assertSubstrings () {
-  var $ = arguments[0]
-  var html = $.html()
-  var phrases = Array.prototype.slice.call(arguments, 1)
+  const $ = arguments[0]
+  const html = $.html()
+  const phrases = Array.prototype.slice.call(arguments, 1)
   phrases.forEach(function (phrase) {
     expect(html).toInclude(phrase, 'Document missing phrase ' + phrase)
   })

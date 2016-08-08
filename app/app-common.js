@@ -1,11 +1,11 @@
-var _ = require('lodash')
-var analyticsScript = require('./site/blocks/analytics')
-var compression = require('compression')
-var config = require('config3')
-var cssRoutes = require('./site/css-routes')
-var express = require('express')
-var httpErrors = require('httperrors')
-var log = require('bole')(__filename)
+const _ = require('lodash')
+const analyticsScript = require('./site/blocks/analytics')
+const compression = require('compression')
+const config = require('config3')
+const cssRoutes = require('./site/css-routes')
+const express = require('express')
+const httpErrors = require('httperrors')
+const log = require('bole')(__filename)
 
 function locals (req, res, next) {
   _.extend(

@@ -1,14 +1,14 @@
-var appCommon = require('./app-common')
-var Blog = require('./blog')
-var config = require('config3')
-var express = require('express')
-var glob = require('glob')
-var path = require('path')
-var redirector = require('./redirector')
+const appCommon = require('./app-common')
+const Blog = require('./blog')
+const config = require('config3')
+const express = require('express')
+const glob = require('glob')
+const path = require('path')
+const redirector = require('./redirector')
 
-var app = express()
+const app = express()
 appCommon.head(app)
-var problog = new Blog({
+const problog = new Blog({
   basePath: path.join(__dirname, '../../data/posts/problog'),
   prefix: '/problog',
   staticPath: path.join(__dirname, '../../static/problog'),
@@ -29,11 +29,11 @@ require('./plus-party/plus-party-routes')(app)
 require('./js-debug/js-debug-routes')(app)
 require('./decks/decks-routes')(app)
 // Add routes for each template in "pages" directory
-var pagesPattern = path.join(__dirname, 'pages', '*.jade')
-var pages = glob.sync(pagesPattern) // eslint-disable-line no-sync
+const pagesPattern = path.join(__dirname, 'pages', '*.jade')
+const pages = glob.sync(pagesPattern) // eslint-disable-line no-sync
 pages.forEach(function (page) {
-  var ext = path.extname(page)
-  var base = path.basename(page, ext)
+  const ext = path.extname(page)
+  const base = path.basename(page, ext)
   app.get('/' + base, function (req, res) {
     res.render(path.join('pages', base))
   })

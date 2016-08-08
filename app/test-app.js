@@ -1,16 +1,16 @@
-var expect = require('chaimel')
-var cheerio = require('cheerio')
-var supertest = require('supertest')
+const expect = require('chaimel')
+const cheerio = require('cheerio')
+const supertest = require('supertest')
 
 function testApp (app) {
-  var request = supertest(app)
+  const request = supertest(app)
   function loadPage (URL, callback) {
     request.get(URL).expect(200).end(function (error, res) {
       if (error) {
         callback(error)
         return
       }
-      var $ = cheerio.load(res.text)
+      const $ = cheerio.load(res.text)
       callback(null, $)
     })
   }
@@ -25,9 +25,9 @@ function testApp (app) {
 
   /* eslint no-unused-vars:0 */
   function pageContains (_url, _phraseVarArgs, _done) {
-    var phrases = Array.prototype.slice.call(arguments)
-    var url = phrases.shift()
-    var done = phrases.pop()
+    const phrases = Array.prototype.slice.call(arguments)
+    const url = phrases.shift()
+    const done = phrases.pop()
 
     request.get(url).expect(200).end(function (error, res) {
       if (error) {
@@ -51,8 +51,8 @@ function testApp (app) {
   function smoke (testConfigs) {
     describe('smoke tests for most pages on the site', function () {
       testConfigs.forEach(function (testConfig) {
-        var URI = testConfig[0]
-        var regex = testConfig[1]
+        const URI = testConfig[0]
+        const regex = testConfig[1]
         it(URI + ' should match ' + regex, function (done) {
           pageContains(URI, regex, done)
         })

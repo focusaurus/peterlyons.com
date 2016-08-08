@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-var bole = require('bole')
-var log = bole(__filename)
+const bole = require('bole')
+const log = bole(__filename)
 
 bole.output({
   level: 'debug',
@@ -30,9 +30,9 @@ function listen (app, port, ip) {
 }
 
 require('process-title')
-var config = require('config3')
-var persApp = require('./personal/app')
-var proApp = require('./index')
+const config = require('config3')
+const persApp = require('./personal/app')
+const proApp = require('./index')
 
 listen(proApp, config.proPort, config.ip)
 listen(persApp, config.persPort, config.ip)

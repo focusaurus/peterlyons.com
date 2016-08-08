@@ -1,6 +1,6 @@
-var request = require('./request')
+const request = require('./request')
 
-var map = {
+const map = {
   '/code_conventions': '/code-conventions',
   '/leveling_up': '/leveling-up',
   '/npm_gold': '/npm-gold',

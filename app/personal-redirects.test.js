@@ -1,7 +1,7 @@
-var request = require('./request')
+const request = require('./request')
 
 describe('personal URLs should redirect to .org', function () {
-  var pages = [
+  const pages = [
     '/app/photos',
     '/bands',
     '/favorites',
@@ -20,7 +20,7 @@ describe('personal URLs should redirect to .org', function () {
   })
 
   it('should maintain photo gallery path and query', function (done) {
-    var page = '/app/photos?gallery=fall_2009&photo=020_paint_and_blinds'
+    const page = '/app/photos?gallery=fall_2009&photo=020_paint_and_blinds'
     request
       .get(page)
       .expect(301)
