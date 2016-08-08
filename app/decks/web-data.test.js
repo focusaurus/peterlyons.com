@@ -1,8 +1,8 @@
-var request = require('../request')
-var testUtils = require('../test-utils')
+const request = require('../request')
+const testUtils = require('../test-utils')
 
 describe('the Web Data Slide Deck', function () {
-  var $ = null
+  let $ = null
   before(function (done) {
     request.loadPage('/web-data', function (error, dom) {
       $ = dom
