@@ -1,9 +1,9 @@
-var request = require('../request')
-var expect = require('chaimel')
-var testUtils = require('../test-utils')
+const request = require('../request')
+const expect = require('chaimel')
+const testUtils = require('../test-utils')
 
 describe('the Leveling Up article', function () {
-  var $ = null
+  let $ = null
   before(function (done) {
     request.loadPage('/leveling-up', function (error, dom) {
       $ = dom

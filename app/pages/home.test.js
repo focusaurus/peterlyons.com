@@ -1,8 +1,8 @@
-var testUtils = require('../test-utils')
-var request = require('../request')
+const testUtils = require('../test-utils')
+const request = require('../request')
 
 describe('the home page', function () {
-  var $ = null
+  let $ = null
 
   before(function (done) {
     request.loadPage('/', function (error, dom) {

@@ -1,4 +1,4 @@
-var log = require('bole')(__filename)
+const log = require('bole')(__filename)
 
 // Express looks at function arity, so we must declare 4 arguments here
 /* eslint no-unused-vars:0 */

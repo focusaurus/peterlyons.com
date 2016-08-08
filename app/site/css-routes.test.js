@@ -1,4 +1,4 @@
-var request = require('../request')
+const request = require('../request')
 
 describe('the CSS route', function () {
   it('should have the CSS', function (done) {

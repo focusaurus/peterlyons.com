@@ -1,12 +1,12 @@
-var _ = require('lodash')
-var config = require('config3')
-var expect = require('chaimel')
-var pack = require('../../package')
-var request = require('../request')
-var testUtils = require('../test-utils')
+const _ = require('lodash')
+const config = require('config3')
+const expect = require('chaimel')
+const pack = require('../../package')
+const request = require('../request')
+const testUtils = require('../test-utils')
 
 describe('the main layout', function () {
-  var $ = null
+  let $ = null
   before(function (done) {
     request.loadPage('/', function (error, dom) {
       $ = dom
@@ -14,9 +14,9 @@ describe('the main layout', function () {
     })
   })
   it('should have the google fonts', function () {
-    var selector = 'link[rel=stylesheet]'
+    const selector = 'link[rel=stylesheet]'
     testUtils.assertSelectors($, selector)
-    var hrefs = []
+    const hrefs = []
     $(selector).each(function (index, item) {
       hrefs.push($(item).attr('href'))
     })
@@ -31,7 +31,7 @@ describe('the main layout', function () {
   })
 
   it('should include the pro nav links', function () {
-    var body = $.html()
+    const body = $.html()
     expect(body).toInclude('Code Conventions')
     expect(body).toInclude('Career')
     expect(body).toInclude('Projects')
@@ -74,7 +74,7 @@ describe('analytics snippet', function () {
   it('should include the analytics snippet when enabled', function (done) {
     request.loadPage('/', function (error, $) {
       expect(error).notToExist()
-      var selector = 'script[data-id=analytics]'
+      const selector = 'script[data-id=analytics]'
       testUtils.assertSelectors($, selector)
       expect($(selector).text()).to.include('UNIT_TEST')
       done()

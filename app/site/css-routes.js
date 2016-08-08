@@ -1,7 +1,7 @@
-var autoprefixer = require('autoprefixer-stylus')
-var nib = require('nib')
-var rupture = require('rupture')
-var stylish = require('stylish')
+const autoprefixer = require('autoprefixer-stylus')
+const nib = require('nib')
+const rupture = require('rupture')
+const stylish = require('stylish')
 
 module.exports = stylish({
   src: __dirname,

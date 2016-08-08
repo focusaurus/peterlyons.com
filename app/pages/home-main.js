@@ -1,4 +1,4 @@
-var HEADER_SELECTOR = '.intro .highlight'
+const HEADER_SELECTOR = '.intro .highlight'
 var subtitle
 
 function speed () {
@@ -6,8 +6,8 @@ function speed () {
 }
 
 function pushLetter () {
-  var header = document.querySelector(HEADER_SELECTOR)
-  var text = header.textContent
+  const header = document.querySelector(HEADER_SELECTOR)
+  const text = header.textContent
   if (text.length === subtitle.length) {
     return
   }
@@ -16,7 +16,7 @@ function pushLetter () {
 }
 
 function init () {
-  var header = document.querySelector(HEADER_SELECTOR)
+  const header = document.querySelector(HEADER_SELECTOR)
   subtitle = header.textContent
   header.textContent = ''
   setTimeout(pushLetter, speed())

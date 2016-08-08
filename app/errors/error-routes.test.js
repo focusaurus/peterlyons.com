@@ -1,6 +1,6 @@
-var request = require('../request')
+const request = require('../request')
 
-var codes = [404, 500]
+const codes = [404, 500]
 describe('the error pages', function () {
   codes.forEach(function (code) {
     it('should have ' + code, function (done) {
