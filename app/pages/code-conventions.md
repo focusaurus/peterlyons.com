@@ -72,6 +72,8 @@ _See also_ [Andy Lester's article on the two worst variable names]( http://www.o
 
 _See also_ [Long Names Are Long](http://journal.stuffwithstuff.com/2016/06/16/long-names-are-long/)
 
+_See also_ [Why I Will Never Abbreviate Variable Names](https://beehollander.wordpress.com/2016/07/08/the-6-month-bug-and-why-i-will-never-abbreviate-variable-names/)
+
 # General Guidelines
 
 Don't use C-style abbreviations that truncate words or omit certain letters. For example: `message->msg, index->idx, value->val, createDispatcher->crtDisp`. I find these highly problematic and irritating. First, they don't follow a single clear rule about how the abbreviation is achieved (sometimes truncation, sometimes dropping just vowels, sometimes dropping certain consonants). Secondly, they aren't clearly pronouncable. Pronouncability helps when discussing code and thinking about it in an audible voice in one's own mind. Thirdly, the premises that originated this convention (presumably ease of typing or length limits imposed by early languages and tools) are no longer relevant. All decent editors have word completion and/or code completion. Modern languages and tools don't have tiny eight-character length limits anymore. Also, as a native English speaker I find it hard enough to parse these things. I assume this is especially difficult for non-native speakers. Editor's note: Never abbreviate the word "password" in code. Don't use "pass". Don't use "passwd". Don't use "pwd". Don't use "pword". Don't do it. I will hunt you down. You must be stopped. The following exceptions are accomodating because of their extreme popularity: `database->Db (so connectToDatabase->connectToDb), identifier->Id`.
