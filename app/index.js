@@ -48,7 +48,7 @@ app.get(/^\/[a-z0-9]+_/, function kebabify (req, res) {
 app.use(require('./errors/error-routes'))
 app.use(express.static(config.zeroClipboardDir))
 // needed for reveal slideshows
-app.use('/reveal', express.static(config.revealDir))
+app.use('/reveal.js', express.static(config.revealDir))
 appCommon.tail(app)
 
 module.exports = app

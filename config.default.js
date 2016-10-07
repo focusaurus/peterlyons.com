@@ -17,7 +17,7 @@ var config = {
   persPort: get('persport', 9001),
   staticDir: join(__dirname, '../static'),
   titleSuffix: ' | Peter Lyons',
-  revealDir: join(__dirname, 'node_modules/reveal'),
+  revealDir: join(__dirname, 'node_modules/reveal.js'),
   wwwDir: join(__dirname, 'www'),
   zeroClipboardDir: join(__dirname, 'node_modules/zeroclipboard/dist')
 }

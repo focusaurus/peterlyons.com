@@ -15,11 +15,6 @@ if [[ "$1" == "production" ]]; then
   uglify_args="--compress warnings=false --mangle --keep-fnames --screw-ie8"
 fi
 
-printf 'building ./www/reveal.js…'
-browserify --entry app/decks/deck-main | uglifyjs ${uglify_args} > www/reveal.js
-gzip --stdout www/reveal.js > www/reveal.js.gz
-echo ✓
-
 echo -n "${bundler}…"
 ${bundler} \
   --outfile "${out}" \

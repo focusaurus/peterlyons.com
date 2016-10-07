@@ -1,7 +1,6 @@
 const expect = require('chaimel')
 
-function assertSelectors () {
-  const $ = arguments[0]
+function assertSelectors ($) {
   const selectors = Array.prototype.slice.call(arguments, 1)
   selectors.forEach(function (selector) {
     expect($(selector)).toHaveLengthAbove(
@@ -9,8 +8,7 @@ function assertSelectors () {
   })
 }
 
-function assertSubstrings () {
-  const $ = arguments[0]
+function assertSubstrings ($) {
   const html = $.html()
   const phrases = Array.prototype.slice.call(arguments, 1)
   phrases.forEach(function (phrase) {
@@ -19,7 +17,7 @@ function assertSubstrings () {
 }
 
 function assertDeck ($) {
-  expect($('.reveal .slides section').length).toBeAbove(3)
+  expect($('.reveal .slides ').length).toEqual(1)
   assertSubstrings($, 'reveal.js')
 }
 

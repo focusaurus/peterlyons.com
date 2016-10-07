@@ -1,0 +1,80 @@
+mixin fig(imageUrl, authorName, authorUrl, licenseName, licenseUrl)
+  figure
+    img(src=imageUrl)
+    figcaption Photo by
+      != "&nbsp;"
+      a(href=authorUrl)= authorName
+      != "&nbsp;"
+      a(href=licenseUrl)= "(" + licenseName + ")"
+
+doctype html
+html(lang="en")
+  head
+    title= title
+    meta(charset="utf-8")
+    link(rel="stylesheet", href="/reveal.js/css/reveal.css")
+    link#theme(rel="stylesheet" href="/reveal.js/css/theme/simple.css")
+    // Code syntax highlighting
+    link(rel="stylesheet" href="/reveal.js/lib/css/zenburn.css")
+    link(rel="stylesheet", href="/deck.css")
+    block head
+    link(href="/favicon.jpg" type="image/jpeg" rel="icon")
+    link(rel="author" type="text/plain" href="/humans.txt")
+    meta(name="author" content="Peter Lyons")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+
+  body.reveal
+    // Any section element inside of this container is displayed as a slide
+    .slides: section(data-markdown="" data-separator="^---" data-separator-vertical="^___" data-separator-notes="^Note:" data-charset="utf-8")
+      script(type="text/template")!= contentMarkdown
+    block scripts
+    script(src="/reveal.js/js/reveal.js?v=" + appVersion)
+    script(src="/reveal.js/lib/js/head.min.js")
+    script.
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: false,
+        history: true,
+        center: false,
+        mouseWheel: true,
+
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: '/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '/reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: '/reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+      // This is a focusaurus customization.
+      // Want many elements to be fragments.
+      function fragment (element) {
+        element.classList.add('fragment')
+      }
+      var $ = document.querySelectorAll.bind(document)
+      var forEach = Array.prototype.forEach
+      Reveal.addEventListener('ready', function onReady(event) {
+        forEach.call($('figure'), fragment)
+        forEach.call($('li'), fragment)
+        forEach.call($('p'), fragment)
+        forEach.call($('h2'), fragment)
+        forEach.call($('h3'), fragment)
+        forEach.call($('h4'), fragment)
+        forEach.call($('h5'), fragment)
+        forEach.call($('h6'), fragment)
+        var codes = document.querySelectorAll('pre > code')
+        for (var i = 0; i < codes.length; i++) {
+          codes[i].parentElement.classList.add('fragment')
+        }
+        forEach.call($('a'), function (link) {
+          link.target = '_blank'
+        })
+      })
+    if analytics.enabled
+      script(data-id="analytics")!= analytics.script()
