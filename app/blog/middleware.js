@@ -15,7 +15,7 @@ var youtubeTemplate =
 
 function debugLog (message) {
   return function (req, res, next) {
-    console.log(req.method, req.path, message)
+    console.log(req.method, req.path, message) // eslint-disable-line no-console
     next()
   }
 }

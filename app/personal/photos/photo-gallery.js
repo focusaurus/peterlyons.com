@@ -77,7 +77,7 @@ var PhotoGallery = React.createClass({
     request('/galleries/' + galleryDirName)
       .end(function (error, res) {
         if (error) {
-          console.error(error)
+          console.error(error) // eslint-disable-line no-console
           return
         }
         var gallery = res.body
