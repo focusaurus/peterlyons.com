@@ -1,4 +1,5 @@
 const request = require('./request')
+const expect = require('chaimel')
 
 describe('the express web server basics', function () {
   it('GET /no-such-url should be 404', function (done) {
@@ -6,7 +7,15 @@ describe('the express web server basics', function () {
   })
 
   it('GET / should deny iframes', function (done) {
-    request.get('/').expect('X-FRAME-OPTIONS', 'DENY').end(done)
+    request
+    .get('/')
+    .expect('x-frame-options', 'DENY')
+    .expect('x-content-type-options', 'nosniff')
+    .end((error, res) => {
+      expect(error).notToExist()
+      expect(res.headers['x-powered-by']).notToExist()
+      done()
+    })
   })
 })
 

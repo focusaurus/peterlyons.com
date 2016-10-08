@@ -21,7 +21,8 @@ function locals (req, res, next) {
 }
 
 function security (req, res, next) {
-  res.header('X-FRAME-OPTIONS', 'DENY')
+  res.header('X-Frame-Options', 'DENY')
+  res.header('X-Content-Type-Options', 'nosniff')
   next()
 }
 
@@ -29,6 +30,7 @@ function head (app) {
   app.set('view engine', 'pug')
   app.set('views', __dirname)
   app.set('trust proxy', true)
+  app.disable('x-powered-by')
   if (config.enableLogger) {
     app.use(function logger (req, res, next) {
       log.debug(req)
