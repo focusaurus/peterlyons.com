@@ -84,7 +84,7 @@ function Blog (options) {
   this.staticPath = this.staticPath && path.normalize(this.staticPath)
   var app = this.app = express()
   app.locals.blog = this
-  app.set('view engine', 'jade')
+  app.set('view engine', 'pug')
   app.set('views', path.join(__dirname, '..'))
   app.get('/', function renderIndex (req, res) {
     res.locals.posts = res.app.locals.blog.posts

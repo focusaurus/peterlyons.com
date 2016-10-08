@@ -10,7 +10,7 @@ block body
     - Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
     - The #1 primary mandate of the software engineer is managing complexity
     - Simple, small, consistent tools
-      - Small languages that foster consistency such as Python, jade
+      - Small languages that foster consistency such as Python, pug
       - One and preferably only one good way to do it
       - Significant white space fosters consistency, so I am in favor of it
       - Small core library plus good package management such as node.js with npm
@@ -65,14 +65,14 @@ block body
     - If running tests gets slow, it's probably time to split the project into smaller modules
 
     ## Configuration
-    
+
     - I agree with [this research](http://neverworkintheory.org/2016/06/09/too-many-knobs.html) that most configuration settings go unchanged and therefore are unnecessary. [This article](http://ometer.com/preferences.html) is also a good read.
     - Good design that does not require configuration is superior to "flexible" code that comes with many confusing settings
     - The end user is usually much less likely to be in a position to understand and specify a good configuration value than the software development team
     - For basic environment-specific settings, configuration can be mostly unavoidable. These settings are fine just keep it simple.
 
     ## Process
-    
+
     - I don't subscribe entirely to any specific methodology
         - There are good ideas and practices in Agile, Scrum, KanBan, Lean, etc
         - Most of my projects don't lend themselves to a formal methodology
@@ -101,7 +101,7 @@ block body
     ### Definition and purpose of a stage environment
 
     - Reduce risk that new releases will disrupt production
-      - In order to deliver this, stage must be entirely separate from production. No sharing of any resources whatsoever with production. 
+      - In order to deliver this, stage must be entirely separate from production. No sharing of any resources whatsoever with production.
     - Create high confidence that new releases will deploy and function correctly
       - If it deploys and runs OK on stage, we have very high confidence that it will deploy and run OK on prod.
       - In order to deliver this, stage must be nearly-identical to production

@@ -29,7 +29,7 @@ require('./plus-party/plus-party-routes')(app)
 require('./js-debug/js-debug-routes')(app)
 require('./decks/decks-routes')(app)
 // Add routes for each template in "pages" directory
-const pagesPattern = path.join(__dirname, 'pages', '*.jade')
+const pagesPattern = path.join(__dirname, 'pages', '*.pug')
 const pages = glob.sync(pagesPattern) // eslint-disable-line no-sync
 pages.forEach(function (page) {
   const ext = path.extname(page)

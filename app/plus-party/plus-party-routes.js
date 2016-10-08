@@ -4,7 +4,7 @@ var plusPartyHtml = server.renderToStaticMarkup(
   require('./plus-party').PlusParty)
 
 function plusParty (req, res) {
-  res.render('plus-party/plus-party.jade', {plusPartyHtml: plusPartyHtml})
+  res.render('plus-party/plus-party', {plusPartyHtml: plusPartyHtml})
 }
 
 function setup (app) {

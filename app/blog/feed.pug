@@ -5,7 +5,7 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   link(href=URL, rel="self")
   link(href=URL)
   //- Note that W3C Validator does not allow whitespace within these tags
-  //- but jade indents the closing tag, so we go raw dog
+  //- but pug indents the closing tag, so we go raw dog
   != "<updated>" + posts[0].publish_date.toISOString() + "</updated>"
   != "<id>http://" + hostname + blog.prefix + "/feed</id>"
   author

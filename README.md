@@ -9,7 +9,7 @@ This repo contains a node.js/express.js web application I use to power my profes
 Basically, the site supports content in the following formats:
 
  - static html pages
- - pages written in [jade](https://github.com/visionmedia/jade)
+ - pages written as [pug](https://pugjs.org) templates
  - pages written in [markdown](http://daringfireball.net/projects/markdown/)
  - a basic blog engine
    - Includes an ATOM feed
