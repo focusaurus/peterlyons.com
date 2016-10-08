@@ -20,6 +20,11 @@ function locals (req, res, next) {
   next()
 }
 
+function security (req, res, next) {
+  res.header('X-FRAME-OPTIONS', 'DENY')
+  next()
+}
+
 function head (app) {
   app.set('view engine', 'pug')
   app.set('views', __dirname)
@@ -31,6 +36,7 @@ function head (app) {
     })
   }
   app.use(compression())
+  app.use(security)
   app.use(locals)
   app.use(cssRoutes)
 }
