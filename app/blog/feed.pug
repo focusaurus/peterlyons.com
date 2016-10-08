@@ -4,16 +4,14 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   - var URL = "http://" + hostname + blog.prefix + "/feed"
   link(href=URL, rel="self")
   link(href=URL)
-  //- Note that W3C Validator does not allow whitespace within these tags
-  //- but pug indents the closing tag, so we go raw dog
-  != "<updated>" + posts[0].publish_date.toISOString() + "</updated>"
-  != "<id>http://" + hostname + blog.prefix + "/feed</id>"
+  updated= posts[0].publish_date.toISOString()
+  id= URL
   author
     name Peter Lyons
   each post in posts
     entry
       title= post.title
       link(href="http://" + hostname + post.uri())
-      != "<updated>" + post.publish_date.toISOString() + "</updated>"
-      != "<id>http://" + hostname + post.uri() + "</id>"
-      content(type="html")= post.content || ""
+      updated= post.publish_date.toISOString()
+      id= `http://${hostname}${post.uri()}`
+      content(type="html")= post.presented.content || ""

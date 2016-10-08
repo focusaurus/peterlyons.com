@@ -30,4 +30,10 @@ describe('a blog feed XML', function () {
     expect($('link[rel="self"]').attr('href'))
       .toEqual('http://127.0.0.1/utb/feed')
   })
+
+  it('should have the post content', function () {
+    // Post 8 should be index 3 because 11, 10, 9, 8
+    expect($('entry > content')[3].children[0].data)
+      .toInclude('Unit Test Post 8 content')
+  })
 })
