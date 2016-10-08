@@ -2,28 +2,33 @@
 
 // Re-renders the static HTML for our error pages for when express is down.
 // Writes them out to the static repo where they can later be committed to git
-var async = require('async')
-var fs = require('fs')
-var join = require('path').join
-var request = require('../app/request')
+const async = require('async')
+const fs = require('fs')
+const join = require('path').join
+const request = require('../app/request')
 
 function download (code, callback) {
-  var outFile = join(__dirname, '/../../static/error' + code + '.html')
-  var outStream = fs.createWriteStream(outFile)
+  const outFile = join(__dirname, '/../../static/error' + code + '.html')
+  const outStream = fs.createWriteStream(outFile)
   console.log('Building ' + outFile)
-  var req = request
+  request
     .get('/error' + code)
-    .expect(200)
-  req.on('end', callback)
-  req.pipe(outStream)
+    .expect(code)
+    .end((error, res) => {
+      const html = res && res.text
+      if (html) {
+        outStream.end(html)
+      } else {
+        console.error(`ERROR: no HTML received for ${code}: ${error.message}`)
+      }
+      callback(error)
+    })
 }
 
-var codes = [404, 500]
-async.forEach(codes, download, function (error) {
+async.forEach([404, 500], download, function (error) {
   if (error) {
     console.error(error)
-    process.exit(10) // eslint-disable-line no-process-exit
-    return
+    process.exit(10)
   }
-  process.exit() // eslint-disable-line no-process-exit
+  process.exit()
 })
