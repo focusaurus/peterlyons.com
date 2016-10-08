@@ -80,5 +80,5 @@
     "start": "./bin/start.sh",
     "test": "./bin/test.sh"
   },
-  "version": "5.30.0"
+  "version": "5.30.1"
 }
