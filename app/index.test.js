@@ -6,11 +6,12 @@ describe('the express web server basics', function () {
     request.get('/no-such-url').expect(404).end(done)
   })
 
-  it('GET / should deny iframes', function (done) {
+  it('GET / should have security headers', function (done) {
     request
     .get('/')
     .expect('x-frame-options', 'DENY')
     .expect('x-content-type-options', 'nosniff')
+    .expect('x-xss-protection', '1')
     .end((error, res) => {
       expect(error).notToExist()
       expect(res.headers['x-powered-by']).notToExist()

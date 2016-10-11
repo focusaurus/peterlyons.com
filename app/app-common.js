@@ -23,6 +23,7 @@ function locals (req, res, next) {
 function security (req, res, next) {
   res.header('X-Frame-Options', 'DENY')
   res.header('X-Content-Type-Options', 'nosniff')
+  res.header('X-XSS-Protection', '1')
   next()
 }
 
