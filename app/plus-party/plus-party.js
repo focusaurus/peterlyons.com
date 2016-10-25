@@ -52,9 +52,8 @@ var PlusParty = React.createClass({
   },
 
   componentDidMount: function componentDidMount () {
-    var ZeroClipboard = require('zeroclipboard')
-    var copyButton = document.getElementById('copyToClipboard')
-    new ZeroClipboard(copyButton) // eslint-disable-line no-new
+    var ClipBoard = require('clipboard')
+    new ClipBoard('#copyToClipboard') // eslint-disable-line no-new
   }
 })
 

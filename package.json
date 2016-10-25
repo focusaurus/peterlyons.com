@@ -8,6 +8,7 @@
     "bole": "3.0.1",
     "browserify": "13.1.0",
     "cheerio": "0.22.0",
+    "clipboard": "1.5.15",
     "compression": "1.6.2",
     "config3": "1.0.3",
     "connect-cache": "0.2.1",
@@ -32,8 +33,7 @@
     "stylish": "1.0.0",
     "stylus": "0.54.5",
     "superagent": "2.3.0",
-    "uglify-js": "2.7.3",
-    "zeroclipboard": "2.2.0"
+    "uglify-js": "2.7.3"
   },
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {

@@ -18,8 +18,7 @@ var config = {
   staticDir: join(__dirname, '../static'),
   titleSuffix: ' | Peter Lyons',
   revealDir: join(__dirname, 'node_modules/reveal.js'),
-  wwwDir: join(__dirname, 'www'),
-  zeroClipboardDir: join(__dirname, 'node_modules/zeroclipboard/dist')
+  wwwDir: join(__dirname, 'www')
 }
 
 config.analytics = {
