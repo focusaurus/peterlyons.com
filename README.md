@@ -30,11 +30,11 @@ The site requires 3 git repositories to fully function
 
 The data and static repositories aren't particularly interesting. All the interesting code is in this repository.
 
-## New Developer Setup (OS X Scripted)
+## How to Set Up for Development (OS X Scripted)
 
 - run `./bin/install-prereqs.sh`
 
-## New Developer Setup (Manual or custom)
+## How to Set Up for Development (Manual or custom)
 
 - Install prereqs (homebrew is the recommended approach on OS X)
   - git
@@ -48,7 +48,7 @@ The data and static repositories aren't particularly interesting. All the intere
   - `nvm install`
 - `npm install`
 
-## Build Notes
+## How to Build
 
 - do work in the develop branch
 - when ready to cut a release candidate, get develop into a clean committed state
@@ -65,6 +65,9 @@ The data and static repositories aren't particularly interesting. All the intere
 - deploy that to the vagrant "stage" vm from your laptop via `./bin/deploy.sh build/<build>.tar.gz deploy/host-vagrant-stage.yml`
   - vagrant sudo password is `password`
 - Test that and if all looks good you can finalize the release with
+
+## How to Deploy
+
 - `./bin/release.sh`
 - deploy to prod with `./bin/deploy.sh build/<build>.tar.gz deploy/host-production.yml`
 
