@@ -51,6 +51,7 @@
     "eslint-formatter-comment": "2.0.0",
     "eslint-plugin-promise": "3.0.0",
     "eslint-plugin-standard": "2.0.1",
+    "eslint-tap": "2.0.0",
     "express-state": "1.4.0",
     "html-validator": "2.0.1",
     "mktmp": "1.0.1",
