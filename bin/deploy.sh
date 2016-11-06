@@ -6,13 +6,14 @@
 # distribution archive files get built in the "build" directory
 # inventory files live in the deploy/hosts directory"
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit 10
 source ./bin/lib/strict_mode.sh
 
 main() {
   PATH="${PWD}/python/bin:${PATH}"
   local dist_path="$1"
-  local dist_name=$(basename "${dist_path/.tar.*/}")
+  local dist_name
+  dist_name=$(basename "${dist_path/.tar.*/}")
   local inventory="$2"
   export ANSIBLE_HOST_KEY_CHECKING=False
   ansible-playbook \

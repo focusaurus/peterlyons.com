@@ -8,7 +8,6 @@
     express_user: plws
     app_root: /opt/peter_lyons_web_site
     www_root: /opt/peter_lyons_web_site/static
-    data_root: /opt/peter_lyons_web_site/data
     config_dir: /etc/peterlyons.com
     repo_base: https://github.com/focusaurus
   handlers:
@@ -34,12 +33,6 @@
         owner: 'root'
         group: '{{express_user}}'
         mode: '0755'
-    - name: clone data repo
-      git:
-        repo: '{{repo_base}}/data.git'
-        dest: '{{data_root}}'
-        version: 'master'
-        force: 'no'
     - name: clone static repo
       git:
         repo: '{{repo_base}}/static.git'

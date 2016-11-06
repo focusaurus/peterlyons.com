@@ -1,3 +1,4 @@
 ---
+- include: playbook-data-repo.yml
 - include: playbook-express.yml
 - include: playbook-nginx.yml

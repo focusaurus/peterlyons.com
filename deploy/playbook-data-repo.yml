@@ -1,0 +1,30 @@
+---
+- include: playbook-ansible-prereqs.yml
+- hosts: all
+  become: true
+  vars:
+    express_port_pro: '{{ lookup("pipe", "../node_modules/.bin/config3 proPort") }}'
+    express_port_pers: '{{ lookup("pipe", "../node_modules/.bin/config3 persPort") }}'
+    express_user: plws
+    data_root: /opt/peter_lyons_web_site/data
+    repo_base: https://github.com/focusaurus
+  tasks:
+    - name: install prerequisites
+      apt: pkg={{item}}
+      with_items:
+        #static/data repo access
+        - git-core
+    - name: clone data repo
+      git:
+        repo: '{{repo_base}}/data.git'
+        dest: '{{data_root}}'
+        version: 'master'
+        force: 'no'
+    - name: flush blog cache and reload new content
+      get_url:
+        url: '{{item}}'
+        dest: /dev/null
+      ignore_errors: yes
+      with_items:
+        - 'http://localhost:{{express_port_pro}}/problog/flush-cache'
+        - 'http://localhost:{{express_port_pers}}/persblog/flush-cache'
