@@ -8,20 +8,16 @@ import Process
 import Task
 import Time
 import Round
-
+import Json.Encode as JE
 
 type Msg
     = ChangeInput String
-    | CopyFixed
-    | CopyFixedDone
-    | CopyFloat
-    | CopyFloatDone
+    | CopyFixed Bool
+    | CopyFloat Bool
 
 
 type alias Model =
     { text : String
-    , numbers : List Float
-    , total : Float
     , copyingFloat : Bool
     , copyingFixed : Bool
     }
@@ -29,8 +25,15 @@ type alias Model =
 
 type alias Party =
     { numbersFixed : List String
-    , total : String
-    , totalFixed : String
+    , totalFloat : Total
+    , totalFixed : Total
+    }
+
+
+type alias Total =
+    { selector : String
+    , value : String
+    , copying : Bool
     }
 
 
@@ -41,22 +44,23 @@ initialText =
 For example: 1 plus 2 plus 2 plus 1
 """
 
+fix2 : Float -> String
+fix2 =
+    Round.round 2
 
-getParty : String -> Party
-getParty text =
+
+getParty : Model -> Party
+getParty model =
     let
-        fix2 =
-            Round.round 2
-
         numbers =
-            Core.parseNumbers text
+            Core.parseNumbers model.text
 
         total =
             List.sum numbers
     in
         { numbersFixed = List.map fix2 numbers
-        , total = toString total
-        , totalFixed = (fix2 total)
+        , totalFloat = Total "copy-float" (toString total) model.copyingFloat
+        , totalFixed = Total "copy-fixed" (fix2 total) model.copyingFixed
         }
 
 
@@ -67,53 +71,59 @@ item fixed =
 
 later : msg -> Cmd msg
 later msg =
-    (Time.second * 2) |> Process.sleep |> Task.perform (always msg)
+    (Time.second * 2) |> Process.sleep |> Task.perform (\_ -> msg)
 
-totalView : String -> String -> Bool -> msg -> Html msg
-totalView value selector copying msg =
+
+totalView : Total -> msg -> Html msg
+totalView total msg =
     div [ class "total" ]
         [ button
-            [ id selector
+            [ id total.selector
             , onClick msg
-            , attribute "data-clipboard-text" value
+            , attribute "data-clipboard-text" total.value
+            , property "innerHTML" (buttonText total.copying)
             ]
-            [ text (buttonText copying)
-            ]
-        , text value
+            [ ]
+        , text total.value
         ]
-buttonText : Bool -> String
+
+
+-- http://stackoverflow.com/a/41495885/266795
+buttonText : Bool -> JE.Value
 buttonText copying =
-    if copying then
-        "Copied!"
-    else
-        "Copy to clipboard"
+    case copying of
+        True ->
+            JE.string "Copied!"
+
+        False ->
+            JE.string "Copy &#x1F4CB;"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
         ChangeInput newText ->
-            let
-                numbers =
-                    Core.parseNumbers newText
-            in
-                Debug.log ":" ( { model | text = newText, numbers = numbers, total = List.sum numbers }, Cmd.none )
+            ( { model | text = newText }, Cmd.none )
 
-        CopyFixed ->
-            ( { model | copyingFixed = True }
-            , later CopyFixedDone
+        CopyFloat state ->
+            ( { model | copyingFloat = state }
+            , case state of
+                True ->
+                    later (CopyFloat False)
+
+                False ->
+                    Cmd.none
             )
 
-        CopyFixedDone ->
-            ( { model | copyingFixed = False }, Cmd.none )
+        CopyFixed state ->
+            ( { model | copyingFixed = state }
+            , case state of
+                True ->
+                    later (CopyFixed False)
 
-        CopyFloat ->
-            ( { model | copyingFloat = True }
-            , later CopyFloatDone
+                False ->
+                    Cmd.none
             )
-
-        CopyFloatDone ->
-            ( { model | copyingFloat = False }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -125,24 +135,19 @@ view : Model -> Html Msg
 view model =
     let
         party =
-            getParty model.text
+            getParty model
     in
         div [ class "plus-party" ]
             [ textarea [ onInput ChangeInput ] [ text model.text ]
             , ul [ class "clear" ] (List.map item party.numbersFixed)
-            , totalView party.totalFixed "copy-fixed" model.copyingFixed CopyFixed
-            , totalView party.total "copy-float" model.copyingFloat CopyFloat
+            , totalView party.totalFixed (CopyFixed True)
+            , totalView party.totalFloat (CopyFloat True)
             ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { text = initialText
-      , numbers = []
-      , total = 0
-      , copyingFloat = False
-      , copyingFixed = False
-      }
+    ( { text = initialText, copyingFloat = False, copyingFixed = False }
     , Cmd.none
     )
 
