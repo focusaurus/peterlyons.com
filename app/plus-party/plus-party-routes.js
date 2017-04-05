@@ -1,10 +1,7 @@
-var server = require('react-dom/server')
-
-var plusPartyHtml = server.renderToStaticMarkup(
-  require('./plus-party').PlusParty)
+'use strict'
 
 function plusParty (req, res) {
-  res.render('plus-party/plus-party', {plusPartyHtml: plusPartyHtml})
+  res.render('plus-party/plus-party')
 }
 
 function setup (app) {

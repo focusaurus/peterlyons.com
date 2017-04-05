@@ -40,6 +40,7 @@
     "browserify": "13.1.0",
     "chai": "3.5.0",
     "chaimel": "3.0.0",
+    "elm": "0.18.0",
     "enzyme": "2.5.1",
     "esformatter": "0.9.6",
     "esformatter-literal-notation": "1.0.1",

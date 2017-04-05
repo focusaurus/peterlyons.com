@@ -8,8 +8,10 @@ block body
       Paste some numbers into the box.
       It's OK if they have other text around them.
       All the numbers will be parsed out and totaled up for you.
-    != plusPartyHtml
+    div.plus-party-container
     img(src='/images/clue_bullets.png', alt='One plus two plus two plus one.')
     iframe(src='//www.youtube.com/embed/O5ROhf5Soqs', width='420', height='315' allowfullscreen)
 block append scripts
-  script require('app/plus-party/plus-party-main')
+  script(src="/plus-party.js")
+  script.
+    Elm.PlusParty.embed(document.querySelector('.plus-party-container'))

@@ -7,3 +7,4 @@
 /www
 *.retry
 config.local.*
+elm-stuff
