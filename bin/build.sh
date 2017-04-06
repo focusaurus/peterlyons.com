@@ -52,7 +52,6 @@ main() {
   cd "${build_dir}/${prefix}" || exit 10
   # Run OSX node and npm utilites but within the linux build dir
   npm install --silent --production --ignore-scripts
-
   ./bin/build-js.sh production
   npm dedupe
   npm prune --silent --production
