@@ -10,30 +10,21 @@ import Time
 import Round
 import Json.Encode as JE
 
+
 type Msg
     = ChangeInput String
-    | CopyFixed Bool
-    | CopyFloat Bool
+    | CopyTotal Bool
 
 
 type alias Model =
     { text : String
-    , copyingFloat : Bool
-    , copyingFixed : Bool
+    , copying : Bool
     }
 
 
 type alias Party =
-    { numbersFixed : List String
-    , totalFloat : Total
-    , totalFixed : Total
-    }
-
-
-type alias Total =
-    { selector : String
-    , value : String
-    , copying : Bool
+    { numbers : List String
+    , totalFixed : String
     }
 
 
@@ -43,6 +34,7 @@ initialText =
 
 For example: 1 plus 2 plus 2 plus 1
 """
+
 
 fix2 : Float -> String
 fix2 =
@@ -58,9 +50,8 @@ getParty model =
         total =
             List.sum numbers
     in
-        { numbersFixed = List.map fix2 numbers
-        , totalFloat = Total "copy-float" (toString total) model.copyingFloat
-        , totalFixed = Total "copy-fixed" (fix2 total) model.copyingFixed
+        { numbers = List.map toString numbers
+        , totalFixed = fix2 total
         }
 
 
@@ -74,21 +65,10 @@ later msg =
     (Time.second * 2) |> Process.sleep |> Task.perform (\_ -> msg)
 
 
-totalView : Total -> msg -> Html msg
-totalView total msg =
-    div [ class "total" ]
-        [ button
-            [ id total.selector
-            , onClick msg
-            , attribute "data-clipboard-text" total.value
-            , property "innerHTML" (buttonText total.copying)
-            ]
-            [ ]
-        , text total.value
-        ]
-
 
 -- http://stackoverflow.com/a/41495885/266795
+
+
 buttonText : Bool -> JE.Value
 buttonText copying =
     case copying of
@@ -96,7 +76,7 @@ buttonText copying =
             JE.string "Copied!"
 
         False ->
-            JE.string "Copy &#x1F4CB;"
+            JE.string "Copy Total &#x1F4CB;"
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -105,21 +85,11 @@ update message model =
         ChangeInput newText ->
             ( { model | text = newText }, Cmd.none )
 
-        CopyFloat state ->
-            ( { model | copyingFloat = state }
+        CopyTotal state ->
+            ( { model | copying = state }
             , case state of
                 True ->
-                    later (CopyFloat False)
-
-                False ->
-                    Cmd.none
-            )
-
-        CopyFixed state ->
-            ( { model | copyingFixed = state }
-            , case state of
-                True ->
-                    later (CopyFixed False)
+                    later (CopyTotal False)
 
                 False ->
                     Cmd.none
@@ -139,15 +109,23 @@ view model =
     in
         div [ class "plus-party" ]
             [ textarea [ onInput ChangeInput ] [ text model.text ]
-            , ul [ class "clear" ] (List.map item party.numbersFixed)
-            , totalView party.totalFixed (CopyFixed True)
-            , totalView party.totalFloat (CopyFloat True)
+            , button
+                [ id "copy-total"
+                , onClick (CopyTotal True)
+                , attribute "data-clipboard-text" party.totalFixed
+                , property "innerHTML" (buttonText model.copying)
+                ]
+                []
+            , ul [ class "clear" ] (List.map item party.numbers)
+            , div [ class "total" ]
+                [ text party.totalFixed
+                ]
             ]
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { text = initialText, copyingFloat = False, copyingFixed = False }
+    ( { text = initialText, copying = False }
     , Cmd.none
     )
 
