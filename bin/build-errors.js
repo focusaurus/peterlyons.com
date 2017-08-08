@@ -2,12 +2,12 @@
 
 // Re-renders the static HTML for our error pages for when express is down.
 // Writes them out to the static repo where they can later be committed to git
-const async = require("async");
+const eachAsync = require("each-async");
 const fs = require("fs");
 const join = require("path").join;
 const request = require("../app/request");
 
-function download(code, callback) {
+function download(code, index, callback) {
   const outFile = join(__dirname, `/../../static/error${code}.html`);
   const outStream = fs.createWriteStream(outFile);
   console.log("Building", outFile);
@@ -22,7 +22,7 @@ function download(code, callback) {
   });
 }
 
-async.forEach([404, 500], download, error => {
+eachAsync([404, 500], download, error => {
   if (error) {
     console.error(error);
     process.exit(10);

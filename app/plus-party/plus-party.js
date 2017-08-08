@@ -57,7 +57,6 @@ const PlusParty = React.createClass({
   },
 
   componentDidMount: function componentDidMount() {
-    // eslint-disable-next-line global-require
     const ClipBoard = require("clipboard");
     new ClipBoard("#copyToClipboard"); // eslint-disable-line no-new
   }

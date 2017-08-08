@@ -46,7 +46,6 @@ function tail(app) {
   app.use((req, res, next) => {
     next(new httpErrors.NotFound(req.path));
   });
-  // eslint-disable-next-line global-require
   app.use(require("./errors/error-handler"));
 }
 

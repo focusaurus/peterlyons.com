@@ -1,7 +1,6 @@
 {
   "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
   "dependencies": {
-    "async": "2.1.2",
     "autoprefixer-stylus": "0.11.0",
     "bcryptjs": "2.3.0",
     "body-parser": "1.15.2",
@@ -38,6 +37,7 @@
     "browserify": "14.4.0",
     "chai": "3.5.0",
     "chaimel": "3.0.0",
+    "each-async": "1.1.1",
     "elm": "0.18.0",
     "enzyme": "2.5.1",
     "eslint": "4.4.1",
