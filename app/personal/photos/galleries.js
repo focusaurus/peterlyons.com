@@ -1,6 +1,9 @@
-const fs = require("fs");
+const {promisify} = require("util");
 const config = require("config3");
+const fs = require("fs");
 const galleries = require("./galleries-data");
+
+const readFileAsync = promisify(fs.readFile);
 
 function photoJSONToObject(gallery, photoJSON) {
   const photos = JSON.parse(photoJSON);
@@ -31,11 +34,10 @@ function photoJSONToObject(gallery, photoJSON) {
   return photos;
 }
 
-function loadBySlug(slug, callback) {
+async function loadBySlug(slug) {
   const matches = galleries.filter(gallery2 => gallery2.dirName === slug);
   if (!matches.length) {
-    callback();
-    return;
+    return null;
   }
   const gallery = matches[0];
   const jsonPath = [
@@ -44,14 +46,9 @@ function loadBySlug(slug, callback) {
     gallery.dirName,
     "/photos.json"
   ].join("");
-  fs.readFile(jsonPath, (error2, photoJSON) => {
-    if (error2) {
-      callback(error2);
-      return;
-    }
-    gallery.photos = photoJSONToObject(gallery, photoJSON);
-    callback(null, gallery);
-  });
+  const photoJSON = await readFileAsync(jsonPath, "utf8");
+  gallery.photos = photoJSONToObject(gallery, photoJSON);
+  return gallery;
 }
 
 module.exports = {

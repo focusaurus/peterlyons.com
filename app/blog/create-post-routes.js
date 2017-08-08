@@ -1,6 +1,6 @@
 const { promisify } = require("util");
 const childProcess = require("child_process");
-const promiseHandler = require("./promise-handler");
+const promiseHandler = require("../promise-handler");
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const config = require("config3");
