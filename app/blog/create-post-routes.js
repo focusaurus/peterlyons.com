@@ -38,7 +38,7 @@ async function newBlogPrepare() {
 }
 
 async function savePost(req) {
-  const post = new Post(req.app.locals.blog, req.body.title, new Date(), "md");
+  const post = new Post(req.app.locals.blog, req.body.title);
   post.content = `${(req.body.content || "").trim()}\n`;
   post.base = config.blog.postBasePath;
   await post.save();

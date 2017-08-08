@@ -6,5 +6,5 @@ a.button#subscribe(href=blog.prefix + "/feed") Subscribe
 .posts
   each post in posts
     .post
-      a.postTitle(href=post.uri())= post.title
-      div.postDate= post.presented.date
+      a.postTitle(href=post.uri)= post.title
+      div.postDate= post.date

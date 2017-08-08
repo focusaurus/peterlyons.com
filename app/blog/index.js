@@ -40,7 +40,7 @@ function Blog(options) {
   app.set("view engine", "pug");
   app.set("views", path.join(__dirname, ".."));
   app.get("/", (req, res) => {
-    res.locals.posts = res.app.locals.blog.posts;
+    res.locals.posts = res.app.locals.blog.posts.map(presentPost);
     res.render("blog/index");
   });
   app

@@ -14,7 +14,7 @@ const writeFileAsync = promisify(fs.writeFile);
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable camelcase */
 class Post {
-  constructor(blog, title, publish_date, format) {
+  constructor(blog, title="", publish_date=new Date(), format="md") {
     this.blog = blog;
     this.title = title;
     this.publish_date = publish_date;
