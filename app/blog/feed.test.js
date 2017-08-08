@@ -2,12 +2,10 @@ var expect = require('chaimel')
 var testBlog = require('./test-blog')
 
 describe('a blog feed XML', function () {
-  var $ = null
-  before(function (done) {
-    testBlog.loadPage('/utb/feed', function (error, dom) {
-      $ = dom
-      done(error)
-    })
+  let $ = null
+  before(async function () {
+    await testBlog.load()
+    $ = await testBlog.loadPage('/utb/feed')
   })
 
   it('should have an atom XML feed tag', function () {

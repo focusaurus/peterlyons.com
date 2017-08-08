@@ -5,7 +5,7 @@ block body
   article
     span.date= post.presented.date
     h1= post.title
-    != postContent
+    != post.content
   nav.blog
     a.blogIndex(href=post.blog.prefix) back to blog index
     ul

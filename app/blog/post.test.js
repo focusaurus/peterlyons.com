@@ -52,18 +52,18 @@ describe('Post model class', function () {
     expect(post.uri()).toEqual('/unit-test-blog/2014/01/unit-test-title')
   })
 
-  it('should handle non-existent metadata correctly', function (done) {
+  it('should handle non-existent metadata correctly', function () {
     var post = new Post()
-    post.loadMetadata('/tmp/no-such-metadata.json', function (error) {
+    return post.loadMetadata('/tmp/no-such-metadata.json')
+    .catch(function (error) {
       expect(error).toBeAnInstanceOf(Error)
       expect(error.code).toEqual('ENOENT')
-      done()
     })
   })
 
-  it('should save properly', function (done) {
-    post.save(function (error) {
-      expect(error).notToExist()
+  it('should save properly', function () {
+    return post.save()
+    .then(() => {
       var content = fs.readFileSync(post.contentPath(), 'utf-8')
       expect(content).toEqual('# Unit Test Post Content\n')
       var metadataString = fs.readFileSync(post.metadataPath(), 'utf-8')
@@ -72,7 +72,6 @@ describe('Post model class', function () {
       expect(metadata).toHaveProperty('name', 'unit-test-title')
       expect(metadata).toHaveProperty('title', 'Unit Test Title')
       expect(metadata).toHaveProperty('publish_date')
-      done()
     })
   })
 })

@@ -2,12 +2,10 @@ var testBlog = require('./test-blog')
 var expect = require('chaimel')
 
 describe('a blog post list page', function () {
-  var $ = null
-  before(function (done) {
-    testBlog.loadPage('/utb', function (error, dom) {
-      $ = dom
-      done(error)
-    })
+  let $ = null
+  before(async function () {
+    await testBlog.load()
+    $ = await testBlog.loadPage('/utb')
   })
 
   it('should have nicely formatted dates', function () {

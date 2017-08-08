@@ -2,12 +2,10 @@ var expect = require('chaimel')
 var testBlog = require('./test-blog')
 
 describe('a blog post page', function () {
-  var $
-  before(function (done) {
-    testBlog.loadPage('/utb/2015/12/unit-test-post-1', function (error, dom) {
-      $ = dom
-      done(error)
-    })
+  let $ = null
+  before(async function () {
+    await testBlog.load()
+    $ = await testBlog.loadPage('/utb/2015/12/unit-test-post-1')
   })
 
   it('should have the post title', function () {
@@ -48,12 +46,10 @@ describe('a blog post page', function () {
 })
 
 describe('the most recent blog post', function () {
-  var $
-  before(function (done) {
-    testBlog.loadPage('/utb/2016/01/unit-test-post-11', function (error, dom) {
-      $ = dom
-      done(error)
-    })
+  let $ = null
+  before(async function () {
+    await testBlog.load()
+    $ = await testBlog.loadPage('/utb/2016/01/unit-test-post-11')
   })
 
   it('should have the post title', function () {
@@ -75,12 +71,10 @@ describe('the most recent blog post', function () {
 })
 
 describe('a blog post in the middle', function () {
-  var $
-  before(function (done) {
-    testBlog.loadPage('/utb/2015/12/unit-test-post-2', function (error, dom) {
-      $ = dom
-      done(error)
-    })
+  let $ = null
+  before(async function () {
+    await testBlog.load()
+    $ = await testBlog.loadPage('/utb/2015/12/unit-test-post-2')
   })
 
   it('should have the post title', function () {

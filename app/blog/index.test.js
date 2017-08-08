@@ -3,6 +3,8 @@ var cheerio = require('cheerio')
 var expect = require('chaimel')
 var testBlog = require('./test-blog')
 
+before(() => testBlog.load())
+
 describe('Blog constructor', function () {
   it('should accept and store options properly', function () {
     var options = {
@@ -18,36 +20,23 @@ describe('Blog constructor', function () {
 })
 
 describe('a request for a non-existent blog post name', function () {
-  it('should 404', function (done) {
-    testBlog(function (ignore, request) {
-      request.get('/utb/2014/01/no-such-post').expect(404).end(done)
-    })
+  it('should 404', function () {
+    return testBlog.request.get('/utb/2014/01/no-such-post').expect(404)
   })
 })
 
 describe('a static image request', function () {
-  it('should 200', function (done) {
-    testBlog(function (ignore, request) {
-      request
+  it('should 200', function () {
+    return testBlog.request
         .get('/utb/images/one.png')
         .expect(200)
         .expect('Content-Type', 'image/png')
-        .end(done)
-    })
   })
 })
 
 describe('the preview converter', function () {
-  var request
-  before(function (done) {
-    testBlog(function (error, req) {
-      request = req
-      done(error)
-    })
-  })
-
   it('should convert markdown to HTML', function (done) {
-    request.post('/utb/convert')
+    testBlog.request.post('/utb/convert')
       .send('# Header One')
       .set('Content-Type', 'text/x-markdown')
       .set('Accept', 'text/html')
@@ -60,7 +49,7 @@ describe('the preview converter', function () {
   })
 
   it('should have the flickr & youtube pipeline middleware', function (done) {
-    request.post('/utb/convert')
+    testBlog.request.post('/utb/convert')
       .send('<youtube href="http://www.youtube.com/embed/K27MA8v91D4"></youtube>\n<flickrshow href="https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/"></flickrshow>') // eslint-disable-line max-len
       .set('Content-Type', 'text/x-markdown')
       .set('Accept', 'text/html')

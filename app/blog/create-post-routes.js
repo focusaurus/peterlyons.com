@@ -1,95 +1,75 @@
-var async = require('async')
+const {promisify} = require('util')
+const childProcess = require('child_process')
+const promiseHandler = require('./promise-handler')
 var bcrypt = require('bcryptjs')
 var bodyParser = require('body-parser')
 var config = require('config3')
-var execFile = require('child_process').execFile
 var fs = require('fs')
 var log = require('bole')(__filename)
 var Post = require('./post')
 
-function verifyPassword (password, hash, callback) {
-  bcrypt.compare(password, hash, function (error, correctPassword) {
-    if (error) {
-      callback(error)
-      return
-    }
-    if (!correctPassword) {
-      callback('incorrect password')
-      return
-    }
-    callback()
-  })
+const readFileAsync = promisify(fs.readFile)
+const compareAsync = promisify(bcrypt.compare)
+const execFileAsync = promisify(childProcess.execFile)
+
+async function verifyPasswordAsync (password, hash) {
+  const correctPassword = compareAsync(password, hash)
+  if (!correctPassword) {
+    throw new Error('incorrect password')
+  }
+  return correctPassword
 }
 
-function newBlogPrepare (callback) {
+async function newBlogPrepare () {
   var script = config.blog.newBlogPreparePath
-  execFile(script, [], function (error, stdout, stderr) {
-    if (error) {
-      log.error({
-        err: error,
-        stdout: stdout,
-        stderr: stderr
-      }, 'Error preparing git repo for new blog')
-      callback(error)
-      return
-    }
+  try {
+    const io = await execFileAsync(script, [])
     log.info({
-      stdout: stdout.toString(),
-      stderr: stderr.toString()
+      stdout: io.stdout.toString(),
+      stderr: io.stderr.toString()
     }, 'new blog prepare succeeded')
-    callback()
-  })
+  } catch (error) {
+    log.error({ err: error }, 'Error preparing git repo for new blog')
+    throw error
+  }
 }
 
-function savePost (req, callback) {
+async function savePost (req) {
   var post = new Post(req.app.locals.blog, req.body.title, new Date(), 'md')
   post.content = (req.body.content || '').trim() + '\n'
   post.base = config.blog.postBasePath
-  post.save(callback)
+  await post.save()
 }
 
-function newBlogFinalize (token, post, callback) {
+async function newBlogFinalize (token, post, callback) {
   var script = config.blog.newBlogFinalizePath
-  execFile(script, [token], function (error, stdout, stderr) {
-    if (error) {
-      log.error({
-        err: error,
-        stdout: stdout,
-        stderr: stderr
-      }, 'Error finalizing git commit/push for new blog')
-      callback(error)
-      return
-    }
+  try {
+    const io = await execFileAsync(script, [token])
     log.info({
-      stdout: stdout.toString(),
-      stderr: stderr.toString()
+      stdout: io.stdout.toString(),
+      stderr: io.stderr.toString()
     }, 'new blog finalized successfully')
     callback(null, post)
-  })
+  } catch (error) {
+    log.error({ err: error }, 'Error finalizing git commit/push for new blog')
+    throw error
+  }
 }
 
-function createPost (req, res) {
+async function createPost (req, res) {
   var password = req.body.password
-  var work = [
-    async.apply(fs.readFile, config.blog.hashPath, 'utf8'),
-    async.apply(verifyPassword, password),
-    async.apply(newBlogPrepare),
-    async.apply(savePost, req),
-    async.apply(newBlogFinalize, password)
-  ]
-  async.waterfall(work, function (error, post) {
-    if (error) {
-      log.error(error, 'Could not save blog post' + req.body.title)
-      return res.status(500).send(error)
-    }
-    var response = post.metadata()
-    response.uri = post.uri()
-    res.send(response)
-    post.blog.load()
-  })
+  const hash = await readFileAsync(config.blog.hashPath, 'utf8')
+  await verifyPasswordAsync(password, hash)
+  await newBlogPrepare
+  const post = await savePost(req)
+  await newBlogFinalize(password, post)
+  var response = post.metadata()
+  response.uri = post.uri()
+  res.send(response)
+  post.blog.load()
 }
 
 module.exports = {
-  handler: [bodyParser.json(), createPost],
-  verifyPassword: verifyPassword
+  handler: [bodyParser.json(), promiseHandler(createPost)],
+  verifyPasswordAsync: verifyPasswordAsync
 }
