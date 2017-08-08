@@ -1,40 +1,47 @@
-var cheerio = require('cheerio')
-var expect = require('chaimel')
-var request = require('supertest')(process.env.URL)
-var testUtils = require('../test-utils')
-var smokeTests = require('../smoke-tests')
+const cheerio = require("cheerio");
+const expect = require("chaimel");
+const request = require("supertest")(process.env.URL);
+const testUtils = require("../test-utils");
+const smokeTests = require("../smoke-tests");
 
-var configs = [
-  ['/app/photos?gallery=burning_man_2011', /Gallery/],
-  ['/persblog', /travel/],
-  ['/persblog/2007/10/hometown-dracula', /Randall/]
-]
+const configs = [
+  ["/app/photos?gallery=burning_man_2011", /Gallery/],
+  ["/persblog", /travel/],
+  ["/persblog/2007/10/hometown-dracula", /Randall/]
+];
 
-smokeTests('persblog smoke tests', process.env.URL, configs)
+smokeTests("persblog smoke tests", process.env.URL, configs);
 
-describe('the photos page', function () {
-  var $ = null
+describe("the photos page", () => {
+  let $ = null;
 
-  before(function (done) {
+  before(done => {
     request
-      .get('/app/photos?gallery=burning_man_2011')
+      .get("/app/photos?gallery=burning_man_2011")
       .expect(200)
-      .end(function (error, res) {
-        expect(error).notToExist()
-        $ = cheerio.load(res.text)
-        done(error)
-      })
-  })
+      .end((error, res) => {
+        expect(error).notToExist();
+        $ = cheerio.load(res.text);
+        done(error);
+      });
+  });
 
-  it('should have the photo surrounding structure', function () {
+  it("should have the photo surrounding structure", () => {
     testUtils.assertSelectors(
-      $, 'h1#photo', 'figure', 'figcaption', '#nextPrev', 'a.thumbnail')
-  })
+      $,
+      "h1#photo",
+      "figure",
+      "figcaption",
+      "#nextPrev",
+      "a.thumbnail"
+    );
+  });
 
-  it('should redirect to the newest gallery', function (done) {
-    request.get('/app/photos')
+  it("should redirect to the newest gallery", done => {
+    request
+      .get("/app/photos")
       .expect(302)
-      .expect('Location', '/photos?gallery=burning_man_2011')
-      .end(done)
-  })
-})
+      .expect("Location", "/photos?gallery=burning_man_2011")
+      .end(done);
+  });
+});

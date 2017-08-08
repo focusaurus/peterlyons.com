@@ -1,31 +1,27 @@
-var request = require('./request')
-var expect = require('chaimel')
+const request = require("./request");
+const expect = require("chaimel");
 
-var testConfigs = [
-  ['/', /personal site/],
-  ['/bands', /Afronauts/],
-  ['/oberlin', /Edison/],
-  ['/favorites', /Imogen/]
-]
+const testConfigs = [
+  ["/", /personal site/],
+  ["/bands", /Afronauts/],
+  ["/oberlin", /Edison/],
+  ["/favorites", /Imogen/]
+];
 
-request.smoke(testConfigs)
+request.smoke(testConfigs);
 
-var proNav = [
-  'Code Conventions',
-  'Career',
-  'Projects'
-]
-describe('the layout for personal site', function () {
-  var body
-  before(function (done) {
-    request.get('/').expect(200).end(function (error, res) {
-      body = res && res.text
-      done(error)
-    })
-  })
-  proNav.forEach(function (page) {
-    it('should not include pro navigation' + page, function () {
-      expect(body).notToInclude(page)
-    })
-  })
-})
+const proNav = ["Code Conventions", "Career", "Projects"];
+describe("the layout for personal site", () => {
+  let body;
+  before(done => {
+    request.get("/").expect(200).end((error, res) => {
+      body = res && res.text;
+      done(error);
+    });
+  });
+  proNav.forEach(page => {
+    it(`should not include pro navigation${page}`, () => {
+      expect(body).notToInclude(page);
+    });
+  });
+});

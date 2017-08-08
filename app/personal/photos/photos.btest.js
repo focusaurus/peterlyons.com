@@ -1,30 +1,31 @@
-var React = require('react')
-var PhotoGallery = require('./photo-gallery')
-var expect = require('chaimel')
-var galleries = require('./galleries-test')
-var enzyme = require('enzyme')
+const React = require("react");
+const PhotoGallery = require("./photo-gallery");
+const expect = require("chaimel");
+const galleries = require("./galleries-test");
+const enzyme = require("enzyme");
 
-describe('PhotoGallery', function () {
-  var wrapper
-  before(function () {
-    var element = React.createElement(PhotoGallery, {
-      galleries: galleries,
+describe("PhotoGallery", () => {
+  let wrapper;
+  before(() => {
+    const element = React.createElement(PhotoGallery, {
+      galleries,
       gallery: galleries[0],
       photo: galleries[0].photos[2]
-    })
-    wrapper = enzyme.mount(element)
-  })
+    });
+    wrapper = enzyme.mount(element);
+  });
 
-  it('should have the correct list of galleries', function () {
-    var galleries = wrapper.find('a.gallerylink')
-    expect(galleries).toHaveLength(2)
-    expect(galleries.get(1).innerText).toEqual('Unit Test Gallery 2')
-  })
+  it("should have the correct list of galleries", () => {
+    const gall2 = wrapper.find("a.gallerylink");
+    expect(gall2).toHaveLength(2);
+    expect(gall2.get(1).innerText).toEqual("Unit Test Gallery 2");
+  });
 
-  it('should have the correct thumbnails', function () {
-    var thumbnails = wrapper.find('a.thumbnail')
-    expect(thumbnails).toHaveLength(3)
+  it("should have the correct thumbnails", () => {
+    const thumbnails = wrapper.find("a.thumbnail");
+    expect(thumbnails).toHaveLength(3);
     expect(thumbnails.get(0).href).toInclude(
-      '/app/photos?gallery=burning_man_2011&photo=001_hexayurt_model')
-  })
-})
+      "/app/photos?gallery=burning_man_2011&photo=001_hexayurt_model"
+    );
+  });
+});

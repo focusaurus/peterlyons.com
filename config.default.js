@@ -1,13 +1,13 @@
-var join = require('path').join
-var pack = require('./package')
+const join = require('path').join
+const pack = require('./package')
 
-var IS_PRODUCTION = process.env.NODE_ENV === 'production'
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 function get (name, defaultValue) {
   return process.env['PLWS_' + name.toUpperCase()] || defaultValue
 }
 
-var config = {
+const config = {
   appURI: '/app',
   appVersion: pack.version,
   enableLogger: false, // process.env.NODE_ENV !== 'test',

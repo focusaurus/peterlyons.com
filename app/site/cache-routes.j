@@ -1,7 +1,7 @@
-var cache = require('connect-cache')
-var MemoryStorage = require('connect-cache/lib/storages/memory')
-var TTL = 60 * 1000
-var cacheMW = cache({
+const cache = require('connect-cache')
+const MemoryStorage = require('connect-cache/lib/storages/memory')
+const TTL = 60 * 1000
+const cacheMW = cache({
   rules: [
     {
       regex: /\.css$/,

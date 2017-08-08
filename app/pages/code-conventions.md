@@ -119,7 +119,7 @@ Oh God, it's a mess out there, folks. Things are pretty much hopelessly broken i
     - This also fosters consistency with java, c, python, ruby, and coffeescript.
     - Apostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
 - unix linefeed line endings (no carriage return)
-- Declare variables one-per line each with it's own var keyword
+- Declare variables one-per line each with it's own const keyword
   - Easiest to maintain.
   - Declaring multiple variables with one `var` probably relates back to the convention of declaring all variables at the top of each function, which I do not do and find quite harmful, so declare your variables to keep their codespan as small as possible and use a `var` keyword each time.
   - Comma-first is just bizarre. Keep these people in the same room with the AngularJS dependency injection syntax people.

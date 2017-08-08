@@ -21,14 +21,14 @@ block body
         a#toggleComments(href="#") Show Disqus Blog Comments
   section#comments.none
     #disqus_thread
-    != '<script>var disqus_shortname = "peterlyons-' + post.blog.prefix.slice(1) + '";</script>'
+    != '<script>const disqus_shortname = "peterlyons-' + post.blog.prefix.slice(1) + '";</script>'
     script.
       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-      var disqus_developer = 1;
+      const disqus_developer = 1;
 
       /* * * DON'T EDIT BELOW THIS LINE * * */
       (function() {
-          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          const dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
@@ -40,9 +40,9 @@ block append scripts
       if (event) {
         event.preventDefault();
       }
-      var classList = document.querySelector("#comments").classList;
-      var hidden = classList.contains("none");
-      var newText = hidden ? "Hide Comments" : "Show Disqus Blog Comments";
+      const classList = document.querySelector("#comments").classList;
+      const hidden = classList.contains("none");
+      const newText = hidden ? "Hide Comments" : "Show Disqus Blog Comments";
       document.querySelector("#toggleComments").textContent = newText;
       if (hidden) {
         classList.remove("none");

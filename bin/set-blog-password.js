@@ -1,19 +1,19 @@
 #!/usr/bin/env node
-var bcrypt = require('bcryptjs')
-var fs = require('fs')
-var join = require('path').join
-var promptly = require('promptly')
+const bcrypt = require("bcryptjs");
+const fs = require("fs");
+const join = require("path").join;
+const promptly = require("promptly");
 
-var outPath = join(__dirname, '../../data', 'blog_password.bcrypt')
+const outPath = join(__dirname, "../../data", "blog_password.bcrypt");
 
 /* eslint-disable no-sync */
 /* eslint-disable no-process-exit */
-function save (nope, newPassword) {
-  var salt = bcrypt.genSaltSync(10)
-  var hash = bcrypt.hashSync(newPassword, salt)
-  fs.writeFileSync(outPath, hash, 'utf8')
-  console.log('password hash stored at ' + outPath)
-  process.exit(0)
+function save(nope, newPassword) {
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(newPassword, salt);
+  fs.writeFileSync(outPath, hash, "utf8");
+  console.log("password hash stored at", outPath);
+  process.exit(0);
 }
 
-promptly.prompt('New blog password: ', {silent: true}, save)
+promptly.prompt("New blog password: ", { silent: true }, save);

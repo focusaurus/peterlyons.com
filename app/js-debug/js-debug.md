@@ -51,9 +51,9 @@ Stick to one statement per line, and avoid complex nested expressions. Rather, p
 
 Make this more debugger-friendly (and more maintainer-friendly in general).
 
-    var config = lookupConfig(configName);
-    var ruleSet = getRuleSet(config);
-    var scores = getTeamScores(teams);
+    const config = lookupConfig(configName);
+    const ruleSet = getRuleSet(config);
+    const scores = getTeamScores(teams);
     findWinningTeam(scores, ruleSet);
 
 This is much easier to add breakpoints and inspect those intermediate values and step over line by line.

@@ -1,7 +1,10 @@
-var CreatePost = require('./create-post-react')
-var React = require('react')
-var ReactDOM = require('react-dom')
+const CreatePost = require("./create-post-react");
+const React = require("react");
+const ReactDOM = require("react-dom");
+/* global window */
 
-var reactEl = React.createElement(CreatePost, {storage: window.localStorage})
-var domEl = document.querySelector('.create-post-container')
-ReactDOM.render(reactEl, domEl)
+const reactEl = React.createElement(CreatePost, {
+  storage: window.localStorage
+});
+const domEl = window.document.querySelector(".create-post-container");
+ReactDOM.render(reactEl, domEl);

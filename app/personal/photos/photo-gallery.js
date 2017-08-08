@@ -1,51 +1,56 @@
-var _ = require('lodash')
-var GalleryList = require('./gallery-list')
-var Photo = require('./photo')
-var querystring = require('querystring')
-var React = require('react')
-var request = require('superagent')
-var Thumbnails = require('./thumbnails')
+const _ = require("lodash");
+const GalleryList = require("./gallery-list");
+const Photo = require("./photo");
+const querystring = require("querystring");
+const React = require("react");
+const request = require("superagent");
+const Thumbnails = require("./thumbnails");
 
-var RD = React.DOM
+const RD = React.DOM;
+/* global window */
 
-var PhotoGallery = React.createClass({
-  getInitialState: function () {
+const PhotoGallery = React.createClass({
+  getInitialState: function getInitialState() {
     return {
       gallery: this.props.gallery,
       galleries: this.props.galleries,
       photo: this.props.photo || this.props.gallery.photos[0]
-    }
+    };
   },
 
-  onKeyDown: function onKeyDown (event) {
+  onKeyDown: function onKeyDown(event) {
     switch (event.code || event.keyCode) {
-      case 'ArrowRight':
+      case "ArrowRight":
       case 39:
         if (this.state.nextPhoto) {
-          this.viewPhoto(this.state.nextPhoto.name)
+          this.viewPhoto(this.state.nextPhoto.name);
         }
-        break
-      case 'ArrowLeft':
+        break;
+      case "ArrowLeft":
       case 37:
         if (this.state.previousPhoto) {
-          this.viewPhoto(this.state.previousPhoto.name)
+          this.viewPhoto(this.state.previousPhoto.name);
         }
-        break
+        break;
+      // no default
     }
   },
 
-  render: function render () {
-    var index = _.findIndex(
-      this.state.gallery.photos, {
-        name: this.state.photo.name
-      })
-    this.state.previousPhoto = this.state.gallery.photos[index - 1]
-    this.state.nextPhoto = this.state.gallery.photos[index + 1]
+  render: function render() {
+    const index = _.findIndex(this.state.gallery.photos, {
+      name: this.state.photo.name
+    });
+    this.state.previousPhoto = this.state.gallery.photos[index - 1];
+    this.state.nextPhoto = this.state.gallery.photos[index + 1];
 
-    return RD.div({className: 'gallery-app'},
-      RD.h1({
-        id: 'photo'
-      }, this.state.gallery.displayName),
+    return RD.div(
+      {className: "gallery-app"},
+      RD.h1(
+        {
+          id: "photo"
+        },
+        this.state.gallery.displayName
+      ),
       React.createElement(Photo, {
         photo: this.state.photo,
         previousPhoto: this.state.previousPhoto,
@@ -60,57 +65,54 @@ var PhotoGallery = React.createClass({
         galleries: this.state.galleries,
         viewGallery: this.viewGallery
       })
-    )
+    );
   },
 
-  viewPhoto: function viewPhoto (photoName) {
-    var match = {
+  viewPhoto: function viewPhoto(photoName) {
+    const match = {
       name: photoName
-    }
-    var photo = _.find(this.state.gallery.photos, match) || this.state.photo
-    this.setState({photo: photo})
-    setTimeout(this.navigate)
+    };
+    const photo = _.find(this.state.gallery.photos, match) || this.state.photo;
+    this.setState({photo});
+    setTimeout(this.navigate);
   },
 
-  viewGallery: function viewGallery (galleryDirName) {
-    var self = this
-    request('/galleries/' + galleryDirName)
-      .end(function (error, res) {
-        if (error) {
-          console.error(error) // eslint-disable-line no-console
-          return
-        }
-        var gallery = res.body
-        self.setState({
-          gallery: gallery,
-          photo: gallery.photos[0]
-        })
-        self.navigate()
-      })
+  viewGallery: function viewGallery(galleryDirName) {
+    const self = this;
+    request(`/galleries/${galleryDirName}`).end((error, res) => {
+      if (error) {
+        console.error(error); // eslint-disable-line no-console
+        return;
+      }
+      const gallery = res.body;
+      self.setState({
+        gallery,
+        photo: gallery.photos[0]
+      });
+      self.navigate();
+    });
   },
 
-  navigate: function navigate () {
-    window.document.title = this.state.gallery.displayName + ' Photo Gallery'
-    var query = {
+  navigate: function navigate() {
+    window.document.title = `${this.state.gallery.displayName} Photo Gallery`;
+    const query = {
       gallery: this.state.gallery.dirName,
       photo: this.state.photo.name
-    }
-    var newUrl = window.location.pathname +
-      '?' +
-      querystring.stringify(query) +
-      '#photo'
-    window.history.pushState(this.state, document.title, newUrl)
-    document.getElementById('photo').scrollIntoView()
+    };
+    const newUrl = `${window.location.pathname}?${querystring.stringify(
+      query
+    )}#photo`;
+    window.history.pushState(this.state, window.document.title, newUrl);
+    window.document.getElementById("photo").scrollIntoView();
   },
 
-  componentDidMount: function componentDidMount () {
-    window.addEventListener('keydown', this.onKeyDown)
+  componentDidMount: function componentDidMount() {
+    window.addEventListener("keydown", this.onKeyDown);
   },
 
-  componentWillUnmount: function componentWillUnmount () {
-    window.removeEventListener('keydown', this.onKeyDown)
+  componentWillUnmount: function componentWillUnmount() {
+    window.removeEventListener("keydown", this.onKeyDown);
   }
+});
 
-})
-
-module.exports = PhotoGallery
+module.exports = PhotoGallery;

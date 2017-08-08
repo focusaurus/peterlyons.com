@@ -1,28 +1,28 @@
-const expect = require('chaimel')
+const expect = require("chaimel");
 
-function assertSelectors ($) {
-  const selectors = Array.prototype.slice.call(arguments, 1)
-  selectors.forEach(function (selector) {
+function assertSelectors($, ...selectors) {
+  selectors.forEach(selector => {
     expect($(selector)).toHaveLengthAbove(
-      0, 'Document missing selector ' + selector)
-  })
+      0,
+      `Document missing selector ${selector}`
+    );
+  });
 }
 
-function assertSubstrings ($) {
-  const html = $.html()
-  const phrases = Array.prototype.slice.call(arguments, 1)
-  phrases.forEach(function (phrase) {
-    expect(html).toInclude(phrase, 'Document missing phrase ' + phrase)
-  })
+function assertSubstrings($, ...phrases) {
+  const html = $.html();
+  phrases.forEach(phrase => {
+    expect(html).toInclude(phrase, `Document missing phrase ${phrase}`);
+  });
 }
 
-function assertDeck ($) {
-  expect($('.reveal .slides ').length).toEqual(1)
-  assertSubstrings($, 'reveal.js')
+function assertDeck($) {
+  expect($(".reveal .slides ").length).toEqual(1);
+  assertSubstrings($, "reveal.js");
 }
 
 module.exports = {
-  assertSelectors: assertSelectors,
-  assertSubstrings: assertSubstrings,
-  assertDeck: assertDeck
-}
+  assertSelectors,
+  assertSubstrings,
+  assertDeck
+};

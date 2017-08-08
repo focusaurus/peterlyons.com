@@ -264,13 +264,13 @@ When you have resolved a high-profile issue, you will want to send out a status 
 
     Technical Details:
 
-    The /var file system on tp904.oh.example.com filled up. This caused the
+    The /const file system on tp904.oh.example.com filled up. This caused the
     transaction processor to exit. We freed up space by moving archived log
     files to the SAN storage. We ran an integrity check on the transaction files
     (chkinteg.09), and no problems were detected. We restarted the transaction
     processor and verified that it was able to process all transactions and get
     caught up. We added an OpenView alert script for all transaction hosts to
-    warn if /var becomes more than 85% full.
+    warn if /const becomes more than 85% full.
 
 #### Sample #2 of two-part email format
 

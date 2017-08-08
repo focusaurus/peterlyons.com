@@ -1,42 +1,43 @@
-var pd = require('./prevent-default')
-var React = require('react')
+const pd = require("./prevent-default");
+const React = require("react");
 
-var RD = React.DOM
+const RD = React.DOM;
 
-function links (props) {
-  'use strict'
-  var links = []
+function links(props) {
+  const returnLinks = [];
   if (props.previousPhoto) {
-    var attrs = {
+    const attrs = {
       href: props.previousPhoto.pageURI,
-      onClick: pd(function (event) {
-        props.viewPhoto(props.previousPhoto.name)
+      onClick: pd(() => {
+        props.viewPhoto(props.previousPhoto.name);
       }),
-      key: 'previous',
-      dangerouslySetInnerHTML: {__html: '&larr;previous&nbsp;'}
-    }
-    links.push(RD.a(attrs))
+      key: "previous",
+      dangerouslySetInnerHTML: {__html: "&larr;previous&nbsp;"}
+    };
+    returnLinks.push(RD.a(attrs));
   }
 
   if (props.nextPhoto) {
-    var attrs2 = {
+    const attrs2 = {
       href: props.nextPhoto.pageURI,
-      onClick: pd(function (event) {
-        props.viewPhoto(props.nextPhoto.name)
+      onClick: pd(() => {
+        props.viewPhoto(props.nextPhoto.name);
       }),
-      key: 'next',
-      dangerouslySetInnerHTML: {__html: 'next&rarr;'}
-    }
-    links.push(RD.a(attrs2))
+      key: "next",
+      dangerouslySetInnerHTML: {__html: "next&rarr;"}
+    };
+    returnLinks.push(RD.a(attrs2));
   }
-  return links
+  return returnLinks;
 }
 
-function Photo (props) {
-  var photo = props.photo
-  return RD.div({className: 'photo'},
-    RD.div({id: 'nextPrev'}, links(props)),
-    RD.figure(null,
+function Photo(props) {
+  const photo = props.photo;
+  return RD.div(
+    {className: "photo"},
+    RD.div({id: "nextPrev"}, links(props)),
+    RD.figure(
+      null,
       RD.img({
         src: photo.fullSizeURI,
         alt: photo.caption,
@@ -44,7 +45,7 @@ function Photo (props) {
       }),
       RD.figcaption(null, photo.caption)
     )
-  )
+  );
 }
 
-module.exports = Photo
+module.exports = Photo;

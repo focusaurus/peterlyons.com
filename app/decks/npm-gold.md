@@ -18,13 +18,13 @@
   //Don't need lodash for this. Native is OK.
 });
 
-var _ = require("lodash");
-var user = {
+const _ = require("lodash");
+const user = {
   name: "Bob",
   email: "bob@example.com",
   shoeSize: 11
 };
-var variant = _.pick(user, "name", "email");
+const variant = _.pick(user, "name", "email");
 console.log(variant);
 //{ name: 'Bob', email: 'bob@example.com' }
 ```

@@ -1,25 +1,28 @@
-var pd = require('./prevent-default')
-var React = require('react')
+const pd = require("./prevent-default");
+const React = require("react");
 
-var RD = React.DOM
+const RD = React.DOM;
 
-function Thumbnails (props) {
-  var thumbnails = props.gallery.photos.map(function (photo) {
-    return RD.a({
-      className: 'thumbnail',
-      href: photo.pageURI,
-      key: photo.pageURI,
-      onClick: pd(function (event) {
-        props.viewPhoto(photo.name)
-      })},
+function Thumbnails(props) {
+  const thumbnails = props.gallery.photos.map(photo =>
+    RD.a(
+      {
+        className: "thumbnail",
+        href: photo.pageURI,
+        key: photo.pageURI,
+        onClick: pd(() => {
+          props.viewPhoto(photo.name);
+        })
+      },
       RD.img({
-        className: 'thumbnail',
+        className: "thumbnail",
         src: photo.thumbnailURI,
         alt: photo.caption,
-        title: photo.caption })
-      )
-  })
-  return RD.div({className: 'thumbnails'}, thumbnails)
+        title: photo.caption
+      })
+    )
+  );
+  return RD.div({className: "thumbnails"}, thumbnails);
 }
 
-module.exports = Thumbnails
+module.exports = Thumbnails;

@@ -1,8 +1,9 @@
-var PhotoGallery = require('./photo-gallery')
-var React = require('react')
-var ReactDOM = require('react-dom')
-var sharify = require('sharify')
+const PhotoGallery = require('./photo-gallery')
+const React = require('react')
+const ReactDOM = require('react-dom')
+const sharify = require('sharify')
 
-var galleryApp = document.querySelector('.gallery-app')
-var element = React.createElement(PhotoGallery, sharify.data)
+/* global document */
+const galleryApp = document.querySelector('.gallery-app')
+const element = React.createElement(PhotoGallery, sharify.data)
 ReactDOM.render(element, galleryApp)

@@ -1,23 +1,24 @@
-function personal (req) {
-  return 'http://peterlyons.org' + req.url
+function personal(req) {
+  return `http://peterlyons.org${req.url}`;
 }
 
-const matchers = []
-matchers.push([/^\/app\/photos/i, personal])
-matchers.push([/^\/bands(\.html)?/i, personal])
-matchers.push([/^\/favorites(\.html)?/i, personal])
-matchers.push([/^\/oberlin(\.html)?/i, personal])
-matchers.push([/^\/persblog/i, personal])
-matchers.push([/^\/photos/i, personal])
+const matchers = [];
+matchers.push([/^\/app\/photos/i, personal]);
+matchers.push([/^\/bands(\.html)?/i, personal]);
+matchers.push([/^\/favorites(\.html)?/i, personal]);
+matchers.push([/^\/oberlin(\.html)?/i, personal]);
+matchers.push([/^\/persblog/i, personal]);
+matchers.push([/^\/photos/i, personal]);
 
-function redirectHandler (req, res, next) {
+function redirectHandler(req, res, next) {
+  // eslint-disable-next-line no-plusplus
   for (let i = 0; i < matchers.length; i++) {
     if (matchers[i][0].test(req.url)) {
-      res.redirect(301, matchers[i][1](req))
-      return
+      res.redirect(301, matchers[i][1](req));
+      return;
     }
   }
-  next()
+  next();
 }
 
-module.exports = redirectHandler
+module.exports = redirectHandler;

@@ -24,7 +24,7 @@ build_browserify() {
   local uglify_args=""
   if [[ "$1" == "production" ]]; then
     bundler="browserify"
-    uglify_args="--compress warnings=false --mangle --keep-fnames --screw-ie8"
+    uglify_args="--compress --mangle --keep-fnames"
   fi
 
   echo -n "${bundler}…"
@@ -37,7 +37,9 @@ build_browserify() {
     --require app/personal/photos/photos-main
   temp=$(mktemp -t plws-build-XXXX)
   cp "${out}" "${temp}"
+  echo -n "uglify…"
   uglifyjs ${uglify_args} "${temp}" | gzip > "${out}.gz"
+  echo "✓"
 }
 
 if [[ "$1" == "production" ]]; then

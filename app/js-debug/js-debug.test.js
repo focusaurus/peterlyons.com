@@ -1,24 +1,25 @@
-var request = require('../request')
-var testUtils = require('../test-utils')
+const request = require("../request");
+const testUtils = require("../test-utils");
 
-describe('the jsDebug', function () {
-  var $ = null
+describe("the jsDebug", () => {
+  let $ = null;
 
-  before(function (done) {
-    request.loadPage('/js-debug', function (error, dom) {
-      $ = dom
-      done(error)
-    })
-  })
+  before(done => {
+    request.loadPage("/js-debug", (error, dom) => {
+      $ = dom;
+      done(error);
+    });
+  });
 
-  it('should have the screencast youtube video', function () {
-    testUtils.assertSelectors($, 'iframe', 'button.stepSync')
-  })
+  it("should have the screencast youtube video", () => {
+    testUtils.assertSelectors($, "iframe", "button.stepSync");
+  });
 
-  it('should redirect /jsDebug to /js-debug', function (done) {
-    request.get('/jsDebug')
+  it("should redirect /jsDebug to /js-debug", done => {
+    request
+      .get("/jsDebug")
       .expect(301)
-      .expect('Location', '/js-debug')
-      .end(done)
-  })
-})
+      .expect("Location", "/js-debug")
+      .end(done);
+  });
+});

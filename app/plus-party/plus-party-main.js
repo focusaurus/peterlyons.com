@@ -1,4 +1,5 @@
-var plusParty = require('./plus-party')
-var ReactDOM = require('react-dom')
+const plusParty = require("./plus-party");
+const ReactDOM = require("react-dom");
 
-ReactDOM.render(plusParty.PlusParty, document.querySelector('.plus-party'))
+/* global document */
+ReactDOM.render(plusParty.PlusParty, document.querySelector(".plus-party"));

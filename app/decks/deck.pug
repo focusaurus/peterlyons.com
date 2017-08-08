@@ -55,8 +55,8 @@ html(lang="en")
       function fragment (element) {
         element.classList.add('fragment')
       }
-      var $ = document.querySelectorAll.bind(document)
-      var forEach = Array.prototype.forEach
+      const $ = document.querySelectorAll.bind(document)
+      const forEach = Array.prototype.forEach
       Reveal.addEventListener('ready', function onReady(event) {
         forEach.call($('figure'), fragment)
         forEach.call($('li'), fragment)
@@ -66,8 +66,8 @@ html(lang="en")
         forEach.call($('h4'), fragment)
         forEach.call($('h5'), fragment)
         forEach.call($('h6'), fragment)
-        var codes = document.querySelectorAll('pre > code')
-        for (var i = 0; i < codes.length; i++) {
+        const codes = document.querySelectorAll('pre > code')
+        for (const i = 0; i < codes.length; i++) {
           codes[i].parentElement.classList.add('fragment')
         }
         forEach.call($('a'), function (link) {
