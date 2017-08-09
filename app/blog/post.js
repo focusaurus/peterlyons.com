@@ -56,7 +56,7 @@ class Post {
     this.metadataPath = metadataPath;
     const jsonString = await readFileAsync(metadataPath, "utf8");
     const metadata = JSON.parse(jsonString);
-    _.extend(this, metadata);
+    Object.assign(this, metadata);
     this.publish_date = new Date(this.publish_date);
     // load next, previous links
     Object.assign(this, this.blog.postLinks[this.uri()]);

@@ -17,7 +17,7 @@ const globAsync = util.promisify(glob);
 
 function flushCache(req, res) {
   const blog = res.app.locals.blog;
-  log.info("flushing blog cache", { title: blog.title });
+  log.info("flushing blog cache", {title: blog.title});
   blog.load();
   res.redirect(blog.prefix);
 }
@@ -27,7 +27,7 @@ function Blog(options) {
     return new Blog();
   }
   events.EventEmitter.call(this);
-  _.extend(
+  Object.assign(
     this,
     _.pick(options, "title", "subtitle", "basePath", "prefix", "staticPath")
   );
@@ -48,7 +48,7 @@ function Blog(options) {
     .get((req, res) => {
       const element = React.createElement(CreatePost);
       const bodyHtml = server.renderToStaticMarkup(element);
-      res.render("blog/create-post", { bodyHtml });
+      res.render("blog/create-post", {bodyHtml});
     })
     .post(require("./create-post-routes").handler);
   app.post("/convert", viewPost.viewDraft);

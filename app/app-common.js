@@ -8,7 +8,7 @@ const httpErrors = require("httperrors");
 const log = require("bole")(__filename);
 
 function locals(req, res, next) {
-  _.extend(
+  Object.assign(
     res.locals,
     _.pick(config, "appURI", "appVersion", "analytics", "titleSuffix")
   );
