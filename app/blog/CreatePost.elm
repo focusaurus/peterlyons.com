@@ -13,7 +13,7 @@ type Msg
     = SetTitle String
     | SetContentMarkdown String
     | SetContentFocusMark String
-    | ClickFocus
+    | SetGithubToken String
     | Deb (Control Msg)
 
 
@@ -22,6 +22,7 @@ type alias Model =
     , contentMarkdown : String
     , contentFocusMark : String
     , contentState : Control.State Msg
+    , githubToken : String
     }
 
 
@@ -42,8 +43,8 @@ update message model =
         SetTitle newTitle ->
             ( { model | title = newTitle }, Cmd.none )
 
-        ClickFocus ->
-            ( model, focusMarkOut model.contentFocusMark )
+        SetGithubToken token ->
+            ( { model | githubToken = token }, Cmd.none )
 
         SetContentFocusMark content ->
             ( { model
@@ -74,7 +75,8 @@ view model =
         [ h2 [] [ text model.title ]
         , section [ class "preview" ] [ (Markdown.toHtml [] model.contentMarkdown) ]
         , hr [] []
-        , label [] [ text "title", input [ name "title", value model.title, onInput SetTitle ] [] ]
+        , label [ for "title" ] [ text "title" ]
+        , input [ name "title", value model.title, size 35, onInput SetTitle ] []
         , textarea
             [ class "content"
             , cols 80
@@ -82,9 +84,9 @@ view model =
             , Html.Attributes.map debounce <| onInput SetContentFocusMark
             ]
             []
-        , label [] [ text "github token", input [ type_ "password" ] [] ]
+        , label [ for "github-token" ] [ text "github token" ]
+        , input [ type_ "password", name "github-token", size 35, value model.githubToken, onInput SetGithubToken ] []
         , button [ disabled True ] [ text "Save" ]
-        , button [ onClick ClickFocus ] [ text "Focus" ]
         ]
 
 
@@ -94,6 +96,7 @@ init =
       , contentMarkdown = ""
       , contentFocusMark = "write some **markdown** here"
       , contentState = Control.initialState
+      , githubToken = ""
       }
     , Cmd.none
     )
