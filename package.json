@@ -23,6 +23,7 @@
     "process-title": "1.0.0",
     "pug": "2.0.0-beta6",
     "raw-body": "2.1.7",
+    "rawkit": "1.1.1",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "reveal.js": "3.3.0",
