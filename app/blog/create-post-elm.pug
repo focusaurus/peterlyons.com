@@ -1,0 +1,26 @@
+extends ../site/layout
+block variables
+  - title = "Write a new blog post"
+block body
+  .create-post-container
+    != bodyHtml
+block append scripts
+  script(src="/create-post.js")
+  script.
+    const flickrRE = /\!\[flickr\]\((.*)\)/g;
+    const youtubeRE = /\!\[youtube\]\((.*)\)/g;
+    function doFlickr(match, url) {
+      return "<p> This is a flickrshow " + url + "</p>";
+    }
+    function doYoutube(match, url) {
+      return "<p> This is a youtube video " + url + "</p>";
+    }
+    const app = Elm.CreatePost.embed(
+      document.querySelector(".create-post-container")
+    );
+    app.ports.focusMarkOut.subscribe(markdown => {
+      const result = markdown
+        .replace(flickrRE, doFlickr)
+        .replace(youtubeRE, doYoutube);
+      app.ports.focusMarkIn.send(result);
+    });

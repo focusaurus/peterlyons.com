@@ -14,8 +14,16 @@ build_plus_party() {
   cd app/plus-party
   elm-make --yes --output "${plus_party_temp}" PlusParty.elm
   cd -
-  cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" > "${out}"
-  uglifyjs ${uglify_args} "${out}" | gzip > "${out}.gz"
+  cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" >"${out}"
+  uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
+}
+
+build_create_post() {
+  local out="www/create-post.js"
+  cd app/blog
+  elm-make --yes --output "../../${out}" CreatePost.elm
+  cd -
+  uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
 }
 
 build_browserify() {
@@ -38,11 +46,10 @@ build_browserify() {
   temp=$(mktemp -t plws-build-XXXX)
   cp "${out}" "${temp}"
   echo -n "uglify…"
-  uglifyjs ${uglify_args} "${temp}" | gzip > "${out}.gz"
+  uglifyjs ${uglify_args} "${temp}" | gzip >"${out}.gz"
   echo "✓"
 }
 
-if [[ "$1" == "production" ]]; then
-  build_browserify "$@"
-  build_plus_party
-fi
+#@bug build_browserify "$@"
+#@bug build_plus_party
+build_create_post

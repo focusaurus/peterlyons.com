@@ -43,12 +43,15 @@ function Blog(options) {
     res.locals.posts = res.app.locals.blog.posts.map(presentPost);
     res.render("blog/index");
   });
+  app.route("/post-elm").get((req, res) => {
+    res.render("blog/create-post-elm");
+  });
   app
     .route("/post")
     .get((req, res) => {
       const element = React.createElement(CreatePost);
       const bodyHtml = server.renderToStaticMarkup(element);
-      res.render("blog/create-post", {bodyHtml});
+      res.render("blog/create-post-elm", {bodyHtml});
     })
     .post(require("./create-post-routes").handler);
   app.post("/convert", viewPost.viewDraft);
