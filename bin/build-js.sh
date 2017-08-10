@@ -26,12 +26,12 @@ build_plus_party() {
 #   uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
 # }
 
-build_create_post() {
-  local out="www/create-post.js"
-  watchify ./app/blog/create-post-vanilla.js --debug --entry ./app/blog/create-post-vanilla.js --outfile "${out}"
-    # | uglifyjs ${uglify_args} > "${out}"
-  # gzip --force --stdout "${out}" > "${out}.gz"
-}
+# build_create_post() {
+#   local out="www/create-post.js"
+#   watchify ./app/blog/create-post.js --debug --entry ./app/blog/create-post.js --outfile "${out}"
+#     # | uglifyjs ${uglify_args} > "${out}"
+#   # gzip --force --stdout "${out}" > "${out}.gz"
+# }
 
 build_browserify() {
   local bundler="watchify --debug"
@@ -57,6 +57,6 @@ build_browserify() {
   echo "✓"
 }
 
-#@bug build_browserify "$@"
-#@bug build_plus_party
-build_create_post
+build_browserify "$@"
+build_plus_party
+# build_create_post

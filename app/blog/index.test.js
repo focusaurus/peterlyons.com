@@ -1,5 +1,4 @@
 const Blog = require("./");
-const cheerio = require("cheerio");
 const expect = require("chaimel");
 const testBlog = require("./test-blog");
 
@@ -10,12 +9,40 @@ describe("Blog constructor", () => {
     const options = {
       title: "Unit Test Title",
       subtitle: "Unit Test Subtitle",
+      prefix: "/utb1",
       basePath: "/tmp/unit-test-base-path"
     };
     const blog = new Blog(options);
-    expect(blog.title).toEqual(options.title);
-    expect(blog.subtitle).toEqual(options.subtitle);
     expect(blog.basePath).toEqual(options.basePath);
+    expect(blog.prefix).toEqual(options.prefix);
+    expect(blog.subtitle).toEqual(options.subtitle);
+    expect(blog.title).toEqual(options.title);
+  });
+});
+
+describe("blog.load", () => {
+  it("should link next/previous posts", () => {
+    const last = testBlog.posts[0];
+    const penultimate = testBlog.posts[1];
+    const first = testBlog.posts[testBlog.posts.length - 1];
+    expect(first.previous).notToExist();
+    expect(first.next).toDeepEqual({
+      title: "Unit Test Post 2",
+      uri: "/utb/2015/12/unit-test-post-2"
+    });
+    expect(penultimate.previous).toDeepEqual({
+      title: "Unit Test Post 9",
+      uri: "/utb/2016/01/unit-test-post-9"
+    });
+    expect(penultimate.next).toDeepEqual({
+      title: "Unit Test Post 11",
+      uri: "/utb/2016/01/unit-test-post-11"
+    });
+    expect(last.previous).toDeepEqual({
+      title: "Unit Test Post 10",
+      uri: "/utb/2016/01/unit-test-post-10"
+    });
+    expect(last.next).notToExist();
   });
 });
 
@@ -30,40 +57,4 @@ describe("a static image request", () => {
       .get("/utb/images/one.png")
       .expect(200)
       .expect("Content-Type", "image/png"));
-});
-
-describe("the preview converter", () => {
-  it("should convert markdown to HTML", done => {
-    testBlog.request
-      .post("/utb/convert")
-      .send("# Header One")
-      .set("Content-Type", "text/x-markdown")
-      .set("Accept", "text/html")
-      .expect(200)
-      .end((error, res) => {
-        expect(error).notToExist();
-        expect('<h1 id="header-one">Header One</h1>').toEqual(res.text.trim());
-        done();
-      });
-  });
-
-  it("should have the flickr & youtube pipeline middleware", done => {
-    testBlog.request
-      .post("/utb/convert")
-      .send(
-        '<youtube href="http://www.youtube.com/embed/K27MA8v91D4"></youtube>\n<flickrshow href="https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/"></flickrshow>'
-      ) // eslint-disable-line max-len
-      .set("Content-Type", "text/x-markdown")
-      .set("Accept", "text/html")
-      .expect(200)
-      .end((error, res) => {
-        expect(error).notToExist();
-        const $ = cheerio.load(res.text);
-        expect($("youtube")).toHaveLength(0);
-        expect($("iframe")).toHaveLength(2);
-        expect($("flickrshow")).toHaveLength(0);
-        expect($("object")).toHaveLength(0);
-        done();
-      });
-  });
 });

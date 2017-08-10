@@ -3,25 +3,25 @@ block variables
   - title = post.title
 block body
   article
-    span.date= post.presented.date
+    span.date= post.date
     h1= post.title
-    != post.content
+    != post.html
   nav.blog
-    a.blogIndex(href=post.blog.prefix) back to blog index
+    a.blogIndex(href=blog.prefix) back to blog index
     ul
       if post.previous
         li
           | Previous post &nbsp;
-          a.previous(href=post.previous.uri())= post.previous.title
+          a.previous(href=post.previous.uri)= post.previous.title
       if post.next
         li
           | Next post &nbsp;
-          a.next(href=post.next.uri())= post.next.title
+          a.next(href=post.next.uri)= post.next.title
       li
         a#toggleComments(href="#") Show Disqus Blog Comments
   section#comments.none
     #disqus_thread
-    != '<script>const disqus_shortname = "peterlyons-' + post.blog.prefix.slice(1) + '";</script>'
+    != '<script>const disqus_shortname = "peterlyons-' + blog.prefix.slice(1) + '";</script>'
     script.
       /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
       const disqus_developer = 1;

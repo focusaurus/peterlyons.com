@@ -18,7 +18,7 @@ describe("createPost.verifyPasswordAsync", () => {
     try {
       await createPost.verifyPasswordAsync(`${password}NOPE`, hash);
     } catch (error) {
-      expect(error).toBeError();
+      expect(error).toBeAnInstanceOf(Error);
     }
   });
 });

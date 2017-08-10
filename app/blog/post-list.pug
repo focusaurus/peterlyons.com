@@ -4,7 +4,7 @@ a.button#subscribe(href=blog.prefix + "/feed") Subscribe
     alt='Subscribe to my Atom feed',
     title='Subscribe to my Atom Feed')
 .posts
-  each post in posts
+  each post in blog.posts
     .post
       a.postTitle(href=post.uri)= post.title
       div.postDate= post.date

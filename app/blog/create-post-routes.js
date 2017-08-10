@@ -1,21 +1,22 @@
-const { promisify } = require("util");
-const childProcess = require("child_process");
-const promiseHandler = require("../promise-handler");
+const {promisify} = require("util");
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
+const childProcess = require("child_process");
 const config = require("config3");
 const fs = require("fs");
+const httpErrors = require("httperrors");
 const log = require("bole")(__filename);
-const Post = require("./post");
+const postStore = require("./post-store");
+const promiseHandler = require("../promise-handler");
 
 const readFileAsync = promisify(fs.readFile);
 const compareAsync = promisify(bcrypt.compare);
 const execFileAsync = promisify(childProcess.execFile);
 
 async function verifyPasswordAsync(password, hash) {
-  const correctPassword = compareAsync(password, hash);
+  const correctPassword = await compareAsync(password, hash);
   if (!correctPassword) {
-    throw new Error("incorrect password");
+    throw new httpErrors.Forbidden("incorrect password");
   }
   return correctPassword;
 }
@@ -32,19 +33,12 @@ async function newBlogPrepare() {
       "new blog prepare succeeded"
     );
   } catch (error) {
-    log.error({ err: error }, "Error preparing git repo for new blog");
+    log.error({err: error}, "Error preparing git repo for new blog");
     throw error;
   }
 }
 
-async function savePost(req) {
-  const post = new Post(req.app.locals.blog, req.body.title);
-  post.content = `${(req.body.content || "").trim()}\n`;
-  post.base = config.blog.postBasePath;
-  await post.save();
-}
-
-async function newBlogFinalize(password, post, callback) {
+async function newBlogFinalize(password, post) {
   const script = config.blog.newBlogFinalizePath;
   try {
     const io = await execFileAsync(script, [password]);
@@ -55,9 +49,9 @@ async function newBlogFinalize(password, post, callback) {
       },
       "new blog finalized successfully"
     );
-    callback(null, post);
+    return post;
   } catch (error) {
-    log.error({ err: error }, "Error finalizing git commit/push for new blog");
+    log.error({err: error}, "Error finalizing git commit/push for new blog");
     throw error;
   }
 }
@@ -67,12 +61,16 @@ async function createPost(req, res) {
   const hash = await readFileAsync(config.blog.hashPath, "utf8");
   await verifyPasswordAsync(password, hash);
   await newBlogPrepare;
-  const post = await savePost(req);
+  const blog = req.app.locals.blog;
+  const post = {
+    title: req.body.title,
+    content: `${(req.body.content || "").trim()}\n`
+  };
+  const metadataPath = await postStore.save(blog.basePath, post);
   await newBlogFinalize(password, post);
-  const response = post.metadata();
-  response.uri = post.uri();
-  res.send(response);
-  post.blog.load();
+  const loadedPost = postStore.load(blog.prefix, metadataPath);
+  res.send(loadedPost);
+  res.app.locals.blog.load();
 }
 
 module.exports = {

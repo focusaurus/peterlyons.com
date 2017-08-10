@@ -1,15 +1,12 @@
 const _ = require("lodash");
-const CreatePost = require("./create-post-react");
 const errors = require("httperrors");
 const events = require("events");
 const express = require("express");
 const glob = require("glob");
 const log = require("bole")(__filename);
 const path = require("path");
-const Post = require("./post");
+const postStore = require("./post-store");
 const presentPost = require("./present-post");
-const React = require("react");
-const server = require("react-dom/server");
 const util = require("util");
 const viewPost = require("./view-post");
 
@@ -22,9 +19,27 @@ function flushCache(req, res) {
   res.redirect(blog.prefix);
 }
 
+function setupNextPrevious(posts, post, index) {
+  const next = posts[index - 1];
+  const previous = posts[index + 1];
+  /* eslint-disable no-param-reassign */
+  if (next) {
+    post.next = {
+      title: next.title,
+      uri: next.uri
+    };
+  }
+  if (previous) {
+    post.previous = {
+      title: previous.title,
+      uri: previous.uri
+    };
+  }
+}
+
 function Blog(options) {
   if (!(this instanceof Blog)) {
-    return new Blog();
+    return new Blog(options);
   }
   events.EventEmitter.call(this);
   Object.assign(
@@ -33,34 +48,19 @@ function Blog(options) {
   );
   this.basePath = path.normalize(this.basePath);
   this.staticPath = this.staticPath && path.normalize(this.staticPath);
-  this.postLinks = {};
   const app = express();
   this.app = app;
   app.locals.blog = this;
   app.set("view engine", "pug");
   app.set("views", path.join(__dirname, ".."));
-  app.get("/", (req, res) => {
-    res.locals.posts = res.app.locals.blog.posts.map(presentPost);
-    res.render("blog/index");
-  });
-  app.route("/post-elm").get((req, res) => {
-    res.render("blog/create-post-elm");
-  });
-  app.route("/post-vanilla").get((req, res) => {
-    res.render("blog/create-post-vanilla");
-  });
+  app.get("/", (req, res) => res.render("blog/index"));
   app
     .route("/post")
-    .get((req, res) => {
-      const element = React.createElement(CreatePost);
-      const bodyHtml = server.renderToStaticMarkup(element);
-      res.render("blog/create-post-elm", {bodyHtml});
-    })
+    .get((req, res) => res.render("blog/create-post"))
     .post(require("./create-post-routes").handler);
-  app.post("/convert", viewPost.viewDraft);
   app.get("/feed", require("./feed-route"));
   app.get("/flush-cache", flushCache);
-  app.get(new RegExp("/\\d{4}/\\d{2}/\\w+"), viewPost.viewPublished);
+  app.get(new RegExp("/\\d{4}/\\d{2}/\\w+"), viewPost);
   if (this.staticPath) {
     app.use(express.static(this.staticPath));
   }
@@ -77,21 +77,17 @@ Blog.prototype.load = async function load() {
   const self = this;
   const files = await globAsync(`${this.basePath}/**/*.json`);
   async function loadPost(file) {
-    const post = new Post(self);
-    await post.load(file);
-    post.presented = presentPost(post);
-    return post;
+    const post = await postStore.load(self.prefix, file);
+    return presentPost.asObject(post);
   }
   let posts = await Promise.all(files.map(loadPost));
   posts = _.sortBy(posts, "publish_date").reverse();
-  posts.forEach((post, index) => {
-    /* eslint no-ternary:0 */
-    this.postLinks[post.uri()] = {
-      next: index > 0 ? posts[index - 1] : null,
-      previous: index < posts.length ? posts[index + 1] : null
-    };
-  });
+  posts.forEach(setupNextPrevious.bind(null, posts));
   this.posts = posts;
 };
 
+Blog.prototype.assignNextPrevious = function assignNextPrevious(post) {
+  const index = this.posts.findIndex(_post => _post.uri === post.uri);
+  setupNextPrevious(this.posts, post, index);
+};
 module.exports = Blog;

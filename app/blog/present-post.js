@@ -1,58 +1,55 @@
-const moment = require("moment");
-const cheerio = require("cheerio");
-const fs = require("fs");
-const path = require("path");
-const pug = require("pug");
+const dateFns = require("date-fns");
+const marked = require("marked");
 const url = require("url");
 
-// eslint-disable-next-line no-sync
-const flickrshow = fs.readFileSync(
-  path.join(__dirname, "flickrshow.pug"),
-  "utf8"
-);
-const youtubeTemplate =
-  "<iframe width='420' height='315' src='{URL}' allowfullscreen></iframe>";
+const flickrRE = /!\[flickr\]\((.*)\)/g;
+const youtubeRE = /!\[youtube\]\((.*)\)/g;
 
-function flickr($) {
-  $("flickrshow").each((index, elem) => {
-    const $elem = $(elem);
-    const href = $elem.attr("href");
-    // Need to parse this album URL, which I copy directly from a web browser
-    // https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
-    const slashes = url.parse(href).path.split("/");
-    const locals = {
-      userId: slashes[2],
-      setId: slashes[4]
-    };
-    const flickrHtml = pug.render(flickrshow, locals);
-    return $elem.replaceWith(flickrHtml);
-  });
+function doFlickr(match, src) {
+  // Need to parse this album URL, which I copy directly from a web browser
+  // https://www.flickr.com/photos/88096431@N00/sets/72157645234728466/
+  const slashes = url.parse(src).path.split("/");
+  const userId = encodeURIComponent(slashes[2]);
+  const setId = encodeURIComponent(slashes[4]);
+  return `<iframe
+    align="center"
+    frameborder="0"
+    height="375"
+    width="500"
+    scrolling="no"
+    src="https://www.flickr.com/slideShow/index.gne?user_id=${userId}&set_id=${setId}">
+    </iframe>`;
 }
 
-function youtube($) {
-  $("youtube").each((index, elem) => {
-    const $elem = $(elem);
-    const URL = $elem.attr("href");
-    return $elem.replaceWith(youtubeTemplate.replace(/\{URL\}/, URL));
-  });
+function doYoutube(match, src) {
+  return `<iframe width="420" height="315" src="${src}" allowfullscreen></iframe>`;
 }
 
-function customHtml(html) {
-  const $ = cheerio.load(html);
-  flickr($);
-  youtube($);
-  return `${$.html()}\n`;
+function asHtml(fomark) {
+  return marked(
+    fomark.replace(flickrRE, doFlickr).replace(youtubeRE, doYoutube)
+  );
 }
+exports.asHtml = asHtml;
 
-function presentPost(post) {
+function asObject(post) {
+  const withDefaults = Object.assign(
+    {
+      publish_date: new Date(),
+      content: "",
+      title: "",
+      name: "",
+      uri: ""
+    },
+    post
+  );
   return {
-    date: moment(post.publish_date).format("MMM DD, YYYY"),
-    html: customHtml(post.content || ""),
-    name: post.name.trim(),
-    publish_date: post.publish_date,
-    title: post.title.trim(),
-    uri: post.uri(),
-  }
+    date: dateFns.format(withDefaults.publish_date, "MMM DD, YYYY"),
+    html: asHtml(withDefaults.content),
+    name: withDefaults.name.trim(),
+    publish_date: withDefaults.publish_date,
+    title: withDefaults.title.trim(),
+    uri: withDefaults.uri
+  };
 }
-
-module.exports = presentPost;
+exports.asObject = asObject;

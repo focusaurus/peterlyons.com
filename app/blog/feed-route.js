@@ -1,16 +1,13 @@
-const presentPost = require("./present-post");
-
 function feed(req, res, next) {
-  const blog = res.app.locals.blog;
   res.type("xml");
+  const blog = res.app.locals.blog;
   if (blog.cachedFeedXML) {
     res.send(blog.cachedFeedXML);
     return;
   }
-  const posts = blog.posts.slice(0, 10).map(presentPost);
   const locals = {
     pretty: true,
-    posts,
+    posts: blog.posts.slice(0, 10),
     hostname: req.hostname
   };
   res.app.render("blog/feed", locals, (error, feedXML) => {

@@ -2,6 +2,6 @@ This is a paragraph.
 
 Unit Test Post 3 content.
 
-<flickrshow href="https://www.flickr.com/photos/88096431@N00/sets/72157647341676134/"></flickrshow>
+![flickr](https://www.flickr.com/photos/88096431@N00/sets/72157647341676134/)
 
-<youtube href="//www.youtube.com/embed/eJMyq8M_abI"></youtube>
+![youtube](//www.youtube.com/embed/eJMyq8M_abI)
