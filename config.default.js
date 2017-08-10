@@ -4,7 +4,7 @@ const pack = require('./package')
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 function get (name, defaultValue) {
-  return process.env['PLWS_' + name.toUpperCase()] || defaultValue
+  return process.env[`PLWS_${name.toUpperCase()}`] || defaultValue
 }
 
 const config = {
@@ -29,8 +29,8 @@ config.analytics = {
 
 config.photos = {
   photoURI: '/photos/',
-  galleryURI: config.appURI + '/photos',
-  galleryDir: config.staticDir + '/photos',
+  galleryURI: `${config.appURI}/photos`,
+  galleryDir: `${config.staticDir}/photos`,
   thumbExtension: '-TN.jpg',
   extension: '.jpg',
   serveDirect: !IS_PRODUCTION

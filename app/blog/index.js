@@ -46,6 +46,9 @@ function Blog(options) {
   app.route("/post-elm").get((req, res) => {
     res.render("blog/create-post-elm");
   });
+  app.route("/post-vanilla").get((req, res) => {
+    res.render("blog/create-post-vanilla");
+  });
   app
     .route("/post")
     .get((req, res) => {

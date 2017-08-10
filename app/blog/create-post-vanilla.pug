@@ -1,0 +1,21 @@
+extends ../site/layout
+block variables
+  - title = "Write a new blog post"
+block body
+  .create-post
+    h2.title 
+    section.preview
+    hr
+    label title
+      input(name="title" size="35" value="new-post-title-here")
+    textarea.content(cols="80" rows="15")
+    label github token
+      input(type="password" name="password" size="35")
+    .saved
+      | New Post Saved:&nbsp;
+      a.link(href="#")
+    .error
+    button(disabled=true).save Save
+
+block append scripts
+  script(src="/create-post.js")

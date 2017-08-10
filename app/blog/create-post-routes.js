@@ -44,10 +44,10 @@ async function savePost(req) {
   await post.save();
 }
 
-async function newBlogFinalize(token, post, callback) {
+async function newBlogFinalize(password, post, callback) {
   const script = config.blog.newBlogFinalizePath;
   try {
-    const io = await execFileAsync(script, [token]);
+    const io = await execFileAsync(script, [password]);
     log.info(
       {
         stdout: io.stdout.toString(),

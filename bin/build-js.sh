@@ -17,13 +17,20 @@ build_plus_party() {
   cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" >"${out}"
   uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
 }
+#
+# build_create_post() {
+#   local out="www/create-post.js"
+#   cd app/blog
+#   elm-make --yes --output "../../${out}" CreatePost.elm
+#   cd -
+#   uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
+# }
 
 build_create_post() {
   local out="www/create-post.js"
-  cd app/blog
-  elm-make --yes --output "../../${out}" CreatePost.elm
-  cd -
-  uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
+  watchify ./app/blog/create-post-vanilla.js --debug --entry ./app/blog/create-post-vanilla.js --outfile "${out}"
+    # | uglifyjs ${uglify_args} > "${out}"
+  # gzip --force --stdout "${out}" > "${out}.gz"
 }
 
 build_browserify() {
