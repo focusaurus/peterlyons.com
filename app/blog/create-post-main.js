@@ -1,21 +1,38 @@
 const render = require("./render-post");
 const debounce = require("lodash.debounce");
 
+function dom(selector) {
+  return document.querySelector(`.create-post ${selector}`);
+}
+
 /* global document window */
 function init() {
   const input = {
-    content: document.querySelector(".create-post textarea.content"),
-    saveButton: document.querySelector(".create-post .save"),
-    title: document.querySelector(".create-post input[name=title]"),
-    password: document.querySelector(".create-post input[name=password]")
+    content: dom("textarea.content"),
+    saveButton: dom(".save"),
+    title: dom("input[name=title]"),
+    password: dom("input[name=password]")
   };
-
+  const draftJson = window.localStorage.postDraft;
+  let postDraft;
+  if (draftJson) {
+    try {
+      postDraft = JSON.parse(draftJson);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn("Invalid draft json in localStorage", error);
+    }
+  }
+  if (postDraft) {
+    input.content.value = postDraft.content;
+    input.title.value = postDraft.title;
+  }
   const display = {
-    content: document.querySelector(".create-post .preview"),
-    error: document.querySelector(".create-post .error"),
-    link: document.querySelector(".create-post .link"),
-    saved: document.querySelector(".create-post .saved"),
-    title: document.querySelector(".create-post .title")
+    content: dom(".preview"),
+    error: dom(".error"),
+    link: dom(".link"),
+    saved: dom(".saved"),
+    title: dom(".title")
   };
 
   input.content.addEventListener(
@@ -43,17 +60,18 @@ function init() {
     input.saveButton.disabled = !valid;
   }
 
-  input.title.addEventListener("input", checkValid);
-  input.content.addEventListener("input", checkValid);
-  input.password.addEventListener("input", checkValid);
-
-  input.saveButton.addEventListener("click", () => {
+  function save() {
     input.saveButton.disabled = true;
+    const reqBody = postBody();
+    window.localStorage.postDraft = JSON.stringify({
+      title: reqBody.title,
+      content: reqBody.content
+    });
     window
       .fetch("", {
         method: "POST",
         headers: new window.Headers({"Content-Type": "application/json"}),
-        body: JSON.stringify(postBody())
+        body: JSON.stringify(reqBody)
       })
       .then(res => {
         if (res.status === 403) {
@@ -77,7 +95,16 @@ function init() {
       .then(() => {
         input.saveButton.disabled = false;
       });
+  }
+  input.title.addEventListener("input", checkValid);
+  input.content.addEventListener("input", checkValid);
+  input.password.addEventListener("input", checkValid);
+  input.password.addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      save();
+    }
   });
+  input.saveButton.addEventListener("click", save);
 }
 
 module.exports = init;
