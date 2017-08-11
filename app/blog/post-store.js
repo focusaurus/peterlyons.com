@@ -7,16 +7,14 @@ const slug = require("./slug");
 
 const readFileAsync = promisify(fs.readFile);
 const writeFileAsync = promisify(fs.writeFile);
-const DEFAULT_FORMAT = "md";
 
-function contentPath(post) {
-  const noExt = post.metadataPath.substr(0, post.metadataPath.lastIndexOf("."));
-  return `${noExt}.${post.format || DEFAULT_FORMAT}`;
+function contentPath(metadataPath) {
+  const noExt = metadataPath.substr(0, metadataPath.lastIndexOf("."));
+  return `${noExt}.md`;
 }
 
 async function save(basePath, post) {
   const metadata = {
-    format: post.format || DEFAULT_FORMAT,
     name: slug(post.title),
     publish_date: post.publish_date || new Date(),
     title: post.title
@@ -31,7 +29,7 @@ async function save(basePath, post) {
 
   return Promise.all([
     writeFileAsync(
-      contentPath({metadataPath, format: post.format}),
+      contentPath(metadataPath),
       post.content
     ),
     writeFileAsync(metadataPath, JSON.stringify(metadata, null, 2))
@@ -41,8 +39,7 @@ exports.save = save;
 
 async function load(prefix, metadataPath) {
   const post = {
-    metadataPath,
-    format: DEFAULT_FORMAT
+    metadataPath
   };
   const jsonString = await readFileAsync(metadataPath, "utf8");
   const metadata = JSON.parse(jsonString);
@@ -51,7 +48,7 @@ async function load(prefix, metadataPath) {
   post.dirPath = path.dirname(metadataPath);
   post.monthPath = dateFns.format(post.publish_date, "YYYY/MM");
   post.uri = `${prefix}/${post.monthPath}/${post.name}`;
-  post.contentPath = contentPath(post);
+  post.contentPath = contentPath(metadataPath);
   post.content = await readFileAsync(post.contentPath, "utf8");
   return post;
 }

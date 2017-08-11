@@ -5,7 +5,6 @@ const presentPost = require("./present-post");
 const promiseHandler = require("../promise-handler");
 
 async function viewPost(req, res, next) {
-  debugger
   const blog = res.app.locals.blog;
   const metadataPath = path.join(blog.basePath, `${req.path}.json`);
   let post

@@ -24,7 +24,7 @@ describe("post.load", () => {
       expect(post).toHaveProperty("title", "Unit Test Post 1");
       expect(post).toHaveProperty("name", "unit-test-post-1");
       expect(post).toHaveProperty("metadataPath", metadataPath);
-      expect(post).toHaveProperty("format", "md");
+      expect(post).notToHaveProperty("format");
       expect(post).toHaveProperty(
         "uri",
         "/unit-test-blog/2015/12/unit-test-post-1"
@@ -64,7 +64,6 @@ describe("post.save", () => {
       const metadataString = fs.readFileSync(metadataPath, "utf-8");
       const metadata = JSON.parse(metadataString);
       expect(metadata).toDeepEqual({
-        format: "md",
         name: "unit-test-title-20",
         publish_date: publishDate.toISOString(),
         title: post.title
