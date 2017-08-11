@@ -4,10 +4,7 @@ const express = require("express");
 const galleries = require("./galleries-data");
 const galleryMod = require("./galleries");
 const path = require("path");
-const PhotoGallery = require("./photo-gallery");
 const promiseHandler = require("../../promise-handler");
-const React = require("react");
-const server = require("react-dom/server");
 const sharify = require("sharify");
 
 const router = new express.Router();
@@ -25,18 +22,12 @@ function loadGallery(req, res, next) {
   next();
 }
 
-async function photosReact(req, res) {
+async function viewGallery(req, res) {
   const gallery = await galleryMod.loadBySlug(res.locals.gallery.dirName);
   const photo =
     _.find(gallery.photos, {name: req.query.photo}) || gallery.photos[0];
   Object.assign(res.locals.sharify.data, {gallery, galleries, photo});
-  const element = React.createElement(PhotoGallery, {
-    galleries,
-    gallery,
-    photo
-  });
-  const photoGalleryHtml = server.renderToStaticMarkup(element);
-  res.render("personal/photos/view-gallery", {photoGalleryHtml, gallery});
+  res.render("personal/photos/view-gallery");
 }
 
 async function getGallery(req, res) {
@@ -50,7 +41,7 @@ async function getGallery(req, res) {
 
 router.use("/photos", express.static(path.join(__dirname, "../browser")));
 router.get("/galleries/:slug", promiseHandler(getGallery));
-const mw = [sharify, loadGallery, promiseHandler(photosReact)];
+const mw = [sharify, loadGallery, promiseHandler(viewGallery)];
 router.get("/photos", mw);
 if (config.photos.serveDirect) {
   router.get("/app/photos", mw);

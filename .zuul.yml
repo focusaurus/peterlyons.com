@@ -1,4 +1,0 @@
-browserify:
-  - external: react/addons
-  - external: react/lib/ReactContext
-  - external: react/lib/ExecutionEnvironment

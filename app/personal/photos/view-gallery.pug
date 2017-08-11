@@ -2,8 +2,8 @@ extends ../../site/layout
 block variables
   - title = gallery.displayName + " Photo Gallery"
 block body
-  != photoGalleryHtml
+  .view-gallery
 block prepend scripts
   != sharify.script()
 block append scripts
-  script require('app/personal/photos/photos-main')
+  script require('app/personal/photos/photos-main')()
