@@ -84,6 +84,7 @@ Blog.prototype.load = async function load() {
   posts = _.sortBy(posts, "publish_date").reverse();
   posts.forEach(setupNextPrevious.bind(null, posts));
   this.posts = posts;
+  log.info(`blog at ${this.prefix} loaded ${this.posts.length} posts`);
 };
 
 Blog.prototype.assignNextPrevious = function assignNextPrevious(post) {

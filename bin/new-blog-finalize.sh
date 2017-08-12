@@ -21,7 +21,6 @@ set -o posix      # more strict failures in subshells
 IFS="$(printf "\n\t")"
 cd "$(dirname "$0")/../../data"
 branch="$(git rev-parse --abbrev-ref HEAD)"
-exit #@bug
 
 # If this is a fresh deployment, these are necessary so git can commit properly
 git config --local "user.email" "pete@peterlyons.com"

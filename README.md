@@ -20,6 +20,10 @@ Basically, the site supports content in the following formats:
 
 Over the years, I've tried out various deployment methodologies and file layouts. I tried a full-on static site generator with all the generated files in the git repo, and have now decided I do not like that approach. Thus this site serves dynamic content primarily with tiny bits of caching at the few spots where we get decent bang for our caching buck.
 
+## Heads Up
+
+Currently [this npm v5.3 bug](https://github.com/npm/npm/issues/17781) is breaking the build. Downgraded manually to v5.2 until a newer release fixes the prune operation.
+
 ## Related repositories
 
 The site requires 3 git repositories to fully function

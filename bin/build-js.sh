@@ -14,24 +14,9 @@ build_plus_party() {
   cd app/plus-party
   elm-make --yes --output "${plus_party_temp}" PlusParty.elm
   cd -
-  cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" >"${out}"
+  cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" > "${out}"
   uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
 }
-#
-# build_create_post() {
-#   local out="www/create-post.js"
-#   cd app/blog
-#   elm-make --yes --output "../../${out}" CreatePost.elm
-#   cd -
-#   uglifyjs ${uglify_args} "${out}" | gzip >"${out}.gz"
-# }
-
-# build_create_post() {
-#   local out="www/create-post.js"
-#   watchify ./app/blog/create-post.js --debug --entry ./app/blog/create-post.js --outfile "${out}"
-#     # | uglifyjs ${uglify_args} > "${out}"
-#   # gzip --force --stdout "${out}" > "${out}.gz"
-# }
 
 build_browserify() {
   local bundler="watchify --debug"
@@ -59,4 +44,3 @@ build_browserify() {
 
 build_browserify "$@"
 build_plus_party
-# build_create_post

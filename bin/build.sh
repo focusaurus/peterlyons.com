@@ -50,13 +50,6 @@ main() {
   tar --create --file - node_modules | \
     tar --directory "${build_dir}/${prefix}" --extract --file -
   cd "${build_dir}/${prefix}" || exit 10
-  # Run OSX node and npm utilites but within the linux build dir
-  npm install --silent --production --ignore-scripts
-  ./bin/build-js.sh production
-  npm dedupe
-  npm prune --silent --production
-  # npm prune removes our symlink, add it back
-  ln -nsf ../app node_modules/app
   echo ✓; echo -n "nginx configs…"
 
   ./bin/config-json.js \
@@ -80,9 +73,17 @@ main() {
     --www_root=/opt/peter_lyons_web_site/static | \
     mustache - deploy/nginx-site.mustache > nginx-stage.peterlyons.org
 
+  # Run OSX node and npm utilites but within the linux build dir
+  npm install --silent --production --ignore-scripts
+  ./bin/build-js.sh production
+  npm dedupe
+  npm prune --silent --production
+  # npm prune removes our symlink, add it back
+  ln -nsf ../app node_modules/app
+
   # remove development-only files
-  rm -rf wallah doc deploy test Vagrantfile .gitignore .agignore .gitmodules app/blog/unit-test-blog1
-  find ./app -name \*.test.js -print0 | xargs -0 rm
+  rm -rf wallah doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/blog/unit-test-blog1
+  find ./app -name \*.test.js -delete
   cd - || exit 10
 
   echo ✓; echo -n "vagrant rebuild…"
