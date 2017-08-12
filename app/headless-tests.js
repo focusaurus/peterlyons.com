@@ -1,15 +1,21 @@
-const HeadlessChrome = require("simple-headless-chrome");
-/* global document */
-const browser = new HeadlessChrome();
-const suite = require("./blog/create-post-main-btest");
 const app = require("./");
+const glob = require("glob");
+const HeadlessChrome = require("simple-headless-chrome");
 
+const browser = new HeadlessChrome();
+const suites = glob.sync(process.argv[2] || `${__dirname}/**/*btest.js`);
+
+/* eslint-disable no-console,no-restricted-syntax,no-await-in-loop,import/no-dynamic-require */
 async function runTests(port) {
   try {
     await browser.init();
     const tab = await browser.newTab({privateTab: false});
-    await tab.goTo(`http://localhost:${port}${suite.uri}`);
-    await suite.run(tab);
+    for (const suite of suites) {
+      const mod = require(suite);
+      console.log("go to:", mod.uri);
+      await tab.goTo(`http://localhost:${port}${mod.uri}`);
+      await mod.run(tab);
+    }
     await browser.close();
   } catch (error) {
     console.error(error);
@@ -17,8 +23,7 @@ async function runTests(port) {
 }
 const server = app.listen(() => {
   runTests(server.address().port).catch(console.error).then(() => {
-    console.log("done tests, closing"); // fixme
-    server.close();
-    process.exit()
+    // eslint-disable-next-line no-process-exit
+    process.exit();
   });
 });

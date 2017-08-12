@@ -42,5 +42,5 @@ async function run(tab) {
     );
   });
 }
-exports.uri = "/problog/post";
 exports.run = run;
+exports.uri = "/problog/post";
