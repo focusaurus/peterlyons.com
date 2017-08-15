@@ -3,6 +3,10 @@ const tag = require("escape-goat").escapeTag;
 
 const pageState = {};
 
+function dom(selector) {
+  return document.querySelector(`.view-gallery ${selector}`);
+}
+
 function thumbnail(photo) {
   return tag`<a class="thumbnail" href="${photo.pageURI}">
   <img
@@ -38,6 +42,7 @@ function fullSize(state) {
   const {photo, previousPhoto, nextPhoto} = state;
   return [
     '<div class="photo">',
+    `<h1 id="photo">${state.gallery.displayName}</h1>`,
     previousNext(previousPhoto, nextPhoto),
     tag`<figure>
       <img src="${photo.fullSizeURI}" alt="${photo.caption}" title="${photo.caption}">
@@ -95,11 +100,12 @@ function galleryList(galleries) {
   return `<nav class="photos">${yearNodes}</nav>`;
 }
 
-// const pd = require("./prevent-default");
+function renderFullSize(state) {
+  dom(".photo").innerHTML = fullSize(state);
+}
 
 function render(state) {
-  document.querySelector(".view-gallery").innerHTML = `<h1 id="photo">${state
-    .gallery.displayName}</h1>
+  document.querySelector(".view-gallery").innerHTML = `
     ${fullSize(state)}
     ${thumbnails(state.gallery.photos)}
     ${galleryList(state.galleries)}`;
@@ -126,7 +132,11 @@ function setState(changes) {
     previousPhoto: photos[index - 1],
     nextPhoto: photos[index + 1]
   });
-  render(pageState);
+  if (changes.gallery) {
+    render(pageState);
+  } else {
+    renderFullSize(pageState);
+  }
   navigate(pageState);
 }
 
