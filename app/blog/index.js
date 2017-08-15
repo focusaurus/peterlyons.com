@@ -74,16 +74,14 @@ util.inherits(Blog, events.EventEmitter);
 
 Blog.prototype.load = async function load() {
   delete this.cachedFeedXML;
-  const self = this;
   const files = await globAsync(`${this.basePath}/**/*.json`);
-  async function loadPost(file) {
-    const post = await postStore.load(self.prefix, file);
-    return presentPost.asObject(post);
-  }
-  let posts = await Promise.all(files.map(loadPost));
+  let posts = await Promise.all(
+    files.map(postStore.load.bind(null, this.prefix))
+  );
   posts = _.sortBy(posts, "publish_date").reverse();
   posts.forEach(setupNextPrevious.bind(null, posts));
   this.posts = posts;
+  this.presentedPosts = posts.map(presentPost.asObject);
   log.info(`blog at ${this.prefix} loaded ${this.posts.length} posts`);
 };
 

@@ -10,6 +10,7 @@ async function viewPost(req, res, next) {
   let post
   try {
     post = await postStore.load(blog.prefix, metadataPath);
+    await postStore.loadContent(post);
   } catch (error) {
     if (error && error.code === "ENOENT") {
       next(new errors.NotFound(req.path));

@@ -20,7 +20,6 @@ describe("post.load", () => {
     );
 
     return postStore.load(blog.prefix, metadataPath).then(post => {
-      expect(post.content).toInclude("Unit Test Post 1 content.");
       expect(post).toHaveProperty("title", "Unit Test Post 1");
       expect(post).toHaveProperty("name", "unit-test-post-1");
       expect(post).toHaveProperty("metadataPath", metadataPath);
@@ -43,10 +42,26 @@ describe("post.load", () => {
   });
 
   it("should handle non-existent metadata correctly", () =>
-    postStore.load("/unit-test-blog", "/tmp/no-such-metadata.json").catch(error => {
-      expect(error).toBeAnInstanceOf(Error);
-      expect(error.code).toEqual("ENOENT");
-    }));
+    postStore
+      .load("/unit-test-blog", "/tmp/no-such-metadata.json")
+      .catch(error => {
+        expect(error).toBeAnInstanceOf(Error);
+        expect(error.code).toEqual("ENOENT");
+      }));
+});
+
+describe("post.loadContent", () => {
+  it("should load all properties properly", () => {
+    const metadataPath = path.join(
+      __dirname,
+      "unit-test-blog1/2015/12/unit-test-post-1.json"
+    );
+
+    return postStore.load(blog.prefix, metadataPath).then(async post => {
+      await postStore.loadContent(post);
+      expect(post.content).toInclude("Unit Test Post 1 content.");
+    });
+  });
 });
 
 describe("post.save", () => {

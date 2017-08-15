@@ -3,6 +3,7 @@ const dateFns = require("date-fns");
 const fs = require("fs");
 const mkdirpAsync = promisify(require("mkdirp"));
 const path = require("path");
+const presentPost = require("./present-post");
 const slug = require("./slug");
 
 const readFileAsync = promisify(fs.readFile);
@@ -28,10 +29,7 @@ async function save(basePath, post) {
   await mkdirpAsync(path.dirname(metadataPath));
 
   return Promise.all([
-    writeFileAsync(
-      contentPath(metadataPath),
-      post.content
-    ),
+    writeFileAsync(contentPath(metadataPath), post.content),
     writeFileAsync(metadataPath, JSON.stringify(metadata, null, 2))
   ]).then(() => metadataPath);
 }
@@ -49,7 +47,14 @@ async function load(prefix, metadataPath) {
   post.monthPath = dateFns.format(post.publish_date, "YYYY/MM");
   post.uri = `${prefix}/${post.monthPath}/${post.name}`;
   post.contentPath = contentPath(metadataPath);
-  post.content = await readFileAsync(post.contentPath, "utf8");
   return post;
 }
 exports.load = load;
+
+async function loadContent(post) {
+  const fomark = await readFileAsync(post.contentPath, "utf8");
+  // eslint-disable-next-line no-param-reassign
+  post.content = presentPost.asHtml(fomark);
+  return post;
+}
+exports.loadContent = loadContent;
