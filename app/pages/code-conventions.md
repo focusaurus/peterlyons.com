@@ -112,12 +112,9 @@ Many of my existing projects have code written to my own conventions before I fo
 
 Oh God, it's a mess out there, folks. Things are pretty much hopelessly broken in JS land, but here are my conventions, as utterly pointless as they may ultimately be.
 
-- StandardJS [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-  - It's reasonably conventional, and has the best tooling
-  - I do wish StandardJS had chosen double quotes instead of single quotes, but it didn't so I follow the convention and use single quotes.
-    - JSON requires double quotes. Double quotes in JS makes for less pain converting between JSON and JavaScript. This is important to me.
-    - This also fosters consistency with java, c, python, ruby, and coffeescript.
-    - Apostrophes are fairly common to want to put into source code. This makes things like `"${name}'s Settings"` easy.
+- Prettier Formatting
+  - [https://prettier.io/]()
+  - Does a great job and automatically wraps long lines properly
 - unix linefeed line endings (no carriage return)
 - Declare variables one-per line each with it's own const keyword
   - Easiest to maintain.
