@@ -52,6 +52,11 @@ The data and static repositories aren't particularly interesting. All the intere
   - `nvm install`
 - `npm install`
 
+## How to test
+
+- `./bin/test-node.sh` to run the node tests
+- `./bin/test-integration.sh` to run the integration tests
+
 ## How to Build
 
 - do work in the develop branch

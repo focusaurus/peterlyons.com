@@ -29,17 +29,22 @@ describe("the photos page", () => {
   it("should have the photo surrounding structure", () => {
     testUtils.assertSelectors(
       $,
-      "h1#photo",
-      "figure",
-      "figcaption",
-      "#nextPrev",
-      "a.thumbnail"
+      "h1",
+      ".view-gallery"
     );
   });
 
   it("should redirect to the newest gallery", done => {
     request
       .get("/app/photos")
+      .expect(302)
+      .expect("Location", "/app/photos?gallery=burning_man_2011")
+      .end(done);
+  });
+
+  it("should redirect to the newest gallery", done => {
+    request
+      .get("/photos")
       .expect(302)
       .expect("Location", "/photos?gallery=burning_man_2011")
       .end(done);
