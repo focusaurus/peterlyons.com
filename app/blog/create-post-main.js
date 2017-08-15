@@ -1,11 +1,52 @@
 const render = require("./render-post");
 const debounce = require("lodash.debounce");
+
+/* global document window */
 /* eslint-disable no-console */
+
 function dom(selector) {
   return document.querySelector(`.create-post ${selector}`);
 }
 
-/* global document window */
+function postBody(input) {
+  return {
+    content: input.content.value,
+    title: input.title.value,
+    password: input.password.value
+  };
+}
+
+function checkValid(input) {
+  const body = postBody(input);
+  const valid = Object.keys(body).every(key => body[key].length > 0);
+  // eslint-disable-next-line no-param-reassign
+  input.saveButton.disabled = !valid;
+}
+
+function loadDraft() {
+  try {
+    const draftJson = window.localStorage.postDraft;
+    if (draftJson) {
+      return JSON.parse(draftJson);
+    }
+  } catch (error) {
+    console.warn("Error loading draft from localStorage", error);
+  }
+  return null;
+}
+
+function saveDraft(input) {
+  const draft = postBody(input);
+  try {
+    window.localStorage.postDraft = JSON.stringify({
+      title: draft.title,
+      content: draft.content
+    });
+  } catch (error) {
+    console.warn("Error saving post draft to localStorage", error);
+  }
+}
+
 function init() {
   const input = {
     content: dom("textarea.content"),
@@ -13,15 +54,7 @@ function init() {
     title: dom("input[name=title]"),
     password: dom("input[name=password]")
   };
-  let postDraft;
-  try {
-    const draftJson = window.localStorage.postDraft;
-    if (draftJson) {
-      postDraft = JSON.parse(draftJson);
-    }
-  } catch (error) {
-    console.warn("Error loading draft from localStorage", error);
-  }
+  const postDraft = loadDraft();
   if (postDraft) {
     input.content.value = postDraft.content;
     input.title.value = postDraft.title;
@@ -38,6 +71,7 @@ function init() {
     "input",
     debounce(event => {
       display.content.innerHTML = render(event.target.value);
+      saveDraft(input);
     }, 1250)
   );
 
@@ -45,31 +79,10 @@ function init() {
     display.title.innerText = event.target.value;
   });
 
-  function postBody() {
-    return {
-      content: input.content.value,
-      title: input.title.value,
-      password: input.password.value
-    };
-  }
-
-  function checkValid() {
-    const body = postBody();
-    const valid = Object.keys(body).every(key => body[key].length > 0);
-    input.saveButton.disabled = !valid;
-  }
-
   function save() {
     input.saveButton.disabled = true;
     const reqBody = postBody();
-    try {
-      window.localStorage.postDraft = JSON.stringify({
-        title: reqBody.title,
-        content: reqBody.content
-      });
-    } catch (error) {
-      console.warn("Error saving post draft to localStorage", error);
-    }
+
     window
       .fetch("", {
         method: "POST",
@@ -99,9 +112,10 @@ function init() {
         input.saveButton.disabled = false;
       });
   }
-  input.title.addEventListener("input", checkValid);
-  input.content.addEventListener("input", checkValid);
-  input.password.addEventListener("input", checkValid);
+  const boundCheckValid = checkValid.bind(null, input);
+  input.title.addEventListener("input", boundCheckValid);
+  input.content.addEventListener("input", boundCheckValid);
+  input.password.addEventListener("input", boundCheckValid);
   input.password.addEventListener("keydown", event => {
     if (event.key === "Enter") {
       save();
