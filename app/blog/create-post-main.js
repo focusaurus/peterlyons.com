@@ -81,7 +81,7 @@ function init() {
 
   function save() {
     input.saveButton.disabled = true;
-    const reqBody = postBody();
+    const reqBody = postBody(input);
 
     window
       .fetch("", {
