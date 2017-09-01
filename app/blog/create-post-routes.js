@@ -60,7 +60,7 @@ async function createPost(req, res) {
   const password = req.body.password;
   const hash = await readFileAsync(config.blog.hashPath, "utf8");
   await verifyPasswordAsync(password, hash);
-  await newBlogPrepare;
+  await newBlogPrepare();
   const blog = req.app.locals.blog;
   const post = {
     title: req.body.title,
