@@ -1,6 +1,6 @@
 # peterlyons.com web site
 
-This repo contains a node.js/express.js web application I use to power my professional web site at [http://peterlyons.com]() and personal site at [http://peterlyons.org]()
+This repo contains a node.js/express.js web application I use to power my professional web site at [https://peterlyons.com]() and personal site at [https://peterlyons.org]()
 
 [![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)

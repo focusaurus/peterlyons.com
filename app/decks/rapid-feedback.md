@@ -2,7 +2,7 @@
 
 ## DaVinci Coders Lunch and Learn January 30, 2013
 
-pete@peterlyons.com http://peterlyons.com
+pete@peterlyons.com https://peterlyons.com
 
 ---
 

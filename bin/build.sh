@@ -10,7 +10,7 @@ main() {
   cd "$(dirname "$0")/.." || exit 10
   source ./bin/lib/strict_mode.sh
 
-  local git_ref="${1-HEAD}"
+  local git_ref="${1-WORK}"
   local build_dir="build"
   local prefix
   prefix="peterlyons.com-${git_ref}-$(date +%Y%m%d%H%M)"

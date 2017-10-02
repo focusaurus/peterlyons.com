@@ -1,5 +1,5 @@
 function personal(req) {
-  return `http://peterlyons.org${req.url}`;
+  return `https://peterlyons.org${req.url}`;
 }
 
 const matchers = [];

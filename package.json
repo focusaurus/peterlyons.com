@@ -1,5 +1,5 @@
 {
-  "author": "Peter Lyons <pete@peterlyons.com> (http://peterlyons.com)",
+  "author": "Peter Lyons <pete@peterlyons.com> (https://peterlyons.com)",
   "dependencies": {
     "autoprefixer-stylus": "0.11.0",
     "bcryptjs": "2.3.0",
@@ -64,7 +64,7 @@
     "node": "v8.3.0"
   },
   "files": [],
-  "homepage": "http://peterlyons.com",
+  "homepage": "https://peterlyons.com",
   "main": "app/server.js",
   "name": "peterlyons.com",
   "private": true,

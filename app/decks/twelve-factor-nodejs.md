@@ -13,7 +13,7 @@
 - Independent Consultant
 - Full-stack web applications
 - node.js specialist
-- [http://peterlyons.com](http://peterlyons.com)
+- [https://peterlyons.com](https://peterlyons.com)
 
 ---
 
@@ -382,7 +382,7 @@ exec app/server.js
 
 - [StrongLoop node.js Deployment Best Practices](https://strongloop.com/strongblog/node-js-deploy-production-best-practice)
 - [Immutable Infrastructure is the Future](http://michaeldehaan.net/post/118717252307/immutable-infrastructure-is-the-future)
-- [My Post About Avoiding npm -g](http://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path)
+- [My Post About Avoiding npm -g](https://peterlyons.com/problog/2012/09/managing-per-project-interpreters-and-the-path)
 - [Definition and purpose of a staging environment](/practices)
 - [Environment Variables Considered Harmful](/problog/2010/02/environment-variables-considered-harmful)
 

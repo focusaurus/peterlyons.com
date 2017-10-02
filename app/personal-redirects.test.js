@@ -14,7 +14,7 @@ describe("personal URLs should redirect to .org", () => {
       request
         .get(page)
         .expect(301)
-        .expect("location", `http://peterlyons.org${page}`)
+        .expect("location", `https://peterlyons.org${page}`)
         .end(done);
     });
   });
@@ -24,7 +24,7 @@ describe("personal URLs should redirect to .org", () => {
     request
       .get(page)
       .expect(301)
-      .expect("location", `http://peterlyons.org${page}`)
+      .expect("location", `https://peterlyons.org${page}`)
       .end(done);
   });
 });

@@ -14,7 +14,7 @@
 - Full-stack web applications
 - node.js specialist
 - Built several production apps on MongoDB
-- [http://peterlyons.com](http://peterlyons.com)
+- [https://peterlyons.com]()
 
 ---
 
