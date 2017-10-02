@@ -5,6 +5,7 @@ describe("app/blogs/slug", () => {
   it("should replace URL-unfriendly characters", () => {
     expect(slug("space to dash")).toEqual("space-to-dash");
     expect(slug("no apostrophe's")).toEqual("no-apostrophes");
+    expect(slug("Quick Thoughts: Hey There")).toEqual("quick-thoughts-hey-there");
     expect(slug("dot.to.dash")).toEqual("dot-to-dash");
     expect(slug("double--dash--to--dash")).toEqual("double-dash-to-dash");
     expect(slug("no!bang")).toEqual("nobang");
