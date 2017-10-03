@@ -11,6 +11,8 @@ brew install git nvm
 # shellcheck disable=SC1090
 source "$(brew --prefix nvm)/nvm.sh"
 nvm install
-npm install --install-scripts
-git submodule update --init --depth 1
-./wallah/bin/install_pip_package "ansible=${ansible_version}"
+npm install
+if [[ ! -e python ]]; then
+  virtualenv python
+fi
+./python/bin/pip install "ansible=${ansible_version}"

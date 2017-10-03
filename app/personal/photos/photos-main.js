@@ -109,6 +109,7 @@ function render(state) {
     ${fullSize(state)}
     ${thumbnails(state.gallery.photos)}
     ${galleryList(state.galleries)}`;
+  // eslint-disable-next-line no-use-before-define
   document.querySelector("nav.photos").addEventListener("click", viewGallery);
 }
 

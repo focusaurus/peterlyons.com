@@ -29,6 +29,6 @@
 //     );
 //   });
 // });
-async function run(tab) {}
+async function run(tab) {} // eslint-disable-line
 exports.run = run;
 exports.uri = "/photos";

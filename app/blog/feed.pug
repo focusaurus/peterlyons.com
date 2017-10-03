@@ -11,7 +11,7 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   each post in posts
     entry
       title= post.title
-      link(href="http://" + hostname + post.uri)
+      link(href="//" + hostname + post.uri)
       updated= post.publish_date.toISOString()
-      id= `http://${hostname}${post.uri}`
+      id= `//${hostname}${post.uri}`
       content(type="html")= post.html || ""

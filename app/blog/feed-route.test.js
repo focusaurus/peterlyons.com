@@ -26,7 +26,7 @@ describe("a blog feed XML", () => {
 
   it("should have the self ref link", () => {
     expect($('link[rel="self"]').attr("href")).toEqual(
-      "http://127.0.0.1/utb/feed"
+      "https://127.0.0.1/utb/feed"
     );
   });
 

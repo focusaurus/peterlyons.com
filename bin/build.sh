@@ -5,7 +5,7 @@
 #   build.sh HEAD will use the last commit on the current branch
 #   build.sh WORK will use uncommited local changes
 #   build.sh TAG will use the code in the given git tag"
-
+set -x
 main() {
   cd "$(dirname "$0")/.." || exit 10
   source ./bin/lib/strict_mode.sh
@@ -82,7 +82,7 @@ main() {
   ln -nsf ../app node_modules/app
 
   # remove development-only files
-  rm -rf wallah doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/blog/unit-test-blog1
+  rm -rf doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/blog/unit-test-blog1
   find ./app -name \*.test.js -delete
   cd - || exit 10
 
