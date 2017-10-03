@@ -5,7 +5,7 @@
 #   build.sh HEAD will use the last commit on the current branch
 #   build.sh WORK will use uncommited local changes
 #   build.sh TAG will use the code in the given git tag"
-set -x
+
 main() {
   cd "$(dirname "$0")/.." || exit 10
   source ./bin/lib/strict_mode.sh
