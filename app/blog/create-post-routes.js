@@ -68,7 +68,7 @@ async function createPost(req, res) {
   };
   const metadataPath = await postStore.save(blog.basePath, post);
   await newBlogFinalize(password, post);
-  const loadedPost = postStore.load(blog.prefix, metadataPath);
+  const loadedPost = await postStore.load(blog.prefix, metadataPath);
   res.send(loadedPost);
   res.app.locals.blog.load();
 }
