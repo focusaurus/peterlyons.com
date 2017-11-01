@@ -111,3 +111,4 @@ block body
       - In order to deliver high probability of reproducing issue off production, stage must be nearly-identical to production
       - Want to know if it happens in production, it can be reproduced in staging, and if a change fixes an issue in stage, that same change will fix the issue in production.
       - In order to deliver this, staging must nearly-always be available in a state exactly matching production. Thus stage must not be used for functional testing or QA of releases. Stage should only be used as a final quick verification that the release is deployed to stage and the new features are passing quick smoke tests. Thorough testing and QA should be done in a dedicated enironment distinct from stage.
+    - Further reading: [Center Stage](https://increment.com/development/center-stage-best-practices-for-staging-environments/) by Alice Goldfuss
