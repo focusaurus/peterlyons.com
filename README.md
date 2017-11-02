@@ -3,7 +3,7 @@
 This repo contains a node.js/express.js web application I use to power my professional web site at [https://peterlyons.com]() and personal site at [https://peterlyons.org]()
 
 [![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 ![Technical Architecture Diagram](doc/peterlyons.com_technical_architecture_2014-12-21.png)
 Basically, the site supports content in the following formats:
