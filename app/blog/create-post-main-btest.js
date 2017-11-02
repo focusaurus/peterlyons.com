@@ -1,46 +1,51 @@
 const tap = require("tap");
-/* global document */
 
-async function run(tab) {
+async function clear(page, selector) {
+  const inputValue = await page.$eval(selector, el => el.value);
+  await page.focus(selector);
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < inputValue.length; i++) {
+    // eslint-disable-next-line no-await-in-loop
+    await page.keyboard.press("Delete");
+  }
+}
+
+async function run(page) {
   await tap.test(
     "create-post-main should have the correct initial title",
     async test => {
-      const title = await tab.getValue(".create-post input[name=title]");
+      const title = await page.$eval(
+        ".create-post input[name=title]",
+        el => el.value
+      );
       test.same(title, "new-post-title-here");
     }
   );
 
   await tap.test("should disable save initially", async test => {
-    const wrapper = await tab.evaluate(
-      selector => document.querySelector(selector).disabled,
-      ".create-post .save"
-    );
-    test.same(wrapper.result.value, true);
+    const disabled = await page.$eval(".create-post .save", el => el.disabled);
+    test.same(disabled, true);
   });
 
   await tap.test("should enable save with valid input", async test => {
-    await tab.clear(".create-post input[name=title]");
-    await tab.type(".create-post input[name=title]", "unit test title 2");
-    await tab.type(".create-post textarea.content", "unit test **content** 2");
-    await tab.type(".create-post input[name=password]", "unit test password 2");
-    const disabledEval = await tab.evaluate(
-      () => document.querySelector(".create-post .save").disabled
+    await clear(page, ".create-post input[name=title]");
+    await page.type(".create-post input[name=title]", "unit test title 2");
+    await page.type(".create-post textarea.content", "unit test **content** 2");
+    await page.type(
+      ".create-post input[name=password]",
+      "unit test password 2"
     );
-    test.same(disabledEval.result.value, false);
-    const titleEval = await tab.evaluate(
-      () => document.querySelector(".create-post .title").innerText
+    const disabled = await page.$eval(".create-post .save", el => el.disabled);
+    test.same(disabled, false);
+    const title = await page.$eval(".create-post .title", el => el.innerText);
+    test.same(title, "unit test title 2");
+    await page.waitFor(1500); // preview is debounced
+    const preview = await page.$eval(
+      ".create-post .preview",
+      el => el.innerHTML
     );
-    test.same(titleEval.result.value, "unit test title 2");
-    await tab.wait(2000); // preview is debounced
-    const previewEval = await tab.evaluate(
-      selector => document.querySelector(selector).innerHTML,
-      ".create-post .preview"
-    );
-    test.same(
-      previewEval.result.value,
-      "<p>unit test <strong>content</strong> 2</p>\n"
-    );
+    test.same(preview, "<p>unit test <strong>content</strong> 2</p>\n");
   });
 }
-exports.run = run;
-exports.uri = "/problog/post";
+
+module.exports = {run, uri: "/problog/post"};

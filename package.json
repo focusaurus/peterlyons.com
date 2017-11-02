@@ -52,7 +52,7 @@
     "nsp": "2.6.2",
     "prettier": "1.5.3",
     "promptly": "2.1.0",
-    "simple-headless-chrome": "4.3.1",
+    "puppeteer": "0.12.0",
     "supertest": "2.0.0",
     "tap": "10.7.1",
     "to-markdown": "3.1.0",

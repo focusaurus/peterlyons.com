@@ -8,3 +8,4 @@
 *.retry
 config.local.*
 elm-stuff
+/local
