@@ -16,9 +16,10 @@ async function runTests(port) {
       await tab.goTo(`http://localhost:${port}${mod.uri}`);
       await mod.run(tab);
     }
-    await browser.close();
   } catch (error) {
     console.error(error);
+  } finally {
+    await browser.close()
   }
 }
 const server = app.listen(() => {
