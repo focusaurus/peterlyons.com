@@ -50,7 +50,7 @@
     "mocha": "3.1.2",
     "node-dev": "3.1.3",
     "nsp": "2.6.2",
-    "prettier": "1.5.3",
+    "prettier": "1.7.4",
     "promptly": "2.1.0",
     "puppeteer": "0.12.0",
     "supertest": "2.0.0",

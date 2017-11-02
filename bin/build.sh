@@ -83,7 +83,7 @@ main() {
 
   # remove development-only files
   rm -rf doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/blog/unit-test-blog1
-  find ./app -name \*.test.js -delete
+  find ./app -name \*-test.js -delete
   cd - || exit 10
 
   echo ✓; echo -n "vagrant rebuild…"
