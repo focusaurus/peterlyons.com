@@ -1,5 +1,5 @@
 ---
-- include: playbook-ansible-prereqs.yml
+- import_playbook: playbook-ansible-prereqs.yml
 - hosts: all
   become: true
   vars:
@@ -13,7 +13,7 @@
   handlers:
     - name: restart express
       service: name=plws-express state=restarted
-    - include: handlers.yml
+    - include_tasks: handlers.yml
   tasks:
     - name: install prerequisites
       apt: pkg={{item}}

@@ -1,5 +1,5 @@
 ---
-- include: playbook-ansible-prereqs.yml
+- import_playbook: playbook-ansible-prereqs.yml
 - hosts: all
   become: true
   vars:

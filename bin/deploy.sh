@@ -20,6 +20,7 @@ main() {
     -i "${inventory}" \
     --extra-vars "dist=${dist_path}" \
     --extra-vars "dist_name=${dist_name}" \
+    --ask-become-pass \
     ./deploy/playbook-full-stack.yml
 }
 
