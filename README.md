@@ -59,26 +59,29 @@ The data and static repositories aren't particularly interesting. All the intere
 
 ## How to Build
 
-- do work in the develop branch
-- when ready to cut a release candidate, get develop into a clean committed state
-- make sure you are backmerged from master (normally this should always be true)
-- run `./bin/release-candidate.sh <patch|minor|major>`
+- check prereqs
+  - do work in the develop branch
+  - when ready to cut a release candidate, get develop into a clean committed state
+  - make sure you are backmerged from master (normally this should always be true)
+- `./bin/release-candidate.sh <patch|minor|major>`
   - (patch is the default)*
-- make sure the build and stage vagrant boxes are up with `vagrant up`
-- create a build `./bin/build.sh <version>`
+- `vagrant up`
+  - make sure the build and stage vagrant boxes are up
+- `./bin/build.sh <version>` create a build
   - Normally `<version>` is the new git tag created
   - also supported is `WORK` to make a build out of files in your working directory
      - they must be at least added via `git add` but don't need to be committed
    - also supported is `HEAD` or any other git commit refspec
      - Any of these flavors will build using files from git exclusively regardless of the state of your working directory
-- deploy that to the vagrant "stage" vm from your laptop via `./bin/deploy.sh build/<build>.tar.gz deploy/host-vagrant-stage.yml`
-  - vagrant sudo password is `password`
-- Test that and if all looks good you can finalize the release with
+- `./bin/deploy.sh build/<build>.tar.gz deploy/host-vagrant-stage.yml`
+  - deploy that to the vagrant "stage" vm from your laptop via   - vagrant sudo password is `password`
+- Test that stage looks OK
+- `./bin/release.sh`
+  - if all looks good you can finalize the release with
 
 ## How to Deploy
 
-- `./bin/release.sh`
-- deploy to prod with `./bin/deploy.sh build/<build>.tar.gz deploy/host-production.yml`
+- `./bin/deploy.sh build/<build>.tar.gz deploy/host-production.yml`
 
 # License
 
