@@ -8,6 +8,7 @@ module.exports = {
     "block-scoped-var": "error",
     "consistent-this": ["error", "self"],
     "func-style": ["error", "declaration"],
+    "no-param-reassign": ["error", {props: false}],
     "global-require": "off",
     "import/no-extraneous-dependencies": [
       "error",
