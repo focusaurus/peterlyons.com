@@ -67,12 +67,12 @@ The data and static repositories aren't particularly interesting. All the intere
   - (patch is the default)*
 - `vagrant up`
   - make sure the build and stage vagrant boxes are up
-- `./bin/build.sh <version>` create a build
+- `./bin/build.sh "v$(jq -r .version < package.json)"` create a build
   - Normally `<version>` is the new git tag created
-  - also supported is `WORK` to make a build out of files in your working directory
-     - they must be at least added via `git add` but don't need to be committed
-   - also supported is `HEAD` or any other git commit refspec
-     - Any of these flavors will build using files from git exclusively regardless of the state of your working directory
+    - also supported is `WORK` to make a build out of files in your working directory
+      - they must be at least added via `git add` but don't need to be committed
+    - also supported is `HEAD` or any other git commit refspec
+      - Any of these flavors will build using files from git exclusively regardless of the state of your working directory
 - `./bin/deploy.sh build/<build>.tar.gz deploy/host-vagrant-stage.yml`
   - deploy that to the vagrant "stage" vm from your laptop via   - vagrant sudo password is `password`
 - Test that stage looks OK
