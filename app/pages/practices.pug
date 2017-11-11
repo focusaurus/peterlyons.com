@@ -9,12 +9,6 @@ block body
 
     - Pragmatic Craftsmanship (see The Pragmatic Programmer, Code Complete)
     - The #1 primary mandate of the software engineer is managing complexity
-    - Simple, small, consistent tools
-      - Small languages that foster consistency such as Python, pug
-      - One and preferably only one good way to do it
-      - Significant white space fosters consistency, so I am in favor of it
-      - Small core library plus good package management such as node.js with npm
-      - Big, complex, heterogeneous languages like Perl and Ruby aren't compatible with my general orientation (but I will code in Ruby when appropriate)
     - Correctness and clarity are king
       - readability and maintainability are more important than brevity
     - Clever is bad. Period.
@@ -22,7 +16,6 @@ block body
     - Libraries over frameworks
       - My code invokes library methods
       - No "your code goes here" boilerplate
-    - Right tool for the right job
     - Slow, calm, and correct
       - I build working software that is well-crafted
     - Components Should Be Focused, Independent, Reusable, Small & Testable ([FIRST](http://addyosmani.com/first/))
@@ -32,14 +25,16 @@ block body
     ## Data Modeling
 
     - Integrity-first
-      - Default attitude is traditional referential integrity with transactions and strict expectations of data consistency and durability
+      - Default attitude is traditional referential integrity with schema, transactions, and strict expectations of data consistency and durability
       - Sacrifice consistency, integrity or durability to get performance or convenience when warranted
+        - Spoiler alert: it's rarely warranted
       - Properly coding for collections of data where individual records can vary greatly is difficult. Stick with consistent records.
       - Disciplined data migrations should be part of the normal development process
     - Minimalism
       - Each field and record has perpetual maintainance cost
       - Only add more data when clearly driven by current features
       - Prune stale data as early as possible
+      - [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it)
     - Conform to common system model in end-user terms
       - Avoid abstractions
       - Keep naming clear and consistent with the system model and user interface
@@ -52,7 +47,6 @@ block body
     - Pure functional with no side effects has great testability
     - I think more about data and functions being separate these days as opposed to Object Oriented coupling of the two
     - Use built-in data structures (lists, maps) for simple cases, but go to objects as soon as it is non-trivial
-    - Encapsulation and composition as opposed to complex inheritence hierarchy
     - Prefer basic procedural conditions and loops when they are clearer than complex functional or object oriented patterns
 
     ## Testing
@@ -78,6 +72,8 @@ block body
         - Most of my projects don't lend themselves to a formal methodology
     - Key things I focus on
       - Working, deployed software as the core deliverable
+        - Avoid shipping partial features, use separate mock-ups for that
+        - Avoid shipping in any not-ready-for-prime-time state
       - Small sprints (usually weekly)
       - Some reasonable project management tool other than email
       - Stakeholder prioritizes the work to be done in conversation with developers
@@ -88,6 +84,7 @@ block body
       - Avoid them as much as possible
       - Build trust based on past performance instead
       - When unavoidable, keep it simple: small, medium, large
+        - Call BS on Story Points
       - Work items must be decomposed until they fit in a single sprint (there is no extra large)
     - Lean Startup/Minimum Viable Product. Launch and learn. Rinse and repeat.
 
@@ -97,6 +94,7 @@ block body
     - Should be able to rebuild entire app infrastructure with code and docs in the main source code repository
     - [Semantic Versioning](http://semver.org/)
     - Modified [12-Factor](http://www.12factor.net/) principles
+      - See also my talk: [12-Factor Apps in node.js](/twelve-factor-nodejs)
 
     ### Definition and purpose of a stage environment
 
