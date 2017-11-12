@@ -11,7 +11,7 @@
     - include_tasks: handlers.yml
   tasks:
     - name: install nginx and monit
-      apt: pkg={{item}}
+      apt: pkg="{{item}}"
       with_items:
         #web server
         - nginx
