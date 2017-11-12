@@ -57,6 +57,22 @@ The data and static repositories aren't particularly interesting. All the intere
 - `./bin/test-node.sh` to run the node tests
 - `./bin/test-integration.sh` to run the integration tests
 
+## How to setup the stage vagrant vm
+
+- vagrant up stage
+- vagrant ssh stage
+  - `sudo adduser plyons`
+  - `sudo adduser plyons sudo`
+- On your dev laptop, add a record to `/etc/hosts` for `stage.peterlyons.com` (or use the IP)
+- as plyons on your laptop: `ssh-copy-id stage.peterlyons.com`
+- `ssh stage.peterlyons.com`
+  - `sudo su -`
+  - Run the `setup-tls-acme.sh` script
+  - Provision TLS from letsencrypt with domain validation
+  - `su - acme -c '"${HOME}/.acme.sh/acme.sh" --issue --dns --domain "stage.peterlyons.com"  --keylength ec-256'`
+- Login to your registrar (namecheap) and set up the TXT record as per the acme instructions
+- Wait a minute or two for the record to work, test with `dig -t TXT _acme-challenge.stage.peterlyons.com`
+- `su - acme -c '"${HOME}/.acme.sh/acme.sh" --renew --domain "stage.peterlyons.com" --ecc'`
 ## How to Build
 
 - check prereqs

@@ -1,5 +1,0 @@
----
-- name: restart monit
-  service: name=monit state=restarted
-- name: restart express
-  service: name=plws-express state=restarted

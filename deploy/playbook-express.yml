@@ -13,7 +13,8 @@
   handlers:
     - name: restart express
       service: name=plws-express state=restarted
-    - include_tasks: handlers.yml
+    - name: restart monit
+      service: name=monit state=restarted
   tasks:
     - name: install prerequisites
       apt: pkg={{item}}

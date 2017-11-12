@@ -8,7 +8,10 @@
     app_root: /opt/peter_lyons_web_site
     data_root: /opt/peter_lyons_web_site/data
   handlers:
-    - include_tasks: handlers.yml
+    - name: restart monit
+      service: name=monit state=restarted
+    - name: restart nginx
+      service: name=nginx state=restarted
   tasks:
     - name: install nginx and monit
       apt: pkg="{{item}}"
