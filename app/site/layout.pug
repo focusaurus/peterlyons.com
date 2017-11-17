@@ -33,12 +33,12 @@ html(lang="en")
     .content
       include blocks/header
       block body
-      footer.navigationHorizontal
+      footer(role="contentinfo").navigationHorizontal
         if proSite
           include blocks/navigation
         else
           include ../personal/navigation
-      footer.license
+      footer(role="contentinfo").license
         include blocks/license
       block scripts
         script(src="/plws.js?v=" + appVersion)
