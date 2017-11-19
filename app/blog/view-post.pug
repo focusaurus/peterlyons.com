@@ -17,8 +17,7 @@ block body
         li
           | Next post &nbsp;
           a.next(href=post.next.uri)= post.next.title
-      li
-        a#toggleComments(href="#") Show Disqus Blog Comments
+    button#toggleComments [+Show Disqus Blog Comments]
   section#comments.none
     #disqus_thread
     != '<script>const disqus_shortname = "peterlyons-' + blog.prefix.slice(1) + '";</script>'
@@ -47,7 +46,7 @@ block append scripts
       }
       const classList = document.querySelector("#comments").classList;
       const hidden = classList.contains("none");
-      const newText = hidden ? "Hide Comments" : "Show Disqus Blog Comments";
+      const newText = hidden ? "[- Hide Comments]" : "[+Show Disqus Blog Comments]";
       document.querySelector("#toggleComments").textContent = newText;
       if (hidden) {
         classList.remove("none");
@@ -56,6 +55,6 @@ block append scripts
       }
     }
 
-    document.querySelector("a#toggleComments").addEventListener(
+    document.querySelector("#toggleComments").addEventListener(
       "click", toggleComments);
     })();
