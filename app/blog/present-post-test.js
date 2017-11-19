@@ -28,7 +28,7 @@ describe("presentPost.asObject", () => {
 
   it("should render markdown", () => {
     const presented = presentPost.asObject({content: "# header\n"});
-    expect(presented.html).toEqual('<h1 id="header">header</h1>\n');
+    expect(presented.html).toEqual('<h1 id="header">header</h1>');
   });
 
   it("should render fomark", () => {

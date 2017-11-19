@@ -3,7 +3,7 @@ const dateFns = require("date-fns");
 const fs = require("fs");
 const mkdirpAsync = promisify(require("mkdirp"));
 const path = require("path");
-const presentPost = require("./present-post");
+const renderPost = require("./render-post");
 const slug = require("./slug");
 
 const readFileAsync = promisify(fs.readFile);
@@ -54,7 +54,7 @@ exports.load = load;
 async function loadContent(post) {
   const fomark = await readFileAsync(post.contentPath, "utf8");
   // eslint-disable-next-line no-param-reassign
-  post.content = presentPost.asHtml(fomark);
+  post.content = renderPost(fomark);
   return post;
 }
 exports.loadContent = loadContent;
