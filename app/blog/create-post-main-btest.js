@@ -60,6 +60,28 @@ paragraph`;
     );
     test.match(preview, "<p>paragraph1</p>");
   });
+
+  await tap.test("should render youtube properly", async test => {
+    await page.$eval(".create-post textarea.content", el => {
+      el.value = `# first header
+
+![youtube](https://www.youtube.com/embed/XYxQw-YujEw)
+
+paragraph`;
+    });
+    await page.type(".create-post textarea.content", "1");
+    await page.waitFor(1500); // preview is debounced
+    const preview = await page.$eval(
+      ".create-post .preview",
+      el => el.innerHTML
+    );
+    test.match(preview, `<h1 id="firstheader">first header</h1>`);
+    test.match(
+      preview,
+      `<iframe width="420" height="315" src="https://www.youtube.com/embed/XYxQw-YujEw" allowfullscreen=""></iframe>`
+    );
+    test.match(preview, "<p>paragraph1</p>");
+  });
 }
 
 module.exports = {run, uri: "/problog/post"};
