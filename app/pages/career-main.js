@@ -32,7 +32,7 @@ function expand(event) {
   const blockquote = event.target.parentElement;
   const body = blockquote.querySelector(".testimonial-body");
   body.classList.toggle("expanded");
-  nodeListEach(blockquote.querySelectorAll("a"), element => {
+  nodeListEach(blockquote.querySelectorAll("button"), element => {
     element.classList.toggle("hidden");
   });
 }
