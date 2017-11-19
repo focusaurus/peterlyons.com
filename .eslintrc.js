@@ -31,7 +31,6 @@ module.exports = {
     "no-nested-ternary": "error",
     "no-process-exit": 1,
     "no-sync": 1,
-    "no-ternary": "error",
     "no-undefined": "error",
     "no-underscore-dangle": "off",
     "no-warning-comments": "warn",
