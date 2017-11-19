@@ -1,6 +1,7 @@
-const marked = require("marked");
+const showdown = require("showdown");
 const url = require("url");
 
+const converter = new showdown.Converter();
 const flickrRE = /!\[flickr\]\((.*)\)/g;
 const youtubeRE = /!\[youtube\]\((.*)\)/g;
 
@@ -15,8 +16,10 @@ function doFlickr(match, src) {
     frameborder="0"
     height="375"
     scrolling="no"
-    src="https://www.flickr.com/slideShow/index.gne?user_id=${encodeURIComponent(userId)}&set_id=${encodeURIComponent(setId)} width="500">
-    </iframe>`;
+    width="500"
+    src="https://www.flickr.com/slideShow/index.gne?user_id=${encodeURIComponent(
+      userId
+    )}&set_id=${encodeURIComponent(setId)}"></iframe>`;
 }
 
 function doYoutube(match, src) {
@@ -24,8 +27,10 @@ function doYoutube(match, src) {
 }
 
 function render(fomark) {
-  return marked(
-    fomark.replace(flickrRE, doFlickr).replace(youtubeRE, doYoutube)
-  );
+  const markdown = fomark
+    .replace(flickrRE, doFlickr)
+    .replace(youtubeRE, doYoutube);
+  return converter.makeHtml(markdown);
 }
+
 module.exports = render;

@@ -18,7 +18,6 @@
     "jstransformer-marked": "1.0.1",
     "lodash": "4.16.4",
     "lodash.debounce": "4.0.8",
-    "marked": "0.3.6",
     "mkdirp": "0.5.1",
     "mustache": "2.2.1",
     "nib": "1.1.2",
@@ -27,6 +26,7 @@
     "reveal.js": "3.3.0",
     "rupture": "0.6.2",
     "sharify": "0.1.6",
+    "showdown": "1.8.2",
     "stylish": "1.0.0",
     "stylus": "0.54.5"
   },

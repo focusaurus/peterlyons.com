@@ -36,7 +36,29 @@ async function run(page) {
       ".create-post .preview",
       el => el.innerHTML
     );
-    test.same(preview, "<p>unit test <strong>content</strong> 2</p>\n");
+    test.same(preview, "<p>unit test <strong>content</strong> 2</p>");
+  });
+
+  await tap.test("should render flickr properly", async test => {
+    await page.$eval(".create-post textarea.content", el => {
+      el.value = `# first header
+
+![flickr](https://www.flickr.com/photos/focusaurus/albums/72157687300615032)
+
+paragraph`;
+    });
+    await page.type(".create-post textarea.content", "1");
+    await page.waitFor(1500); // preview is debounced
+    const preview = await page.$eval(
+      ".create-post .preview",
+      el => el.innerHTML
+    );
+    test.match(preview, `<h1 id="firstheader">first header</h1>`);
+    test.match(
+      preview,
+      `<iframe align="center" frameborder="0" height="375" scrolling="no" width="500" src="https://www.flickr.com/slideShow/index.gne?user_id=focusaurus&amp;set_id=72157687300615032"></iframe>`
+    );
+    test.match(preview, "<p>paragraph1</p>");
   });
 }
 
