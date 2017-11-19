@@ -4,12 +4,12 @@ block variables
   - title = "Write a new blog post"
 block body
   .create-post
-    h2.title 
-    section.preview
-    hr
     label title
       input(name="title" size="35" value="new-post-title-here")
     textarea.content(cols="80" rows="15")
+    hr
+    h2.title 
+    section.preview
     label github token
       input(type="password" name="password" size="35")
     .saved

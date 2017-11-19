@@ -54,11 +54,7 @@ function init() {
     title: dom("input[name=title]"),
     password: dom("input[name=password]")
   };
-  const postDraft = loadDraft();
-  if (postDraft) {
-    input.content.value = postDraft.content;
-    input.title.value = postDraft.title;
-  }
+
   const display = {
     content: dom(".preview"),
     error: dom(".error"),
@@ -67,13 +63,18 @@ function init() {
     title: dom(".title")
   };
 
-  input.content.addEventListener(
-    "input",
-    debounce(event => {
-      display.content.innerHTML = render(event.target.value);
-      saveDraft(input);
-    }, 1250)
-  );
+  function onInput(event) {
+    display.content.innerHTML = render(event.target.value);
+    saveDraft(input);
+  }
+
+  const postDraft = loadDraft();
+  if (postDraft) {
+    input.content.value = postDraft.content;
+    input.title.value = postDraft.title;
+    onInput({target: {value: input.content.value}});
+  }
+  input.content.addEventListener("input", debounce(onInput, 1250));
 
   input.title.addEventListener("input", event => {
     display.title.innerText = event.target.value;
