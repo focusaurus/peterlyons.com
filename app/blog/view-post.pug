@@ -3,8 +3,8 @@ block variables
   - title = post.title
 block body
   article
-    span.date= post.date
     h1= post.title
+    .date= post.date
     != post.html
   nav.blog
     a.blogIndex(href=blog.prefix) back to blog index
