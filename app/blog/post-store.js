@@ -3,7 +3,6 @@ const dateFns = require("date-fns");
 const fs = require("fs");
 const mkdirpAsync = promisify(require("mkdirp"));
 const path = require("path");
-const renderPost = require("./render-post");
 const slug = require("./slug");
 
 const readFileAsync = promisify(fs.readFile);
@@ -33,7 +32,6 @@ async function save(basePath, post) {
     writeFileAsync(metadataPath, JSON.stringify(metadata, null, 2))
   ]).then(() => metadataPath);
 }
-exports.save = save;
 
 async function load(prefix, metadataPath) {
   const post = {
@@ -52,9 +50,9 @@ async function load(prefix, metadataPath) {
 exports.load = load;
 
 async function loadContent(post) {
-  const fomark = await readFileAsync(post.contentPath, "utf8");
   // eslint-disable-next-line no-param-reassign
-  post.content = renderPost(fomark);
+  post.content = await readFileAsync(post.contentPath, "utf8");
   return post;
 }
-exports.loadContent = loadContent;
+
+module.exports = {load, loadContent, save};
