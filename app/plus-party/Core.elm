@@ -16,7 +16,7 @@ dateRe =
 
 numberRe : Regex.Regex
 numberRe =
-    regex "-?(\\d{1,3}(,\\d{3})*|\\d+)(\\.\\d+)?\\b"
+    regex "\\b-?(\\d{1,3}(,\\d{3})*|\\d+)(\\.\\d+)?\\b"
 
 
 parseFloat : Regex.Match -> Maybe Float
@@ -29,6 +29,7 @@ parseNumbers rawText =
     let
         noDates =
             Regex.replace Regex.All dateRe (always "") rawText
+        noCommas = Regex.replace Regex.All commaRe (always "") noDates
     in
-        Regex.find Regex.All numberRe noDates
+        Regex.find Regex.All numberRe noCommas
             |> List.filterMap parseFloat
