@@ -1,7 +1,7 @@
-const showdown = require("showdown");
+const marked = require("marked");
 const url = require("url");
 
-const converter = new showdown.Converter();
+// const converter = new showdown.Converter();
 const flickrRE = /!\[flickr\]\((.*)\)/g;
 const youtubeRE = /!\[youtube\]\((.*)\)/g;
 
@@ -30,7 +30,7 @@ function render(fomark) {
   const markdown = fomark
     .replace(flickrRE, doFlickr)
     .replace(youtubeRE, doYoutube);
-  return converter.makeHtml(markdown);
+  return marked(markdown);
 }
 
 module.exports = render;

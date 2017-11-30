@@ -36,7 +36,7 @@ async function run(page) {
       ".create-post .preview",
       el => el.innerHTML
     );
-    test.same(preview, "<p>unit test <strong>content</strong> 2</p>");
+    test.match(preview, "<p>unit test <strong>content</strong> 2</p>");
   });
 
   await tap.test("should render flickr properly", async test => {
@@ -53,10 +53,14 @@ paragraph`;
       ".create-post .preview",
       el => el.innerHTML
     );
-    test.match(preview, `<h1 id="firstheader">first header</h1>`);
+    test.match(preview, `<h1 id="first-header">first header</h1>`);
     test.match(
       preview,
-      `<iframe align="center" frameborder="0" height="375" scrolling="no" width="500" src="https://www.flickr.com/slideShow/index.gne?user_id=focusaurus&amp;set_id=72157687300615032"></iframe>`
+      `<iframe align="center" frameborder="0" height="375" scrolling="no" width="500"`
+    );
+    test.match(
+      preview,
+      `src="https://www.flickr.com/slideShow/index.gne?user_id=focusaurus&amp;set_id=72157687300615032"></iframe>`
     );
     test.match(preview, "<p>paragraph1</p>");
   });
@@ -75,12 +79,34 @@ paragraph`;
       ".create-post .preview",
       el => el.innerHTML
     );
-    test.match(preview, `<h1 id="firstheader">first header</h1>`);
+    test.match(preview, `<h1 id="first-header">first header</h1>`);
+    test.match(preview, `<iframe width="420" height="315"`);
     test.match(
       preview,
-      `<iframe width="420" height="315" src="https://www.youtube.com/embed/XYxQw-YujEw" allowfullscreen=""></iframe>`
+      `src="https://www.youtube.com/embed/XYxQw-YujEw" allowfullscreen=""></iframe>`
     );
     test.match(preview, "<p>paragraph1</p>");
+  });
+
+  await tap.test("should render unordered lists properly", async test => {
+    await page.$eval(".create-post textarea.content", el => {
+      el.value = `- one
+  - 1 sub 1
+- two
+  - 2 sub 1
+
+para
+`;
+    });
+    await page.type(".create-post textarea.content", "1");
+    await page.waitFor(1500); // preview is debounced
+    const preview = await page.$eval(
+      ".create-post .preview",
+      el => el.innerHTML
+    );
+    test.match(preview, `<ul>\n<li>one<ul>`);
+    test.match(preview, `<li>two<ul>`);
+    test.match(preview, `<li>2 sub 1</li>`);
   });
 }
 
