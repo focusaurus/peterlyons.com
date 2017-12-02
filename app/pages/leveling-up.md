@@ -60,8 +60,7 @@ Worried about your job going overseas? Again, make yourself valuable to the busi
 
 ## Thoughts on Salary
 
-Software developers are paid a very wide range of salaries. The high end of base salary is easily five times the entry-level salary. Steve McConnell, author of Code Complete and an advocate of the 10x productivity notion, has [this interesting blog post on compensation](http://forums.construx.com/blogs/stevemcc/archive/2011/01/22/10x-productivity-myths-where-s-the-10x-difference-in-compensation.aspx).
-
+Software developers are paid a very wide range of salaries. The high end of base salary is easily five times the entry-level salary. Steve McConnell, author of Code Complete and an advocate of the 10x productivity notion, has [this interesting blog post on compensation](http://web.archive.org/web/20120115174127/http://forums.construx.com/blogs/stevemcc/archive/2011/01/22/10x-productivity-myths-where-s-the-10x-difference-in-compensation.aspx) (Link is to web archive, original URL was http://forums.construx.com/blogs/stevemcc/archive/2011/01/22/10x-productivity-myths-where-s-the-10x-difference-in-compensation.aspx)
 
 <h1 id="pillar1">Pillar #1: Technical Competence</h1>
 
@@ -119,7 +118,7 @@ There are almost no scenarios where basic (well, intermediate really) familiarit
 * Basic Unix filesystem permissions: `chmod`, `chown`, `chgrp`
 * Basic string manipulation with `sed`, `awk`, `cut`, etc. don't waste time learning all the details here. Just learn the three or four most common and useful constructs.
 * Working with tar and zip archives:
-    * in particular, [this construct of piping through stdout/stdin to exactly clone a directory tree](http://www.sun.com/bigadmin/descAll/recursively_copy_fi.html)
+    * in particular, [this construct of piping through stdout/stdin to exactly clone a directory tree](http://web.archive.org/web/20091213042731/http://www.sun.com/bigadmin/descAll/recursively_copy_fi.html)
     * this version is also super handy: `tar cf . - | tar xf - -C /target/dir`
 * `ssh`, `scp`, and `rsync`
     * ssh keys and password-less ssh
@@ -175,7 +174,7 @@ In many large organizations, expert specialists are hired into different groups 
 
 ## Actively Adding Value and Taking Initiative
 
-Periodically step back and take an analytical look at the state of the company. Are the processes and tools working effictively?  What are the pain points and problems you might be able to improve. Find something that is not working and take on a small side project to get it fixed. When doing this, it is best to follow through on your own initiative as opposed to asking for permission beforehand. For example, in the early days of Opsware we had no good collaboration tool beyond email. Our consultants were discovering complex processes that we needed to share with each other effectively. Email is not a good tool for this. So one of our consultants took it upon himself to install and configure a MoinMoin wiki we could use to collaborate on technical documents and projects. He had it up and running before he even mentioned it to management. The wiki quickly became one of the company's most valuable IT assets and completely mission critical. This is still true seven years later. Many times this type of project  doesn't require that much work. Perhaps a weekend of research and configuration and little or no coding. However, this can have a large long-term positive impact on the business, which will get noticed and appreciated by attentive management.
+Periodically step back and take an analytical look at the state of the company. Are the processes and tools working effectively?  What are the pain points and problems you might be able to improve. Find something that is not working and take on a small side project to get it fixed. When doing this, it is best to follow through on your own initiative as opposed to asking for permission beforehand. For example, in the early days of Opsware we had no good collaboration tool beyond email. Our consultants were discovering complex processes that we needed to share with each other effectively. Email is not a good tool for this. So one of our consultants took it upon himself to install and configure a MoinMoin wiki we could use to collaborate on technical documents and projects. He had it up and running before he even mentioned it to management. The wiki quickly became one of the company's most valuable IT assets and completely mission critical. This is still true seven years later. Many times this type of project  doesn't require that much work. Perhaps a weekend of research and configuration and little or no coding. However, this can have a large long-term positive impact on the business, which will get noticed and appreciated by attentive management.
 
 <h1 id="pillar2">Pillar #2: Professional Communication</h1>
 
@@ -542,7 +541,7 @@ You want to prepare a document (again HTML email is strongly encouraged here) th
 
 During the review your manager will likely have a basic agenda already set. There will be a slot on this agenda for you to review your work from the previous period and talk about your goals for your career. This is your chance to shine. Review your document verbally, adding additional details and color as needed.
 
-There will be one or more standard forms that need to be filled in. Don't let the format of your company's standard document constrain you. Create your own document using the format above or some variation that expresses exactly what you want and exactly how you want to achieve it. You can then take the raw content from your custom document and copy/paste it into your company's standard document as needed. For reference, [here is a sample PDF form of a typical annual performance review template](https://service.govdelivery.com/service/edition.html?edition_id=5534).
+There will be one or more standard forms that need to be filled in. Don't let the format of your company's standard document constrain you. Create your own document using the format above or some variation that expresses exactly what you want and exactly how you want to achieve it. You can then take the raw content from your custom document and copy/paste it into your company's standard document as needed. For reference, [here is a sample form of a typical annual performance review template](http://web.archive.org/web/20121102095657/http://service.govdelivery.com/docs/HRDOC/HRDOC_213/HRDOC_213_20020801_en.rtf).
 
 ### Tracking Your Performance Reviews Over Time
 
