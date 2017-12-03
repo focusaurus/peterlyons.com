@@ -334,7 +334,7 @@ When you have resolved a high-profile issue, you will want to send out a status 
        * This server was configured for EDT while Opsware requires UTC on all core servers.
         The other 5 servers in the mesh are correctly configured for UTC. This was fixed
         Thursday morning by editing /etc/TIMEZONE and rebooting.
-    ...
+        ...
 
 ## Note these key points for communication.
 
