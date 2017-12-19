@@ -9,9 +9,13 @@ source ./bin/lib/strict_mode.sh
 
 main() {
   PATH="${PWD}/python/bin:${PATH}"
+  if [[ $# -ne 1 ]]; then
+    echo "Usage $0 <deploy/host-production.yml>" 1>&2
+    exit 1
+  fi
   local inventory="$1"
   export ANSIBLE_HOST_KEY_CHECKING=False
-  ansible-playbook -i "${inventory}" ./deploy/playbook-data-repo.yml
+  ansible-playbook -i "${inventory}" --ask-become-pass ./deploy/playbook-data-repo.yml
 }
 
 main "$@"
