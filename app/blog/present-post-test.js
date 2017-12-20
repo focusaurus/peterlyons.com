@@ -8,7 +8,7 @@ describe("presentPost.asObject", () => {
     const presented = presentPost.asObject({
       publish_date: new Date(2014, 0, 31)
     });
-    expect(presented.date).toEqual("Jan 31, 2014");
+    expect(presented.date).toEqual("January 31, 2014");
   });
 
   it("should format the default date", () => {

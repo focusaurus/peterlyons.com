@@ -11,7 +11,7 @@ describe("a blog post list page", () => {
   it("should have nicely formatted dates", () => {
     expect($(".postDate")).notToHaveLength(0);
     const date = $(".postDate").last().html();
-    expect(date).toMatch(/Dec 01, 2015/);
+    expect(date).toMatch(/December 01, 2015/);
   });
 
   it("should include all the posts", () => {

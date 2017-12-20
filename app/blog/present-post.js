@@ -13,7 +13,7 @@ function asObject(post) {
     post
   );
   return {
-    date: dateFns.format(withDefaults.publish_date, "MMM DD, YYYY"),
+    date: dateFns.format(withDefaults.publish_date, "MMMM DD, YYYY"),
     html: renderPost(withDefaults.content),
     name: withDefaults.name.trim(),
     publish_date: withDefaults.publish_date,
