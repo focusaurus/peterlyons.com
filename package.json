@@ -78,5 +78,5 @@
     "test": "./bin/test.sh",
     "lint": "eslint --format ./node_modules/eslint-tap app bin"
   },
-  "version": "6.8.0"
+  "version": "6.8.1"
 }
