@@ -54,7 +54,7 @@ describe("the main layout", () => {
     request
       .get(`/plws.js?v=${pack.version}`)
       .expect(200)
-      .expect("Content-Type", "application/javascript")
+      .expect("Content-Type", "application/javascript; charset=UTF-8")
       .expect("Content-Encoding", "gzip")
       .end(done);
   });
@@ -81,7 +81,7 @@ describe("analytics snippet", () => {
       expect(error).notToExist();
       const selector = "script[data-id=analytics]";
       testUtils.assertSelectors($, selector);
-      expect($(selector).text()).to.include("UNIT_TEST");
+      expect($(selector).html()).to.include("UNIT_TEST");
       done();
     });
   });
