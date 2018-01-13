@@ -32,7 +32,7 @@ This guide is intended for professional software developers. The optimal target 
 * ...in junior positions
 * ...working in large software companies
 
-However, much of the more general information in this guide applies equally well to other IT roles including system administrators, DBAs, and network administrators. A lot of this also applies to smaller software companies, although generally they wouldn't have so many different formal positions and titles available for a promotion track.
+However, much of the more general information in this guide applies equally well to other IT roles including system administrators, devops, DBAs, network administrators, etc. A lot of this also applies to smaller software companies, although generally they wouldn't have so many different formal positions and titles available for a promotion track.
 
 ## Scope of This Guide
 
@@ -72,6 +72,34 @@ So in this section we will review the core technical skills that are most crucia
 
 There are hordes of developers out there who know a single OS reasonably well. However, in just about any business, it takes more than a single OS to make things run. Thus when something needs to be done on a different OS, the single-OS developer is useless to the business and unable to help. If a basic problem is encountered on any OS, and you have to shrug and point to a colleague who can look into it, it sends a message to management that you are low-skill, entry-level, and should be compensated according to the technical problems you can solve. However, if you have basic familiarity with the different platform, you can at least do some basic troubleshooting or development work, and management views you as more of an asset to the business.
 
+### Unix/Linux Basics
+
+There are almost no scenarios where basic (well, intermediate really) familiarity with a Unix style command shell (Bourne Shell) and essential command line utilities are not critical to doing anything useful. If you have basic capabilities with using a Unix command prompt, spend some time refining them. If you are a pure-Windows coder only comfortable inside your IDE, plan to invest some quality time on a Linux machine and get yourself comfortable with that too.
+
+* Shell variables and environment variables:
+    * the difference between the two
+    * how environment variables are inherited by child processes
+    * the use of the `/usr/bin/env` wrapper
+* Basic shell scripting control flow:
+    * functions, conditionals, loops
+    * the test utility/built-in and its oddities
+* Querying the filesystem masterfully with `find`, `xargs`, `grep`
+* Basic Unix filesystem permissions: `chmod`, `chown`, `chgrp`
+* Basic string manipulation with `sed`, `awk`, `cut`, etc. don't waste time learning all the details here. Just learn the three or four most common and useful constructs.
+* Working with tar and zip archives:
+    * in particular, [this construct of piping through stdout/stdin to exactly clone a directory tree](http://web.archive.org/web/20091213042731/http://www.sun.com/bigadmin/descAll/recursively_copy_fi.html)
+    * this version is also super handy: `tar cf . - | tar xf - -C /target/dir`
+* `ssh`, `scp`, and `rsync`
+    * ssh keys and password-less ssh
+    * [This is a great visual explaination of ssh](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html)
+* Network troubleshooting with `telnet`, `dig`, `nslookup`, `netstat`, `ping`, netcat (`nc`), `ifconfig`
+* vi (not vim, not emacs)
+    * This is because vi ships as standard on all Unix and Linux operating systems - it is therefore omnipresent and reliable. Emacs and vim are not installed by default on Solaris, AIX, HP-UX, etc, so unless you can perform basic open, edit, and save operations in vi, you are going to be stuck.
+
+### Linux-specific Competencies
+* Package management with `rpm`, `rpm --verify`, `apt-get` on Debian
+* Linux-specific network configuration (varies per distribution)
+
 ### Windows Basics
 
 Like it or not, you must learn at least the bare minimum about Windows.
@@ -102,40 +130,6 @@ Like it or not, you must learn at least the bare minimum about Windows.
     * how the Windows OS and Windows applications use the registry for configuration
     * the basics of backing up the registry and making changes using regedit32.exe
     * basic familiarity with the interesting paths in the registry and the data types for registry keys
-
-### Unix/Linux Basics
-
-There are almost no scenarios where basic (well, intermediate really) familiarity with a Unix style command shell (Bourne Shell) and essential command line utilities are not critical to doing anything useful. If you have basic capabilities with using a Unix command prompt, spend some time refining them. If you are a pure-Windows coder only comfortable inside your IDE, plan to invest some quality time on a Linux machine and get yourself comfortable with that too.
-
-* Shell variables and environment variables:
-    * the difference between the two
-    * how environment variables are inherited by child processes
-    * the use of the `/usr/bin/env` wrapper
-* Basic shell scripting control flow:
-    * functions, conditionals, loops
-    * the test utility/built-in and its oddities
-* Querying the filesystem masterfully with `find`, `xargs`, `grep`
-* Basic Unix filesystem permissions: `chmod`, `chown`, `chgrp`
-* Basic string manipulation with `sed`, `awk`, `cut`, etc. don't waste time learning all the details here. Just learn the three or four most common and useful constructs.
-* Working with tar and zip archives:
-    * in particular, [this construct of piping through stdout/stdin to exactly clone a directory tree](http://web.archive.org/web/20091213042731/http://www.sun.com/bigadmin/descAll/recursively_copy_fi.html)
-    * this version is also super handy: `tar cf . - | tar xf - -C /target/dir`
-* `ssh`, `scp`, and `rsync`
-    * ssh keys and password-less ssh
-    * [This is a great visual explaination of ssh](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html)
-* Network troubleshooting with `telnet`, `dig`, `nslookup`, `netstat`, `ping`, netcat (`nc`), `ifconfig`
-* NFS basics
-* vi (not vim, not emacs)
-    * This is because vi ships as standard on all Unix and Linux operating systems - it is therefore omnipresent and reliable. Emacs and vim are not installed by default on Solaris, AIX, HP-UX, etc, so unless you can perform basic open, edit, and save operations in vi, you are going to be stuck.
-
-### Linux-specific Competencies
-* Package management with `rpm`, `rpm --verify`
-* Linux-specific network configuration (varies per distribution)
-
-### Solaris-specific Competencies
-* Package management with `pkgadd`/`pkgrm`/`pkginfo`
-* Patch management with `patchadd`/`patchrm`
-* Korn shell scripts
 
 ## TCP/IP
 
@@ -190,16 +184,16 @@ If your manager finds your behavior irritating, they are likely to discriminate 
     * This isn't college. You are part of a business and you are paid a salary. Being late to work or to meetings sends a strong negative signal about your commitment to the work, and it annoys managers. Get your act together and be on time.
 * Dress appropriately,
     * In some offices, there's truly no dress code and being full-on casual (barefoot with shorts) is acceptable. If you work at one of those places, good for you. Skip ahead past this point. However, many companies and regions still have a dress code that requires business casual dress.
-    * It's just not worth the negative exposure to push the limits of coder hygiene and style at work. Have good showering and personal grooming habits. Men, shave or keep your facial hair neatly trimmed. If you are expected to wear business casual, wear actual business casual. If you are unsure about a specific item of clothing, ask a salesperson or colleague. There's a good chance you aren't wearing real dress slacks (as opposed to khakis). If all the managers are wearing real business casual slacks, you should be, too. You probably need to get help selecting the right shoes as well. Those Doc Martens don't count.
+    * It's just not worth the negative exposure to push the limits of coder hygiene and style at work. Have good showering and personal grooming habits. If you have facial hair, shave or keep it neatly groomed. If you are expected to wear business casual, wear actual business casual. If you are unsure about a specific item of clothing, ask a salesperson or colleague. There's a good chance you aren't wearing real dress slacks (as opposed to khakis). If all the managers are wearing real business casual slacks, you should be, too. You probably need to get help selecting the right shoes as well. Those Doc Martens don't count.
     * Note that I can count at least four people on this [list of famous programmers](https://web.archive.org/web/20150401054033/http://www.sherweb.com/blog/the-men-behind-the-code-creators-of-famous-programming-languages) who are clearly clueless about appearance. Your own mileage will vary, but since you didn't invent Unix or C, don't push your luck.
 * Be client-facing.
     * Always act as an ambassador for your company and your products.
-    * Know how to talk to non-technical users. If you can't do this, get help and work on it. It's not hard, but it takes practice. You should be able to explain exactly what you do, satisfactorily, to your parents. Practice with friends and relatives.
+    * Know how to talk to non-technical users. If you can't do this, get help and work on it. It's not hard, but it takes practice. You should be able to explain exactly what you do, satisfactorily, to someone very non-technical. Practice with friends and relatives.
     * Don't bad-mouth your products or services. Yes, you can be clear and frank about issues and limitations, but you can't make general disparaging remarks about your products.
 * Watch your language.
     * Profanity usually doesn't cut it. This is especially true in front of clients. In general, most mature businesses will have a profanity-free culture. You may still hear a lot of profanity in some smaller businesses, but this is problematic because if you are in the habit of swearing all the time, it can be really difficult to constantly censor yourself when you need to. Eventually, companies usually make a trade-off between liability and professionalism, and the profanity goes away.
 
-Again, all of these rules should be "no brainers"; things that you should just do, without needing reminders. They are easy and they maximize your chances of success. If you violate them, you take yourself out of the running for the biggest raises and promotions. You might like saying "douchebag" a lot, but if I said you'd get $10K a year more if you stopped saying it, you'd probably clean up your act. Another way to think of it is, if I charged you $6.40 for every time you swore, you would probably stop swearing so much. That's how the math works out if you swear 6 times a day for 260 work days a year (2011) and it costs you a $10K raise.
+Again, all of these rules should be "no brainers"; things that you should just do, without needing reminders. They are easy and they maximize your chances of success. If you violate them, you take yourself out of the running for the biggest raises and promotions. You might like saying "asshole" a lot, but if I said you'd get $10K a year more if you stopped saying it, you'd probably clean up your act. Another way to think of it is, if I charged you $6.40 for every time you swore, you would probably stop swearing so much. That's how the math works out if you swear 6 times a day for 260 work days a year (2011) and it costs you a $10K raise.
 
 ### Write good emails when interacting with customers.
 
@@ -547,6 +541,64 @@ There will be one or more standard forms that need to be filled in. Don't let th
 
 You should personally archive your performance review materials and have your own notes for reference. It seems that big companies like to switch performance management software about every three cycles, and whenever they switch, they usually are not able to migrate the data from the old system to the new system. Keeping your own copies and records will allow you to better track long term progress. You can also send a full record to a new manager if you are assigned to a new manager, which also happens fairly regularly. Thus you can get your new manager up to speed on where you started and where you want to be.
 
+### Communication Reader Write-In Anecdotes
+
+A reader of this article emailed me these stories from their experiences I wanted to share.
+
+<blockquote>
+<strong>lesson 1</strong>: keeping my head down and just working hard on my assigned job will get me nowhere without communication
+<br>
+<p>
+<strong>Situation</strong>:
+</p>
+<p>
+In a previous job, I was part of a scrum team working on a product with 5 or 6 other developers. In the 2 week sprint cycles, I concentrated on working on the backlog 100% of my time. I was thinking: if i just do my job with hard work, I will eventually get noticed and promoted.
+</p>
+<p>
+At the same time, some of the developers work on side projects that they selected while working less or even completely not working on the team backlog for certain sprints. They the side projects were voluntary stuff like writing newsletters or fixing other stuff of other teams. The team backlog was celebrated as the success of the whole team, and any credit to the side projects went to the other individuals. They received one time bonuses and promotions. I did not receive anything extra for "doing my job".
+</p>
+<p>
+<strong>How I handled</strong>:
+<p>
+I decided to do something about this. I also decided to approach it in a way that does not involve saying anything negative to management about anyone such as : Developer X was not doing his job on the planned sprint while writing newsletters.
+</p>
+<p>
+I picked out things that I did anyway in my daily work that benefitted the organisation as a whole and communicated this to my manager and about how this contributed to the overall unit operational strategy. One example was how I was working very closely with colleagues in Bangalore on certain issues and how I bridge the divide between german and Indian teams. I kept communicating similar points to my manager in our 1 to 1 talks.
+</p>
+<p>
+<strong>Result</strong>:
+<p>
+It took many months before any results showed, but gradually my efforts were recognised and I even had a cash bonus for it.
+I've learn that communicating what I do even if its "part of the job" is very important.
+</p>
+</blockquote>
+
+----
+
+<blockquote>
+<p>
+<strong>lesson 2</strong>: expressing genuine interest can open new chances
+</p>
+<p>
+<strong>Situation</strong>:
+</p>
+<p>
+At an internal tech developer conference, I was listening to a innovative talk by a colleague from another department at that time. I thought the talk was really cool and was impressed that there are teams working on such topics at the company.
+</p>
+<p>
+<strong>How I handled</strong>:
+</p>
+<p>
+A few days later, I ran into him at a supermarket (talk about luck). I was super nervous but I mustered courage to speak to him and told him I really enjoyed the talk, and asked if he could tell me about other projects his team was working on.
+</p>
+<p>
+<strong>Result</strong>:
+</p>
+<p>
+He took the time to show me ongoing and previous projects done at his team in informal coffee corner meets. At $COMPANY, there is this "fellowship" arrangement where you can work at another department for a few months as a guest. I asked if I could work as a fellow because the projects are really cool to me. One thing led to another and I ended up applying and getting a permanent position at the team a few months later. This is my current job position.
+</p>
+</blockquote>
+
 ## Notes on Writing Well
 
 [How to write without writing](http://www.codinghorror.com/blog/2011/02/how-to-write-without-writing.html)
@@ -560,7 +612,7 @@ You should personally archive your performance review materials and have your ow
 
 ## Notes on Changing Companies
 
-Most successful careers involve working for at least several different companies.  Just a few quick tips here.  Plan on changing companies as appropriate just maybe one or two times when the opportunity feels very compelling and the improved benefits are significant.  Be aware that frequent moving from company to company can be a major red flag to hiring departments that you are disloyal.  So just be aware of that as you are considering your options and think about the big picture.  Expectations vary by industry and company size here as well.  When the time is right, changing companies can get you a big salary increase ahead of schedule.  Of course, this is all part of "the game".  At the end of the day, you want to be enjoying your work and feeling fulfilled and inspired, and that matters more than the money.  These decisions are tough.  Consult your friends and family.  Don't get trapped in a rut in a bad job for a long time, and don't get in the habit of quitting every ten months.  Find that good middle ground that feels right for you.
+Most successful careers involve working for at least several different companies.  Just a few quick tips here.  Plan on changing companies as appropriate when the opportunity feels very compelling and the improved benefits are significant.  Be aware that frequent moving from company to company used to be a major red flag (I think), although in 2018 I think average tenures at a company are less than 2 years so maybe no one cares about longevity anymore. So just be aware of that as you are considering your options and think about the big picture.  Expectations vary by industry and company size here as well.  When the time is right, changing companies can get you a big salary increase ahead of schedule.  Of course, this is all part of "the game".  At the end of the day, you want to be enjoying your work and feeling fulfilled and inspired, and that matters more than the money.  These decisions are tough.  Consult your friends and family.  Don't get trapped in a rut in a bad job for a long time, and don't get in the habit of quitting every ten months.  Find that good middle ground that feels right for you.
 
 # About the Author
 
