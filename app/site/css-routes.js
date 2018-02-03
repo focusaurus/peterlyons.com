@@ -6,6 +6,7 @@ const stylish = require("stylish");
 module.exports = stylish({
   src: __dirname,
   compress: true,
+  cache: true,
   setup(renderer) {
     return renderer.use(nib()).use(rupture()).use(autoprefixer());
   }
