@@ -10,6 +10,5 @@ module.exports = [
   ["/plus-party", /Plus Party/],
   ["/js-debug", /Lighting Up/],
   ["/twelve-factor-nodejs", /Twelve-Factor/],
-  ["/nodejs-training", /node\.js training/],
   ["/talks", /Speaking/]
 ];
