@@ -6,6 +6,7 @@ const DECKS = {
   "web-data": "How Data Powers the Web",
   "rapid-feedback": "Rapid Feedback Learning Tools",
   "npm-gold": "Nice Pretty Modules",
+  "rust-at-recurse": "Learning Rust at Recurse Center",
   "twelve-factor-nodejs": "Twelve-Factor Apps in node.js",
   "white-glove": "Finding Inconsistencies in Your MongoDB Data"
 };
