@@ -12,7 +12,7 @@ Object.keys(DECKS).forEach(deck => {
           return;
         }
         expect($(".reveal .slides ").length).toEqual(1);
-        testUtils.assertSubstrings($, "reveal.js", "##", "highlight");
+        testUtils.assertSubstrings($, "reveal.js", "# ", "---", "highlight");
         done(error);
       });
     });
