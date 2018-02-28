@@ -71,6 +71,11 @@
 - tealeaves
 
 ---
+# This Talk Is Random
+
+- Just here's some rust I wrote, here's a crate, the end
+
+---
 # tirefox
 
 - print candidate project code names
@@ -93,6 +98,6 @@
 - x509-parser (TLS Certificates)
 
 ---
-## The End
+# The End
 
 [peterlyons.com](/)
