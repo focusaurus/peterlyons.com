@@ -6,10 +6,10 @@
 # Agendish
 
 - 6:00 Arrive, eat, drink, chat
-- 6:15 Learning Rust at Recurse Center (Pete Lyons)
-- 6:35 CLI Ergonomics (Garrett Berg)
-- 6:55 Tokio (Joel Dice)
-- 7:15 Pair/Group Projects
+- 6:20 Learning Rust at Recurse Center (Pete Lyons)
+- 6:40 Tokio (Joel Dice)
+- (Canceled): CLI Ergonomics (Garrett Berg)
+- 7:00 Pair/Group Projects
 
 ---
 # Recurse Center
