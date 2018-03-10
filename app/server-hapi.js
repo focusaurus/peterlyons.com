@@ -23,7 +23,8 @@ async function start({port = config.proPort}) {
       logEvents: ["response"]
     }
   });
-
+  server.logger().level = config.logLevel;
+  log.level = config.logLevel;
   await require("./pages")(server);
 
   await server.register(require("inert"));
