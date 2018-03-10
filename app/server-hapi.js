@@ -8,7 +8,7 @@ require("process-title");
 async function start({port = config.proPort}) {
   const server = hapi.server({
     port,
-    host: config.ip,
+    host: config.host,
     routes: {
       files: {
         relativeTo: path.join(__dirname, "..", "www")
@@ -25,6 +25,7 @@ async function start({port = config.proPort}) {
   });
   server.logger().level = config.logLevel;
   log.level = config.logLevel;
+
   await require("./pages")(server);
 
   await server.register(require("inert"));

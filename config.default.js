@@ -3,25 +3,23 @@ const {join} = require("path");
 const pack = require("./package");
 
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
-const IS_TEST = process.env.NODE_ENV === "test";
 
 function get(name, defaultValue) {
-  return process.env[`PLWS_${name.toUpperCase()}`] || defaultValue;
+  return process.env[`PLWS_${name}`] || defaultValue;
 }
 
 const config = {
   appURI: "/app",
   appVersion: pack.version,
   enableLogger: false, // process.env.NODE_ENV !== 'test',
-  hostname: get("hostname", "127.0.0.1"),
-  ip: get("IP", "127.0.0.1"),
-  proPort: get("proport", 9000),
-  persPort: get("persport", 9001),
+  host: get("HOST", "127.0.0.1"),
+  logLevel: get("LOG_LEVEL", IS_PRODUCTION ? "info" : "debug"),
+  persPort: get("PERS_PORT", 9001),
+  proPort: get("PRO_PORT", 9000),
+  revealDir: join(__dirname, "node_modules/reveal.js"),
   staticDir: join(__dirname, "../static"),
   titleSuffix: " | Peter Lyons",
-  revealDir: join(__dirname, "node_modules/reveal.js"),
-  wwwDir: join(__dirname, "www"),
-  logLevel: IS_TEST ? "silent" : "debug"
+  wwwDir: join(__dirname, "www")
 };
 
 config.analytics = {
@@ -43,10 +41,6 @@ config.blog = {
   hashPath: join(__dirname, "../data/blog_password.bcrypt"),
   newBlogPreparePath: join(__dirname, "bin/new-blog-prepare.sh"),
   newBlogFinalizePath: join(__dirname, "bin/new-blog-finalize.sh")
-};
-
-config.tests = {
-  port: get("testPort", 9002)
 };
 
 module.exports = config;
