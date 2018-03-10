@@ -6,8 +6,7 @@ let server;
 
 async function getServer() {
   if (!server) {
-    server = await serverHapi.start({port: null});
-    server.logger().level = "silent";
+    server = await serverHapi.start({port: null, logLevel: 'silent'});
   }
   return server;
 }

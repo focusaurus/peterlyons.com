@@ -5,7 +5,7 @@ const log = require("pino")();
 const path = require("path");
 require("process-title");
 
-async function start({port = config.proPort}) {
+async function start({port = config.proPort, logLevel = config.logLevel}) {
   const server = hapi.server({
     port,
     host: config.host,
@@ -23,10 +23,11 @@ async function start({port = config.proPort}) {
       logEvents: ["response"]
     }
   });
-  server.logger().level = config.logLevel;
-  log.level = config.logLevel;
+  server.logger().level = logLevel;
+  log.level = logLevel;
 
   await require("./pages")(server);
+  await require("./site/css-routes-hapi")(server);
 
   await server.register(require("inert"));
   server.route({
