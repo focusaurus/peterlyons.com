@@ -15,7 +15,6 @@
     "express": "4.16.2",
     "glob": "7.1.2",
     "hapi": "17.2.2",
-    "hapi-consolidate": "0.0.3",
     "hapi-pino": "4.0.3",
     "httperrors": "2.3.0",
     "inert": "5.1.0",
@@ -33,7 +32,8 @@
     "rupture": "0.7.1",
     "sharify": "0.1.6",
     "stylish": "1.0.0",
-    "stylus": "0.54.5"
+    "stylus": "0.54.5",
+    "vision": "5.3.1"
   },
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {

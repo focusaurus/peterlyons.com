@@ -12,7 +12,7 @@ module.exports = {
     "global-require": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      {devDependencies: ["**/*test*", "bin/*"]}
+      {devDependencies: ["**/*test*", "bin/*", "**/*-tap.js"]}
     ],
     "lines-around-directive": "off",
     "max-len": [
