@@ -2,7 +2,6 @@
 const config = require("config3");
 const hapi = require("hapi");
 const log = require("pino")();
-const path = require("path");
 require("process-title");
 
 async function start({port = config.proPort, logLevel = config.logLevel}) {

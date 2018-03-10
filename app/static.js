@@ -19,7 +19,10 @@ async function setup(server) {
     path: "/{param*}",
     handler: {
       directory: {
-        path: path.join(__dirname, "..", "..", "static"),
+        path: [
+          path.join(__dirname, "..", "..", "static"),
+          path.join(__dirname, "third-party")
+        ],
         redirectToSlash: false,
         index: true
       }

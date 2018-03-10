@@ -34,4 +34,14 @@ const pathExps = [
         test.end(err);
       });
   });
+
+  tap.test("google analytics", test => {
+    request(server.info.uri)
+      .get("/googleAnalytics.js")
+      .expect("Content-Type", "text/javascript")
+      .expect("GoogleAnalyticsObject")
+      .expect(200, err => {
+        test.end(err);
+      });
+  });
 })();
