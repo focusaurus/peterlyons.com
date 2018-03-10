@@ -13,7 +13,7 @@ async function init(server) {
   server.route({
     method: "GET",
     path: "/",
-    handler: (request, reply) => reply.view("home", locals())
+    handler: (request, reply) => reply.view("pages/home", locals())
   });
   const pagesPattern = path.join(__dirname, "pages", "*.pug");
   const pages = glob.sync(pagesPattern); // eslint-disable-line no-sync

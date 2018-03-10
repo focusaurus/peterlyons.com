@@ -1,6 +1,7 @@
 "use strict";
-const tap = require("tap");
 const request = require("supertest");
+const smokeTests = require("./smoke-tests");
+const tap = require("tap");
 
 let server;
 
@@ -26,3 +27,17 @@ tap.test("static files from www", test => {
       test.end(err);
     });
 });
+
+tap.test("static files from static", test => {
+  request(server.info.uri)
+    .get("/favicon.ico")
+    .expect("Content-Type", "image/ico")
+    .expect(200, err => {
+      test.end(err);
+    });
+});
+
+tap.test("static smoke tests", test => {
+    smokeTests("static files", server.info.uri, [["/humans.txt", "Technology Stack"]])
+
+})
