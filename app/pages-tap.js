@@ -1,4 +1,7 @@
 "use strict";
+const tap = require("tap");
+const request = require("supertest");
+
 const pathExps = [
   ["/career", /Opsware/],
   ["/code-conventions", /readability/],
@@ -19,4 +22,14 @@ const pathExps = [
     server.info.uri,
     pathExps
   );
+  tap.test("home page", test => {
+    request(server.info.uri)
+      .get("/")
+      .expect("Crafting node.js web applications")
+      .expect("Stacks")
+      .expect("Creative Commons")
+      .expect(200, err => {
+        test.end(err);
+      });
+  });
 })();
