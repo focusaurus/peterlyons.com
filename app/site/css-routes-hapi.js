@@ -8,16 +8,16 @@ const stylus = require("stylus");
 const util = require("util");
 
 const readFileAsync = util.promisify(fs.readFile);
-const screenDotStyl = path.join(__dirname, "screen.styl");
 async function setup(server) {
   server.route({
     method: "GET",
-    path: "/screen.css",
+    path: "/{sheet}.css",
     handler: async (request, reply) => {
-      const input = (await readFileAsync(screenDotStyl)).toString();
+      const sheetPath = path.join(__dirname, `${request.params.sheet}.styl`);
+      const input = (await readFileAsync(sheetPath)).toString();
       const css = await new Promise((resolve, reject) => {
         stylus(input)
-          .set("filename", screenDotStyl)
+          .set("filename", sheetPath)
           .use(nib())
           .use(rupture())
           .use(autoprefixer())
