@@ -30,7 +30,7 @@ block append scripts
     ///// Stepping Over Synchronous Code /////
     function stepSync() {
       const words = "one two three four five".split(" ");
-      for (const i = 0; i < words.length; i++) {
+      for (let i = 0; i < words.length; i++) {
         console.log("Stepping through a for loop with word", words[i]);
       }
       words.forEach(function (word) {
@@ -65,8 +65,7 @@ block append scripts
     }
 
     function multipleAsync() {
-      const requestNumber = 1;
-      for (const requestNumber = 1; requestNumber < 5; requestNumber++) {
+      for (let requestNumber = 1; requestNumber < 5; requestNumber++) {
         const request = new XMLHttpRequest();
         request.open("GET",
           "/jsDebug/randomDelay?requestNumber=" + requestNumber, true);

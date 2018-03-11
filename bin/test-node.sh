@@ -8,11 +8,11 @@ export PATH="${PWD}/node_modules/.bin:$PATH"
 echo -n "browserifying…"
 ./bin/build-js.sh production
 echo ✓
-echo "node.js mocha unit tests…"
+echo "node.js tap unit tests…"
 export NODE_ENV=test
 if [[ $# -eq 0 ]]; then
-  mocha $(find ./app -name \*-test.js | sort)
+  find ./app -name \*-tap.js | sort | NODE_ENV=test xargs tap
 else
-  mocha "$@"
+  NODE_ENV='test' tap "$@"
 fi
 echo ✓

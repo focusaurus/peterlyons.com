@@ -1,6 +1,5 @@
 "use strict";
 const fs = require("fs");
-const locals = require("../locals");
 const path = require("path");
 const util = require("util");
 
@@ -27,7 +26,7 @@ async function setup(server) {
       }
       const markdownPath = path.join(__dirname, `${deck}.md`);
       const contentMarkdown = await readFileAsync(markdownPath, "utf8");
-      return reply.view(`decks/deck`, locals({title, contentMarkdown}));
+      return reply.view(`decks/deck`, {title, contentMarkdown});
     }
   });
 }
