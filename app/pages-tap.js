@@ -25,11 +25,14 @@ const pathExps = [
   tap.test("home page", test => {
     request(server.info.uri)
       .get("/")
-      .expect("Crafting node.js web applications")
-      .expect("Stacks")
-      .expect("Creative Commons")
-      .expect(200, err => {
-        test.end(err);
+      .expect(200)
+      .expect(/Crafting node.js web applications/)
+      .expect(/Stacks/)
+      .expect(/Creative Commons/)
+      .end(error => {
+        test.error(error);
+        test.end();
       });
+
   });
 })();

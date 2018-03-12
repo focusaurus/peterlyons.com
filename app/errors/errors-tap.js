@@ -8,24 +8,25 @@ tap.beforeEach(async () => {
   server = await require("../test-hapi-server")();
 });
 
-tap.test("/screen.css", test => {
+tap.test("custom 404 error page", test => {
   request(server.info.uri)
-    .get("/screen.css")
-    .expect(200)
-    .expect("content-type", "text/css; charset=utf-8")
-    .expect(/font-family/)
+    .get("/unit-test-error-404")
+    .expect(404)
+    .expect("404")
+    .expect("browsernope")
     .end(error => {
       test.error(error);
       test.end();
     });
 });
 
-tap.test("/deck.css", test => {
+tap.test("custom 500 error page", test => {
   request(server.info.uri)
-    .get("/deck.css")
-    .expect(200)
-    .expect("content-type", "text/css; charset=utf-8")
-    .expect(/background-color:/)
+    .get("/unit-test-error-500")
+    .expect(500)
+    .expect("content-type", "text/html; charset=utf-8")
+    .expect(/oops/i)
+    .expect(/quick nap/i)
     .end(error => {
       test.error(error);
       test.end();

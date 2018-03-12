@@ -13,7 +13,8 @@ const context = {
 async function start({port = config.proPort, logLevel = config.logLevel}) {
   const server = hapi.server({
     port,
-    host: config.host
+    host: config.host,
+    // debug: {request: ["*"]}
   });
 
   await server.register({
@@ -37,8 +38,8 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   await require("./site/css-routes-hapi")(server);
   await require("./decks/decks-routes-hapi")(server);
   await require("./js-debug/js-debug-routes-hapi")(server);
+  await require("./errors/errors-routes-hapi")(server);
   await require("./static")(server);
-
   await server.start();
   log.info(`Server running at: ${server.info.uri}`);
   return server;

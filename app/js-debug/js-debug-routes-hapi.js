@@ -25,12 +25,13 @@ async function setup(server) {
   server.route({
     method: "GET",
     path: "/jsDebug",
-    handler: (request, reply) => reply.redirect("/js-debug")
+    handler: (request, reply) => reply.redirect("/js-debug").code(301)
   });
   server.route({
     method: "GET",
     path: "/jsDebug/randomDelay",
-    handler: (request, reply) => reply.redirect("/js-debug/random-delay")
+    handler: (request, reply) =>
+      reply.redirect("/js-debug/random-delay").code(301)
   });
 }
 

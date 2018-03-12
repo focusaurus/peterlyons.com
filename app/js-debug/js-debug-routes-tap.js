@@ -11,9 +11,14 @@ tap.beforeEach(async () => {
 tap.test("/js-debug", test => {
   request(server.info.uri)
     .get("/js-debug")
-    .expect("iframe")
-    .expect("button.stepSync")
-    .expect(200, test.end);
+    .expect(200)
+    .expect(/iframe/)
+    .expect(/button/i)
+    .expect(/\.stepSync/)
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
 });
 
 tap.test("/jsDebug redirect", test => {
@@ -21,13 +26,20 @@ tap.test("/jsDebug redirect", test => {
     .get("/jsDebug")
     .expect(301)
     .expect("Location", "/js-debug")
-    .end(test.end);
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
 });
 
 tap.test("/js-debug/random-delay", test => {
   request(server.info.uri)
     .get("/js-debug/random-delay?requestNumber=42")
+    .expect(200)
     .expect(/42/)
     .expect(/\d+ ms/)
-    .expect(200, test.end);
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
 });

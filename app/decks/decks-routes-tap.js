@@ -13,12 +13,14 @@ Object.keys(DECKS).forEach(deck => {
   tap.test(`deck: ${deck}`, test => {
     request(server.info.uri)
       .get(`/${deck}`)
-      .expect("reveal.js")
-      .expect("---")
-      .expect("highlight")
-      .expect("#")
-      .expect(200, err => {
-        test.end(err);
+      .expect(200)
+      .expect(/reveal\.js/)
+      .expect(/---/)
+      .expect(/highlight/)
+      .expect(/#/)
+      .end(error => {
+        test.error(error);
+        test.end();
       });
   });
 });

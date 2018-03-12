@@ -5,6 +5,15 @@ async function setup(server) {
   await server.register(require("inert"));
   server.route({
     method: "GET",
+    path: "/favicon.ico",
+    handler: (request, h) =>
+      h
+        .response()
+        .code(204)
+        .type("image/x-icon")
+  });
+  server.route({
+    method: "GET",
     path: "/reveal.js/{file*}",
     handler: {
       directory: {
@@ -21,7 +30,7 @@ async function setup(server) {
       directory: {
         path: [
           path.join(__dirname, "..", "..", "static"),
-          path.join(__dirname, "third-party")
+          path.join(__dirname, "www")
         ],
         redirectToSlash: false,
         index: true
