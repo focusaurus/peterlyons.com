@@ -11,6 +11,7 @@ process.on("unhandledRejection", err => {
 
 async function main() {
   await require("./server-hapi").start({});
+  await require("./personal/server").start({});
 }
 
 main();

@@ -1,5 +1,5 @@
 "use strict";
-const serverHapi = require("./server-hapi");
+const serverHapi = require("./server");
 const tap = require("tap");
 
 let server;
