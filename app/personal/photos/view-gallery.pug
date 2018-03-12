@@ -4,6 +4,6 @@ block variables
 block body
   .view-gallery
 block prepend scripts
-  != sharify.script()
+  script(type="text/javascript")!=sharify
 block append scripts
   script require('app/personal/photos/photos-main')()

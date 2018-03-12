@@ -30,7 +30,7 @@ async function setup(server) {
       directory: {
         path: [
           path.join(__dirname, "..", "..", "static"),
-          path.join(__dirname, "www")
+          path.join(__dirname, "..", "www")
         ],
         redirectToSlash: false,
         index: true
