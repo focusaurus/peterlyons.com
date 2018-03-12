@@ -42,6 +42,11 @@ async function setup(server) {
     path: "/photos",
     handler: viewGallery
   });
+  server.route({
+    method: "GET",
+    path: "/app/photos",
+    handler: viewGallery
+  });
 }
 
 module.exports = setup;
