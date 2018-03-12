@@ -12,8 +12,8 @@ tap.test("custom 404 error page", test => {
   request(server.info.uri)
     .get("/unit-test-error-404")
     .expect(404)
-    .expect("404")
-    .expect("browsernope")
+    .expect(/404/)
+    .expect(/not very funny/i)
     .end(error => {
       test.error(error);
       test.end();

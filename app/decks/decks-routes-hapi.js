@@ -15,19 +15,17 @@ const DECKS = {
 };
 
 async function setup(server) {
-  server.route({
-    method: "GET",
-    path: "/{deck}",
-    handler: async (request, reply) => {
-      const {deck} = request.params;
-      const title = DECKS[deck];
-      if (!title) {
-        return reply.continue;
+  Object.keys(DECKS).forEach(deck => {
+    server.route({
+      method: "GET",
+      path: `/${deck}`,
+      handler: async (request, h) => {
+        const title = DECKS[deck];
+        const markdownPath = path.join(__dirname, `${deck}.md`);
+        const contentMarkdown = await readFileAsync(markdownPath, "utf8");
+        return h.view(`decks/deck`, {title, contentMarkdown});
       }
-      const markdownPath = path.join(__dirname, `${deck}.md`);
-      const contentMarkdown = await readFileAsync(markdownPath, "utf8");
-      return reply.view(`decks/deck`, {title, contentMarkdown});
-    }
+    });
   });
 }
 module.exports = setup;
