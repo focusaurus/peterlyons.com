@@ -7,7 +7,7 @@ async function feed(request, h) {
     blog,
     pretty: true,
     posts: feedPosts,
-    hostname: request.url.hostname
+    hostname: (request.headers.host || "127.0.0.1").split(":", 1)[0]
   };
   return h.view("blog/feed", locals);
 }
