@@ -1,7 +1,7 @@
 "use strict";
 
 function randomDelay() {
-  const delay = Math.random() * 10000;
+  const delay = Math.random() * 2000;
   return new Promise(resolve => {
     setTimeout(() => resolve(delay), delay);
   });

@@ -31,6 +31,7 @@ async function start({port = config.persPort, logLevel = config.logLevel}) {
   await require("./pages")(server);
   await require("./photos/photos")(server);
   await require("../site/css-routes-hapi")(server);
+  await server.register(require("./redirects"));
   await require("../static")(server);
   await require("../errors/errors-routes-hapi")(server);
   await server.start();

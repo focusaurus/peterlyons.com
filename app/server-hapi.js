@@ -30,7 +30,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
     context: require("./template-vars")({proSite: true})
   });
 
-  await require("./pages")(server);
+  await server.register(require("./pages"));
   await require("./site/css-routes-hapi")(server);
   await require("./decks/decks-routes-hapi")(server);
   await require("./js-debug/js-debug-routes-hapi")(server);

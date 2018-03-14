@@ -1,10 +1,11 @@
-function noHtml(req, res, next) {
-  if (/\.html$/.test(req.path)) {
-    const to = req.path.slice(0, req.path.length - 5);
-    res.redirect(301, to);
-    return;
+module.exports = {
+  name: "redirects",
+  version: "1.0.0",
+  async register(server) {
+    server.route({
+      method: "GET",
+      path: "/{page}.html",
+      handler: (request, h) => h.redirect(`/${request.params.page}`).code(301)
+    });
   }
-  next();
-}
-
-module.exports = [noHtml];
+};
