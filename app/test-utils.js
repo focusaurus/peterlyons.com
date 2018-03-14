@@ -1,4 +1,7 @@
+"use strict";
+const cheerio = require("cheerio");
 const expect = require("chaimel");
+const request = require("supertest");
 
 function assertSelectors($, ...selectors) {
   selectors.forEach(selector => {
@@ -21,8 +24,16 @@ function assertDeck($) {
   assertSubstrings($, "reveal.js");
 }
 
+async function loadDom(uri, path) {
+  return request(uri)
+    .get(path)
+    .expect(200)
+    .then(res => cheerio.load(res.text));
+}
+
 module.exports = {
   assertSelectors,
   assertSubstrings,
-  assertDeck
+  assertDeck,
+  loadDom
 };
