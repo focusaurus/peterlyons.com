@@ -28,12 +28,14 @@ async function start({port = config.persPort, logLevel = config.logLevel}) {
     context: require("../template-vars")()
   });
 
-  await server.register(require("./pages"));
-  await server.register(require("./photos/photos"));
-  await server.register(require("../site/css-routes-hapi"));
-  await server.register(require("./redirects"));
-  await server.register(require("../static"));
-  await server.register(require("../errors/errors-routes-hapi"));
+  await server.register([
+    require("../errors/errors-routes-hapi"),
+    require("../site/css-routes-hapi"),
+    require("../static"),
+    require("./pages"),
+    require("./photos/photos"),
+    require("./redirects")
+  ]);
   await server.start();
   log.info(`Server running at: ${server.info.uri}`);
   return server;

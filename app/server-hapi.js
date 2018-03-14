@@ -38,16 +38,16 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   });
 
   await server.register([
-    require("./pages"),
-    require("./site/css-routes-hapi"),
     require("./decks/decks-routes-hapi"),
+    require("./errors/errors-routes-hapi"),
     require("./js-debug/js-debug-routes-hapi"),
+    require("./pages"),
+    require("./personal-redirects"),
     require("./plus-party/plus-party-routes"),
-    require("./personal-redirects")
+    require("./site/css-routes-hapi"),
+    require("./static")
   ]);
   await server.register({plugin: require("./blog"), options: problog});
-  await server.register(require("./static"));
-  await server.register(require("./errors/errors-routes-hapi"));
   await server.start();
   log.info(`Server running at: ${server.info.uri}`);
   return server;
