@@ -1,5 +1,4 @@
 "use strict";
-const _ = require("lodash");
 const config = require("config3");
 const hapi = require("hapi");
 const log = require("pino")();
@@ -31,12 +30,12 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   });
 
   await server.register(require("./pages"));
-  await require("./site/css-routes-hapi")(server);
-  await require("./decks/decks-routes-hapi")(server);
-  await require("./js-debug/js-debug-routes-hapi")(server);
+  await server.register(require("./site/css-routes-hapi"));
+  await server.register(require("./decks/decks-routes-hapi"));
+  await server.register(require("./js-debug/js-debug-routes-hapi"));
   await server.register(require("./personal-redirects"));
-  await require("./static")(server);
-  await require("./errors/errors-routes-hapi")(server);
+  await server.register(require("./static"));
+  await server.register(require("./errors/errors-routes-hapi"));
   await server.start();
   log.info(`Server running at: ${server.info.uri}`);
   return server;

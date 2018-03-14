@@ -29,11 +29,11 @@ async function start({port = config.persPort, logLevel = config.logLevel}) {
   });
 
   await server.register(require("./pages"));
-  await require("./photos/photos")(server);
-  await require("../site/css-routes-hapi")(server);
+  await server.register(require("./photos/photos"));
+  await server.register(require("../site/css-routes-hapi"));
   await server.register(require("./redirects"));
-  await require("../static")(server);
-  await require("../errors/errors-routes-hapi")(server);
+  await server.register(require("../static"));
+  await server.register(require("../errors/errors-routes-hapi"));
   await server.start();
   log.info(`Server running at: ${server.info.uri}`);
   return server;

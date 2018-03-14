@@ -14,19 +14,22 @@ const DECKS = {
   "white-glove": "Finding Inconsistencies in Your MongoDB Data"
 };
 
-async function setup(server) {
-  Object.keys(DECKS).forEach(deck => {
-    server.route({
-      method: "GET",
-      path: `/${deck}`,
-      handler: async (request, h) => {
-        const title = DECKS[deck];
-        const markdownPath = path.join(__dirname, `${deck}.md`);
-        const contentMarkdown = await readFileAsync(markdownPath, "utf8");
-        return h.view(`decks/deck`, {title, contentMarkdown});
-      }
+module.exports = {
+  DECKS,
+  name: "decks",
+  version: "1.0.0",
+  async register(server) {
+    Object.keys(DECKS).forEach(deck => {
+      server.route({
+        method: "GET",
+        path: `/${deck}`,
+        handler: async (request, h) => {
+          const title = DECKS[deck];
+          const markdownPath = path.join(__dirname, `${deck}.md`);
+          const contentMarkdown = await readFileAsync(markdownPath, "utf8");
+          return h.view(`decks/deck`, {title, contentMarkdown});
+        }
+      });
     });
-  });
-}
-module.exports = setup;
-module.exports.DECKS = DECKS;
+  }
+};

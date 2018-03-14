@@ -31,22 +31,24 @@ async function viewGallery(request, h) {
   });
 }
 
-async function setup(server) {
-  server.route({
-    method: "GET",
-    path: "/galleries/{slug}",
-    handler: getGallery
-  });
-  server.route({
-    method: "GET",
-    path: "/photos",
-    handler: viewGallery
-  });
-  server.route({
-    method: "GET",
-    path: "/app/photos",
-    handler: viewGallery
-  });
-}
-
-module.exports = setup;
+module.exports = {
+  name: "photos",
+  version: "1.0.0",
+  async register(server) {
+    server.route({
+      method: "GET",
+      path: "/galleries/{slug}",
+      handler: getGallery
+    });
+    server.route({
+      method: "GET",
+      path: "/photos",
+      handler: viewGallery
+    });
+    server.route({
+      method: "GET",
+      path: "/app/photos",
+      handler: viewGallery
+    });
+  }
+};
