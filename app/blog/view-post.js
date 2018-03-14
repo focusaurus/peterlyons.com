@@ -1,27 +1,26 @@
-const errors = require("httperrors");
+"use strict";
+const boom = require("boom");
 const path = require("path");
 const postStore = require("./post-store");
 const presentPost = require("./present-post");
-const promiseHandler = require("../promise-handler");
 
-async function viewPost(req, res, next) {
-  const blog = res.app.locals.blog;
-  const metadataPath = path.join(blog.basePath, `${req.path}.json`);
-  let post
+async function viewPost(request, h) {
+  const blog = h.context;
+  const metadataPath = path.join(blog.basePath, `${request.params.year}/${request.params.month}/${request.params.slug}.json`);
+  request.log("hey metadataPath", metadataPath)
+  let post;
   try {
     post = await postStore.load(blog.prefix, metadataPath);
     await postStore.loadContent(post);
   } catch (error) {
     if (error && error.code === "ENOENT") {
-      next(new errors.NotFound(req.path));
-      return;
+      throw boom.notFound(request.path);
     }
-    next(error);
-    return;
+    throw error;
   }
-  res.locals.post = presentPost.asObject(post);
-  blog.assignNextPrevious(res.locals.post);
-  res.render("blog/view-post");
+  post = presentPost.asObject(post);
+  blog.assignNextPrevious(post);
+  return h.view("blog/view-post", {blog, post});
 }
 
-module.exports = promiseHandler(viewPost);
+module.exports = viewPost;

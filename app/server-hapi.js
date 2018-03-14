@@ -5,11 +5,19 @@ const log = require("pino")();
 const path = require("path");
 require("process-title");
 
+const problog = {
+  basePath: path.join(__dirname, "../../data/posts/problog"),
+  prefix: "/problog",
+  staticPath: path.join(__dirname, "../../static/problog"),
+  subtitle: "A blog about web development, programming, technology",
+  title: "Pete's Points"
+};
+
 async function start({port = config.proPort, logLevel = config.logLevel}) {
   const server = hapi.server({
     port,
-    host: config.host
-    // debug: {request: ["*"]}
+    host: config.host,
+    debug: {request: ["*"]}
   });
 
   await server.register({
@@ -34,6 +42,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   await server.register(require("./decks/decks-routes-hapi"));
   await server.register(require("./js-debug/js-debug-routes-hapi"));
   await server.register(require("./personal-redirects"));
+  await server.register({plugin: require("./blog"), options: problog});
   await server.register(require("./static"));
   await server.register(require("./errors/errors-routes-hapi"));
   await server.start();

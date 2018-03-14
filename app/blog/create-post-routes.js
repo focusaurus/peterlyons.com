@@ -1,13 +1,11 @@
 const {promisify} = require("util");
 const bcrypt = require("bcryptjs");
-const bodyParser = require("body-parser");
 const childProcess = require("child_process");
 const config = require("config3");
 const fs = require("fs");
 const httpErrors = require("httperrors");
 const log = require("bole")(__filename);
 const postStore = require("./post-store");
-const promiseHandler = require("../promise-handler");
 
 const readFileAsync = promisify(fs.readFile);
 const compareAsync = promisify(bcrypt.compare);
@@ -56,24 +54,24 @@ async function newBlogFinalize(password, post) {
   }
 }
 
-async function createPost(req, res) {
-  const password = req.body.password;
+async function createPost(request, h) {
+  const {password, title, content} = request.body;
   const hash = await readFileAsync(config.blog.hashPath, "utf8");
   await verifyPasswordAsync(password, hash);
   await newBlogPrepare();
-  const blog = req.app.locals.blog;
+  const blog = h.context;
   const post = {
-    title: req.body.title,
-    content: `${(req.body.content || "").trim()}\n`
+    title,
+    content: `${(content || "").trim()}\n`
   };
   const metadataPath = await postStore.save(blog.basePath, post);
   await newBlogFinalize(password, post);
   const loadedPost = await postStore.load(blog.prefix, metadataPath);
-  res.send(loadedPost);
-  res.app.locals.blog.load();
+  blog.load(); // Don't await this on purpose
+  return loadedPost;
 }
 
 module.exports = {
-  handler: [bodyParser.json(), promiseHandler(createPost)],
+  handler: createPost,
   verifyPasswordAsync
 };
