@@ -1,24 +1,27 @@
-function personal(req) {
-  return `https://peterlyons.org${req.url}`;
-}
+"use strict";
 
-const matchers = [];
-matchers.push([/^\/app\/photos/i, personal]);
-matchers.push([/^\/bands(\.html)?/i, personal]);
-matchers.push([/^\/favorites(\.html)?/i, personal]);
-matchers.push([/^\/oberlin(\.html)?/i, personal]);
-matchers.push([/^\/persblog/i, personal]);
-matchers.push([/^\/photos/i, personal]);
-
-function redirectHandler(req, res, next) {
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < matchers.length; i++) {
-    if (matchers[i][0].test(req.url)) {
-      res.redirect(301, matchers[i][1](req));
-      return;
-    }
+const paths = [
+  "/app/photos",
+  "/bands.html",
+  "/bands",
+  "/favorites.html",
+  "/favorites",
+  "/oberlin.html",
+  "/oberlin",
+  "/persblog",
+  "/photos"
+];
+module.exports = {
+  name: "personalRedirects",
+  version: "1.0.0",
+  async register(server) {
+    paths.forEach(path => {
+      server.route({
+        method: "GET",
+        path,
+        handler: (request, h) =>
+          h.redirect(`https://peterlyons.org${request.url.path}`).code(301)
+      });
+    });
   }
-  next();
-}
-
-module.exports = redirectHandler;
+};

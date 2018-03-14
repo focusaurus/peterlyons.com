@@ -34,6 +34,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   await require("./site/css-routes-hapi")(server);
   await require("./decks/decks-routes-hapi")(server);
   await require("./js-debug/js-debug-routes-hapi")(server);
+  await server.register(require("./personal-redirects"));
   await require("./static")(server);
   await require("./errors/errors-routes-hapi")(server);
   await server.start();
