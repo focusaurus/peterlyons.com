@@ -1,6 +1,6 @@
 "use strict";
-const tap = require("tap");
 const request = require("supertest");
+const tap = require("tap");
 
 const pathExps = [
   ["/career", /Opsware/],
@@ -15,24 +15,30 @@ const pathExps = [
   ["/web-prog", /PHP/]
 ];
 
-(async () => {
-  const server = await require("./test-hapi-server")();
+let server;
+
+tap.beforeEach(async () => {
+  server = await require("./test-hapi-server")();
+});
+
+tap.test("pages smoke tests", test => {
   require("./test-responses")(
     "Pages (pug templates)",
     server.info.uri,
     pathExps
   );
-  tap.test("home page", test => {
-    request(server.info.uri)
-      .get("/")
-      .expect(200)
-      .expect(/Crafting node.js web applications/)
-      .expect(/Stacks/)
-      .expect(/Creative Commons/)
-      .end(error => {
-        test.error(error);
-        test.end();
-      });
+  test.end();
+});
 
-  });
-})();
+tap.test("home page", test => {
+  request(server.info.uri)
+    .get("/")
+    .expect(200)
+    .expect(/Crafting node.js web applications/)
+    .expect(/Stacks/)
+    .expect(/Creative Commons/)
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});

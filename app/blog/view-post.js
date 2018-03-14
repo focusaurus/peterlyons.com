@@ -6,8 +6,10 @@ const presentPost = require("./present-post");
 
 async function viewPost(request, h) {
   const blog = h.context;
-  const metadataPath = path.join(blog.basePath, `${request.params.year}/${request.params.month}/${request.params.slug}.json`);
-  request.log("hey metadataPath", metadataPath)
+  const metadataPath = path.join(
+    blog.basePath,
+    `${request.params.year}/${request.params.month}/${request.params.slug}.json`
+  );
   let post;
   try {
     post = await postStore.load(blog.prefix, metadataPath);

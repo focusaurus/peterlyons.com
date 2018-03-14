@@ -47,16 +47,20 @@ class Blog extends events.EventEmitter {
   }
 
   async load() {
-    delete this.cachedFeedXML;
     const files = await globAsync(`${this.basePath}/**/*.json`);
     let posts = await Promise.all(
       files.map(postStore.load.bind(null, this.prefix))
     );
     posts = _.sortBy(posts, "publish_date").reverse();
     posts.forEach(setupNextPrevious.bind(null, posts));
-    this.posts = posts;
-    this.presentedPosts = posts.map(presentPost.asObject);
-    log.info(`this at ${this.prefix} loaded ${this.posts.length} posts`);
+    const feedPosts = (await Promise.all(
+      posts.slice(0, 10).map(postStore.loadContent)
+    )).map(presentPost.asObject);
+    const presentedPosts = posts.map(presentPost.asObject);
+    return {
+      feedPosts,
+      presentedPosts
+    };
   }
 
   async assignNextPrevious(post) {
@@ -101,6 +105,16 @@ module.exports = {
       path: `${blog.prefix}/{year}/{month}/{slug}`,
       handler: require("./view-post")
     });
+    server.method(
+      "loadPosts",
+      async () => {
+        server.log(["blog"], "loading blog posts from disk");
+        return blog.load();
+      },
+      {
+        cache: {expiresIn: 1000 * 60 * 24, generateTimeout: 1000 * 60 * 1}
+      }
+    );
     // if (this.staticPath) {
     //   app.use(express.static(this.staticPath));
     // }

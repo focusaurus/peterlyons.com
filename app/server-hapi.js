@@ -17,7 +17,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   const server = hapi.server({
     port,
     host: config.host,
-    debug: {request: ["*"]}
+    debug: {request: ["blog"]}
   });
 
   await server.register({
@@ -37,11 +37,14 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
     context: require("./template-vars")({proSite: true})
   });
 
-  await server.register(require("./pages"));
-  await server.register(require("./site/css-routes-hapi"));
-  await server.register(require("./decks/decks-routes-hapi"));
-  await server.register(require("./js-debug/js-debug-routes-hapi"));
-  await server.register(require("./personal-redirects"));
+  await server.register([
+    require("./pages"),
+    require("./site/css-routes-hapi"),
+    require("./decks/decks-routes-hapi"),
+    require("./js-debug/js-debug-routes-hapi"),
+    require("./plus-party/plus-party-routes"),
+    require("./personal-redirects")
+  ]);
   await server.register({plugin: require("./blog"), options: problog});
   await server.register(require("./static"));
   await server.register(require("./errors/errors-routes-hapi"));

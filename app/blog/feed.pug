@@ -4,7 +4,7 @@ feed(xmlns="http://www.w3.org/2005/Atom")
   - const URL = "https://" + hostname + blog.prefix + "/feed"
   link(href=URL, rel="self")
   link(href=URL)
-  updated= posts[0].publish_date.toISOString()
+  updated= posts[0].publish_date
   id= URL
   author
     name Peter Lyons
@@ -12,6 +12,6 @@ feed(xmlns="http://www.w3.org/2005/Atom")
     entry
       title= post.title
       link(href="//" + hostname + post.uri)
-      updated= post.publish_date.toISOString()
+      updated= post.publish_date
       id= `//${hostname}${post.uri}`
       content(type="html")= post.html || ""
