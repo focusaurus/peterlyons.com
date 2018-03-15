@@ -56,7 +56,8 @@ module.exports = {
       "loadPosts",
       async () => {
         server.log(["blog"], "loading blog posts from disk");
-        return blog.load();
+        await blog.load();
+        return blog.feedPosts;
       },
       {
         cache: {expiresIn: 1000 * 60 * 24, generateTimeout: 1000 * 60 * 1}
