@@ -15,8 +15,6 @@ async function getServer() {
   server.views({
     engines: {pug: require("pug")},
     relativeTo: path.join(__dirname, "..")
-    // crap coupling here, sorry
-    // context: require("../template-vars")()
   });
   const options = {
     basePath: path.join(__dirname, "unit-test-blog1"),

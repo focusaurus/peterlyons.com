@@ -17,6 +17,7 @@ module.exports = {
       if (!request.response.isBoom) {
         return h.continue;
       }
+      server.log(["errors"], request.response);
       const code = request.response.output.statusCode;
       switch (code) {
         case 500:

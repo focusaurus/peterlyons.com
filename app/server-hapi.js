@@ -24,7 +24,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
     plugin: require("hapi-pino"),
     options: {
       prettyPrint: false,
-      logEvents: ["response"]
+      logEvents: ["*"]
     }
   });
   server.logger().level = logLevel;

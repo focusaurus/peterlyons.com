@@ -16,6 +16,8 @@ function asObject(post) {
     date: dateFns.format(withDefaults.publish_date, "MMMM DD, YYYY"),
     html: renderPost(withDefaults.content),
     name: withDefaults.name.trim(),
+    next: post.next,
+    previous: post.previous,
     publish_date: withDefaults.publish_date,
     title: withDefaults.title.trim(),
     uri: withDefaults.uri
