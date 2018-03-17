@@ -9,5 +9,6 @@ module.exports = {
       path: "/plus-party",
       handler: async (request, h) => h.view("plus-party/plus-party")
     });
+    server.methods.redirect("/plusParty", "/plus-party");
   }
 };

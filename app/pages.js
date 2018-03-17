@@ -22,5 +22,9 @@ module.exports = {
         handler: (request, reply) => reply.view(`pages/${base}`)
       });
     });
+    // Redirect old snake_case uris to kebab-case
+    server.methods.redirect("/code_conventions", "/code-conventions");
+    server.methods.redirect("/leveling_up", "/leveling-up");
+    server.methods.redirect("/web_prog", "/web-prog");
   }
 };

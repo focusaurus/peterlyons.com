@@ -27,16 +27,7 @@ module.exports = {
         )} ms to request number ${num}`;
       }
     });
-    server.route({
-      method: "GET",
-      path: "/jsDebug",
-      handler: (request, reply) => reply.redirect("/js-debug").code(301)
-    });
-    server.route({
-      method: "GET",
-      path: "/jsDebug/randomDelay",
-      handler: (request, reply) =>
-        reply.redirect("/js-debug/random-delay").code(301)
-    });
+    server.methods.redirect("/jsDebug", "/js-debug");
+    server.methods.redirect("/jsDebug/randomDelay", "/js-debug/random-delay");
   }
 };

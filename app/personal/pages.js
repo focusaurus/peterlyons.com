@@ -17,6 +17,9 @@ module.exports = {
     pages.forEach(page => {
       const ext = path.extname(page);
       const base = path.basename(page, ext);
+      if (base === "navigation") {
+        return;
+      }
       server.route({
         method: "GET",
         path: `/${encodeURIComponent(base)}`,

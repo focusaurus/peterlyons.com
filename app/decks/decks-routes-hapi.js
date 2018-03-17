@@ -6,11 +6,11 @@ const util = require("util");
 const readFileAsync = util.promisify(fs.readFile);
 
 const DECKS = {
-  "web-data": "How Data Powers the Web",
-  "rapid-feedback": "Rapid Feedback Learning Tools",
   "npm-gold": "Nice Pretty Modules",
+  "rapid-feedback": "Rapid Feedback Learning Tools",
   "rust-at-recurse": "Learning Rust at Recurse Center",
   "twelve-factor-nodejs": "Twelve-Factor Apps in node.js",
+  "web-data": "How Data Powers the Web",
   "white-glove": "Finding Inconsistencies in Your MongoDB Data"
 };
 
@@ -30,6 +30,8 @@ module.exports = {
           return h.view(`decks/deck`, {title, contentMarkdown});
         }
       });
+      // Redirectly old snake_case_routes to kebab-case
+      server.methods.redirect(`/${deck.replace(/-/g, "_")}`, `/${deck}`);
     });
   }
 };
