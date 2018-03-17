@@ -37,6 +37,7 @@ tap.test("home page", test => {
     .expect(/Crafting node.js web applications/)
     .expect(/Stacks/)
     .expect(/Creative Commons/)
+    .expect(/<section .*class="intro"/i)
     .end(error => {
       test.error(error);
       test.end();

@@ -32,6 +32,17 @@ tap.test("/jsDebug redirect", test => {
     });
 });
 
+tap.test("/jsDebug/randomDelay redirect", test => {
+  request(server.info.uri)
+    .get("/jsDebug/randomDelay")
+    .expect(301)
+    .expect("Location", "/js-debug/random-delay")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});
+
 tap.test("/js-debug/random-delay", test => {
   request(server.info.uri)
     .get("/js-debug/random-delay?requestNumber=42")
