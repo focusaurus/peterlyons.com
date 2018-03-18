@@ -5,11 +5,11 @@ const testUtils = require("../test-utils");
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../test-hapi-server")();
+  uri = await require("../get-test-uri")(require("../server"));
 });
 
 tap.test("the plus party page", async test => {
-  const $ = await testUtils.loadDom(server.info.uri, "/plus-party");
+  const $ = await testUtils.loadDom(uri, "/plus-party");
   testUtils.assertSelectors(
     $,
     "iframe[allowfullscreen]",

@@ -12,7 +12,7 @@ const pathExps = [
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("./test-hapi-server")();
+  uri = await require("./get-test-uri")(require("./server"));
 });
 
 tap.test("static files smoke tests", test => {
@@ -36,6 +36,17 @@ tap.test("static images", test => {
     .get("/images/gora_gora_orkestar.jpg")
     .expect(200)
     .expect("content-type", "image/jpeg")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});
+
+tap.test("static pdf", test => {
+  request(uri)
+    .get("/scnd.pdf")
+    .expect(200)
+    .expect("Content-Type", "application/pdf")
     .end(error => {
       test.error(error);
       test.end();

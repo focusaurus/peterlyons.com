@@ -7,11 +7,8 @@ const testUtils = require("../test-utils");
 let uri;
 let $;
 tap.beforeEach(async () => {
-  if (server) {
-    return;
-  }
-  uri = await require("../test-hapi-server")();
-  $ = await testUtils.loadDom(server.info.uri, "/");
+  uri = await require("../get-test-uri")(require("../server"));
+  $ = await testUtils.loadDom(uri, "/");
 });
 
 tap.test("the main layout", async test => {

@@ -22,7 +22,7 @@ async function getServer() {
   if (!server) {
     server = await serverHapi.start({port: null, logLevel: "silent"});
   }
-  return server;
+  return server.info.uri;
 }
 
 tap.tearDown(async () => {

@@ -1,42 +1,53 @@
-#!/usr/bin/env node
+"use strict";
+const config = require("config3");
+const hapi = require("hapi");
+const log = require("pino")();
+const path = require("path");
+require("process-title");
 
-const bole = require("bole");
+const problog = {
+  basePath: path.join(__dirname, "../../data/posts/problog"),
+  prefix: "/problog",
+  staticPath: path.join(__dirname, "../../static/problog"),
+  subtitle: "A blog about web development, programming, technology",
+  title: "Pete's Points"
+};
 
-const log = bole(__filename);
-
-bole.output({
-  level: "debug",
-  stream: process.stdout
-});
-
-process.on("uncaughtException", exception => {
-  log.error(exception, "uncaught exception. Process will exit");
-  setImmediate(() => {
-    process.exit(66); // eslint-disable-line no-process-exit
-  }, 1000);
-});
-
-log.info(
-  {
-    env: process.env.NODE_ENV
-  },
-  "Express server process starting"
-);
-
-function listen(app, port, ip) {
-  app.listen(port, ip, error => {
-    if (error) {
-      log.error("Could not bind server port. Aborting.");
-      process.exit(10); // eslint-disable-line no-process-exit
-    }
-    log.info({ ip, port }, "express server listening");
+async function start({port = config.proPort, logLevel = config.logLevel}) {
+  const server = hapi.server({
+    port,
+    host: config.host,
+    debug: {request: ["*"]}
   });
+  await server.register([
+    require("vision"), // renders page templates (pug)
+    require("hapi-pino"), // logging
+    require("./redirect-plugin"), // old uri redirects,
+    require("./security-plugin") // headers
+  ]);
+  server.logger().level = logLevel;
+  log.level = logLevel;
+
+  server.views({
+    engines: {pug: require("pug")},
+    relativeTo: path.join(__dirname),
+    context: require("./template-vars")({proSite: true})
+  });
+
+  await server.register([
+    require("./decks/decks-routes-hapi"),
+    require("./errors/errors-routes-hapi"),
+    require("./js-debug/js-debug-routes-hapi"),
+    require("./pages"),
+    require("./personal-redirects"),
+    require("./plus-party/plus-party-routes"),
+    require("./site/css-routes-hapi"),
+    require("./static")
+  ]);
+  await server.register({plugin: require("./blog"), options: problog});
+  await server.start();
+  log.info(`Server running at: ${server.info.uri}`);
+  return server;
 }
 
-require("process-title");
-const config = require("config3");
-const persApp = require("./personal/app");
-const proApp = require("./index");
-
-listen(proApp, config.proPort, config.ip);
-listen(persApp, config.persPort, config.ip);
+module.exports = {start};

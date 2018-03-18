@@ -19,7 +19,7 @@ const pathExps = [
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("./test-hapi-server")();
+  uri = await require("./get-test-uri")(require("./server"));
 });
 
 tap.test("pages smoke tests", test => {

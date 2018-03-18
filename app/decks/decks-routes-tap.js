@@ -6,7 +6,7 @@ const tap = require("tap");
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../test-hapi-server")();
+  uri = await require("../get-test-uri")(require("../server"));
 });
 
 Object.keys(DECKS).forEach(deck => {

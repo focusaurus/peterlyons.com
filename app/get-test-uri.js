@@ -1,5 +1,4 @@
 "use strict";
-const serverHapi = require("./server");
 const tap = require("tap");
 
 /**
@@ -12,15 +11,15 @@ const tap = require("tap");
  * (could be local, stage, production), set the environment variable URI
  * to the base URI the tests should hit, and that will be used instead.
  */
-let uri;
+let server;
 
-async function getServer() {
+async function getServer(serverMod) {
   const uri = process.env.URI;
   if (/^https?:\/\//.test(uri)) {
     return uri;
   }
   if (!server) {
-    server = await serverHapi.start({port: null, logLevel: "silent"});
+    server = await serverMod.start({port: null, logLevel: "silent"});
   }
   return server.info.uri;
 }
