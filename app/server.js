@@ -1,7 +1,6 @@
 "use strict";
 const config = require("config3");
 const hapi = require("hapi");
-const log = require("pino")();
 const path = require("path");
 require("process-title");
 
@@ -15,18 +14,24 @@ const problog = {
 
 async function start({port = config.proPort, logLevel = config.logLevel}) {
   const server = hapi.server({
-    port,
+    // debug: {request: "*", log: "*"}
+    debug: false,
     host: config.host,
-    debug: {request: ["*"]}
+    port
   });
+
+  await server.register({
+    plugin: require("hapi-pino"),
+    options: {mergeHapiLogData: true}
+  });
+
   await server.register([
     require("vision"), // renders page templates (pug)
-    require("hapi-pino"), // logging
     require("./redirect-plugin"), // old uri redirects,
     require("./security-plugin") // headers
   ]);
   server.logger().level = logLevel;
-  log.level = logLevel;
+  server.log("info", "PLWS (professional) server starting");
 
   server.views({
     engines: {pug: require("pug")},
@@ -46,7 +51,7 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   ]);
   await server.register({plugin: require("./blog"), options: problog});
   await server.start();
-  log.info(`Server running at: ${server.info.uri}`);
+  server.log("info", `Server running at: ${server.info.uri}`);
   return server;
 }
 

@@ -1,11 +1,10 @@
 "use strict";
 const Blog = require("./blog");
-const log = require("bole")(__filename);
 const presentPost = require("./present-post");
 
 async function flushCache(request, h) {
   const blog = h.context;
-  log.info("flushing blog cache", {title: blog.title});
+  request.log("blog", `flushing blog cache for ${blog.title}`);
   await blog.load();
   return h.redirect(blog.prefix);
 }
@@ -55,7 +54,7 @@ module.exports = {
     server.method(
       "loadPosts",
       async () => {
-        server.log(["blog"], "loading blog posts from disk");
+        server.log("blog", "loading blog posts from disk");
         await blog.load();
         return blog.feedPosts;
       },

@@ -9,7 +9,15 @@ module.exports = {
       method: "GET",
       path: "/unit-test-error-500", // catch-all path
       handler: async () => {
-        throw boom.internal("unit-test-500-error");
+        throw boom.internal("unit-test-error-500-message");
+      }
+    });
+
+    server.route({
+      method: "GET",
+      path: "/unit-test-error-404", // catch-all path
+      handler: async () => {
+        throw boom.notFound("unit-test-error-404-message");
       }
     });
 
@@ -17,14 +25,14 @@ module.exports = {
       if (!request.response.isBoom) {
         return h.continue;
       }
-      server.log(["errors"], request.response);
       const code = request.response.output.statusCode;
+      // Yep, it's a switch statement with fallthrough!
       switch (code) {
         case 500:
-        case 404:
+          request.log("error", request.response);
+        case 404: // eslint-disable-line no-fallthrough
           return h.view(`errors/error${code}`).code(code);
         default:
-          request.logger.warn(request.response);
           return h.continue;
       }
     });

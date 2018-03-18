@@ -38,9 +38,7 @@ config.photos = {
 };
 
 config.blog = {
-  hashPath: join(__dirname, "../data/blog_password.bcrypt"),
-  newBlogPreparePath: join(__dirname, "bin/new-blog-prepare.sh"),
-  newBlogFinalizePath: join(__dirname, "bin/new-blog-finalize.sh")
+  hashPath: join(__dirname, "../data/blog_password.bcrypt")
 };
 
 module.exports = config;

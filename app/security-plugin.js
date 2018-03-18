@@ -8,7 +8,7 @@ module.exports = {
       if (request.response.isBoom) {
         return h.continue;
       }
-      server.log(["security"], "Setting security headers");
+      server.log("debug", "Setting security headers");
       return request.response
         .header("x-frame-options", "DENY")
         .header("x-content-type-options", "nosniff")

@@ -14,7 +14,6 @@ tap.skip("a request for a non-existent blog post name", async test => {
     .expect(404)
     .end(error => {
       test.error(error);
-      // console.log("HEY", res.text); // fixme
       test.end();
     });
 });
