@@ -9,23 +9,19 @@ const pathExps = [
   ["/oberlin", /conservatory/i]
 ];
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-server")();
+  uri = await require("./test-server")();
 });
 
 tap.test("Personal pages smoke tests", test => {
-  require("../test-responses")(
-    "Pages (pug templates)",
-    server.info.uri,
-    pathExps
-  );
+  require("../test-responses")("Pages (pug templates)", uri, pathExps);
   test.end();
 });
 
 tap.test("css", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/screen.css")
     .expect(200)
     .expect("content-type", "text/css; charset=utf-8")
@@ -37,7 +33,7 @@ tap.test("css", test => {
 });
 
 tap.test("personal site does not include pro nav", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/")
     .expect(200)
     .end((error, res) => {

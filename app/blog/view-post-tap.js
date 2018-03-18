@@ -2,7 +2,7 @@
 const tap = require("tap");
 const testUtils = require("../test-utils");
 
-let server;
+let uri;
 tap.beforeEach(async () => {
   server = await require("./test-blog-hapi")();
 });

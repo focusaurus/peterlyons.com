@@ -2,14 +2,14 @@
 const request = require("supertest");
 const tap = require("tap");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("../test-hapi-server")();
+  uri = await require("../test-hapi-server")();
 });
 
 tap.test("/js-debug", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/js-debug")
     .expect(200)
     .expect(/iframe/)
@@ -22,7 +22,7 @@ tap.test("/js-debug", test => {
 });
 
 tap.test("/jsDebug redirect", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/jsDebug")
     .expect(301)
     .expect("Location", "/js-debug")
@@ -33,7 +33,7 @@ tap.test("/jsDebug redirect", test => {
 });
 
 tap.test("/jsDebug/randomDelay redirect", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/jsDebug/randomDelay")
     .expect(301)
     .expect("Location", "/js-debug/random-delay")
@@ -44,7 +44,7 @@ tap.test("/jsDebug/randomDelay redirect", test => {
 });
 
 tap.test("/js-debug/random-delay", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/js-debug/random-delay?requestNumber=42")
     .expect(200)
     .expect(/42/)

@@ -4,13 +4,13 @@ const request = require("supertest");
 const tap = require("tap");
 const testUtils = require("../test-utils");
 
-let server;
+let uri;
 let $;
 tap.beforeEach(async () => {
   if (server) {
     return;
   }
-  server = await require("../test-hapi-server")();
+  uri = await require("../test-hapi-server")();
   $ = await testUtils.loadDom(server.info.uri, "/");
 });
 
@@ -54,7 +54,7 @@ tap.test("the main layout", async test => {
 });
 
 tap.test("should have the browserified JavaScript", test => {
-  request(server.info.uri)
+  request(uri)
     .get(`/plws.js?v=${pack.version}`)
     .expect(200)
     .expect("Content-Type", "application/javascript; charset=utf-8")

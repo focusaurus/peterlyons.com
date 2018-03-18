@@ -9,23 +9,19 @@ const pathExps = [
   ["/error500.html", /quick nap/i]
 ];
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-hapi-server")();
+  uri = await require("./test-hapi-server")();
 });
 
 tap.test("static files smoke tests", test => {
-  require("./test-responses")(
-    "Static files from ../static",
-    server.info.uri,
-    pathExps
-  );
+  require("./test-responses")("Static files from ../static", uri, pathExps);
   test.end();
 });
 
 tap.test("static favicon", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/favicon.ico")
     .expect(204)
     .expect("content-type", "image/x-icon")
@@ -36,7 +32,7 @@ tap.test("static favicon", test => {
 });
 
 tap.test("static images", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/images/gora_gora_orkestar.jpg")
     .expect(200)
     .expect("content-type", "image/jpeg")

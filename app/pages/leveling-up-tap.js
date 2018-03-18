@@ -2,10 +2,10 @@
 const tap = require("tap");
 const testUtils = require("../test-utils");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("../test-hapi-server")();
+  uri = await require("../test-hapi-server")();
 });
 
 tap.test("the leveling up article", async test => {

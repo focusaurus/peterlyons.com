@@ -2,14 +2,14 @@
 const tap = require("tap");
 const request = require("supertest");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-hapi-server")();
+  uri = await require("./test-hapi-server")();
 });
 
 tap.test("GET / should have security headers", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/")
     .expect("x-frame-options", "DENY")
     .expect("x-content-type-options", "nosniff")

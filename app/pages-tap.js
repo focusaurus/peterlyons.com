@@ -16,23 +16,19 @@ const pathExps = [
   ["/web-prog", /PHP/]
 ];
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-hapi-server")();
+  uri = await require("./test-hapi-server")();
 });
 
 tap.test("pages smoke tests", test => {
-  require("./test-responses")(
-    "Pages (pug templates)",
-    server.info.uri,
-    pathExps
-  );
+  require("./test-responses")("Pages (pug templates)", uri, pathExps);
   test.end();
 });
 
 tap.test("home page", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/")
     .expect(200)
     .expect(/Crafting node.js web applications/)

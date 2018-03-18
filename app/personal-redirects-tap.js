@@ -11,14 +11,14 @@ const pages = [
   "/photos"
 ];
 
-let server;
+let uri;
 tap.beforeEach(async () => {
-  server = await require("./test-hapi-server")();
+  uri = await require("./test-hapi-server")();
 });
 
 pages.forEach(page => {
   tap.test(`${page} should redirect to .org`, test => {
-    request(server.info.uri)
+    request(uri)
       .get(page)
       .expect(301)
       .expect("location", `https://peterlyons.org${page}`)
@@ -31,7 +31,7 @@ pages.forEach(page => {
 
 tap.test("should maintain photo gallery path and query", test => {
   const page = "/app/photos?gallery=fall_2009&photo=020_paint_and_blinds";
-  request(server.info.uri)
+  request(uri)
     .get(page)
     .expect(301)
     .expect("location", `https://peterlyons.org${page}`)

@@ -2,14 +2,14 @@
 const request = require("supertest");
 const tap = require("tap");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("../test-hapi-server")();
+  uri = await require("../test-hapi-server")();
 });
 
 tap.test("custom 404 error page", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/unit-test-error-404")
     .expect(404)
     .expect(/404/)
@@ -21,7 +21,7 @@ tap.test("custom 404 error page", test => {
 });
 
 tap.test("custom 500 error page", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/unit-test-error-500")
     .expect(500)
     .expect("content-type", "text/html; charset=utf-8")

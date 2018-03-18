@@ -2,14 +2,14 @@
 const request = require("supertest");
 const tap = require("tap");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("../test-server")();
+  uri = await require("../test-server")();
 });
 
 tap.test("/galleries/{slug}", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/galleries/summer_2001")
     .expect(200)
     .expect("content-type", "application/json; charset=utf-8")
@@ -32,11 +32,12 @@ tap.test("/galleries/{slug}", test => {
 });
 
 tap.test("/photos", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/photos?gallery=burning_man_2011")
     .expect(200)
     .expect("content-type", "text/html; charset=utf-8")
     .expect(/<div class="view-gallery">/i)
+    .expect(/<h1>/i)
     .expect(/window\.__sharifyData=/i)
     .expect(/hexayurt/i)
     .expect(/henry_mancini/i)
@@ -47,7 +48,7 @@ tap.test("/photos", test => {
 });
 
 tap.test("/photos should redirect to newest gallery", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/photos")
     .expect(302)
     .expect("location", "/photos?gallery=burning_man_2011")

@@ -2,10 +2,10 @@
 const request = require("supertest");
 const tap = require("tap");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-hapi-server")();
+  uri = await require("./test-hapi-server")();
 });
 
 const uris = {
@@ -22,7 +22,7 @@ const uris = {
 
 Object.keys(uris).forEach(old => {
   tap.test(`pro pages with underscores should redirect ${old}`, test => {
-    request(server.info.uri)
+    request(uri)
       .get(old)
       .expect(301)
       .expect("Location", uris[old])

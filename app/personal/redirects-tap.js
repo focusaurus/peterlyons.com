@@ -4,15 +4,15 @@ const tap = require("tap");
 
 const pages = ["/bands", "/oberlin", "/favorites"];
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("./test-server")();
+  uri = await require("./test-server")();
 });
 
 pages.forEach(page => {
   tap.test(`${page}.html should redirect to no .html`, test => {
-    request(server.info.uri)
+    request(uri)
       .get(`${page}.html`)
       .expect(301)
       .expect("location", page)

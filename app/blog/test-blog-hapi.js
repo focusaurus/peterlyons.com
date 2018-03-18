@@ -3,7 +3,7 @@ const hapi = require("hapi");
 const path = require("path");
 const tap = require("tap");
 
-let server;
+let uri;
 
 async function getServer() {
   if (server) {

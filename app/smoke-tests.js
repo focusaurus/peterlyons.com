@@ -1,14 +1,19 @@
+"use strict";
 const supertest = require("supertest");
+const tap = require("tap");
 
 function smokeTests(description, appOrUrl, pairs) {
   const request = supertest(appOrUrl);
-  describe(description, () => {
-    pairs.forEach(pair => {
-      const uri = pair[0];
-      const regex = pair[1];
-      it(`should load${uri}`, done => {
-        request.get(uri).expect(200).expect(regex).end(done);
-      });
+  pairs.forEach(([uri, regex]) => {
+    tap.test(`should load ${uri}`, test => {
+      request
+        .get(uri)
+        .expect(200)
+        .expect(regex)
+        .end(error => {
+          test.error(error);
+          test.end();
+        });
     });
   });
 }

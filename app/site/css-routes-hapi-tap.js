@@ -2,14 +2,14 @@
 const request = require("supertest");
 const tap = require("tap");
 
-let server;
+let uri;
 
 tap.beforeEach(async () => {
-  server = await require("../test-hapi-server")();
+  uri = await require("../test-hapi-server")();
 });
 
 tap.test("/screen.css", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/screen.css")
     .expect(200)
     .expect("content-type", "text/css; charset=utf-8")
@@ -21,7 +21,7 @@ tap.test("/screen.css", test => {
 });
 
 tap.test("/deck.css", test => {
-  request(server.info.uri)
+  request(uri)
     .get("/deck.css")
     .expect(200)
     .expect("content-type", "text/css; charset=utf-8")
