@@ -17,6 +17,9 @@ module.exports = {
     await blog.load();
     server.bind(blog);
     server.app.blog = blog;
+
+    await server.register(require("inert"));
+    server.path(options.staticPath);
     server.route({
       method: "GET",
       path: `${blog.prefix}`,
@@ -48,7 +51,7 @@ module.exports = {
     });
     server.route({
       method: "GET",
-      path: `${blog.prefix}/{year}/{month}/{slug}`,
+      path: `${blog.prefix}/{rest*}`,
       handler: require("./view-post")
     });
     server.method(
@@ -62,8 +65,5 @@ module.exports = {
         cache: {expiresIn: 1000 * 60 * 24, generateTimeout: 1000 * 60 * 1}
       }
     );
-    // if (this.staticPath) {
-    //   app.use(express.static(this.staticPath));
-    // }
   }
 };

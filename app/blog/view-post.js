@@ -1,17 +1,14 @@
 "use strict";
-const boom = require("boom");
 const postStore = require("./post-store");
 const presentPost = require("./present-post");
 
 async function viewPost(request, h) {
   const blog = h.context;
-  const uri = `${blog.prefix}/${request.params.year}/${request.params.month}/${
-    request.params.slug
-  }`;
-
-  const post = blog.findPostByUri(uri);
+  const post = blog.findPostByUri(request.url.pathname);
   if (!post) {
-    throw boom.notFound(request.path);
+    // Slice removes the leading / so the path is relative,
+    // which is what we want since the blug plugin establishes the base path
+    return h.file(request.url.pathname.slice(1), {confine: false});
   }
   await postStore.loadContent(post);
   return h.view("blog/view-post", {blog, post: presentPost.asObject(post)});

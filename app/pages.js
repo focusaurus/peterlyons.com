@@ -11,7 +11,7 @@ module.exports = {
       path: "/",
       handler: (request, reply) => reply.view("pages/home")
     });
-    const pagesPattern = path.join(__dirname, "pages", "*.pug");
+    const pagesPattern = path.join(__dirname, "pages/*.pug");
     const pages = glob.sync(pagesPattern); // eslint-disable-line no-sync
     pages.forEach(page => {
       const ext = path.extname(page);

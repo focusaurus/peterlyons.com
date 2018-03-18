@@ -20,7 +20,7 @@ module.exports = {
       path: "/reveal.js/{file*}",
       handler: {
         directory: {
-          path: path.join(__dirname, "..", "node_modules", "reveal.js"),
+          path: path.join(__dirname, "../node_modules/reveal.js"),
           redirectToSlash: false,
           index: false
         }
@@ -32,8 +32,8 @@ module.exports = {
       handler: {
         directory: {
           path: [
-            path.join(__dirname, "..", "..", "static"),
-            path.join(__dirname, "..", "www")
+            path.join(__dirname, "../../static"),
+            path.join(__dirname, "../www")
           ],
           redirectToSlash: false,
           index: true

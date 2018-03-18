@@ -42,6 +42,17 @@ tap.test("static images", test => {
     });
 });
 
+tap.test("static problog images", test => {
+  request(uri)
+    .get("/problog/images/2015/osx-dev-setup.png")
+    .expect(200)
+    .expect("content-type", "image/png")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});
+
 tap.test("static pdf", test => {
   request(uri)
     .get("/scnd.pdf")

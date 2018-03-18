@@ -19,7 +19,8 @@ async function getServer(serverMod) {
     return uri;
   }
   if (!server) {
-    server = await serverMod.start({port: null, logLevel: "silent"});
+    server = await serverMod.setup({port: null, logLevel: "silent"});
+    await server.start();
   }
   return server.info.uri;
 }

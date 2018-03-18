@@ -2,23 +2,17 @@
 const config = require("config3");
 const hapi = require("hapi");
 const path = require("path");
-require("process-title");
 
 const persblog = {
   basePath: path.join(__dirname, "../../../data/posts/persblog"),
   prefix: "/persblog",
-  staticPath: path.join(__dirname, "../../static/persblog"),
+  staticPath: path.join(__dirname, "../../static"),
   subtitle: "Sporadic musing and accounts of my personal life",
   title: "The Stretch of Vitality"
 };
 
-async function start({port = config.persPort, logLevel = config.logLevel}) {
-  const server = hapi.server({
-    // debug: {request: "*", log: "*"}
-    debug: false,
-    host: config.host,
-    port
-  });
+async function setup({port = config.persPort, logLevel = config.logLevel}) {
+  const server = hapi.server({debug: false, host: config.host, port});
 
   await server.register({
     plugin: require("hapi-pino"),
@@ -45,10 +39,7 @@ async function start({port = config.persPort, logLevel = config.logLevel}) {
     require("./redirects")
   ]);
   await server.register({plugin: require("../blog"), options: persblog});
-
-  await server.start();
-  server.log("info", `Server running at: ${server.info.uri}`);
   return server;
 }
 
-module.exports = {start};
+module.exports = {setup};

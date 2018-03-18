@@ -8,7 +8,7 @@ tap.beforeEach(async () => {
   server = await require("./test-blog-hapi")();
 });
 
-tap.skip("a request for a non-existent blog post name", async test => {
+tap.test("a request for a non-existent blog post name", test => {
   request(server.info.uri)
     .get("/utb/2014/01/no-such-post")
     .expect(404)
@@ -18,7 +18,7 @@ tap.skip("a request for a non-existent blog post name", async test => {
     });
 });
 
-tap.skip("a static image request should 200", async test => {
+tap.test("a static image request should 200", test => {
   request(server.info.uri)
     .get("/utb/images/one.png")
     .expect(200)
