@@ -82,6 +82,7 @@
   "scripts": {
     "start": "./bin/start.sh",
     "test": "./bin/test.sh",
+    "coverage": "COVERAGE=--coverage-report=html ./bin/test-node.sh",
     "lint": "eslint --format ./node_modules/eslint-tap app bin"
   },
   "version": "6.12.0"

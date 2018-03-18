@@ -11,7 +11,7 @@ echo ✓
 echo "node.js tap unit tests…"
 export NODE_ENV=test
 if [[ $# -eq 0 ]]; then
-  find ./app -name \*-tap.js | sort | NODE_ENV=test xargs tap
+  find ./app -name \*-tap.js | sort | NODE_ENV=test xargs tap "${COVERAGE}"
 else
   NODE_ENV='test' tap "$@"
 fi
