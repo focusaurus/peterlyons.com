@@ -22,7 +22,8 @@ async function start({port = config.proPort, logLevel = config.logLevel}) {
   await server.register([
     require("vision"), // renders page templates (pug)
     require("hapi-pino"), // logging
-    require("./redirect-plugin") // old uri redirects
+    require("./redirect-plugin"), // old uri redirects,
+    require("./security-plugin") // headers
   ]);
   server.logger().level = logLevel;
   log.level = logLevel;

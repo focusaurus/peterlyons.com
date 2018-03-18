@@ -3,6 +3,7 @@ const request = require("supertest");
 const tap = require("tap");
 
 const pathExps = [
+  ["/", /node\.js/],
   ["/career", /Opsware/],
   ["/code-conventions", /readability/],
   ["/contact", /pete@peterlyons.com/],
