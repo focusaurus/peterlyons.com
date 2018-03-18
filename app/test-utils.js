@@ -1,26 +1,23 @@
 "use strict";
 const cheerio = require("cheerio");
-const expect = require("chaimel");
 const request = require("supertest");
+const tap = require("tap");
 
 function assertSelectors($, ...selectors) {
   selectors.forEach(selector => {
-    expect($(selector)).toHaveLengthAbove(
-      0,
-      `Document missing selector ${selector}`
-    );
+    tap.ok($(selector).length > 0, `Document missing selector ${selector}`);
   });
 }
 
 function assertSubstrings($, ...phrases) {
   const html = $.html();
   phrases.forEach(phrase => {
-    expect(html).toInclude(phrase, `Document missing phrase ${phrase}`);
+    tap.match(html, phrase, `Document missing phrase ${phrase}`);
   });
 }
 
 function assertDeck($) {
-  expect($(".reveal .slides ").length).toEqual(1);
+  tap.same($(".reveal .slides ").length, 1);
   assertSubstrings($, "reveal.js");
 }
 
