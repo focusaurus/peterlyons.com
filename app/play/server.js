@@ -27,18 +27,18 @@ async function setup({port = config.persPort, logLevel = config.logLevel}) {
   server.views({
     engines: {pug: require("pug")},
     relativeTo: path.join(__dirname, ".."),
-    context: require("../template-vars")()
+    context: require("../core/template-vars")()
   });
 
   await server.register([
-    require("../errors/errors-routes-hapi"),
-    require("../site/css-routes-hapi"),
-    require("../static"),
+    require("../core/errors/errors-routes-hapi"),
+    require("../core/css-routes-hapi"),
+    require("../core/static"),
     require("./pages"),
     require("./photos/photos"),
     require("./redirects")
   ]);
-  await server.register({plugin: require("../blog"), options: persblog});
+  await server.register({plugin: require("../core/blog"), options: persblog});
   return server;
 }
 

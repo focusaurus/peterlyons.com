@@ -7,7 +7,7 @@ const pages = ["/bands", "/oberlin", "/favorites"];
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../get-test-uri")(require("./server"));
+  uri = await require("../core/get-test-uri")(require("./server"));
 });
 
 pages.forEach(page => {

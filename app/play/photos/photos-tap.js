@@ -5,7 +5,7 @@ const tap = require("tap");
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../../get-test-uri")(require("../server"));
+  uri = await require("../../core/get-test-uri")(require("../server"));
 });
 
 tap.test("/galleries/{slug}", test => {

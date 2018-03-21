@@ -1,0 +1,7 @@
+extends ../layout
+block variables
+  - title = blog.title
+block body
+  h1= blog.title
+  h2= blog.subtitle
+  include post-list

@@ -12,11 +12,11 @@ const pathExps = [
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../get-test-uri")(require("./server"));
+  uri = await require("../core/get-test-uri")(require("./server"));
 });
 
 tap.test("Personal pages smoke tests", test => {
-  require("../test-responses")("Pages (pug templates)", uri, pathExps);
+  require("../core/test-responses")("Pages (pug templates)", uri, pathExps);
   test.end();
 });
 

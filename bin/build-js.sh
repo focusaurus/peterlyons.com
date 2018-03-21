@@ -11,7 +11,7 @@ build_plus_party() {
   local plus_party_temp
   plus_party_temp="$(mktemp -t plus-party-build-XXXX).js"
   local out="./www/plus-party.js"
-  cd app/plus-party
+  cd app/work/plus-party
   elm-make --yes --output "${plus_party_temp}" PlusParty.elm
   cd -
   cat node_modules/clipboard/dist/clipboard.js "${plus_party_temp}" > "${out}"
@@ -31,9 +31,9 @@ build_browserify() {
   ${bundler} \
     --outfile "${out}" \
     --entry app/browser/navigation \
-    --require app/blog/create-post-main \
-    --require app/pages/career-main \
-    --require app/pages/home-main \
+    --require app/core/blog/create-post-main \
+    --require app/work/pages/career-main \
+    --require app/work/pages/home-main \
     --require app/play/photos/photos-main
   temp=$(mktemp -t plws-build-XXXX)
   cp "${out}" "${temp}"

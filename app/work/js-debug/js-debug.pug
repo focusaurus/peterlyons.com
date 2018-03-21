@@ -1,0 +1,80 @@
+extends ../../core/layout
+block variables
+  - title = "Lighting Up Your JavaScript With the Debugger";
+block body
+  h1= title
+
+  include:marked js-debug.md
+
+  h1 Lab
+
+  button.js-debug.breakpointButton Click to experiment with breakpoints
+  button.js-debug.stepSync Step Over Sync Code
+  button.js-debug.stepAsync Step Over Async Code
+  button.js-debug.multipleAsync Multiple Async Operations
+
+  h1 Screencast Demos
+
+  iframe(width="560", height="315", src="//www.youtube.com/embed/b9KifHCZ0QM",  allowfullscreen="")
+
+block append scripts
+  script.
+    ///// Basic Breakpoint Usage /////
+    function breakpointButton(event) {
+      console.log("Thanks for clicking the button labeled '" +
+        event.target.textContent + "'");
+    }
+    document.querySelector(".breakpointButton").addEventListener(
+       "click", breakpointButton);
+
+    ///// Stepping Over Synchronous Code /////
+    function stepSync() {
+      const words = "one two three four five".split(" ");
+      for (let i = 0; i < words.length; i++) {
+        console.log("Stepping through a for loop with word", words[i]);
+      }
+      words.forEach(function (word) {
+        console.log("Stepping through a forEach with word", word);
+      });
+    }
+
+    document.querySelector(".stepSync").addEventListener(
+      "click", stepSync);
+
+    ///// Stepping Over Asynchronous Code /////
+    function stepAsync() {
+      console.log("OK, now we're going to step over some async code");
+      const request = new XMLHttpRequest();
+      request.open("GET", "/js-debug/random-delay?requestNumber=1", true);
+      request.send();
+      console.log("OMG WTF happens when we hit the next line?");
+      // define and assign now, execute later
+      request.onload = function() {
+        console.log("Server said: ", this.response);
+      }
+      console.log(
+        "OMG brain asplode this line executes BEFORE the line above it!");
+    }
+    document.querySelector(".stepAsync").addEventListener(
+       "click", stepAsync);
+
+
+    ///// Multiple Async Operations /////
+    function loaded() {
+      console.log("Server said:", this.response);
+    }
+
+    function multipleAsync() {
+      for (let requestNumber = 1; requestNumber < 5; requestNumber++) {
+        const request = new XMLHttpRequest();
+        request.open("GET",
+          "/jsDebug/randomDelay?requestNumber=" + requestNumber, true);
+        console.log("Sending request", requestNumber);
+        request.onload = loaded;
+        request.send();
+        console.log("Request " + requestNumber + " sent");
+      }
+    }
+
+    document.querySelector(".multipleAsync").addEventListener(
+       "click", multipleAsync);

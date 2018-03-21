@@ -1,11 +1,11 @@
 "use strict";
 require("process-title");
 
-let proServer;
+let workServer;
 
 process.on("unhandledRejection", error => {
-  if (proServer && typeof proServer.log === "function") {
-    proServer.log("fatal", error);
+  if (workServer && typeof workServer.log === "function") {
+    workServer.log("fatal", error);
   } else {
     // eslint-disable-next-line no-console
     console.error("Programmer error. Process will exit.", error);
@@ -16,13 +16,13 @@ process.on("unhandledRejection", error => {
 });
 
 async function main() {
-  proServer = await require("./server").setup({});
-  await proServer.start();
-  proServer.log("info", `Server (pro) running at: ${proServer.info.uri}`);
+  workServer = await require("./work/server").setup({});
+  await workServer.start();
+  workServer.log("info", `Server (work) running at: ${workServer.info.uri}`);
 
-  const persServer = await require("./play/server").setup({});
-  await persServer.start();
-  persServer.log("info", `Server (pers) running at: ${persServer.info.uri}`);
+  const playServer = await require("./play/server").setup({});
+  await playServer.start();
+  playServer.log("info", `Server (play) running at: ${playServer.info.uri}`);
 }
 
 main();

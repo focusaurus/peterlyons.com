@@ -1,8 +1,8 @@
 const cheerio = require("cheerio");
 const expect = require("chaimel");
 const request = require("supertest")(process.env.URL);
-const testUtils = require("../test-utils");
-const smokeTests = require("../smoke-tests");
+const testUtils = require("../core/test-utils");
+const smokeTests = require("../core/smoke-tests");
 
 const configs = [
   ["/app/photos?gallery=burning_man_2011", /Gallery/],
