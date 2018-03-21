@@ -23,7 +23,7 @@ async function getServer() {
     prefix: "/utb",
     subtitle: "Unit Test Subtitle 1"
   };
-  await server.register({plugin: require("./index"), options});
+  await server.register({plugin: require("./blog-plugin"), options});
   await server.start();
   return server;
 }

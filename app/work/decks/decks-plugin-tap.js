@@ -1,5 +1,5 @@
 "use strict";
-const {DECKS} = require("./decks-routes");
+const {DECKS} = require("./decks-plugin");
 const getTestUri = require("../../core/get-test-uri");
 const request = require("supertest");
 const tap = require("tap");

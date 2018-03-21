@@ -34,14 +34,17 @@ async function setup({
   });
 
   await server.register([
-    require("../core/errors/errors-routes"),
-    require("../core/css-routes"),
-    require("../core/static"),
-    require("./pages"),
-    require("./photos/photos"),
-    require("./redirects")
+    require("../core/errors/errors-plugin"),
+    require("../core/css-plugin"),
+    require("../core/static-plugin"),
+    require("./pages-plugin"),
+    require("./photos/photos-plugin"),
+    require("./redirect-plugin")
   ]);
-  await server.register({plugin: require("../core/blog"), options: persblog});
+  await server.register({
+    plugin: require("../core/blog/blog-plugin"),
+    options: persblog
+  });
   return server;
 }
 

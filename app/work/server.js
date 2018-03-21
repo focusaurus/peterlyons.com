@@ -34,16 +34,19 @@ async function setup({port = config.proPort, logLevel = config.logLevel} = {}) {
   });
 
   await server.register([
-    require("./decks/decks-routes"),
-    require("../core/errors/errors-routes"),
-    require("./js-debug/js-debug-routes"),
-    require("./pages"),
-    require("./play-redirects"),
+    require("./decks/decks-plugin"),
+    require("../core/errors/errors-plugin"),
+    require("./js-debug/js-debug-plugin"),
+    require("./pages-plugin"),
+    require("./play-redirect-plugin"),
     require("./plus-party/plus-party-routes"),
-    require("../core/css-routes"),
-    require("../core/static")
+    require("../core/css-plugin"),
+    require("../core/static-plugin")
   ]);
-  await server.register({plugin: require("../core/blog"), options: problog});
+  await server.register({
+    plugin: require("../core/blog/blog-plugin"),
+    options: problog
+  });
   return server;
 }
 
