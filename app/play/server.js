@@ -34,8 +34,8 @@ async function setup({
   });
 
   await server.register([
-    require("../core/errors/errors-routes-hapi"),
-    require("../core/css-routes-hapi"),
+    require("../core/errors/errors-routes"),
+    require("../core/css-routes"),
     require("../core/static"),
     require("./pages"),
     require("./photos/photos"),

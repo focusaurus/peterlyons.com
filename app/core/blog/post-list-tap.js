@@ -6,7 +6,7 @@ let server;
 let $;
 
 tap.beforeEach(async () => {
-  server = await require("./test-blog-hapi")();
+  server = await require("./test-blog")();
   $ = await testUtils.loadDom(server.info.uri, "/utb");
 });
 

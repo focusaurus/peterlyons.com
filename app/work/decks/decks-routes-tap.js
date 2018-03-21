@@ -1,5 +1,5 @@
 "use strict";
-const {DECKS} = require("./decks-routes-hapi");
+const {DECKS} = require("./decks-routes");
 const getTestUri = require("../../core/get-test-uri");
 const request = require("supertest");
 const tap = require("tap");

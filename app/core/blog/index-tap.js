@@ -5,7 +5,7 @@ const request = require("supertest");
 let server;
 
 tap.beforeEach(async () => {
-  server = await require("./test-blog-hapi")();
+  server = await require("./test-blog")();
 });
 
 tap.test("a request for a non-existent blog post name", test => {

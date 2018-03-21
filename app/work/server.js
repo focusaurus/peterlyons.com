@@ -34,13 +34,13 @@ async function setup({port = config.proPort, logLevel = config.logLevel} = {}) {
   });
 
   await server.register([
-    require("./decks/decks-routes-hapi"),
-    require("../core/errors/errors-routes-hapi"),
-    require("./js-debug/js-debug-routes-hapi"),
+    require("./decks/decks-routes"),
+    require("../core/errors/errors-routes"),
+    require("./js-debug/js-debug-routes"),
     require("./pages"),
     require("./play-redirects"),
     require("./plus-party/plus-party-routes"),
-    require("../core/css-routes-hapi"),
+    require("../core/css-routes"),
     require("../core/static")
   ]);
   await server.register({plugin: require("../core/blog"), options: problog});

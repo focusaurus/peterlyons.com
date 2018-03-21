@@ -7,7 +7,7 @@ const testUtils = require("../test-utils");
 let server;
 
 tap.beforeEach(async () => {
-  server = await require("./test-blog-hapi")();
+  server = await require("./test-blog")();
 });
 
 /* eslint-disable no-sync */

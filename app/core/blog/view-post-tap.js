@@ -1,6 +1,6 @@
 "use strict";
 const tap = require("tap");
-const testBlogHapi = require("./test-blog-hapi");
+const testBlogHapi = require("./test-blog");
 const testUtils = require("../test-utils");
 
 let server;
