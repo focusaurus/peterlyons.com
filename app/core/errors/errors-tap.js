@@ -10,20 +10,20 @@ tap.beforeEach(async () => {
 
 tap.test("custom 404 error page", test => {
   request(uri)
-    .get("/unit-test-error-404")
+    .get("/error404")
     .expect(404)
     .expect(/Error Code: 404 File Not Found/)
     .expect(/not very funny/i)
     .end((error, res) => {
       test.error(error);
-      test.notOk(res.text.includes("unit-test-error-404-message"));
+      test.notOk(res.text.includes("error404-message"));
       test.end();
     });
 });
 
 tap.test("custom 500 error page", test => {
   request(uri)
-    .get("/unit-test-error-500")
+    .get("/error500")
     .expect(500)
     .expect("content-type", "text/html; charset=utf-8")
     .expect(/oops/i)
@@ -31,7 +31,7 @@ tap.test("custom 500 error page", test => {
     .expect(/quick nap/i)
     .end((error, res) => {
       test.error(error);
-      test.notOk(res.text.includes("unit-test-error-500-message"));
+      test.notOk(res.text.includes("error500-message"));
       test.end();
     });
 });

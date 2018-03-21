@@ -33,7 +33,6 @@
   "description": "The node/express web app for the peterlyons.com web site",
   "devDependencies": {
     "browserify": "15.0.0",
-    "each-async": "1.1.1",
     "elm": "0.18.0",
     "eslint": "4.15.0",
     "eslint-config-airbnb-base": "12.1.0",

@@ -7,17 +7,17 @@ module.exports = {
   async register(server) {
     server.route({
       method: "GET",
-      path: "/unit-test-error-500", // catch-all path
+      path: "/error500", // catch-all path
       handler: async () => {
-        throw boom.internal("unit-test-error-500-message");
+        throw boom.internal("error500-message");
       }
     });
 
     server.route({
       method: "GET",
-      path: "/unit-test-error-404", // catch-all path
+      path: "/error404", // catch-all path
       handler: async () => {
-        throw boom.notFound("unit-test-error-404-message");
+        throw boom.notFound("error404-message");
       }
     });
 
