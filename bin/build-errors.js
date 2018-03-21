@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const config = require("config3");
 const fs = require("fs");
 const path = require("path");
 const request = require("supertest");
@@ -8,7 +9,7 @@ const request = require("supertest");
 const workServer = require("../app/work/server");
 
 async function download(server, code) {
-  const outFile = path.join(__dirname, `/../../static/error${code}.html`);
+  const outFile = path.join(config.staticDir, `error${code}.html`);
   const outStream = fs.createWriteStream(outFile);
   console.log("Building", outFile);
   return request(server.info.uri)

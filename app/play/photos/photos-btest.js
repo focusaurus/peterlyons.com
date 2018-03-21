@@ -13,7 +13,7 @@ async function run(page) {
     test.same(await page.$$eval("a.thumbnail", list => list.length), 98);
     test.match(
       await page.$eval("a.thumbnail", el => el.href),
-      "/app/photos?gallery=burning_man_2011&photo=001_hexayurt_model"
+      "/photos?gallery=burning_man_2011&photo=001_hexayurt_model"
     );
   });
 }

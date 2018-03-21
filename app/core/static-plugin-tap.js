@@ -17,7 +17,7 @@ tap.beforeEach(async () => {
 });
 
 tap.test("static files smoke tests", test => {
-  require("./test-responses")("Static files from ../static", uri, pathExps);
+  require("./test-responses")("Static files", uri, pathExps);
   test.end();
 });
 

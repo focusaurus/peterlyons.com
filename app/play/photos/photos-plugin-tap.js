@@ -25,7 +25,7 @@ tap.test("/galleries/{slug}", test => {
         caption: "Andrew, Ed, and Leslie on the dance floor",
         fullSizeURI: "/photos/summer_2001/ap_ep_lp_dance.jpg",
         name: "ap_ep_lp_dance",
-        pageURI: "/app/photos?gallery=summer_2001&photo=ap_ep_lp_dance",
+        pageURI: "/photos?gallery=summer_2001&photo=ap_ep_lp_dance",
         thumbnailURI: "/photos/summer_2001/ap_ep_lp_dance-TN.jpg"
       });
       test.end();

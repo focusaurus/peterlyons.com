@@ -6,15 +6,12 @@ const path = require("path");
 const persblog = {
   basePath: path.join(__dirname, "../../../data/posts/persblog"),
   prefix: "/persblog",
-  staticPath: path.join(__dirname, "../../static"),
+  staticPath: config.staticDir,
   subtitle: "Sporadic musing and accounts of my personal life",
   title: "The Stretch of Vitality"
 };
 
-async function setup({
-  port = config.persPort,
-  logLevel = config.logLevel
-} = {}) {
+async function setup({port = config.persPort, logLevel = "debug"} = {}) {
   const server = hapi.server({debug: false, host: config.host, port});
 
   await server.register({

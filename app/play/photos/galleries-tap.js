@@ -18,7 +18,7 @@ tap.test("photoJSONToObject should parse and format JSON", test => {
   tap.match(photos[0], {
     fullSizeURI: "/photos/testGallery/test-photo-name.jpg",
     thumbnailURI: "/photos/testGallery/test-photo-name-TN.jpg",
-    pageURI: "/app/photos?gallery=testGallery&photo=test-photo-name"
+    pageURI: "/photos?gallery=testGallery&photo=test-photo-name"
   });
   test.end();
 });

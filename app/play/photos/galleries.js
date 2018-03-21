@@ -10,22 +10,21 @@ function photoJSONToObject(gallery, photoJSON) {
   photos.forEach(photo => {
     /* eslint-disable no-param-reassign */
     photo.fullSizeURI = [
-      config.photos.photoURI,
+      "/photos/",
       gallery.dirName,
       "/",
       photo.name,
-      config.photos.extension
+      ".jpg"
     ].join("");
     photo.thumbnailURI = [
-      config.photos.photoURI,
+      "/photos/",
       gallery.dirName,
       "/",
       photo.name,
-      config.photos.thumbExtension
+      "-TN.jpg"
     ].join("");
     photo.pageURI = [
-      config.photos.galleryURI,
-      "?gallery=",
+      "/photos?gallery=",
       gallery.dirName,
       "&photo=",
       photo.name

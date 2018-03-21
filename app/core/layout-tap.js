@@ -62,28 +62,3 @@ tap.test("should have the browserified JavaScript", test => {
       test.end();
     });
 });
-
-/*
-
-describe("analytics snippet", () => {
-  before(() => {
-    config.analytics.enabled = true;
-    config.analytics.proCode = "UNIT_TEST";
-  });
-
-  after(() => {
-    config.analytics.enabled = false;
-    config.analytics.code = "";
-  });
-
-  it("should include the analytics snippet when enabled", done => {
-    request.loadPage("/", (error, $) => {
-      expect(error).notToExist();
-      const selector = "script[data-id=analytics]";
-      testUtils.assertSelectors($, selector);
-      expect($(selector).html()).to.include("UNIT_TEST");
-      done();
-    });
-  });
-});
-*/

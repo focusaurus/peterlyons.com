@@ -6,12 +6,12 @@ const path = require("path");
 const problog = {
   basePath: path.join(__dirname, "../../../data/posts/problog"),
   prefix: "/problog",
-  staticPath: path.join(__dirname, "../../../static"),
+  staticPath: config.staticDir,
   subtitle: "A blog about web development, programming, technology",
   title: "Pete's Points"
 };
 
-async function setup({port = config.proPort, logLevel = config.logLevel} = {}) {
+async function setup({port = config.proPort, logLevel = "debug"} = {}) {
   const server = hapi.server({debug: false, host: config.host, port});
 
   await server.register({

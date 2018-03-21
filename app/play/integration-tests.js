@@ -5,7 +5,7 @@ const testUtils = require("../core/test-utils");
 const smokeTests = require("../core/smoke-tests");
 
 const configs = [
-  ["/app/photos?gallery=burning_man_2011", /Gallery/],
+  ["/photos?gallery=burning_man_2011", /Gallery/],
   ["/persblog", /travel/],
   ["/persblog/2007/10/hometown-dracula", /Randall/]
 ];

@@ -5,7 +5,7 @@ const _ = require("lodash");
 module.exports = function get(overrides = {}) {
   return Object.assign(
     {},
-    _.pick(config, "appURI", "appVersion", "titleSuffix"),
+    _.pick(config, "appVersion"),
     overrides
   );
 };

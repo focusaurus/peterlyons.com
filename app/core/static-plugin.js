@@ -1,5 +1,6 @@
 "use strict";
 const path = require("path");
+const config = require("config3");
 
 module.exports = {
   name: "static",
@@ -31,10 +32,7 @@ module.exports = {
       path: "/{param*}",
       handler: {
         directory: {
-          path: [
-            path.join(__dirname, "../../../static"),
-            path.join(__dirname, "../../www")
-          ],
+          path: [config.staticDir, path.join(__dirname, "../../www")],
           redirectToSlash: false,
           index: true
         }

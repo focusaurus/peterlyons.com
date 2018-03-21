@@ -38,7 +38,7 @@ What's not to love about this charming Brit? Her work on Frou Frou [Details](htt
 
 # Amanda Palmer
 
-Known as AFP or [Amanda Fucking Palmer](http://amandapalmer.net/) is an intense musician I first heard of in [The Dresden Dolls](http://www.dresdendolls.com/).  Her original songs have been aptly described as "punk cabaret".  Her music is intense, deeply personal, cathartic, and often beautiful.  I like all the Dresden Dolls stuff as well as her solo work.  Check out the songs "Delilah" and "Blake Says" for the lyrical softer side and "[Coin Operated Boy](/app/photos?gallery=halloween_2009&photo=002_coin_operated_boy)" for the fun, irreverant, cabaret side.
+Known as AFP or [Amanda Fucking Palmer](http://amandapalmer.net/) is an intense musician I first heard of in [The Dresden Dolls](http://www.dresdendolls.com/).  Her original songs have been aptly described as "punk cabaret".  Her music is intense, deeply personal, cathartic, and often beautiful.  I like all the Dresden Dolls stuff as well as her solo work.  Check out the songs "Delilah" and "Blake Says" for the lyrical softer side and "[Coin Operated Boy](/photos?gallery=halloween_2009&photo=002_coin_operated_boy)" for the fun, irreverant, cabaret side.
 
 # Morphine
 
