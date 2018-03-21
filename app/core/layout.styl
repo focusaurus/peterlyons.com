@@ -1,5 +1,39 @@
 @require "adaptive"
 @require "position"
+@require "typography"
+@import "color"
+
+header
+  margin-bottom 2rem
+  a
+    display block
+    text-decoration none
+    &:visited
+      color $colorSiteHeader
+
+  h1
+    border-bottom 3px solid $colorSiteHeaderBorder
+    letter-spacing 0.3em
+    line-height 1.1em
+    padding-bottom 0.5em
+    margin 0
+    font-family $headerFont
+    font-size 6rem
+    +above("s")
+      fontSize 2 1
+
+.license
+  clear both
+  img
+    margin-right 2em
+  p
+    fontSize -2
+    margin-top 1em
+  border-top solid 1px $colorFooter
+  padding-top 2rem
+  color $colorFooter
+  a
+    color $colorFooter
 
 body > nav
   position fixed
@@ -39,3 +73,8 @@ footer > nav
   display block
   +above("l")
     display none
+
+nav
+  fontSize -1
+  h1
+    fontSize 0

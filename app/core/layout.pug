@@ -32,7 +32,9 @@ html(lang="en")
     else
       include ../play/navigation
     .content
-      include blocks/header
+      header
+        h1(role="banner")
+          a(href="/") Peter Lyons
       block body
       footer(role="contentinfo").navigationHorizontal
         if proSite
@@ -40,6 +42,8 @@ html(lang="en")
         else
           include ../play/navigation
       footer(role="contentinfo").license
-        include blocks/license
+        p This work is licensed under a
+          a(rel="license", href="http://creativecommons.org/licenses/by-sa/3.0/")
+            | &nbsp;Creative Commons Attribution-ShareAlike 3.0 Unported License.
       block scripts
         script(src="/plws.js?v=" + appVersion)

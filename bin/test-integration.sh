@@ -9,18 +9,18 @@ source ./bin/lib/strict_mode.sh
 
 case "$1" in
   stage)
-    pro=stage.peterlyons.com
-    pers=stage.peterlyons.org
+    work=https://stage.peterlyons.com
+    play=https://stage.peterlyons.org
     ;;
   production)
-    pro=peterlyons.com
-    pers=peterlyons.org
+    work=https://peterlyons.com
+    play=https://peterlyons.org
     ;;
   *)
-    pro=localhost:9000
-    pers=localhost:9001
+    work=http://localhost:9000
+    play=http://localhost:9001
     ;;
 esac
 
-URL="${pro}" mocha app/integration-tests.js
-URL="${pers}" mocha app/play/integration-tests.js
+URI="${work}" tap 'app/work/**/*-tap.js' 'app/core/**/*-tap.js'
+URI="${play}" tap 'app/play/**/*-tap.js'

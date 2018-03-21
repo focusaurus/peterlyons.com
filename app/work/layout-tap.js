@@ -1,14 +1,14 @@
 "use strict";
-const getTestUri = require("./get-test-uri");
+const getTestUri = require("../core/get-test-uri");
 const pack = require("../../package");
 const request = require("supertest");
 const tap = require("tap");
-const testUtils = require("./test-utils");
+const testUtils = require("../core/test-utils");
 
 let uri;
 let $;
 tap.beforeEach(async () => {
-  uri = await getTestUri(require("../work/server"));
+  uri = await getTestUri(require("./server"));
   $ = await testUtils.loadDom(uri, "/");
 });
 
