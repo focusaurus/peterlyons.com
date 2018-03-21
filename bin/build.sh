@@ -82,8 +82,8 @@ main() {
   ln -nsf ../app node_modules/app
 
   # remove development-only files
-  rm -rf doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/blog/unit-test-blog1
-  find ./app -name \*test.js -delete
+  rm -rf doc deploy test Vagrantfile .gitignore .eslint* .gitmodules app/core/blog/unit-test-blog1
+  find ./app -name \*-tap.js -delete
   cd - || exit 10
 
   echo ✓; echo -n "vagrant rebuild…"

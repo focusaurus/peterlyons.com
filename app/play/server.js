@@ -11,7 +11,10 @@ const persblog = {
   title: "The Stretch of Vitality"
 };
 
-async function setup({port = config.persPort, logLevel = config.logLevel}) {
+async function setup({
+  port = config.persPort,
+  logLevel = config.logLevel
+} = {}) {
   const server = hapi.server({debug: false, host: config.host, port});
 
   await server.register({

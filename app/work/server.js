@@ -11,7 +11,7 @@ const problog = {
   title: "Pete's Points"
 };
 
-async function setup({port = config.proPort, logLevel = config.logLevel}={}) {
+async function setup({port = config.proPort, logLevel = config.logLevel} = {}) {
   const server = hapi.server({debug: false, host: config.host, port});
 
   await server.register({

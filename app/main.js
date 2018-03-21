@@ -16,11 +16,11 @@ process.on("unhandledRejection", error => {
 });
 
 async function main() {
-  workServer = await require("./work/server").setup({});
+  workServer = await require("./work/server").setup();
   await workServer.start();
   workServer.log("info", `Server (work) running at: ${workServer.info.uri}`);
 
-  const playServer = await require("./play/server").setup({});
+  const playServer = await require("./play/server").setup();
   await playServer.start();
   playServer.log("info", `Server (play) running at: ${playServer.info.uri}`);
 }
