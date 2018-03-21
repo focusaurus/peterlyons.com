@@ -1,4 +1,5 @@
 "use strict";
+const getTestUri = require("../core/get-test-uri");
 const request = require("supertest");
 const tap = require("tap");
 
@@ -19,7 +20,7 @@ const pathExps = [
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../core/get-test-uri")(require("./server"));
+  uri = await getTestUri(require("./server"));
 });
 
 tap.test("pages smoke tests", test => {

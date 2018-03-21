@@ -1,6 +1,7 @@
 "use strict";
-const tap = require("tap");
+const getTestUri = require("./get-test-uri");
 const request = require("supertest");
+const tap = require("tap");
 
 const pathExps = [
   ["/humans.txt", /Technology Stack/],
@@ -12,7 +13,7 @@ const pathExps = [
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("./get-test-uri")(require("../work/server"));
+  uri = await getTestUri(require("../work/server"));
 });
 
 tap.test("static files smoke tests", test => {
