@@ -1,10 +1,10 @@
 "use strict";
 const {promisify} = require("util");
 const bcrypt = require("bcryptjs");
+const boom = require("boom");
 const childProcess = require("child_process");
 const config = require("config3");
 const fs = require("fs");
-const httpErrors = require("httperrors");
 const path = require("path");
 const postStore = require("./post-store");
 
@@ -24,7 +24,7 @@ const newBlogFinalizePath = path.join(
 async function verifyPasswordAsync(password, hash) {
   const correctPassword = await compareAsync(password, hash);
   if (!correctPassword) {
-    throw new httpErrors.Forbidden("incorrect password");
+    throw boom.forbidden("incorrect password");
   }
   return correctPassword;
 }
