@@ -34,7 +34,7 @@ build_browserify() {
     --require app/blog/create-post-main \
     --require app/pages/career-main \
     --require app/pages/home-main \
-    --require app/personal/photos/photos-main
+    --require app/play/photos/photos-main
   temp=$(mktemp -t plws-build-XXXX)
   cp "${out}" "${temp}"
   echo -n "uglify…"

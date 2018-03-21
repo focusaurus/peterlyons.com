@@ -11,7 +11,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/",
-      handler: (request, reply) => reply.view("personal/home")
+      handler: (request, reply) => reply.view("play/home")
     });
     const pages = glob.sync(pagesPattern); // eslint-disable-line no-sync
     pages.forEach(page => {
@@ -23,7 +23,7 @@ module.exports = {
       server.route({
         method: "GET",
         path: `/${encodeURIComponent(base)}`,
-        handler: (request, reply) => reply.view(`personal/${base}`)
+        handler: (request, reply) => reply.view(`play/${base}`)
       });
     });
   }

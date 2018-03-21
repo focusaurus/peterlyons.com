@@ -28,6 +28,6 @@ function makeTest(request, configs) {
 
 makeTest(require("../app/request"), require("../app/test-configs"));
 makeTest(
-  require("../app/personal/request"),
-  require("../app/personal/test-configs")
+  require("../app/play/request"),
+  require("../app/play/test-configs")
 );

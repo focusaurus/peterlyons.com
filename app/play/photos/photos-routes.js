@@ -27,7 +27,7 @@ async function viewGallery(req, res) {
   const photo =
     _.find(gallery.photos, {name: req.query.photo}) || gallery.photos[0];
   Object.assign(res.locals.sharify.data, {gallery, galleries, photo});
-  res.render("personal/photos/view-gallery");
+  res.render("play/photos/view-gallery");
 }
 
 async function getGallery(req, res) {

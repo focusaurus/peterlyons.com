@@ -20,7 +20,7 @@ async function main() {
   await proServer.start();
   proServer.log("info", `Server (pro) running at: ${proServer.info.uri}`);
 
-  const persServer = await require("./personal/server").setup({});
+  const persServer = await require("./play/server").setup({});
   await persServer.start();
   persServer.log("info", `Server (pers) running at: ${persServer.info.uri}`);
 }

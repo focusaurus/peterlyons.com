@@ -29,7 +29,7 @@ html(lang="en")
     if proSite
       include blocks/navigation
     else
-      include ../personal/navigation
+      include ../play/navigation
     .content
       include blocks/header
       block body
@@ -37,7 +37,7 @@ html(lang="en")
         if proSite
           include blocks/navigation
         else
-          include ../personal/navigation
+          include ../play/navigation
       footer(role="contentinfo").license
         include blocks/license
       block scripts

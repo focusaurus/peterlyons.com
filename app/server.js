@@ -38,7 +38,7 @@ async function setup({port = config.proPort, logLevel = config.logLevel}) {
     require("./errors/errors-routes-hapi"),
     require("./js-debug/js-debug-routes-hapi"),
     require("./pages"),
-    require("./personal-redirects"),
+    require("./play-redirects"),
     require("./plus-party/plus-party-routes"),
     require("./site/css-routes-hapi"),
     require("./static")

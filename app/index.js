@@ -39,7 +39,7 @@ pages.forEach(page => {
   });
 });
 
-app.use(require("./personal-redirects"));
+app.use(require("./play-redirects"));
 
 app.get("/plusparty", redirector("/plus-party"));
 // Permanent redirect any legacy snake_case URLs to kebab-case

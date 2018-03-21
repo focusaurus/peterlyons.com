@@ -25,7 +25,7 @@ async function viewGallery(request, h) {
   const photo =
     _.find(gallery.photos, {name: request.query.photo}) || gallery.photos[0];
   const sharify = JSON.stringify({gallery, galleries, photo}, null, 2);
-  return h.view("personal/photos/view-gallery", {
+  return h.view("play/photos/view-gallery", {
     gallery,
     sharify: `window.__sharifyData=${sharify};`
   });

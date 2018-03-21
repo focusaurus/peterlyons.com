@@ -23,4 +23,4 @@ case "$1" in
 esac
 
 URL="${pro}" mocha app/integration-tests.js
-URL="${pers}" mocha app/personal/integration-tests.js
+URL="${pers}" mocha app/play/integration-tests.js
