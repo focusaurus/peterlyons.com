@@ -104,9 +104,9 @@ para
       ".create-post .preview",
       el => el.innerHTML
     );
-    test.match(preview, `<ul>\n<li>one<ul>`);
-    test.match(preview, `<li>two<ul>`);
-    test.match(preview, `<li>2 sub 1</li>`);
+    test.match(preview, "<ul>\n<li>one<ul>");
+    test.match(preview, "<li>two<ul>");
+    test.match(preview, "<li>2 sub 1</li>");
   });
 }
 

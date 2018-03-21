@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-const app = require("../app");
+const workServer = require("../app/work/server");
 const glob = require("glob");
 const puppeteer = require("puppeteer");
 
 const suites = glob.sync(process.argv[2] || `${__dirname}/../app/**/*btest.js`);
 
 /* eslint-disable no-console,no-restricted-syntax,no-await-in-loop,import/no-dynamic-require */
-async function runTests(port) {
+async function runTests(uri) {
   let browser;
   try {
     browser = await puppeteer.launch({headless: true});
@@ -14,7 +14,7 @@ async function runTests(port) {
     for (const suite of suites) {
       const mod = require(suite);
       console.log("go to:", mod.uri);
-      await page.goto(`http://localhost:${port}${mod.uri}`);
+      await page.goto(`${uri}${mod.uri}`);
       await mod.run(page);
     }
   } catch (error) {
@@ -24,13 +24,14 @@ async function runTests(port) {
   }
 }
 
-const server = app.listen(() => {
+async function main() {
   console.log("Headless browser tests…");
-  runTests(server.address().port)
-    .catch(console.error)
-    .then(() => {
-      // eslint-disable-next-line no-process-exit
-      console.log("✓");
-      process.exit();
-    });
-});
+  const server = await workServer.setup({logLevel: "silent"});
+  await server.start();
+  await runTests(server.info.uri).catch(console.error);
+  console.log("✓");
+  // eslint-disable-next-line no-process-exit
+  process.exit();
+}
+
+main();

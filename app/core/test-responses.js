@@ -3,7 +3,6 @@ const supertest = require("supertest");
 const tap = require("tap");
 
 function testResponses(description, baseUri, pairs) {
-  debugger;
   const request = supertest(baseUri);
   pairs.forEach(([uri, regex]) => {
     tap.test(`${description} smoke test ${uri}`, test => {

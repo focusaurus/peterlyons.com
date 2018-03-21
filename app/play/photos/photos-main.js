@@ -28,10 +28,14 @@ function previousNext(previousPhoto, nextPhoto) {
   return [
     '<div id="nextPrev">',
     previousPhoto
-      ? tag`<a href="${previousPhoto.pageURI}" data-photo-name="${previousPhoto.name}">&larr;previous&nbsp;</a>`
+      ? tag`<a href="${previousPhoto.pageURI}" data-photo-name="${
+          previousPhoto.name
+        }">&larr;previous&nbsp;</a>`
       : "",
     nextPhoto
-      ? tag`<a href="${nextPhoto.pageURI}" data-photo-name="${nextPhoto.name}">next&rarr;</a>`
+      ? tag`<a href="${nextPhoto.pageURI}" data-photo-name="${
+          nextPhoto.name
+        }">next&rarr;</a>`
       : "",
     "</div>"
   ].join("");
@@ -45,7 +49,9 @@ function fullSize(state) {
     `<h1 id="photo">${state.gallery.displayName}</h1>`,
     previousNext(previousPhoto, nextPhoto),
     tag`<figure>
-      <img src="${photo.fullSizeURI}" alt="${photo.caption}" title="${photo.caption}">
+      <img src="${photo.fullSizeURI}" alt="${photo.caption}" title="${
+      photo.caption
+    }">
       <figcaption>${photo.caption}</figcaption>
     </figure>
   </div>`
@@ -125,9 +131,9 @@ function navigate(state) {
 function setState(changes) {
   Object.assign(pageState, changes);
   if (changes.gallery && !changes.photo) {
-    pageState.photo = pageState.gallery.photos[0];
+    [pageState.photo] = pageState.gallery.photos;
   }
-  const photos = pageState.gallery.photos;
+  const {photos} = pageState.gallery;
   const index = photos.findIndex(photo => photo.name === pageState.photo.name);
   Object.assign(pageState, {
     previousPhoto: photos[index - 1],
@@ -147,7 +153,7 @@ function viewPhoto(event) {
   if (!photoName) {
     return;
   }
-  const photos = pageState.gallery.photos;
+  const {photos} = pageState.gallery;
   setState({photo: photos.find(photo => photo.name === photoName)});
 }
 
