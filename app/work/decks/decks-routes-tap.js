@@ -1,12 +1,14 @@
 "use strict";
 const {DECKS} = require("./decks-routes-hapi");
+const getTestUri = require("../../core/get-test-uri");
 const request = require("supertest");
 const tap = require("tap");
+
 
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../../core/get-test-uri")(require("../server"));
+  uri = await getTestUri(require("../server"));
 });
 
 Object.keys(DECKS).forEach(deck => {

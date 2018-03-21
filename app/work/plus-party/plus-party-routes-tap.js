@@ -1,11 +1,12 @@
 "use strict";
+const getTestUri = require("../../core/get-test-uri");
 const tap = require("tap");
 const testUtils = require("../../core/test-utils");
 
 let uri;
 
 tap.beforeEach(async () => {
-  uri = await require("../../core/get-test-uri")(require("../server"));
+  uri = await getTestUri(require("../server"));
 });
 
 tap.test("the plus party page", async test => {
