@@ -25,7 +25,7 @@ async function setup({port = config.proPort, logLevel = "debug"} = {}) {
     require("../core/security-plugin") // headers
   ]);
   server.logger().level = logLevel;
-  server.log("info", "PLWS (professional) server starting");
+  server.log("info", "PLWS (work) server starting");
 
   server.views({
     engines: {pug: require("pug")},

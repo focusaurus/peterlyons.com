@@ -21,7 +21,7 @@ async function setup({port = config.persPort, logLevel = "debug"} = {}) {
     }
   });
   server.logger().level = logLevel;
-  server.log("info", "PLWS (personal) server starting");
+  server.log("info", "PLWS (play) server starting");
 
   await server.register(require("vision"));
   server.views({
