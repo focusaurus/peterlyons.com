@@ -13,6 +13,8 @@
     "hapi": "17.2.2",
     "hapi-pino": "4.0.3",
     "inert": "5.1.0",
+    "joi": "13.1.2",
+    "joi-summarize": "1.1.0",
     "jstransformer-marked": "1.0.3",
     "lodash": "4.17.4",
     "lodash.debounce": "4.0.8",

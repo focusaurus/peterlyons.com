@@ -1,5 +1,5 @@
 "use strict";
-const config = require("config3");
+const config = require("./config-validate");
 const _ = require("lodash");
 
 module.exports = function get(overrides = {}) {

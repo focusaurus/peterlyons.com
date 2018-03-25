@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const config = require("config3");
+const config = require("../app/core/config-validate");
 const fs = require("fs");
 const path = require("path");
 const request = require("supertest");

@@ -1,6 +1,6 @@
 "use strict";
 const path = require("path");
-const config = require("config3");
+const config = require("./config-validate");
 
 module.exports = {
   name: "static",

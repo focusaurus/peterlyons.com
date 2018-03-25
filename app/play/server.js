@@ -1,5 +1,5 @@
 "use strict";
-const config = require("config3");
+const config = require("../core/config-validate");
 const hapi = require("hapi");
 const path = require("path");
 

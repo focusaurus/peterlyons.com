@@ -1,5 +1,5 @@
 const {promisify} = require("util");
-const config = require("config3");
+const config = require("../../core/config-validate");
 const fs = require("fs");
 const galleries = require("./galleries-data");
 
