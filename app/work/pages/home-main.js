@@ -1,3 +1,4 @@
+"use strict";
 const HEADER_SELECTOR = ".intro .highlight";
 let subtitle;
 /* global document */
