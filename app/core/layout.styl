@@ -1,7 +1,26 @@
+@import "color"
 @require "adaptive"
+@require "navigation"
 @require "position"
 @require "typography"
-@import "color"
+
+body > nav
+  position fixed
+  display none
+  +above("l")
+    display block
+  &.open
+    display block
+    topRight()
+    z-index 10
+    background-color $colorPrimaryBackground
+    margin 0
+    border-left 1px solid $colorCodeBackground
+
+.navMenuButton
+  display inline
+  +above("l")
+    display none
 
 header
   margin-bottom 2rem
@@ -22,6 +41,18 @@ header
     +above("s")
       fontSize 2 1
 
+.content
+  margin 1em
+  +above("m")
+    margin 1em auto
+    width 30em
+  +above("l")
+    // This is carefully calculated to avoid overlap with side nav menu
+    width 23em
+  +above("xl")
+    width 30em
+
+
 .license
   clear both
   img
@@ -35,35 +66,6 @@ header
   a
     color $colorFooter
 
-body > nav
-  position fixed
-  display none
-  +above("l")
-    display block
-  &.open
-    display block
-    topRight()
-    z-index 10
-    background-color $colorPrimaryBackground
-    margin 0
-    border-left 1px solid $colorCodeBackground
-
-.navMenuButton
-  display inline
-  +above("l")
-    display none
-
-.content
-  margin 1em
-  +above("m")
-    margin 1em auto
-    width 30em
-  +above("l")
-    // This is carefully calculated to avoid overlap with side nav menu
-    width 23em
-  +above("xl")
-    width 30em
-
 footer
   margin-top 4em
   p
@@ -73,8 +75,3 @@ footer > nav
   display block
   +above("l")
     display none
-
-nav
-  fontSize -1
-  h1
-    fontSize 0

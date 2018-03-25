@@ -1,6 +1,6 @@
 ## The Debugger is a Fantastic Comprehension Aid
 
-For most of my time as a programmer, I've been in the "no fancy tools camp". I spurned IDEs (and still do), complex build tools, any flavor of a "project" file an editor needed to supplement the filesystem layout, code analyzers, coverage tools, and all that ilk. I got things done by printing to stdout, kept it simple, and moved on. Not that I haven't tried all of these things at some point or another, but I found all of them were so awkward and cumbersome that not a single one of them stayed in my tool box beyond that initial experimentation or a single project.
+For most of my time as a programmer, I've been in the "no fancy tools camp". I spurned IDEs (and still do), complex build tools, any flavor of a "project" file an editor needed to supplement the filesystem layout, code analyzers, coverage tools, and all that ilk. I got things done by printing to stdout, kept it simple, and moved on. Not that I haven't tried all of these things at some point or another (periodically), but I found all of them were so awkward and cumbersome that not a single one of them stayed in my tool box beyond that initial experimentation or a single project.
 
 However, things have changed with the current state of the Chrome developer tools debugger. I now use this tool constantly and find it to be an absolutely key piece of my arsenal. It's definitely in my top five most valuable tools list. It's not absolutely necessary, but getting by without it now feels like groping around in the dark when there's a perfectly good light switch available.
 
@@ -23,13 +23,13 @@ These are your bread and butter primary tools.
 * basic breakpoints
 * step over, step into, step out of
 * asynchronous code flow
-* watch expressions
 * the call stack
 
 ## Learn the Secondary Debugger Concepts
 
 You don't need these very often, but under certain circumstances, they are essential to tracking things down effectively.
 
+* watch expressions
 * conditional breakpoints
 * pause on exceptions
 
@@ -66,11 +66,15 @@ I'm not a big fan of the chaining style in general, but in particular it's a pai
 
 # Debugging Server Side node.js (v8-inspector)
 
-As of node.js v6.3.0 there's (experimental) support for debugging via the chrome developer tools inspector built right into node core. No need for helper modules from npm and no need for a separate node-inspector server.
+As of node.js v6.3.0 and newer there's support for debugging via the chrome developer tools inspector built right into node core. No need for helper modules from npm and no need for a separate node-inspector server.
 
-To debug a server, run it with `node --inspect server.js`. Node will print out a URL that starts `chrome-devtools://devtools/remote/serve_file…`. Open that link in Google Chrome and you're ready to debug.
+To debug a server:
 
-If you need to debug a crash during the initial program load, you can use `node --inspect --debug-brk server.js` to tell the debugger to immediately pause at the start of the program so you can step through and find any early startup bugs.
+1. run it with `node --inspect server.js`.
+1. in chrome, open a tab with `chrome://inspect` address
+1. Click "Open dedicated DevTools for Node" (Look at the bottom of the "Devices" section)
+
+If you need to debug a crash during the initial program load, you can use `node --inspect-brk server.js` to tell the debugger to immediately pause at the start of the program so you can step through and find any early startup bugs.
 
 Under the hood, here's what's happening.
 
@@ -78,53 +82,39 @@ Under the hood, here's what's happening.
 * Running node with the `--inspect` argument tells node/v8 to enable the debugger and have it listen for connections on a port, which is 9229 by default.
 * Your node server program listens on some port for its requests. For a typical web application, this might be port 3000, for example.
 * So that's 1 node process listening for browsers on port 3000 and a debugger user interface on 9229
-* When we browse to the chrome-devtools URL, we will see the devtools web UI, and the query string tells chrome to make a connection to the v8 debugger listening on port 9229 and that's how everything gets wired up together properly and we're off and running
+* When we use the chrome DevTools, it connects to the node process's debugging interface and we're up and running. The same mechanism is used by third party debuggers such as Visual Studio Code, IDEs, etc.
 
 <img src="/problog/images/2014/node-devtools-connections.png" alt="diagram of node devtools connections">
 
-# Debugging Server Side node.js code with node-inspector
+# Debugging mocha Tests
 
-This section applies to node versions prior to v6.3.0.
+To use node `--inspect-brk` (v6.3.0 or later), you can run your [mocha](http://visionmedia.github.io/mocha/) tests with `node --inspect-brk $(npm bin)/_mocha --timeout=0`.
 
-So this is pretty much the Holy Grail in my opinion. This is a huge selling point of node for me. There's a module in npm called [node-inspector](https://npmjs.org/package/node-inspector) that allows you to use the Chrome debugger to debug your server side node.js code.
-
-The setup can be confusing because there are a bunch of different processes and ports to keep straight in your head, so let me break it down.
-
-* Your node server program runs one process, which includes v8
-* Running node with one of the `--debug` argument variants tells node/v8 to enable the debugger and have it listen for connections on a port, which is 5858 by default.
-* Your node server program listens on some port for its requests. For a typical web application, this might be port 3000, for example.
-* So that's 1 node process listening for browsers on port 3000 and a debugger user interface on 5858
-* Now, to use node-inspector, we run that as a second process via `./node_modules/.bin/node-inspector`
-* That starts up another process that runs a web server listening on port 8080 by default.
-* When we browse to http://localhost:8080/debug?port=5858 we will see the node-inspector web UI, which is basically just the chrome debugger and the query string tells node-inspector to make a connection to the v8 debugger listening on port 5858 and that's how everything gets wired up together properly and we're off and running
-
-<img src="/problog/images/2014/node-inspector-connections.png" alt="diagram of node-inspector connections">
-
-If you need to fix a bug that is crashing your program before you can even get it started and connect the debugger, use `--debug-brk` which tells v8 to pause the program before the very first line is interpretted so you can get node-inspector connected and step through.
-
-# Debugging Your Mocha Tests
-
-To use node --inspect (v6.3.0 or later), you can run your [mocha](http://visionmedia.github.io/mocha/) tests with `node --inspect --debug-brk $(npm bin)/_mocha --timeout=0`. Similary for a test runner like tape or tape-catch it would be `node --inspect --debug-brk $(npm bin)/tape some.test.js`.
-
-For earlier versions of node using node-inspector, mocha supports the same `--debug` and `--debug-brk` arguments as node, so you can also debug your tests within node-inspector. Double victory!
-
-To avoid port collisions, you can provide an alternate port to the process for your mocha tests. This can be done with `mocha --debug-brk=6666`, for example if you want to leave your application process's debugger listening on 5858 while you run mocha tests at the same time debugging them via port 6666.
-
+To avoid port collisions, you can provide an alternate port to the process for your mocha tests. This can be done with `mocha --inspect-brk=6666`, for example if you want to leave your application process's debugger listening on 9229 while you run mocha tests at the same time debugging them via port 6666.
 
 # Debugging tape Tests
 
-You can run tape tests in the debugger by running node directly instead of the tape CLI program, and telling node to run the tape entrypoint script.
+You can run [tape](https://www.npmjs.com/package/tape) tests in the debugger by running node directly instead of the `tape` CLI program, and telling node to run the tape entrypoint script.
 
-`node --inspect --debug-brk $(npm bin)/tape my-test.js`
+`node --inspect-brk $(npm bin)/tape my-test-tape.js`
+
+# Debugging tap Tests
+
+You can run [tap](http://www.node-tap.org/) tests in the debugger by running node directly instead of the `tap` CLI program, and telling node to run the tap entrypoint script.
+
+`node --inspect-brk $(npm bin)/tap my-test-tap.js`
+
+ For tap it works either way if you run the `tap` test runner program or even just a single tap test suite file. For example:
+
+`node --inspect-brk some-test-tap.js`.
 
 # Some Workflow Tips
 
 For projects I'm doing active, heavy work on, I usually run them under `node-dev` for automatic restarting on change and always enable the debugger, so `node-dev --inspect server.js`. If I have several projects or microservices that would otherwise create a TCP port conflict binding port 9229, I will pass a project-specific port like `node-dev --inspect=9230 server.js`.
 
-For older projects with node-inspector, I just leave node-inspector running all the time on the default port of 8080. I also usually leave a chrome browser tab open with node inspector all the time and just reload the page when I need to connect to a process and debug it.
-
 # Recommended Reading
 
+* [Node Inspector Docs](https://nodejs.org/en/docs/inspector/)
 * [Chrome Developer Tools Docs](https://developers.google.com/chrome-developer-tools/?csw=1)
 * [HTML5 Rocks Introduction to Chrome Developer Tools](http://www.html5rocks.com/en/tutorials/developertools/part1/)
 * [Lesser-Known JavaScript Debugging Techniques](http://amasad.me/2014/03/09/lesser-known-javascript-debugging-techniques/)
