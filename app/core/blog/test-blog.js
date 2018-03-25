@@ -9,7 +9,7 @@ async function getServer() {
   if (server) {
     return server;
   }
-  server = hapi.server({host: "127.0.0.1"});
+  server = hapi.server({debug: false, host: "localhost", port: 0});
 
   await server.register(require("vision"));
   server.views({

@@ -12,8 +12,7 @@ const problog = {
 };
 
 async function setup({port = config.proPort, logLevel = "debug"} = {}) {
-  const server = hapi.server({debug: false, host: config.host, port});
-
+  const server = hapi.server({debug: false, host: "localhost", port});
   await server.register({
     plugin: require("hapi-pino"),
     options: {mergeHapiLogData: true}

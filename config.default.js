@@ -4,7 +4,6 @@ const pack = require("./package");
 
 const config = {
   appVersion: pack.version,
-  host: process.env.PLWS_HOST || "127.0.0.1",
   persPort: process.env.PLWS_PERS_PORT || 9001,
   proPort: process.env.PLWS_PRO_PORT || 9000,
   revealDir: join(__dirname, "node_modules/reveal.js"),

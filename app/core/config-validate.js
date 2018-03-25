@@ -9,7 +9,6 @@ const port = joi
   .max(65535);
 const schema = joi.object().keys({
   appVersion: joi.string().regex(/\d+\.\d+\.\d+/),
-  host: joi.string().ip(),
   persPort: port,
   proPort: port,
   revealDir: joi.string(),

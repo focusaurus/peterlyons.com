@@ -25,7 +25,7 @@ tap.test("blog feed XML", async test => {
 
   test.same(
     $('link[rel="self"]').attr("href"),
-    "https://127.0.0.1/utb/feed",
+    "https://localhost/utb/feed",
     "should have the self ref link"
   );
   // Post 8 should be index 3 because 11, 10, 9, 8

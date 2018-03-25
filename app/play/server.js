@@ -12,7 +12,7 @@ const persblog = {
 };
 
 async function setup({port = config.persPort, logLevel = "debug"} = {}) {
-  const server = hapi.server({debug: false, host: config.host, port});
+  const server = hapi.server({debug: false, host: "localhost", port});
 
   await server.register({
     plugin: require("hapi-pino"),
