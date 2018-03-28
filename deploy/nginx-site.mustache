@@ -57,13 +57,3 @@ server {
   server_name {{hostname}} www.{{hostname}};
   rewrite ^(.*) https://{{hostname}}$1 permanent;
 }
-
-# For first-time initial bootstrap of TLS with acme only
-# server {
-#   listen 80;
-#   server_name {{hostname}};
-#
-#   location /.well-known/acme-challenge/ {
-#     alias /var/www/letsencrypt/.well-known/acme-challenge/;
-#   }
-# }

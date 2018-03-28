@@ -9,7 +9,6 @@ echo -n "browserifying…"
 ./bin/build-js.sh production
 echo ✓
 echo "node.js tap unit tests…"
-export NODE_ENV=test
 if [[ $# -eq 0 ]]; then
   find ./app -name \*-tap.js | sort | xargs tap --jobs-auto ${COVERAGE}
 else

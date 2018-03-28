@@ -125,7 +125,7 @@ Oh God, it's a mess out there, folks. Things are pretty much hopelessly broken i
   - requirejs is entirely terrible
 - Prefer code that does not need comments, then inline comments as needed, and jsdoc for really formal APIs or very tricky cases.
 
-The only linter I've ever been able to work with successfully is [eslint](http://eslint.org/), which I recommend for all projects. I also suggest configuring your text editor to lint with eslint on the fly. You can see [my .eslintrc rules here](https://github.com/focusaurus/peterlyons.com/blob/master/.eslintrc).
+The only linter I've ever been able to work with successfully is [eslint](http://eslint.org/), which I recommend for all projects. I also suggest configuring your text editor to lint with eslint on the fly. I like the rulesets `recommended`, `airbnb-base`, and `prettier`.
 
 # CoffeeScript Conventions
 
