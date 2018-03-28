@@ -68,7 +68,9 @@
   "main": "app/main.js",
   "name": "peterlyons.com",
   "nyc": {
-    "exclude": ["**/*-tap.js"]
+    "exclude": [
+      "**/*-tap.js"
+    ]
   },
   "private": true,
   "repository": {
@@ -81,5 +83,5 @@
     "coverage": "COVERAGE=--coverage-report=html ./bin/test-node.sh",
     "lint": "eslint --format ./node_modules/eslint-tap app bin"
   },
-  "version": "6.12.0"
+  "version": "7.0.0"
 }
