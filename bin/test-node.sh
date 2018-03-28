@@ -11,8 +11,8 @@ echo ✓
 echo "node.js tap unit tests…"
 export NODE_ENV=test
 if [[ $# -eq 0 ]]; then
-  find ./app -name \*-tap.js | sort | xargs tap --jobs ${COVERAGE}
+  find ./app -name \*-tap.js | sort | xargs tap --jobs-auto ${COVERAGE}
 else
-  tap --jobs "$@"
+  tap --jobs-auto "$@"
 fi
 echo ✓

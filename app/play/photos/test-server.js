@@ -26,10 +26,6 @@ async function getServer() {
 }
 
 tap.tearDown(async () => {
-  /* istanbul ignore if */
-  if (!server) {
-    return;
-  }
   await server.stop();
 });
 

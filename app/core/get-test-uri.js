@@ -15,20 +15,19 @@ let server;
 
 async function getServer(serverMod) {
   const uri = process.env.URI;
+  /* istanbul ignore if */
   if (/^https?:\/\//.test(uri)) {
     return uri;
   }
-  if (!server) {
-    server = await serverMod.setup({port: 0, logLevel: "silent"});
-    await server.start();
+  if (server) {
+    return server.info.uri;
   }
+  server = await serverMod.setup({port: 0, logLevel: "silent"});
+  await server.start();
   return server.info.uri;
 }
 
 tap.tearDown(async () => {
-  if (!server) {
-    return;
-  }
   await server.stop();
 });
 

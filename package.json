@@ -67,6 +67,9 @@
   "homepage": "https://peterlyons.com",
   "main": "app/main.js",
   "name": "peterlyons.com",
+  "nyc": {
+    "exclude": ["**/*-tap.js"]
+  },
   "private": true,
   "repository": {
     "type": "git",

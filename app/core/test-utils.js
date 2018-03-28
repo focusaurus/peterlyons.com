@@ -16,11 +16,6 @@ function assertSubstrings($, ...phrases) {
   });
 }
 
-function assertDeck($) {
-  tap.same($(".reveal .slides ").length, 1);
-  assertSubstrings($, "reveal.js");
-}
-
 async function loadDom(uri, path) {
   return request(uri)
     .get(path)
@@ -31,6 +26,5 @@ async function loadDom(uri, path) {
 module.exports = {
   assertSelectors,
   assertSubstrings,
-  assertDeck,
   loadDom
 };

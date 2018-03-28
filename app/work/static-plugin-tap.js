@@ -20,3 +20,13 @@ tap.test("static plws.js", test => {
       test.end();
     });
 });
+
+tap.test("static favicon", test => {
+  request(uri)
+    .get("/favicon.ico")
+    .expect(204)
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});

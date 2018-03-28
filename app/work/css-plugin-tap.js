@@ -32,3 +32,25 @@ tap.test("/deck.css", test => {
       test.end();
     });
 });
+
+tap.test("non-existent css error", test => {
+  request(uri)
+    .get("/unit-test-error.css")
+    .expect(500)
+    .expect("content-type", "text/html; charset=utf-8")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});
+
+tap.test("invalid stylus error", test => {
+  request(uri)
+    .get("/unit-test-invalid.css")
+    .expect(500)
+    .expect("content-type", "text/html; charset=utf-8")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});
