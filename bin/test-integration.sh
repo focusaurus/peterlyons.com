@@ -4,7 +4,7 @@
 # Will test local dev by default, but pass command line arg
 # "stage" or "production" to test remote systems
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 source ./bin/lib/strict_mode.sh
 
 case "$1" in

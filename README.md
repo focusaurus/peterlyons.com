@@ -1,6 +1,6 @@
 # peterlyons.com web site
 
-This repo contains a node.js/express.js web application I use to power my professional web site at [https://peterlyons.com]() and personal site at [https://peterlyons.org]()
+This repo contains a node.js/hapi web application I use to power my professional web site at [https://peterlyons.com]() and personal site at [https://peterlyons.org]()
 
 [![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
@@ -8,7 +8,6 @@ This repo contains a node.js/express.js web application I use to power my profes
 ![Technical Architecture Diagram](doc/peterlyons.com_technical_architecture_2014-12-21.png)
 Basically, the site supports content in the following formats:
 
- - static html pages
  - pages written as [pug](https://pugjs.org) templates
  - pages written in [markdown](http://daringfireball.net/projects/markdown/)
  - a basic blog engine
@@ -22,8 +21,8 @@ Over the years, I've tried out various deployment methodologies and file layouts
 
 The site requires 3 git repositories to fully function
 
-1. The code (this repository)
-2. The data (blog posts and photo gallery metadata)
+1. The code (this repository) (also photo gallery metadata)
+2. The data/content (blog posts)
 3. Static files (images, fonts, etc)
 
 The data and static repositories aren't particularly interesting. All the interesting code is in this repository.
@@ -49,6 +48,8 @@ The data and static repositories aren't particularly interesting. All the intere
 ## How to test
 
 - `./bin/test-node.sh` to run the node tests
+- `./bin/test-browser.sh` to run the headless browser tests
+- `./bin/test.sh` to run both node and browser tests
 - `./bin/test-integration.sh` to run the integration tests
 
 ## How to setup the stage vagrant vm
@@ -63,10 +64,11 @@ The data and static repositories aren't particularly interesting. All the intere
   - `sudo su -`
   - Run the `setup-tls-acme.sh` script
   - Provision TLS from letsencrypt with domain validation
-  - `su - acme -c '"${HOME}/.acme.sh/acme.sh" --issue --dns --domain "stage.peterlyons.com"  --keylength ec-256'`
-- Login to your registrar (namecheap) and set up the TXT record as per the acme instructions
-- Wait a minute or two for the record to work, test with `dig -t TXT _acme-challenge.stage.peterlyons.com`
+  - `sudo su - acme` to become the acme user
+  - `export DO_API_KEY='get-this-api-key-from-digitalocean'`
+  - `"${HOME}/.acme.sh/acme.sh" --issue --dns dns_dgon --domain stage.peterlyons.org  --domain www.peterlyons.org --keylength ec-256`
 - `su - acme -c '"${HOME}/.acme.sh/acme.sh" --renew --domain "stage.peterlyons.com" --ecc'`
+
 ## How to Build
 
 - check prereqs
