@@ -10,20 +10,17 @@ async function getServer() {
     return server;
   }
   server = hapi.server({debug: false, host: "localhost", port: 0});
-
-  await server.register(require("vision"));
+  await server.register(require("vision")); // renders page templates (pug)
   server.views({
     engines: {pug: require("pug")},
-    relativeTo: path.join(__dirname, "../..")
+    relativeTo: path.join(__dirname, "../.."),
+    context: require("../../core/template-vars")({proSite: false})
   });
   const options = {
-    basePath: path.join(__dirname, "unit-test-blog1"),
-    staticPath: path.join(__dirname, "unit-test-blog1"),
-    title: "Unit Test Blog 1",
-    prefix: "/utb",
-    subtitle: "Unit Test Subtitle 1"
+    galleries: require("./galleries-test"),
+    baseDir: path.join(__dirname, "unit-test-galleries")
   };
-  await server.register({plugin: require("./blog-plugin"), options});
+  await server.register({plugin: require("./photos-plugin"), options});
   await server.start();
   return server;
 }
@@ -37,3 +34,10 @@ tap.tearDown(async () => {
 });
 
 module.exports = getServer;
+
+// if (require.main === module) {
+//   (async () => {
+//     server = await getServer();
+//     console.log("HEY", server.info.uri); // fixme
+//   })();
+// }

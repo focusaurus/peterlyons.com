@@ -22,5 +22,5 @@ case "$1" in
     ;;
 esac
 
-URI="${work}" tap 'app/work/**/*-tap.js' 'app/core/**/*-tap.js'
-URI="${play}" tap 'app/play/**/*-tap.js'
+URI="${work}" tap 'app/work/**/*-tap.js' 'app/core/**/*-tap.js' 'app/work/integration-tests.js'
+URI="${play}" tap 'app/play/**/*-tap.js' 'app/play/integration-tests.js'

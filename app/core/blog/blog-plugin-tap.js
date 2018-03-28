@@ -28,3 +28,14 @@ tap.test("a static image request should 200", test => {
       test.end();
     });
 });
+
+tap.test("a flush-cache request", test => {
+  request(server.info.uri)
+    .get("/utb/flush-cache")
+    .expect(302)
+    .expect("location", "/utb")
+    .end(error => {
+      test.error(error);
+      test.end();
+    });
+});

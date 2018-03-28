@@ -35,9 +35,15 @@ async function setup({port = config.persPort, logLevel = "debug"} = {}) {
     require("../core/css-plugin"),
     require("../core/static-plugin"),
     require("./pages-plugin"),
-    require("./photos/photos-plugin"),
     require("./redirect-plugin")
   ]);
+  await server.register({
+    plugin: require("./photos/photos-plugin"),
+    options: {
+      baseDir: config.photos.galleryDir,
+      galleries: require("./photos/galleries-data")
+    }
+  });
   await server.register({
     plugin: require("../core/blog/blog-plugin"),
     options: persblog
