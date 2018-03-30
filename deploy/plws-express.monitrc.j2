@@ -10,4 +10,4 @@ check host "plws-pers" with address 127.0.0.1
   if failed port {{express_port_pers}} protocol http then restart
   if 5 restarts within 5 cycles then timeout
 check file plws-express-log with path /var/log/upstart/plws-express.log
-  if match "error" then alert
+  if match "\"statusCode\":5" then alert
