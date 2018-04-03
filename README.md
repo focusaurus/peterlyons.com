@@ -5,7 +5,7 @@ This repo contains a node.js/hapi web application I use to power my professional
 [![Build Status](https://semaphoreci.com/api/v1/focusaurus/peterlyons-com/branches/develop/badge.svg)](https://semaphoreci.com/focusaurus/peterlyons-com)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-![Technical Architecture Diagram](doc/peterlyons.com_technical_architecture_2014-12-21.png)
+![Technical Architecture Diagram](doc/peterlyons.com_technical_architecture_2018-04-02.png)
 Basically, the site supports content in the following formats:
 
  - pages written as [pug](https://pugjs.org) templates
@@ -26,6 +26,8 @@ The site requires 3 git repositories to fully function
 3. Static files (images, fonts, etc)
 
 The data and static repositories aren't particularly interesting. All the interesting code is in this repository.
+
+The code has a bunch of shared stuff (layout, css) between my professional and personal sites. Each site has its own hapi server that listens on a distinct port and nginx configuration that reverse proxies traffic and does TLS termination.
 
 ## How to Set Up for Development (OS X Scripted)
 
