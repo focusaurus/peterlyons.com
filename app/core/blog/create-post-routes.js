@@ -69,7 +69,7 @@ async function newBlogFinalize(request, password, post) {
 }
 
 async function createPost(request, h) {
-  const {password, title, content} = request.body;
+  const {password, title, content} = request.payload;
   const hash = await readFileAsync(config.blog.hashPath, "utf8");
   await verifyPasswordAsync(password, hash);
   await newBlogPrepare(request);
