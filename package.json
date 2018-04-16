@@ -82,5 +82,5 @@
     "coverage": "COVERAGE=--coverage-report=html ./bin/test-node.sh",
     "lint": "eslint --format ./node_modules/eslint-tap app bin"
   },
-  "version": "7.0.2"
+  "version": "7.0.3"
 }
