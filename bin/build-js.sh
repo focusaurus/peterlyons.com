@@ -3,7 +3,7 @@
 # bundles browser js via browserify & uglifyjs
 
 cd "$(dirname "$0")/.." || exit
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 unset IFS # This screws up our shell quoting
 export PATH="${PWD}/node_modules/.bin:$PATH"
 

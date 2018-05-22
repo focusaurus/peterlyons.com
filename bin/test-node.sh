@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 cd "$(dirname "$0")/.." || exit
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 
 unset IFS # This screws up groups variable quoting/parsing
 export PATH="${PWD}/node_modules/.bin:$PATH"

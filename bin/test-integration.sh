@@ -5,7 +5,7 @@
 # "stage" or "production" to test remote systems
 
 cd "$(dirname "$0")/.." || exit
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 
 case "$1" in
   stage)

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$(dirname "$0")/.." || exit
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 export PATH="${PWD}/node_modules/.bin:$PATH"
 
 trim_js='
@@ -29,6 +29,6 @@ delete this.v;
 # }
 # '
 nodemon "$@" app/main.js |
-  grep --line-buffered -v nodemon |
+  # egrep --line-buffered -v nodemon |
   json -ga0 -E "${trim_js}"
   # json -ga0 msg tags
