@@ -7,7 +7,7 @@
 # inventory files live in the deploy/hosts directory"
 
 cd "$(dirname "$0")/.." || exit 10
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 
 main() {
   PATH="${PWD}/python/bin:${PATH}"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 cd "$(dirname "$0")/.." || exit
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 export PATH="${PWD}/node_modules/.bin:$PATH"
 
 trim_js='

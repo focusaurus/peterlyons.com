@@ -4,7 +4,7 @@
 # Usage: release-candidate.sh <patch|minor|major>"
 
 cd "$(dirname "$0")/.."
-source ./bin/lib/strict_mode.sh
+source ./bin/lib/strict-mode.sh
 echo "Creating a new release candidate"
 git checkout develop
 git pull origin develop

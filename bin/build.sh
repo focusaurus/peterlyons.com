@@ -8,7 +8,7 @@
 
 main() {
   cd "$(dirname "$0")/.." || exit 10
-  source ./bin/lib/strict_mode.sh
+  source ./bin/lib/strict-mode.sh
 
   local git_ref="${1-WORK}"
   local build_dir="build"
