@@ -9,7 +9,7 @@ export PATH="${PWD}/node_modules/.bin:$PATH"
 
 build_plus_party() {
   local plus_party_temp
-  plus_party_temp="$(mktemp -t plus-party-build-XXXX).js"
+  plus_party_temp="$(mktemp -t plus-party-build-XXXXXX).js"
   local out="./www/plus-party.js"
   cd app/work/plus-party
   elm-make --yes --output "${plus_party_temp}" PlusParty.elm
@@ -35,7 +35,7 @@ build_browserify() {
     --require app/work/pages/career-main \
     --require app/work/pages/home-main \
     --require app/play/photos/photos-main
-  temp=$(mktemp -t plws-build-XXXX)
+  temp=$(mktemp -t plws-build-XXXXXX)
   cp "${out}" "${temp}"
   echo -n "uglify…"
   uglifyjs ${uglify_args} "${temp}" | gzip >"${out}.gz"
