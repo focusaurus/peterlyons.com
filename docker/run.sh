@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit
 source ./bin/lib/strict-mode.sh
 exec docker run --rm --interactive --tty \
   --attach stdin --attach stdout --attach stderr \
@@ -8,4 +8,6 @@ exec docker run --rm --interactive --tty \
   --volume "${PWD}:/opt/plws/code" \
   --publish "127.0.0.1:9000:9000" \
   --publish "127.0.0.1:9001:9001" \
-  plws-server "$@"
+  --volume $SSH_AUTH_SOCK:/ssh-agent \
+  --env SSH_AUTH_SOCK=/ssh-agent \
+  plws-server "${1-/bin/bash}"
