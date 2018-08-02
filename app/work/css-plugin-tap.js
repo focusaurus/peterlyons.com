@@ -14,6 +14,7 @@ tap.test("/screen.css", test => {
     .get("/screen.css")
     .expect(200)
     .expect("content-type", "text/css; charset=utf-8")
+    .expect("cache-control", "max-age=1440, must-revalidate, public")
     .expect(/font-family/)
     .end(error => {
       test.error(error);

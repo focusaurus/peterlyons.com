@@ -71,19 +71,16 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/galleries/{slug}",
-      options: { cache: false },
       handler: getGallery
     });
     server.route({
       method: "GET",
       path: "/photos",
-      options: { cache: false },
       handler: viewGallery
     });
     server.route({
       method: "GET",
       path: "/app/photos",
-      options: { cache: false },
       handler: viewGallery
     });
   }

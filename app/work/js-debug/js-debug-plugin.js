@@ -14,13 +14,11 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/js-debug",
-      options: { cache: false },
       handler: (request, reply) => reply.view("work/js-debug/js-debug")
     });
     server.route({
       method: "GET",
       path: "/js-debug/random-delay",
-      options: { cache: false },
       handler: async request => {
         const delay = await randomDelay();
         const num = request.query.requestNumber;

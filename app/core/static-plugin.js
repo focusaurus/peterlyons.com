@@ -10,7 +10,6 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/favicon.ico",
-      options: { cache: false },
       handler: (request, h) =>
         h
           .response()
@@ -20,7 +19,6 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/reveal.js/{file*}",
-      options: { cache: false },
       handler: {
         directory: {
           path: path.join(__dirname, "../../node_modules/reveal.js"),
@@ -32,7 +30,6 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/{param*}",
-      options: { cache: false },
       handler: {
         directory: {
           path: [config.staticDir, path.join(__dirname, "../../www")],

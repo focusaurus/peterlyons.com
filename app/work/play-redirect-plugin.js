@@ -19,7 +19,6 @@ module.exports = {
       server.route({
         method: "GET",
         path,
-        options: { cache: false },
         handler: (request, h) =>
           h.redirect(`https://peterlyons.org${request.url.path}`).code(301)
       });

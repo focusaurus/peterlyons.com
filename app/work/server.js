@@ -11,9 +11,6 @@ const problog = {
   title: "Pete's Points"
 };
 
-function omit(a, b, c) {
-  console.log("omit", a, b, c); // fixme
-}
 async function setup({
   host = config.proHost,
   port = config.proPort,

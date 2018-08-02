@@ -36,10 +36,8 @@ tap.test("home page", test => {
     .expect(/Stacks/)
     .expect(/Creative Commons/)
     .expect(/<section .*class="intro"/i)
-    .end((error, res) => {
+    .end(error => {
       test.error(error);
-      console.log("HEY", res.headers["cache-control"]); // fixme
-      test.notOk(res.headers["cache-control"]);
       test.end();
     });
 });

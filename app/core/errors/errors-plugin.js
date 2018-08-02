@@ -8,7 +8,6 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/error500", // catch-all path
-      options: { cache: false },
       handler: async () => {
         throw boom.internal("error500-message");
       }
@@ -17,7 +16,6 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/error404", // catch-all path
-      options: { cache: false },
       handler: async () => {
         throw boom.notFound("error404-message");
       }
