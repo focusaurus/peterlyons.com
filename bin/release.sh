@@ -7,7 +7,6 @@ source ./bin/lib/strict-mode.sh
 
 git checkout develop
 git pull origin develop
-./bin/test.sh
 echo "Will merge develop to master and push to origin"
 echo "CTRL-C now to abort. ENTER to proceed."
 read DONTCARE
