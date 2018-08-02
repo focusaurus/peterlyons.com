@@ -6,8 +6,6 @@
 cd "$(dirname "$0")/.."
 source ./bin/lib/strict-mode.sh
 echo "Creating a new release candidate"
-git checkout develop
-git pull origin develop
 npm version "${1-patch}"
 version=$(config3 appVersion)
 cat <<-EOF

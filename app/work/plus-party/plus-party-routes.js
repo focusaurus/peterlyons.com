@@ -7,6 +7,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/plus-party",
+      options: { cache: false },
       handler: async (request, h) => h.view("work/plus-party/plus-party")
     });
     server.methods.redirect("/plusParty", "/plus-party");

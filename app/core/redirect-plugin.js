@@ -8,6 +8,7 @@ module.exports = {
       server.route({
         method: "GET",
         path,
+        options: { cache: false },
         handler: (request, reply) => reply.redirect(newPath).code(301)
       });
     });

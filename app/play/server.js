@@ -16,7 +16,7 @@ async function setup({
   port = config.persPort,
   logLevel = "debug"
 } = {}) {
-  const server = hapi.server({debug: false, host, port});
+  const server = hapi.server({ debug: false, cache: false, host, port });
 
   await server.register({
     plugin: require("hapi-pino"),

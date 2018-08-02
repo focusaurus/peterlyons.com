@@ -23,6 +23,7 @@ module.exports = {
       server.route({
         method: "GET",
         path: `/${deck}`,
+        options: { cache: false },
         handler: async (request, h) => {
           const title = DECKS[deck];
           const markdownPath = path.join(__dirname, `${deck}.md`);

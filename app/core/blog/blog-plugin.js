@@ -23,6 +23,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: `${blog.prefix}`,
+      options: { cache: false },
       handler: async (request, h) =>
         h.view("core/blog/index", {
           blog,
@@ -32,26 +33,31 @@ module.exports = {
     server.route({
       method: "GET",
       path: `${blog.prefix}/post`,
+      options: { cache: false },
       handler: async (request, h) => h.view("core/blog/create-post")
     });
     server.route({
       method: "POST",
       path: `${blog.prefix}/post`,
+      options: { cache: false },
       handler: require("./create-post-routes").handler
     });
     server.route({
       method: "GET",
       path: `${blog.prefix}/feed`,
+      options: { cache: false },
       handler: require("./feed-route")
     });
     server.route({
       method: "GET",
       path: `${blog.prefix}/flush-cache`,
+      options: { cache: false },
       handler: flushCache
     });
     server.route({
       method: "GET",
       path: `${blog.prefix}/{rest*}`,
+      options: { cache: false },
       handler: require("./view-post")
     });
     server.method(
@@ -62,7 +68,7 @@ module.exports = {
         return blog.feedPosts;
       },
       {
-        cache: {expiresIn: 1000 * 60 * 24, generateTimeout: 1000 * 60 * 1}
+        cache: { expiresIn: 1000 * 60 * 24, generateTimeout: 1000 * 60 * 1 }
       }
     );
   }

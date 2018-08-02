@@ -11,6 +11,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/",
+      options: { cache: false },
       handler: (request, reply) => reply.view("play/home")
     });
     const pages = glob.sync(pagesPattern); // eslint-disable-line no-sync
@@ -23,6 +24,7 @@ module.exports = {
       server.route({
         method: "GET",
         path: `/${encodeURIComponent(base)}`,
+        options: { cache: false },
         handler: (request, reply) => reply.view(`play/${base}`)
       });
     });

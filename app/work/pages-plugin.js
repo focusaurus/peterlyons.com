@@ -9,6 +9,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/",
+      options: { cache: false },
       handler: (request, reply) => reply.view("work/pages/home")
     });
     const pagesPattern = path.join(__dirname, "pages/*.pug");
@@ -19,6 +20,7 @@ module.exports = {
       server.route({
         method: "GET",
         path: `/${encodeURIComponent(base)}`,
+        options: { cache: false },
         handler: (request, reply) => reply.view(`work/pages/${base}`)
       });
     });

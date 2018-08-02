@@ -11,15 +11,18 @@ const problog = {
   title: "Pete's Points"
 };
 
+function omit(a, b, c) {
+  console.log("omit", a, b, c); // fixme
+}
 async function setup({
   host = config.proHost,
   port = config.proPort,
   logLevel = "debug"
 } = {}) {
-  const server = hapi.server({debug: false, host, port});
+  const server = hapi.server({ debug: false, host, port });
   await server.register({
     plugin: require("hapi-pino"),
-    options: {mergeHapiLogData: true}
+    options: { mergeHapiLogData: true }
   });
 
   await server.register([
@@ -31,9 +34,9 @@ async function setup({
   server.log("info", "PLWS (work) server starting");
 
   server.views({
-    engines: {pug: require("pug")},
+    engines: { pug: require("pug") },
     relativeTo: path.join(__dirname, ".."),
-    context: require("../core/template-vars")({proSite: true})
+    context: require("../core/template-vars")({ proSite: true })
   });
 
   await server.register([
@@ -53,4 +56,4 @@ async function setup({
   return server;
 }
 
-module.exports = {setup};
+module.exports = { setup };

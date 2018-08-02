@@ -16,6 +16,7 @@ module.exports = {
     server.route({
       method: "GET",
       path: "/{sheet}.css",
+      options: { cache: false },
       handler: async (request, reply) => {
         const sheetPath = path.join(__dirname, `${request.params.sheet}.styl`);
         const input = (await readFileAsync(sheetPath)).toString();
