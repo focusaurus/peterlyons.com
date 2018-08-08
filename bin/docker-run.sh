@@ -9,6 +9,7 @@ exec docker run --rm --interactive --tty \
   --publish "127.0.0.1:9000:9000" \
   --publish "127.0.0.1:9001:9001" \
   --volume $SSH_AUTH_SOCK:/ssh-agent \
+  --volume "${HOME}/.gitconfig":/home/node/.gitconfig \
   --env SSH_AUTH_SOCK=/ssh-agent \
   --user "$(id -u)" \
   plws-server "${1-/bin/bash}"
