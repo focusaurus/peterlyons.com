@@ -10,4 +10,5 @@ exec docker run --rm --interactive --tty \
   --publish "127.0.0.1:9001:9001" \
   --volume $SSH_AUTH_SOCK:/ssh-agent \
   --env SSH_AUTH_SOCK=/ssh-agent \
+  --user "$(id -u)" \
   plws-server "${1-/bin/bash}"
