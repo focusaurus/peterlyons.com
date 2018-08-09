@@ -64,7 +64,7 @@
   },
   "files": [],
   "homepage": "https://peterlyons.com",
-  "main": "app/main.js",
+  "main": "./app/main.js",
   "name": "peterlyons.com",
   "nyc": {
     "exclude": [
