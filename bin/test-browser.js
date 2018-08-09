@@ -9,7 +9,7 @@ const suites = glob.sync(process.argv[2] || `${__dirname}/../app/**/*btest.js`);
 async function runTests(uri) {
   let browser;
   try {
-    browser = await puppeteer.launch({headless: true});
+    browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     for (const suite of suites) {
       const mod = require(suite);
@@ -26,7 +26,7 @@ async function runTests(uri) {
 
 async function main() {
   console.log("Headless browser tests…");
-  const server = await workServer.setup({logLevel: "silent"});
+  const server = await workServer.setup({ logLevel: "silent", port: null });
   await server.start();
   await runTests(server.info.uri).catch(console.error);
   console.log("✓");
