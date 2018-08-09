@@ -1,10 +1,12 @@
 #!/usr/bin/env mocha --reporter spec
 /* eslint-env mocha */
+/* eslint-disable */
 process.env.NODE_ENV = "test";
+
 const htmlValidator = require("html-validator");
 
 function makeTest(request, configs) {
-  describe("The HTML of each page", () => {
+  xdescribe("The HTML of each page", () => {
     configs.forEach(testConfig => {
       const URI = testConfig[0];
       it(`${URI} should be valid HTML5 according to the W3C`, done => {
@@ -26,8 +28,10 @@ function makeTest(request, configs) {
   });
 }
 
+/*
 makeTest(require("../app/request"), require("../app/test-configs"));
 makeTest(
   require("../app/play/request"),
   require("../app/play/test-configs")
 );
+*/
