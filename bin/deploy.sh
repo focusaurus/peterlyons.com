@@ -15,6 +15,7 @@ main() {
   local dist_name
   dist_name=$(basename "${dist_path/.tar.*/}")
   local inventory="$2"
+  echo "Next sudo password prompt is for your unix account on the remote server"
   export ANSIBLE_HOST_KEY_CHECKING=False
   ansible-playbook \
     -i "${inventory}" \
