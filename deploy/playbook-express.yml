@@ -17,12 +17,8 @@
       service: name=monit state=restarted
   tasks:
     - name: install prerequisites
-      apt: pkg={{item}}
-      with_items:
-        #static/data repo access
-        - git-core
-        #For monitoring
-        - monit
+      apt:
+      pkg: ["git-core", "monit"]
     - name: create {{express_user}} group
       group: name={{express_user}}
     - name: create {{express_user}} user

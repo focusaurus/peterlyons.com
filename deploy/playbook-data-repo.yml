@@ -10,10 +10,8 @@
     repo_base: https://github.com/focusaurus
   tasks:
     - name: install prerequisites
-      apt: pkg={{item}}
-      with_items:
-        #static/data repo access
-        - git-core
+      pkg: ["git-core"]
+      apt:
     - name: clone data repo
       git:
         repo: '{{repo_base}}/data.git'

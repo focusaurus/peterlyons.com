@@ -42,7 +42,7 @@
       service: name=nginx state=reloaded
     - name: install weekly nginx reload cron job
       copy:
-        content: "#/usr/bin/env bash\nservice nginx reload > /dev/null"
+        content: "#/usr/bin/env bash\nservice nginx reload > /dev/null\n"
         force: true
         group: "root"
         mode: "0644"
