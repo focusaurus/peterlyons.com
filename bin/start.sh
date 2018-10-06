@@ -29,6 +29,6 @@ delete this.v;
 # }
 # '
 nodemon "$@" app/main.js |
-  # egrep --line-buffered -v nodemon |
+  egrep --line-buffered -v nodemon |
   json -ga0 -E "${trim_js}"
   # json -ga0 msg tags

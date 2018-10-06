@@ -8,7 +8,7 @@ set -o errexit  # always exit on error
 set -o errtrace # trap errors in functions as well
 set -o pipefail # don't ignore exit codes when piping output
 set -o posix    # more strict failures in subshells
-set -x          # enable debugging
+# set -x          # enable debugging
 
 IFS="$(printf "\n\t")"
 # ---- End unofficial bash strict mode boilerplate
@@ -29,7 +29,7 @@ RUN set -eux; \
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367; \
   apt-get --quiet --quiet --yes update; \
   apt-get --quiet --yes install ansible
-WORKDIR /host
+WORKDIR /opt/plws/code
 EXPOSE 9000 9001
 ENV PLWS_PERS_HOST=0.0.0.0
 ENV PLWS_PRO_HOST=0.0.0.0
