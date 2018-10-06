@@ -40,6 +40,14 @@
       service: name=nginx state=started enabled=yes
     - name: reload nginx
       service: name=nginx state=reloaded
+    - name: install weekly nginx reload cron job
+      copy:
+        content: "#/usr/bin/env bash\nservice nginx reload > /dev/null"
+        force: true
+        group: "root"
+        mode: "0644"
+        owner: "root"
+        dest: '/etc/cron.weekly/1reloadnginx'
     - name: 'remove old monit config'
       file:
         path: '/etc/monit/config.d/nginx_peterlyons.com.monitrc'
