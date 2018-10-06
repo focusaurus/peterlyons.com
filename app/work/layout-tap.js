@@ -38,7 +38,7 @@ tap.test("the main layout", async test => {
   test.ok(body.includes("Projects"));
   test.same(
     $("title").text(),
-    "Peter Lyons: node.js expert consultant",
+    "Peter Lyons: Cyber Lumberjack",
     "should have the normal title"
   );
   // should include the javascript with cachebusting

@@ -32,7 +32,7 @@ tap.test("home page", test => {
   request(uri)
     .get("/")
     .expect(200)
-    .expect(/Crafting node.js web applications/)
+    .expect(/Cyber Lumberjack/)
     .expect(/Stacks/)
     .expect(/Creative Commons/)
     .expect(/<section .*class="intro"/i)
