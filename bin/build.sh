@@ -1,4 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Please Use Google Shell Style: https://google.github.io/styleguide/shell.xml
+
+# ---- Start unofficial bash strict mode boilerplate
+# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -o errexit    # always exit on error
+set -o errtrace   # trap errors in functions as well
+set -o pipefail   # don't ignore exit codes when piping output
+set -o posix      # more strict failures in subshells
+# set -x          # enable debugging
+
+IFS="$(printf "\n\t")"
+# ---- End unofficial bash strict mode boilerplate
 
 # create a build archive of the app for deployment
 # Usage: build.sh <HEAD|WORK|TAG>
@@ -80,7 +93,7 @@ main() {
   npm install --silent --production --ignore-scripts
   ./bin/build-js.sh production
   npm dedupe
-  npm prune --silent --production
+  npm prune --production
   # npm prune removes our symlink, add it back
   ln -nsf ../app node_modules/app
 
